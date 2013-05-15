@@ -18,6 +18,7 @@ class App {
 private:
 	bool running;
 	SDL_Surface* surface;
+	GLuint programId;
 
 public:
 	App();

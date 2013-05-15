@@ -14,6 +14,7 @@
 #include <GL/glew.h>
 
 #ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else

@@ -1,5 +1,5 @@
 set(EXENAME bounce_main)
-set(SOURCES bounce.cpp App.cpp loadShaders.cpp)
+set(SOURCES bounce.cpp App.cpp ShaderManager.cpp)
 add_executable(
     ${EXENAME}
     #MACOSX_BUNDLE 
@@ -27,3 +27,9 @@ endif (SDL_FOUND)
 
 
 target_link_libraries(${EXENAME} bounceui)
+
+add_custom_target(copy_shaders ALL)
+
+add_custom_command(TARGET copy_shaders POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E 
+        copy_directory "${PROJECT_SOURCE_DIR}/bounce/shaders" "shaders")

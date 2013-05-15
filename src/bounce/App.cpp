@@ -6,6 +6,9 @@
  */
 
 #include "App.h"
+#include "ShaderManager.h"
+
+
 
 namespace bounce {
 
@@ -40,6 +43,7 @@ int App::onExecute() {
 }
 
 bool App::onInit() {
+
 	int width = 640;
 	int height = 480;
 
@@ -78,6 +82,12 @@ bool App::onInit() {
 	glGenVertexArrays(1, &vertexArrayId);
 	glBindVertexArray(vertexArrayId);
 
+	ShaderManager shaderManager;
+
+	programId = shaderManager.loadShaders("shaders/triangleShader.vert.glsl",
+			"shaders/triangleShader.frag.glsl");
+
+
 	return true;
 }
 
@@ -97,7 +107,7 @@ static const GLfloat vertexBufferData[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0
 void App::onRender() {
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
+	glUseProgram(programId);
 
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
