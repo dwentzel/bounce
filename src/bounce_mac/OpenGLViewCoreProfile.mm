@@ -1,60 +1,7 @@
-#import <Cocoa/Cocoa.h>
-#import <OpenGL/OpenGL.h>
 #import "OpenGLViewCoreProfile.h"
 
 @implementation OpenGLViewCoreProfile
 
-/*
-// This is the callback function for the display link.
-static CVReturn OpenGLViewCoreProfileCallBack(CVDisplayLinkRef displayLink,
-                                              const CVTimeStamp* now,
-                                              const CVTimeStamp* outputTime,
-                                              CVOptionFlags flagsIn,
-                                              CVOptionFlags *flagsOut,
-                                              void *displayLinkContext) {
-    @autoreleasepool {
-        OpenGLViewCoreProfile *view = (__bridge OpenGLViewCoreProfile*)displayLinkContext;
-        [view.openGLContext makeCurrentContext];
-        CGLLockContext(view.openGLContext.CGLContextObj); // This is needed because this isn't running on the main thread.
-        [view drawRect:view.bounds]; // Draw the scene. This doesn't need to be in the drawRect method.
-        CGLUnlockContext(view.openGLContext.CGLContextObj);
-        CGLFlushDrawable(view.openGLContext.CGLContextObj); // This does glFlush() for you.
-        
-        return kCVReturnSuccess;
-    }
-}
-*/
-
-- (void)reshape {
-    [super reshape];
-    CGLLockContext(self.openGLContext.CGLContextObj);
-    
-    //... // standard opengl reshape stuff goes here.
-    
-    CGLUnlockContext(self.openGLContext.CGLContextObj);
-}
-
-- (void)prepareOpenGL {
-    [super prepareOpenGL];
-    
-    [self.openGLContext makeCurrentContext];
-    GLint swapInt = 1;
-    [self.openGLContext setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
-    
-    CGLLockContext(self.openGLContext.CGLContextObj);
-    
-    //... // all opengl prep goes here
-    
-    CGLUnlockContext(self.openGLContext.CGLContextObj);
-    
-    // Below creates the display link and tell it what function to call when it needs to draw a frame.
-    CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
-    CVDisplayLinkSetOutputCallback(self.displayLink, &OpenGLViewCoreProfileCallBack, (__bridge void *)self);
-    CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(self.displayLink,
-                                                      self.openGLContext.CGLContextObj,
-                                                      self.pixelFormat.CGLPixelFormatObj);
-    CVDisplayLinkStart(self.displayLink);
-}
 
 
 @end

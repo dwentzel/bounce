@@ -42,9 +42,9 @@ int App::onExecute() {
 
 bool App::onInit() {
 
-	WindowProperties properties;
-	properties.width = 640;
-	properties.height = 480;
+	//WindowProperties properties;
+	//properties.width = 640;
+	//properties.height = 480;
 
 	//window = new SDLWindow();
 	//window->init(properties);
@@ -99,11 +99,16 @@ void App::onRender() {
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDisableVertexAttribArray(0);
 
+	onFlush();
 	//SDL_GL_SwapBuffers();
 }
 
 void App::onCleanup() {
 	//SDL_Quit();
+}
+
+void App::onFlush() {
+	flush(context);
 }
 
 } /* namespace bounce */

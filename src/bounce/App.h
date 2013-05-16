@@ -21,9 +21,13 @@ private:
 	GLuint programId;
 	const EventManager& eventManager;
 
+	void (*flush)(void*);
+	void* context;
 public:
-	App(const EventManager& eventManager) :
-		programId(0), eventManager(eventManager) {}
+	App(const EventManager& eventManager, void (*flush)(void*), void* context) :
+		running(true), programId(0), eventManager(eventManager), context(context)  {
+				this->flush = flush;
+		}
 	virtual ~App();
 
 	int onExecute();
@@ -33,6 +37,8 @@ public:
 	void onLoop();
 	void onRender();
 	void onCleanup();
+
+	void onFlush();
 };
 
 } /* namespace bounce */
