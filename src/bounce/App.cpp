@@ -8,17 +8,15 @@
 #include "App.h"
 #include "ShaderManager.h"
 
-
-
 namespace bounce {
 
-App::App() {
-	running = true;
-	surface = 0;
-}
+//App::App(const EventManager& eventManager) {
+//	running = true;
+//	this->eventManager = eventManager;
+//}
 
 App::~App() {
-
+	//delete window;
 }
 
 int App::onExecute() {
@@ -26,11 +24,11 @@ int App::onExecute() {
 		return -1;
 	}
 
-	SDL_Event event;
+	Event* event = 0;
 
 	while (running) {
-		while (SDL_PollEvent(&event)) {
-			onEvent(&event);
+		while ((event = eventManager.pollEvent()) != 0) {
+			onEvent(event);
 		}
 
 		onLoop();
@@ -44,33 +42,12 @@ int App::onExecute() {
 
 bool App::onInit() {
 
-	int width = 640;
-	int height = 480;
+	WindowProperties properties;
+	properties.width = 640;
+	properties.height = 480;
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		return false;
-	}
-
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
-
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 8);
-
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
-
-	if ((surface = SDL_SetVideoMode(width, height, 32,
-			SDL_HWSURFACE | SDL_GL_DOUBLEBUFFER | SDL_OPENGL)) == 0) {
-		return false;
-	}
+	//window = new SDLWindow();
+	//window->init(properties);
 
 	glewExperimental = true; // Needed in core profile
 	if (glewInit() != GLEW_OK) {
@@ -91,8 +68,8 @@ bool App::onInit() {
 	return true;
 }
 
-void App::onEvent(SDL_Event* event) {
-	if (event->type == SDL_QUIT) {
+void App::onEvent(Event* event) {
+	if (event->type == Event::EventType::Quit) {
 		running = false;
 	}
 }
@@ -122,11 +99,11 @@ void App::onRender() {
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDisableVertexAttribArray(0);
 
-	SDL_GL_SwapBuffers();
+	//SDL_GL_SwapBuffers();
 }
 
 void App::onCleanup() {
-	SDL_Quit();
+	//SDL_Quit();
 }
 
 } /* namespace bounce */

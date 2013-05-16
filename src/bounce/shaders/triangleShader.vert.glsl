@@ -1,6 +1,6 @@
-#version 120
+#version 150 core
 //layout(location = 0) in vec3 vertexPosition_modelspace;
-attribute vec3 vertexPosition_modelspace;
+in vec3 vertexPosition_modelspace;
 
 void main() {
     gl_Position.xyz = vertexPosition_modelspace;

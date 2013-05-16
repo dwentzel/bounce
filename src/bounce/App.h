@@ -8,8 +8,9 @@
 #ifndef APP_H_
 #define APP_H_
 
-#include <SDL/SDL.h>
 #include "bounceGL.h"
+#include "Event.h"
+#include "Window.h"
 
 
 namespace bounce {
@@ -17,17 +18,18 @@ namespace bounce {
 class App {
 private:
 	bool running;
-	SDL_Surface* surface;
 	GLuint programId;
+	const EventManager& eventManager;
 
 public:
-	App();
+	App(const EventManager& eventManager) :
+		programId(0), eventManager(eventManager) {}
 	virtual ~App();
 
 	int onExecute();
 
 	bool onInit();
-	void onEvent(SDL_Event* event);
+	void onEvent(Event* event);
 	void onLoop();
 	void onRender();
 	void onCleanup();
