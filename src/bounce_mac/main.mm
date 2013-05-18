@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
                                                   action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
     [appMenu addItem:quitMenuItem];
     [appMenuItem setSubmenu:appMenu];
-    id window = [[[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 200, 200)
+    id window = [[[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 640, 480)
                                              styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO]
                  autorelease];
     [window cascadeTopLeftFromPoint:NSMakePoint(20,20)];

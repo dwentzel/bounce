@@ -38,11 +38,19 @@ void draw(void* context) {
 }
 
 - (void)draw {
-    NSLog(@"Drawing...");
+    //NSLog(@"Drawing...");
     
     //[self.openGLContext makeCurrentContext];
     
     [self.openGLContext flushBuffer];
+}
+
+- (void)runBounce {
+    [self.openGLContext makeCurrentContext];
+    
+    bounce::EntryPoint entryPoint;
+    bounce_mac::MacEventManager eventManager;
+    entryPoint.run(eventManager, &draw, self);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -53,6 +61,7 @@ void draw(void* context) {
         NSOpenGLPFAAlphaSize,     8,
         NSOpenGLPFAAccelerated,
         NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFADepthSize, 32,
         0
     };
     
@@ -60,11 +69,13 @@ void draw(void* context) {
     
     self.openGLContext = [[NSOpenGLContext alloc] initWithFormat: pixelFormat shareContext: nil];
     [self.openGLContext setView:[self.window contentView]];
-    [self.openGLContext makeCurrentContext];
+    //[self.openGLContext makeCurrentContext];
     
-    bounce::EntryPoint entryPoint;
-    bounce_mac::MacEventManager eventManager;
-    entryPoint.run(eventManager, &draw, self);
+    [NSThread detachNewThreadSelector:@selector(runBounce) toTarget:self withObject:nil];
+    //bounce::EntryPoint entryPoint;
+    //bounce_mac::MacEventManager eventManager;
+    //entryPoint.run(eventManager, &draw, self);
+    
     
 //    [NSTimer
 //     scheduledTimerWithTimeInterval:.1
