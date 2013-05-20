@@ -13,11 +13,15 @@
 namespace bounce_mac {
 
 class MacEventManager : public bounce::EventManager {
+private:
+	bounce::EventQueue eventQueue;
 public:
 	MacEventManager();
 	virtual ~MacEventManager();
 
-	virtual bounce::Event* pollEvent() const;
+	virtual bounce::Event* pollEvent();
+
+	void queueEvent(bounce::Event* event);
 };
 
 } /* namespace bounce */

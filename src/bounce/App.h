@@ -19,12 +19,12 @@ class App {
 private:
 	bool running;
 	GLuint programId;
-	const EventManager& eventManager;
+	EventManager& eventManager;
 
 	void (*flush)(void*);
 	void* context;
 public:
-	App(const EventManager& eventManager, void (*flush)(void*), void* context) :
+	App(EventManager& eventManager, void (*flush)(void*), void* context) :
 		running(true), programId(0), eventManager(eventManager), context(context)  {
 				this->flush = flush;
 		}

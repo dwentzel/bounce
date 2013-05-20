@@ -14,7 +14,59 @@
 #include "App.h"
 #include "ShaderManager.h"
 
+#include "LockFreeQueue.h"
+
 namespace bounce {
+
+static const GLfloat vertexBufferData[] = {
+		-1.0f, -1.0f, -1.0f, 1.0f,
+		-1.0f, -1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f, 1.0f,
+
+		-1.0f, -1.0f, -1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, -1.0f, 1.0f,
+
+		-1.0f, -1.0f, -1.0f, 1.0f,
+		-1.0f, 1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, -1.0f, 1.0f,
+
+		-1.0f, 1.0f, -1.0f, 1.0f,
+		1.0f, 1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, -1.0f, 1.0f,
+
+		1.0f, -1.0f, -1.0f, 1.0f,
+		1.0f, 1.0f, -1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f,
+
+		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, -1.0f, 1.0f,
+
+		1.0f, 1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, -1.0, 1.0f, 1.0f,
+
+		-1.0f, -1.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f, 1.0f,
+
+		1.0f, -1.0f, 1.0f, 1.0f,
+		-1.0f, -1.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, -1.0f, 1.0f,
+
+		1.0f, -1.0f, -1.0f, 1.0f,
+		-1.0f, -1.0f, 1.0f, 1.0f,
+		-1.0f, -1.0f, -1.0f, 1.0f,
+
+		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, -1.0f, 1.0f,
+		-1.0f, 1.0f, -1.0f, 1.0f,
+
+		-1.0f, 1.0f, -1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f
+};
 
 //App::App(const EventManager& eventManager) {
 //	running = true;
@@ -34,7 +86,10 @@ int App::onExecute() {
 
 	while (running) {
 		while ((event = eventManager.pollEvent()) != 0) {
+			std::cout << "Event" << std::endl;
+
 			onEvent(event);
+
 		}
 
 		onLoop();
@@ -115,8 +170,12 @@ bool App::onInit() {
 }
 
 void App::onEvent(Event* event) {
-	if (event->type == Event::EventType::Quit) {
+	if (event->getType() == EventType::Quit) {
 		running = false;
+	}
+
+	if (event->getType() == EventType::Keydown) {
+
 	}
 }
 
@@ -124,55 +183,7 @@ void App::onLoop() {
 
 }
 
-static const GLfloat vertexBufferData[] = {
-		-1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
 
-		-1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f, 1.0f,
-
-		-1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
-
-		-1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
-
-		1.0f, -1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
-
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
-
-		1.0f, 1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, -1.0, 1.0f, 1.0f,
-
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
-
-		1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
-
-		1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f, 1.0f,
-
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f, 1.0f,
-
-		-1.0f, 1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f
-};
 
 
 

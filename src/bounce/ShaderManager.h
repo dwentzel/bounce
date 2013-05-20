@@ -2,6 +2,7 @@
 #define SHADERMANAGER_H_
 
 #include <string>
+
 namespace bounce {
 
 class ShaderManager {

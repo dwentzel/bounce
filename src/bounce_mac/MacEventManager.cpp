@@ -18,9 +18,18 @@ MacEventManager::~MacEventManager() {
 	// TODO Auto-generated destructor stub
 }
 
-bounce::Event* MacEventManager::pollEvent() const {
+bounce::Event* MacEventManager::pollEvent() {
 
-	return 0;
+	bounce::Event* event;
+	if (eventQueue.consume(event))
+
+		return event;
+	else
+		return 0;
+}
+
+void MacEventManager::queueEvent(bounce::Event* event) {
+	eventQueue.produce(event);
 }
 
 } /* namespace bounce */

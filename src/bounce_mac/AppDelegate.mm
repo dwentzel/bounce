@@ -1,6 +1,5 @@
 #import "AppDelegate.h"
-#import "OpenGLViewCoreProfile.h"
-
+#import "GameView.h"
 #import "bounce/EntryPoint.h"
 #import "MacEventManager.h"
 
@@ -12,6 +11,7 @@
 
 @synthesize window;
 @synthesize openGLContext;
+@synthesize eventManager;
 
 //@synthesize window = _window;
 //@synthesize view = _view;
@@ -49,16 +49,16 @@ void draw(void* context) {
     [self.openGLContext makeCurrentContext];
     
     bounce::EntryPoint entryPoint;
-    bounce_mac::MacEventManager eventManager;
-    entryPoint.run(eventManager, &draw, self);
+    
+    entryPoint.run(*self.eventManager, &draw, self);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     NSOpenGLPixelFormatAttribute attr[] = {
         NSOpenGLPFAOpenGLProfile,
         NSOpenGLProfileVersion3_2Core,
-        NSOpenGLPFAColorSize,     24,
-        NSOpenGLPFAAlphaSize,     8,
+        NSOpenGLPFAColorSize, 24,
+        NSOpenGLPFAAlphaSize, 8,
         NSOpenGLPFAAccelerated,
         NSOpenGLPFADoubleBuffer,
         NSOpenGLPFADepthSize, 32,
@@ -68,7 +68,17 @@ void draw(void* context) {
     NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attr];
     
     self.openGLContext = [[NSOpenGLContext alloc] initWithFormat: pixelFormat shareContext: nil];
-    [self.openGLContext setView:[self.window contentView]];
+    
+    self.eventManager = new bounce_mac::MacEventManager;
+    
+    GameView* gameView = [[GameView alloc] init];
+    
+    gameView.eventManager = self.eventManager;
+    
+    //[self.openGLContext setView:[self.window contentView]];
+    [self.window setContentView: gameView];
+    [self.openGLContext setView: gameView];
+    
     //[self.openGLContext makeCurrentContext];
     
     [NSThread detachNewThreadSelector:@selector(runBounce) toTarget:self withObject:nil];

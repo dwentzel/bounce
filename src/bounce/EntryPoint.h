@@ -17,7 +17,7 @@ public:
 	EntryPoint();
 	virtual ~EntryPoint();
 
-	int run(const EventManager& eventManager, void (*flush)(void*), void* context);
+	int run(EventManager& eventManager, void (*flush)(void*), void* context);
 };
 
 } /* namespace bounce */

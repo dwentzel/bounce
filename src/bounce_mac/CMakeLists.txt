@@ -4,7 +4,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ObjC++")
 find_library(COCOA_LIBRARY Cocoa)
 message(${COCOA_LIBRARY})
 
-add_executable(${EXENAME} main.mm AppDelegate.mm OpenGLViewCoreProfile.mm
+add_executable(${EXENAME} main.mm AppDelegate.mm GameView.mm
     MacEventManager.cpp)
 
 find_package(sdl REQUIRED)

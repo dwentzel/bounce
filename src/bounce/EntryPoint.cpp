@@ -19,7 +19,7 @@ EntryPoint::~EntryPoint() {
 	// TODO Auto-generated destructor stub
 }
 
-int EntryPoint::run(const EventManager& eventManager, void (*flush)(void*), void* context) {
+int EntryPoint::run(EventManager& eventManager, void (*flush)(void*), void* context) {
 	bounce::App app(eventManager, flush, context);
 
 	return app.onExecute();
