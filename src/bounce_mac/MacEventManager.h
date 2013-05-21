@@ -8,13 +8,13 @@
 #ifndef MACEVENTMANAGER_H_
 #define MACEVENTMANAGER_H_
 
-#include "bounce/Event.h"
+#include "bounce/event/Event.h"
 
 namespace bounce_mac {
 
 class MacEventManager : public bounce::EventManager {
 private:
-	bounce::EventQueue eventQueue;
+	bounce::EventQueue* eventQueue;
 public:
 	MacEventManager();
 	virtual ~MacEventManager();

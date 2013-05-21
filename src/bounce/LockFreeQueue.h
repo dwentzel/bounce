@@ -9,25 +9,30 @@
 #define LOCKFREEQUEUE_H_
 
 #include <atomic>
+#include <iostream>
 
 namespace bounce {
 
-template <typename T>
+template<typename T>
 class LockFreeQueue {
 private:
 	struct Node {
-		Node(T val) : value(val), next(nullptr) {}
+		Node(T val) :
+				value(val), next(nullptr) {
+		}
 		T value;
 		Node* next;
 	};
+
 	Node* first;
 	std::atomic<Node*> divider;
 	std::atomic<Node*> last;
 
 public:
 	LockFreeQueue() {
-		first = divider = last =
-				new Node(T());
+		first = new Node(T());
+		last = first;
+		divider = first;
 	}
 
 	~LockFreeQueue() {
@@ -38,29 +43,37 @@ public:
 		}
 	}
 
-	void produce(const T& item) {
-		Node* newNode = new Node(item);
-		last.load()->next = newNode;
-		last.store(newNode);
-
-		while (first != divider) {
-			Node* tmp = first;
-			first = first->next;
-			delete tmp;
-		}
-	}
-
-	bool consume(T& item) {
-		Node* dividerNode = divider.load();
-
-		if (dividerNode != last.load()) {
-			item = dividerNode->next->value;
-			divider.store(dividerNode->next);
-			return true;
-		}
-		return false;
-	}
+	void produce(const T& item);
+	bool consume(T& item);
 };
+
+template<typename T>
+void LockFreeQueue<T>::produce(const T& item) {
+	//std::cout << "produce" << std::endl;
+
+	Node* newNode = new Node(item);
+	last.load()->next = newNode;
+	last = newNode;
+
+	while (first != divider) {
+		Node* tmp = first;
+		first = first->next;
+		delete tmp;
+	}
+}
+
+template<typename T>
+bool LockFreeQueue<T>::consume(T& item) {
+	Node* dividerNode = divider.load();
+
+	if (dividerNode != last) {
+		item = dividerNode->next->value;
+		divider.store(dividerNode->next);
+		return true;
+	}
+
+	return false;
+}
 
 } /* namespace bounce */
 #endif /* LOCKFREEQUEUE_H_ */

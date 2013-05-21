@@ -9,7 +9,7 @@
 #define APP_H_
 
 #include "bounceGL.h"
-#include "Event.h"
+#include "event/Event.h"
 #include "Window.h"
 
 

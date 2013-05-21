@@ -5,31 +5,33 @@
  *      Author: daniel
  */
 
+#include <iostream>
 #include "MacEventManager.h"
 
 namespace bounce_mac {
 
 MacEventManager::MacEventManager() {
-	// TODO Auto-generated constructor stub
+	eventQueue = new bounce::EventQueue();
 
 }
 
 MacEventManager::~MacEventManager() {
-	// TODO Auto-generated destructor stub
+	delete eventQueue;
 }
 
 bounce::Event* MacEventManager::pollEvent() {
 
-	bounce::Event* event;
-	if (eventQueue.consume(event))
+	//std::cout << "poll" << std::endl;
 
+	bounce::Event* event;
+	if (eventQueue->consume(event))
 		return event;
 	else
 		return 0;
 }
 
 void MacEventManager::queueEvent(bounce::Event* event) {
-	eventQueue.produce(event);
+	eventQueue->produce(event);
 }
 
 } /* namespace bounce */

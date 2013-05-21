@@ -18,55 +18,40 @@
 
 namespace bounce {
 
-static const GLfloat vertexBufferData[] = {
-		-1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
+static const GLfloat vertexBufferData[] = { -1.0f, -1.0f, -1.0f, 1.0f, -1.0f,
+		-1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f,
 
-		-1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f, 1.0f,
+		-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f,
+		1.0f,
 
-		-1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
+		-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f,
+		1.0f,
 
-		-1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
+		-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f,
+		1.0f,
 
-		1.0f, -1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f,
 
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f,
+		1.0f,
 
-		1.0f, 1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, -1.0, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0, 1.0f, 1.0f,
 
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
+		-1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f,
+		1.0f,
 
-		1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f,
+		1.0f,
 
-		1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f,
+		1.0f,
 
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f,
+		1.0f,
 
-		-1.0f, 1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f
-};
+		-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f };
 
 //App::App(const EventManager& eventManager) {
 //	running = true;
@@ -77,20 +62,57 @@ App::~App() {
 	//delete window;
 }
 
+GLuint matrixId;
+GLfloat* colorBufferData;
+
+glm::vec3 position = glm::vec3(0, 0, 5);
+float horizontalAngle = 3.14f;
+float verticalAngle = 0.0f;
+float initialFoV = 45.0f;
+float speed = 3.0f;
+float mouseSpeed = 0.005f;
+
+int xpos, ypos;
+
+GLfloat* createColorData() {
+	//std::cout << "Create color data";
+	GLfloat* colorDataArray = new GLfloat[12 * 3 * 3];
+
+	int count = 18;
+
+	for (int i = 0; i < 6 * count; i++) {
+		GLfloat val = ((float) rand() / (RAND_MAX));
+		for (int j = 0; j < count; j++) {
+			colorDataArray[i * count + j] = val;
+		}
+	}
+
+	return colorDataArray;
+}
+;
+
 int App::onExecute() {
 	if (onInit() == false) {
 		return -1;
 	}
 
 	Event* event = 0;
+	std::cout << &eventManager << std::endl;
 
 	while (running) {
-		while ((event = eventManager.pollEvent()) != 0) {
-			std::cout << "Event" << std::endl;
 
-			onEvent(event);
+		//std::cout << "running" << std::endl;
+		event = eventManager.pollEvent();
 
+		if (event != nullptr) {
+			std::cout << event << std::endl;
 		}
+
+		while (event != nullptr) {
+			//std::cout << "Event" << std::endl;
+				onEvent(event);
+				event = eventManager.pollEvent();
+			}
 
 		onLoop();
 		onRender();
@@ -101,50 +123,10 @@ int App::onExecute() {
 	return 0;
 }
 
-GLuint matrixId;
-
-GLfloat* colorBufferData;
-
-GLfloat* createColorData() {
-	//std::cout << "Create color data";
-
-
-	GLfloat* colorDataArray = new GLfloat[12 * 3 * 3];
-
-	int count = 18;
-
-	for (int i = 0; i < 6 * count; i++) {
-
-		GLfloat val = ((float) rand() / (RAND_MAX));
-		for (int j = 0; j < count; j++) {
-			colorDataArray[i * count + j] = val;
-		}
-
-		//colorDataArray[i * count + 0] = val;
-		//colorDataArray[i * count + 1] = val;
-		//colorDataArray[i * count + 2] = val;
-		//colorDataArray[i * count + 3] = val;
-		//colorDataArray[i * count + 4] = val;
-		//colorDataArray[i * count + 5] = val;
-		//colorDataArray[i] = 1.0f;
-	}
-
-	return colorDataArray;
-};
-
 bool App::onInit() {
 	srand(time(0));
 
 	colorBufferData = createColorData();
-//	for (int i = 0; i < 12 * 3 * 3; i++) {
-//		std::cout << colorBufferData[i] << std::endl;
-//	}
-	//WindowProperties properties;
-	//properties.width = 640;
-	//properties.height = 480;
-
-	//window = new SDLWindow();
-	//window->init(properties);
 
 	glewExperimental = true; // Needed in core profile
 	if (glewInit() != GLEW_OK) {
@@ -175,6 +157,19 @@ void App::onEvent(Event* event) {
 	}
 
 	if (event->getType() == EventType::Keydown) {
+		KeydownEvent* keydownEvent = static_cast<KeydownEvent*>(event);
+
+		Key key = keydownEvent->getKeysym().sym;
+
+		if (key == Key::A) {
+			//std::cout << "A" << std::endl;
+		} else if (key == Key::D) {
+			//std::cout << "D" << std::endl;
+		} else if (key == Key::W) {
+
+		} else if (key == Key::S) {
+
+		}
 
 	}
 }
@@ -183,17 +178,11 @@ void App::onLoop() {
 
 }
 
-
-
-
-
 void App::onRender() {
-
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(programId);
-
 
 	glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
@@ -212,15 +201,11 @@ void App::onRender() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexBufferData), vertexBufferData,
 			GL_STATIC_DRAW);
 
-
-
 	//for (int i = 0; i < 12 * 3 * 3; i++) {
 	//	std::cout << colorBufferData[i] << std::endl;
 	//}
 
 	//throw "error";
-
-
 
 	GLuint colorBuffer;
 	glGenBuffers(1, &colorBuffer);
@@ -231,7 +216,7 @@ void App::onRender() {
 	//delete colorBufferData;
 
 	const int vertexArray = 0;
-    const int colorArray = 1;
+	const int colorArray = 1;
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(vertexArray, 4, GL_FLOAT, GL_FALSE, 0, (void*) 0);
@@ -245,7 +230,6 @@ void App::onRender() {
 
 	glDisableVertexAttribArray(vertexArray);
 	glDisableVertexAttribArray(colorArray);
-
 
 	//delete colorBufferData;
 //	model = glm::scale(2.5f, 1.5f, 1.5f);
