@@ -45,11 +45,11 @@ GLuint ShaderManager::loadShaders(const std::string& vertexFilePath,
 
 	std::string vertexShaderCode;
 	vertexShaderCode = loadShaderCode(vertexFilePath);
-	std::cout << "vsc: " << vertexShaderCode << std::endl;
+	//std::cout << "vsc: " << vertexShaderCode << std::endl;
 
 	std::string fragmentShaderCode;
 	fragmentShaderCode = loadShaderCode(fragmentFilePath);
-	std::cout << "fsc: " << fragmentShaderCode << std::endl;
+	//std::cout << "fsc: " << fragmentShaderCode << std::endl;
 
 	std::cout << "Compiling shader: " << vertexFilePath << std::endl;
 	compileShader(vertexShaderId, vertexShaderCode);

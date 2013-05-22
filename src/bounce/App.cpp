@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
@@ -17,6 +19,9 @@
 #include "LockFreeQueue.h"
 
 namespace bounce {
+
+const float PI = 3.14159265358979f;
+const float PI2 = PI * 2.0f;
 
 static const GLfloat vertexBufferData[] = { -1.0f, -1.0f, -1.0f, 1.0f, -1.0f,
 		-1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f,
@@ -65,12 +70,12 @@ App::~App() {
 GLuint matrixId;
 GLfloat* colorBufferData;
 
-glm::vec3 position = glm::vec3(0, 0, 5);
-float horizontalAngle = 3.14f;
+glm::vec3 position = glm::vec3(0, 0, 15);
+float horizontalAngle = 0.0f;
 float verticalAngle = 0.0f;
 float initialFoV = 45.0f;
 float speed = 3.0f;
-float mouseSpeed = 0.005f;
+float mouseSpeed = 0.5f;
 
 int xpos, ypos;
 
@@ -78,14 +83,48 @@ GLfloat* createColorData() {
 	//std::cout << "Create color data";
 	GLfloat* colorDataArray = new GLfloat[12 * 3 * 3];
 
-	int count = 18;
+	int sides = 6;
+	int verticesPerSide = 6;
+	int colorsPerVertex = 3;
+	int colorsPerSide = verticesPerSide * colorsPerVertex;
 
-	for (int i = 0; i < 6 * count; i++) {
-		GLfloat val = ((float) rand() / (RAND_MAX));
-		for (int j = 0; j < count; j++) {
-			colorDataArray[i * count + j] = val;
+	for (int i = 0; i < sides; i++) {
+		GLfloat val = 0.5f; //((float) rand() / (RAND_MAX));
+
+		for (int j = 0; j < verticesPerSide; j++) {
+			int index = i * colorsPerSide + j * colorsPerVertex;
+			if (i == 1) {
+				colorDataArray[index] = 1.0f;
+				colorDataArray[index + 1] = 1.0f;
+			}
+			if (i % 2 == 0) {
+				colorDataArray[index] = 1.0f;
+			}
+			if (i % 3 == 0) {
+				colorDataArray[index + 1] = 1.0f;
+			}
+			if (i % 4 == 0 || i % 5 == 0) {
+				colorDataArray[index + 2] = 1.0f;
+			}
+
+//			else {
+//				colorDataArray[index] = val;
+//				colorDataArray[index + 1] = val;
+//				colorDataArray[index + 2] = val;
+//			}
+
+//			std::cout << "i: " << i << " j: " << j << std::endl;
+//			std::cout << index << " ";
+//			std::cout << index + 1 << " ";
+//			std::cout << index + 2 << " ";
+//			std::cout << std::endl << std::endl;
+
 		}
 	}
+
+//	for (int i = 0; i < 108; i++) {
+//		std::cout << colorDataArray[i] << std::endl;
+//	}
 
 	return colorDataArray;
 }
@@ -97,11 +136,8 @@ int App::onExecute() {
 	}
 
 	Event* event = 0;
-	std::cout << &eventManager << std::endl;
 
 	while (running) {
-
-		//std::cout << "running" << std::endl;
 		event = eventManager.pollEvent();
 
 		if (event != nullptr) {
@@ -109,10 +145,9 @@ int App::onExecute() {
 		}
 
 		while (event != nullptr) {
-			//std::cout << "Event" << std::endl;
-				onEvent(event);
-				event = eventManager.pollEvent();
-			}
+			onEvent(event);
+			event = eventManager.pollEvent();
+		}
 
 		onLoop();
 		onRender();
@@ -162,15 +197,29 @@ void App::onEvent(Event* event) {
 		Key key = keydownEvent->getKeysym().sym;
 
 		if (key == Key::A) {
-			//std::cout << "A" << std::endl;
+			horizontalAngle -= mouseSpeed;
 		} else if (key == Key::D) {
-			//std::cout << "D" << std::endl;
+			horizontalAngle += mouseSpeed;
 		} else if (key == Key::W) {
-
+			verticalAngle -= mouseSpeed;
 		} else if (key == Key::S) {
-
+			verticalAngle += mouseSpeed;
 		}
 
+		if (verticalAngle > PI2) {
+			verticalAngle -= PI2;
+		} else if (verticalAngle < 0.0f) {
+			verticalAngle += PI2;
+		}
+
+		if (horizontalAngle > PI2) {
+			horizontalAngle -= PI2;
+		} else if (horizontalAngle < 0.0f) {
+			horizontalAngle += PI2;
+		}
+
+		std::cout << "horiz: " << horizontalAngle << " vert: " << verticalAngle
+				<< std::endl;
 	}
 }
 
@@ -184,12 +233,20 @@ void App::onRender() {
 
 	glUseProgram(programId);
 
-	glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	glm::vec3 direction(cos(verticalAngle) * sin(horizontalAngle),
+			sin(verticalAngle), cos(verticalAngle) * cos(verticalAngle));
 
-	glm::mat4 view = glm::lookAt(glm::vec3(4, 3, 3), glm::vec3(0, 0, 0),
+	glm::vec3 position(4, 3, 3);
+	float fov = initialFoV;
+
+	glm::mat4 projection = glm::perspective(fov, 4.0f / 3.0f, 0.1f, 100.0f);
+
+	glm::mat4 view = glm::lookAt(position, glm::vec3(0, 0, 0),
 			glm::vec3(0, 1, 0));
 
-	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 model = glm::rotate(glm::mat4(1.0f), horizontalAngle,
+			glm::vec3(0, 1, 0))
+			* glm::rotate(glm::mat4(1.0f), verticalAngle, glm::vec3(1, 0, 0));
 
 	glm::mat4 mvp = projection * view * model;
 
@@ -231,25 +288,7 @@ void App::onRender() {
 	glDisableVertexAttribArray(vertexArray);
 	glDisableVertexAttribArray(colorArray);
 
-	//delete colorBufferData;
-//	model = glm::scale(2.5f, 1.5f, 1.5f);
-//	mvp = projection * view * model;
-//
-//	glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
-//
-//	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexBufferData2), vertexBufferData2,
-//			GL_STATIC_DRAW);
-//
-//	glEnableVertexAttribArray(0);
-//	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-//	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*) 0);
-//
-//	glDrawArrays(GL_TRIANGLES, 0, 4);
-//	glDisableVertexAttribArray(0);
-
 	onFlush();
-	//SDL_GL_SwapBuffers();
 }
 
 void App::onCleanup() {

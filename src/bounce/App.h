@@ -10,8 +10,6 @@
 
 #include "bounceGL.h"
 #include "event/Event.h"
-#include "Window.h"
-
 
 namespace bounce {
 
@@ -23,6 +21,7 @@ private:
 
 	void (*flush)(void*);
 	void* context;
+
 public:
 	App(EventManager& eventManager, void (*flush)(void*), void* context) :
 		running(true), programId(0), eventManager(eventManager), context(context)  {
