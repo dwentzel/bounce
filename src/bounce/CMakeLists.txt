@@ -1,5 +1,5 @@
 set(EXENAME bounce)
-set(SOURCES EntryPoint.cpp App.cpp ShaderManager.cpp)
+set(SOURCES EntryPoint.cpp App.cpp ShaderManager.cpp LogManager.cpp)
 add_library(
     ${EXENAME}
     SHARED

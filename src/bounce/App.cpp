@@ -5,7 +5,6 @@
  *      Author: daniel
  */
 
-#include <iostream>
 #include <cstdlib>
 #include <ctime>
 
@@ -17,6 +16,8 @@
 #include "ShaderManager.h"
 
 #include "LockFreeQueue.h"
+#include "log.h"
+#include "DefaultLogger.h"
 
 namespace bounce {
 
@@ -130,35 +131,12 @@ GLfloat* createColorData() {
 }
 ;
 
-int App::onExecute() {
-	if (onInit() == false) {
-		return -1;
-	}
 
-	Event* event = 0;
-
-	while (running) {
-		event = eventManager.pollEvent();
-
-		if (event != nullptr) {
-			std::cout << event << std::endl;
-		}
-
-		while (event != nullptr) {
-			onEvent(event);
-			event = eventManager.pollEvent();
-		}
-
-		onLoop();
-		onRender();
-	}
-
-	onCleanup();
-
-	return 0;
-}
 
 bool App::onInit() {
+	Logger* logger = new DefaultLogger();
+	LogManager::getInstance().setLogger(logger);
+
 	srand(time(0));
 
 	colorBufferData = createColorData();
@@ -184,6 +162,36 @@ bool App::onInit() {
 
 	matrixId = glGetUniformLocation(programId, "mvp");
 	return true;
+}
+
+int App::onExecute() {
+	if (onInit() == false) {
+		return -1;
+	}
+
+	LOG(LogLevel::Debug) << "testing" << std::flush;
+
+	Event* event = 0;
+
+	while (running) {
+		event = eventManager.pollEvent();
+
+		if (event != nullptr) {
+			std::cout << event << std::endl;
+		}
+
+		while (event != nullptr) {
+			onEvent(event);
+			event = eventManager.pollEvent();
+		}
+
+		onLoop();
+		onRender();
+	}
+
+	onCleanup();
+
+	return 0;
 }
 
 void App::onEvent(Event* event) {
