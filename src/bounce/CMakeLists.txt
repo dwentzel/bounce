@@ -5,14 +5,16 @@ add_library(
     SHARED
     ${SOURCES}
 )
+
 find_package(glew REQUIRED)
 if (GLEW_FOUND)
     include_directories(${GLEW_INCLUDE_DIR})
     target_link_libraries(${EXENAME} ${GLEW_LIBRARIES})
 endif (GLEW_FOUND)
+
 find_package(OpenGL REQUIRED)
 if (OPENGL_FOUND)
-    message(${OPENGL_INCLUDE_DIR})
+#    message(${OPENGL_INCLUDE_DIR})
     include_directories(${OPENGL_INCLUDE_DIR})
     target_link_libraries(${EXENAME} ${OPENGL_LIBRARIES})
 endif (OPENGL_FOUND)

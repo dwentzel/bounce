@@ -20,13 +20,15 @@
 }
 
 - (void)keyDown:(NSEvent *) event {
-    NSLog(@"Pressed key");
+    //NSLog(@"Pressed key");
     
     if (event.type == NSKeyDown)
     {
         unsigned int quals = event.modifierFlags;
         NSString* str = event.characters;
         NSString* strWithout = event.charactersIgnoringModifiers;
+        
+        //NSLog(str);
         
         unichar ch = str.length ? [str characterAtIndex: 0] : 0;
         unichar without = strWithout.length ? [strWithout characterAtIndex: 0] : 0;

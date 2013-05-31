@@ -10,6 +10,7 @@
 
 #include "bounceGL.h"
 #include "event/Event.h"
+#include "Timer.h"
 
 namespace bounce {
 
@@ -21,6 +22,7 @@ private:
 
 	void (*flush)(void*);
 	void* context;
+	Timer timer;
 
 public:
 	App(EventManager& eventManager, void (*flush)(void*), void* context) :

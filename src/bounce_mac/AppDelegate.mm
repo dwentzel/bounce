@@ -1,6 +1,8 @@
 #import "AppDelegate.h"
 #import "GameView.h"
 #import "bounce/EntryPoint.h"
+#import "bounce/log.h"
+#import "bounce/DefaultLogger.h"
 #import "MacEventManager.h"
 
 @interface MyApplicationDelegate()
@@ -68,6 +70,12 @@ void draw(void* context) {
     NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attr];
     
     self.openGLContext = [[NSOpenGLContext alloc] initWithFormat: pixelFormat shareContext: nil];
+    
+    GLint one = 0;
+    [self.openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
+    
+    bounce::Logger* logger = new bounce::DefaultLogger();
+    bounce::LogManager::getInstance().setLogger(logger);
     
     self.eventManager = new bounce_mac::MacEventManager;
     

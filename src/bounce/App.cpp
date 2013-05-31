@@ -19,6 +19,8 @@
 #include "log.h"
 #include "DefaultLogger.h"
 
+#include "Timer.h"
+
 namespace bounce {
 
 const float PI = 3.14159265358979f;
@@ -129,14 +131,10 @@ GLfloat* createColorData() {
 
 	return colorDataArray;
 }
-;
 
 
 
 bool App::onInit() {
-	Logger* logger = new DefaultLogger();
-	LogManager::getInstance().setLogger(logger);
-
 	srand(time(0));
 
 	colorBufferData = createColorData();
@@ -173,16 +171,26 @@ int App::onExecute() {
 
 	Event* event = 0;
 
-	while (running) {
-		event = eventManager.pollEvent();
+	timer.start();
+	float deltaTime;
+	int frameCount = 0;
+	float accumulatedTime = 0.0f;
 
-		if (event != nullptr) {
-			std::cout << event << std::endl;
+	while (running) {
+		deltaTime = timer.getElapsedTime();
+		accumulatedTime += deltaTime;
+		frameCount++;
+		if (accumulatedTime > 1000.0f) {
+			float fps = frameCount * 1000.0f / accumulatedTime;
+			LOG(LogLevel::Debug) << "fps: " << fps << "\n";
+			frameCount = 0;
+			accumulatedTime = 0.0f;
 		}
 
-		while (event != nullptr) {
+		//LOG(LogLevel::Debug) << deltaTime << "\n";
+
+		while ((event = eventManager.pollEvent()) != nullptr) {
 			onEvent(event);
-			event = eventManager.pollEvent();
 		}
 
 		onLoop();
