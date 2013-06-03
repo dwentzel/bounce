@@ -1,40 +1,37 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
+#include <memory>
 #include "../LockFreeQueue.h"
 
 namespace bounce {
 
 enum EventType {
-	Keydown, Quit
+	Keydown, Keyup, Quit
 };
 
 class Event {
 private:
 	EventType type;
 public:
-	EventType getType();
+	EventType getType() const;
+	virtual ~Event() = 0;
 protected:
 	Event(EventType type) :
 			type(type) {
 	}
-
-	virtual ~Event() = 0;
 };
 
 inline Event::~Event() {
 
 }
 
-inline EventType Event::getType() {
+inline EventType Event::getType() const {
 	return type;
 }
 
 enum Key {
-	A,
-	S,
-	D,
-	W
+	A, S, D, W
 };
 
 enum Modifier {
@@ -65,7 +62,16 @@ inline const Keysym& KeyboardEvent::getKeysym() const {
 
 class KeydownEvent: public KeyboardEvent {
 public:
-	KeydownEvent(Keysym keysym) : KeyboardEvent(EventType::Keydown, keysym) {
+	KeydownEvent(Keysym keysym) :
+			KeyboardEvent(EventType::Keydown, keysym) {
+
+	}
+};
+
+class KeyupEvent: public KeyboardEvent {
+public:
+	KeyupEvent(Keysym keysym) :
+			KeyboardEvent(EventType::Keyup, keysym) {
 
 	}
 };
@@ -75,7 +81,7 @@ typedef LockFreeQueue<Event*> EventQueue;
 class EventManager {
 public:
 	virtual ~EventManager() = 0;
-	virtual Event* pollEvent() = 0;
+	virtual std::unique_ptr<Event> pollEvent() = 0;
 };
 
 inline EventManager::~EventManager() {

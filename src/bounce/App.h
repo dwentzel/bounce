@@ -8,6 +8,8 @@
 #ifndef APP_H_
 #define APP_H_
 
+#include <memory>
+
 #include "bounceGL.h"
 #include "event/Event.h"
 #include "Timer.h"
@@ -34,7 +36,7 @@ public:
 	int onExecute();
 
 	bool onInit();
-	void onEvent(Event* event);
+	void onEvent(const Event& event);
 	void onLoop();
 	void onRender();
 	void onCleanup();

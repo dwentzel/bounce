@@ -19,10 +19,10 @@
     eventManager = newEventManager;
 }
 
-- (void)keyDown:(NSEvent *) event {
+- (void)keyEvent:(NSEvent *) event {
     //NSLog(@"Pressed key");
     
-    if (event.type == NSKeyDown)
+    if (event.type == NSKeyDown || event.type == NSKeyUp)
     {
         unsigned int quals = event.modifierFlags;
         NSString* str = event.characters;
@@ -44,8 +44,21 @@
         else if (ch == 'w')
             keysym.sym = bounce::Key::W;
         
-        eventManager->queueEvent(new bounce::KeydownEvent(keysym));
+        if (event.type == NSKeyDown)
+            eventManager->queueEvent(new bounce::KeydownEvent(keysym));
+        else if (event.type == NSKeyUp) {
+            NSLog(@"keyup");
+            eventManager->queueEvent(new bounce::KeyupEvent(keysym));
+        }
     }
+}
+
+- (void)keyUp:(NSEvent *) event {
+    [self keyEvent:event];
+}
+
+- (void)keyDown:(NSEvent *) event {
+    [self keyEvent:event];
 }
 
 @end

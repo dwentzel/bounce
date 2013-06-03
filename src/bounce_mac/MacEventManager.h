@@ -8,6 +8,7 @@
 #ifndef MACEVENTMANAGER_H_
 #define MACEVENTMANAGER_H_
 
+#include <memory>
 #include "bounce/event/Event.h"
 
 namespace bounce_mac {
@@ -19,7 +20,7 @@ public:
 	MacEventManager();
 	virtual ~MacEventManager();
 
-	virtual bounce::Event* pollEvent();
+	virtual std::unique_ptr<bounce::Event> pollEvent();
 
 	void queueEvent(bounce::Event* event);
 };

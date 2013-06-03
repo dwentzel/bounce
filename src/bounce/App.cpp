@@ -167,9 +167,9 @@ int App::onExecute() {
 		return -1;
 	}
 
-	LOG(LogLevel::Debug) << "testing" << std::flush;
+	LOG_DEBUG << "testing" << std::flush;
 
-	Event* event = 0;
+	std::unique_ptr<Event> event = 0;
 
 	timer.start();
 	float deltaTime;
@@ -190,7 +190,7 @@ int App::onExecute() {
 		//LOG(LogLevel::Debug) << deltaTime << "\n";
 
 		while ((event = eventManager.pollEvent()) != nullptr) {
-			onEvent(event);
+			onEvent(*event);
 		}
 
 		onLoop();
@@ -202,15 +202,20 @@ int App::onExecute() {
 	return 0;
 }
 
-void App::onEvent(Event* event) {
-	if (event->getType() == EventType::Quit) {
+void App::onEvent(const Event& event) {
+
+	EventType eventType = event.getType();
+
+	if (eventType == EventType::Quit) {
 		running = false;
 	}
 
-	if (event->getType() == EventType::Keydown) {
-		KeydownEvent* keydownEvent = static_cast<KeydownEvent*>(event);
+	if (eventType == EventType::Keydown || eventType == EventType::Keyup) {
 
-		Key key = keydownEvent->getKeysym().sym;
+
+		const KeydownEvent& keydownEvent = static_cast<const KeydownEvent&>(event);
+
+		Key key = keydownEvent.getKeysym().sym;
 
 		if (key == Key::A) {
 			horizontalAngle -= mouseSpeed;
@@ -234,7 +239,7 @@ void App::onEvent(Event* event) {
 			horizontalAngle += PI2;
 		}
 
-		std::cout << "horiz: " << horizontalAngle << " vert: " << verticalAngle
+		LOG_DEBUG << "horiz: " << horizontalAngle << " vert: " << verticalAngle
 				<< std::endl;
 	}
 }

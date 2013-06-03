@@ -8,6 +8,7 @@
 #ifndef LOGMANAGER_H_
 #define LOGMANAGER_H_
 
+#include <memory>
 #include "Logger.h"
 
 namespace bounce {
@@ -16,11 +17,11 @@ class LogManager {
 private:
 	LogManager() : logger(nullptr) {};
     LogManager(const LogManager&);
-	//virtual ~LogManager() = 0;
+	~LogManager();
 
     void operator=(const LogManager&);
 
-    Logger* logger;
+    std::unique_ptr<Logger> logger;
 public:
     static LogManager& getInstance() {
     	static LogManager instance;
@@ -31,6 +32,10 @@ public:
 	std::ostream& log(const LogLevel& logLevel);
 };
 
+
+inline LogManager::~LogManager() {
+	//delete logger;
+}
 
 
 } /* namespace bounce */

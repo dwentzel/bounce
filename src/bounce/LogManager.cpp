@@ -10,7 +10,7 @@
 namespace bounce {
 
 void LogManager::setLogger(Logger* logger) {
-	this->logger = logger;
+	this->logger = std::unique_ptr<Logger>(logger);
 }
 
 std::ostream& LogManager::log(const LogLevel& logLevel) {

@@ -19,15 +19,13 @@ MacEventManager::~MacEventManager() {
 	delete eventQueue;
 }
 
-bounce::Event* MacEventManager::pollEvent() {
-
-	//std::cout << "poll" << std::endl;
+std::unique_ptr<bounce::Event> MacEventManager::pollEvent() {
 
 	bounce::Event* event;
 	if (eventQueue->consume(event))
-		return event;
+		return std::unique_ptr<bounce::Event>(event);
 	else
-		return 0;
+		return nullptr;
 }
 
 void MacEventManager::queueEvent(bounce::Event* event) {

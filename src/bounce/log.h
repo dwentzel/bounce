@@ -12,6 +12,7 @@
 #define LOG(x) if (0) std::cerr
 #else
 #define LOG(logLevel) LogManager::getInstance().log(logLevel)
+#define LOG_DEBUG LOG(LogLevel::Debug)
 #endif
 
 #include "Logger.h"
