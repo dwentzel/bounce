@@ -21,15 +21,17 @@ MacEventManager::~MacEventManager() {
 
 std::unique_ptr<bounce::Event> MacEventManager::pollEvent() {
 
-	bounce::Event* event;
+	//std::cout << "poll" << std::endl;
+
+	std::unique_ptr<bounce::Event> event;
 	if (eventQueue->consume(event))
-		return std::unique_ptr<bounce::Event>(event);
+		return event;
 	else
 		return nullptr;
 }
 
-void MacEventManager::queueEvent(bounce::Event* event) {
-	eventQueue->produce(event);
+void MacEventManager::queueEvent(std::unique_ptr<bounce::Event> event) {
+	eventQueue->produce(std::move(event));
 }
 
 } /* namespace bounce */

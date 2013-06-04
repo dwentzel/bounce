@@ -22,7 +22,7 @@ public:
 
 	virtual std::unique_ptr<bounce::Event> pollEvent();
 
-	void queueEvent(bounce::Event* event);
+	void queueEvent(std::unique_ptr<bounce::Event> event);
 };
 
 } /* namespace bounce */

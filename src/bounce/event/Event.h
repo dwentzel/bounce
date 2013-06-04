@@ -23,7 +23,7 @@ protected:
 };
 
 inline Event::~Event() {
-
+	std::cout << "Delete event" << std::endl;
 }
 
 inline EventType Event::getType() const {
@@ -76,7 +76,7 @@ public:
 	}
 };
 
-typedef LockFreeQueue<Event*> EventQueue;
+typedef LockFreeQueue<std::unique_ptr<Event>> EventQueue;
 
 class EventManager {
 public:

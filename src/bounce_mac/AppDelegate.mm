@@ -71,7 +71,7 @@ void draw(void* context) {
     
     self.openGLContext = [[NSOpenGLContext alloc] initWithFormat: pixelFormat shareContext: nil];
     
-    GLint one = 0;
+    GLint one = 1;
     [self.openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
     
     bounce::Logger* logger = new bounce::DefaultLogger();

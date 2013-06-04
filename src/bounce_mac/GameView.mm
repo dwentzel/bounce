@@ -45,10 +45,10 @@
             keysym.sym = bounce::Key::W;
         
         if (event.type == NSKeyDown)
-            eventManager->queueEvent(new bounce::KeydownEvent(keysym));
+            eventManager->queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeydownEvent(keysym)));
         else if (event.type == NSKeyUp) {
             NSLog(@"keyup");
-            eventManager->queueEvent(new bounce::KeyupEvent(keysym));
+            eventManager->queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeyupEvent(keysym)));
         }
     }
 }
