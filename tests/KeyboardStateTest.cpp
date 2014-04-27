@@ -1,19 +1,19 @@
 #include "gtest/gtest.h"
-#include "framework/LockFreeQueue.h"
+#include "KeyboardState.h"
 
 namespace bounce {
 namespace tests {
 
-class LockFreeQueueTest : public ::testing::Test {
+class KeyboardStateTest : public ::testing::Test {
 protected:
 	// You can remove any or all of the following functions if its body
 	// is empty.
 
-	LockFreeQueueTest() {
+	KeyboardStateTest() {
 		// You can do set-up work for each test here.
 	}
 
-	virtual ~LockFreeQueueTest() {
+	virtual ~KeyboardStateTest() {
 		// You can do clean-up work that doesn't throw exceptions here.
 	}
 
@@ -30,25 +30,22 @@ protected:
 		// before the destructor).
 	}
 
-	// Objects declared here can be used by all tests in the test case for Foo.
+	KeyboardState subject;
 };
 
-TEST_F(LockFreeQueueTest, consume_from_empty_queue_returns_false) {
-	bounce::LockFreeQueue<int> queue;
-	int item;
-	bool result = queue.consume(item);
-
-	EXPECT_FALSE(result);
+TEST_F(KeyboardStateTest, Key_A_is_up_by_default) {
+	EXPECT_FALSE(subject.isDown(Key::A));
 }
 
-TEST_F(LockFreeQueueTest, consume_from_queue_with_one_item_returns_true) {
-	bounce::LockFreeQueue<int> queue;
-	queue.produce(1);
-	int item;
-	bool result = queue.consume(item);
+TEST_F(KeyboardStateTest, Key_A_is_down_after_keydown_event) {
+	Keysym keySym;
+	keySym.sym = Key::A;
 
-	EXPECT_TRUE(result);
+	KeydownEvent event(keySym);
+	subject.processEvent(event);
+	EXPECT_TRUE(subject.isDown(Key::A));
 }
+
 
 }
 }
