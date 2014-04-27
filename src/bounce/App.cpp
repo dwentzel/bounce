@@ -8,18 +8,19 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "App.h"
+
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-#include "App.h"
+
 #include "ShaderManager.h"
 
-#include "LockFreeQueue.h"
-#include "log.h"
-#include "DefaultLogger.h"
+#include "framework/LockFreeQueue.h"
+#include "logging/log.h"
+#include "logging/DefaultLogger.h"
 
-#include "Timer.h"
 
 namespace bounce {
 
@@ -135,6 +136,8 @@ GLfloat* createColorData() {
 
 
 bool App::onInit() {
+
+  
 	srand(time(0));
 
 	colorBufferData = createColorData();
@@ -212,18 +215,18 @@ void App::onEvent(const Event& event) {
 
 	if (eventType == EventType::Keydown || eventType == EventType::Keyup) {
 
+		keyboardState.processEvent(static_cast<const KeyboardEvent&>(event));
+		//const KeydownEvent& keydownEvent = static_cast<const KeydownEvent&>(event);
 
-		const KeydownEvent& keydownEvent = static_cast<const KeydownEvent&>(event);
+		//Key key = keydownEvent.getKeysym().sym;
 
-		Key key = keydownEvent.getKeysym().sym;
-
-		if (key == Key::A) {
+		if (keyboardState.isDown(Key::A)) {
 			horizontalAngle -= mouseSpeed;
-		} else if (key == Key::D) {
+		} else if (keyboardState.isDown(Key::D)) {
 			horizontalAngle += mouseSpeed;
-		} else if (key == Key::W) {
+		} else if (keyboardState.isDown(Key::W)) {
 			verticalAngle -= mouseSpeed;
-		} else if (key == Key::S) {
+		} else if (keyboardState.isDown(Key::S)) {
 			verticalAngle += mouseSpeed;
 		}
 

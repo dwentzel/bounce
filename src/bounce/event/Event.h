@@ -2,7 +2,7 @@
 #define EVENT_H_
 
 #include <memory>
-#include "../LockFreeQueue.h"
+#include "../framework/LockFreeQueue.h"
 
 namespace bounce {
 
@@ -23,7 +23,7 @@ protected:
 };
 
 inline Event::~Event() {
-	std::cout << "Delete event" << std::endl;
+	//std::cout << "Delete event" << std::endl;
 }
 
 inline EventType Event::getType() const {

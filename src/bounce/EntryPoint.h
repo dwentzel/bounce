@@ -8,6 +8,7 @@
 #ifndef ENTRYPOINT_H_
 #define ENTRYPOINT_H_
 
+#include "ApplicationContext.h"
 #include "event/Event.h"
 
 namespace bounce {
@@ -17,7 +18,11 @@ public:
 	EntryPoint();
 	virtual ~EntryPoint();
 
-	int run(EventManager& eventManager, void (*flush)(void*), void* context);
+	int run(
+			const ApplicationContext& applicationContext,
+			EventManager& eventManager,
+			void (*flush)(void*),
+			void* context);
 };
 
 } /* namespace bounce */

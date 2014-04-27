@@ -1,8 +1,8 @@
 #import "AppDelegate.h"
 #import "GameView.h"
 #import "bounce/EntryPoint.h"
-#import "bounce/log.h"
-#import "bounce/DefaultLogger.h"
+#import "bounce/logging/log.h"
+#import "bounce/logging/DefaultLogger.h"
 #import "MacEventManager.h"
 
 @interface MyApplicationDelegate()
@@ -14,6 +14,7 @@
 @synthesize window;
 @synthesize openGLContext;
 @synthesize eventManager;
+@synthesize applicationContext;
 
 //@synthesize window = _window;
 //@synthesize view = _view;
@@ -52,7 +53,7 @@ void draw(void* context) {
     
     bounce::EntryPoint entryPoint;
     
-    entryPoint.run(*self.eventManager, &draw, self);
+    entryPoint.run(*self.applicationContext, *self.eventManager, &draw, self);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

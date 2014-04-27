@@ -12,7 +12,8 @@
 
 #include "bounceGL.h"
 #include "event/Event.h"
-#include "Timer.h"
+#include "framework/Timer.h"
+#include "KeyboardState.h"
 
 namespace bounce {
 
@@ -21,6 +22,7 @@ private:
 	bool running;
 	GLuint programId;
 	EventManager& eventManager;
+	KeyboardState keyboardState;
 
 	void (*flush)(void*);
 	void* context;
@@ -29,7 +31,7 @@ private:
 public:
 	App(EventManager& eventManager, void (*flush)(void*), void* context) :
 		running(true), programId(0), eventManager(eventManager), context(context)  {
-				this->flush = flush;
+		this->flush = flush;
 		}
 	virtual ~App();
 
