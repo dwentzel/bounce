@@ -37,7 +37,12 @@ find_library(COCOA_LIBRARY Cocoa)
 target_link_libraries(${EXENAME} ${COCOA_LIBRARY} bounce)
 
 file(GLOB ShellScript ${PROJECT_SOURCE_DIR}/bounce.sh)
-add_custom_target(copy ALL)
-add_custom_command(TARGET copy POST_BUILD
+#add_custom_target(copy ALL)
+add_custom_command(TARGET ${EXENAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E
         copy "${CMAKE_CURRENT_SOURCE_DIR}/bounce.sh" "$<TARGET_FILE_DIR:bounce_mac>")
+        
+add_custom_command(TARGET ${EXENAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E
+        copy_directory "${PROJECT_SOURCE_DIR}/resources/shaders" "$<TARGET_FILE_DIR:bounce_mac>/shaders")
+

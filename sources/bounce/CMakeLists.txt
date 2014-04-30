@@ -47,11 +47,11 @@ endif (OPENGL_FOUND)
 
 target_link_libraries(${LIBNAME} logging)
 
-add_custom_target(copy_shaders ALL)
+#add_custom_target(copy_shaders ALL)
 
-add_custom_command(TARGET copy_shaders POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E
-        copy_directory "${PROJECT_SOURCE_DIR}/bounce/shaders" "${CMAKE_BINARY_DIR}/bin/shaders")
+#add_custom_command(TARGET copy_shaders POST_BUILD
+#    COMMAND ${CMAKE_COMMAND} -E
+#        copy_directory "${PROJECT_SOURCE_DIR}/bounce/shaders" "${CMAKE_BINARY_DIR}/bin/shaders")
 
 ###########################################################
 # Tests
@@ -70,4 +70,4 @@ target_include_directories(
 target_link_libraries(${TEST_EXE_NAME} bounce)
 target_link_libraries(${TEST_EXE_NAME} gtest gtest_main)
 
-add_test(NAME bounce_unit_tests COMMAND bounce_unit_tests)
+add_test(${TEST_EXE_NAME} ${TEST_EXE_NAME})
