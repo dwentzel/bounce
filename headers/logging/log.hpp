@@ -15,7 +15,7 @@
 #define LOG_DEBUG LOG(LogLevel::Debug)
 #endif
 
-#include "Logger.h"
-#include "LogManager.h"
+#include "Logger.hpp"
+#include "LogManager.hpp"
 
 #endif /* LOG_H_ */

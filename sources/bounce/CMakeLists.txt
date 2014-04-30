@@ -7,14 +7,18 @@ include_directories(
     ${MODULE_PUBLIC_INCLUDE_DIR}
     include)
 
+set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/ApplicationContext.hpp
+    ${MODULE_PUBLIC_INCLUDE_DIR}/Event.hpp
+    ${MODULE_PUBLIC_INCLUDE_DIR}/LockFreeQueue.hpp
+    ${MODULE_PUBLIC_INCLUDE_DIR}/EntryPoint.hpp
+    include/App.hpp
+    include/KeyboardState.hpp
+    include/ShaderManager.hpp
+    include/Timer.hpp
+    include/bounceGL.hpp)
+
 set(SOURCES
-    ${MODULE_PUBLIC_INCLUDE_DIR}/Event.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/LockFreeQueue.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/EntryPoint.h
-    include/App.h
-    include/ShaderManager.h
-    include/Timer.h
-    include/bounceGL.h
     src/App.cpp
     src/EntryPoint.cpp
     src/KeyboardState.cpp
@@ -23,8 +27,8 @@ set(SOURCES
 add_library(
     ${LIBNAME}
     SHARED
-    ${SOURCES}
-)
+    ${HEADERS}
+    ${SOURCES})
 
 #source_group(\\ FILES ${SOURCES} ${HEADERS})
 #source_group(\\event FILES ${EVENT_SOURCES})

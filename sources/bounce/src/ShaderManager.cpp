@@ -2,8 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "bounceGL.h"
-#include "ShaderManager.h"
+#include "bounceGL.hpp"
+#include "ShaderManager.hpp"
 
 using namespace bounce;
 

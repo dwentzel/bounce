@@ -10,7 +10,7 @@
 
 #include <memory>
 #include <unordered_set>
-#include "Event.h"
+#include "Event.hpp"
 
 namespace bounce {
 

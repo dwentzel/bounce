@@ -8,18 +8,18 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "App.h"
+#include "App.hpp"
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "ShaderManager.h"
+#include "ShaderManager.hpp"
 
-#include "LockFreeQueue.h"
-#include "logging/log.h"
-#include "logging/DefaultLogger.h"
+#include "LockFreeQueue.hpp"
+#include "logging/log.hpp"
+#include "logging/DefaultLogger.hpp"
 
 
 namespace bounce {

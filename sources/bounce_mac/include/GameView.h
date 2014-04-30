@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
-#import "MacEventManager.h"
-#import "bounce/Event.h"
+#import "MacEventManager.hpp"
+#import "bounce/Event.hpp"
 
 @interface GameView : NSView {
 	bounce_mac::MacEventManager* eventManager;

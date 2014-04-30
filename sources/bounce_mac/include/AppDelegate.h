@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
-#import "bounce/ApplicationContext.h"
-#import "MacEventManager.h"
+#import "bounce/ApplicationContext.hpp"
+#import "MacEventManager.hpp"
 
 @interface MyApplicationDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
 	NSWindow* window;

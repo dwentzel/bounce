@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "KeyboardState.h"
+#include "KeyboardState.hpp"
 
 namespace bounce {
 namespace tests {

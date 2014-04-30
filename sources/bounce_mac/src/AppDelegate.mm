@@ -1,9 +1,10 @@
+#import "bounce/EntryPoint.hpp"
+#import "logging/log.hpp"
+#import "logging/DefaultLogger.hpp"
+
 #import "AppDelegate.h"
 #import "GameView.h"
-#import "bounce/EntryPoint.h"
-#import "logging/log.h"
-#import "logging/DefaultLogger.h"
-#import "MacEventManager.h"
+#import "MacEventManager.hpp"
 
 @interface MyApplicationDelegate()
 - (void) draw;

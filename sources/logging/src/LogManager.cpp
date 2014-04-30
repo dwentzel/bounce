@@ -5,7 +5,7 @@
  *      Author: daniel
  */
 
-#include "logging/LogManager.h"
+#include "logging/LogManager.hpp"
 
 namespace bounce {
 

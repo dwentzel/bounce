@@ -9,7 +9,7 @@
 #define LOGMANAGER_H_
 
 #include <memory>
-#include "Logger.h"
+#include "Logger.hpp"
 
 namespace bounce {
 

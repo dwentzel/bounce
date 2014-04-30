@@ -5,7 +5,7 @@
  *      Author: daniel
  */
 
-#include "KeyboardState.h"
+#include "KeyboardState.hpp"
 
 namespace std {
 	template<>

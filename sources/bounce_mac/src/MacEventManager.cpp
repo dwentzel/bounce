@@ -6,7 +6,7 @@
  */
 
 #include <iostream>
-#include "MacEventManager.h"
+#include "MacEventManager.hpp"
 
 namespace bounce_mac {
 

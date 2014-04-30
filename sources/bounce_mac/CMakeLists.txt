@@ -11,16 +11,21 @@ include_directories(
     ${MODULE_PUBLIC_INCLUDE_DIR}
     include)
 
+set(HEADERS
+    include/AppDelegate.h
+    include/GameView.h
+    include/MacEventManager.hpp)
+
 set(SOURCES
     src/main.mm
-    include/AppDelegate.h
     src/AppDelegate.mm
-    include/GameView.h
     src/GameView.mm
-    include/MacEventManager.h
     src/MacEventManager.cpp)
 
-add_executable(${EXENAME} ${SOURCES})
+add_executable(
+    ${EXENAME}
+    ${HEADERS}
+    ${SOURCES})
 
 #source_group(\\ FILES ${SOURCES})
 

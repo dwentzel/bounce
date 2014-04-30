@@ -10,10 +10,10 @@
 
 #include <memory>
 
-#include "bounceGL.h"
-#include "Event.h"
-#include "Timer.h"
-#include "KeyboardState.h"
+#include "bounceGL.hpp"
+#include "Event.hpp"
+#include "Timer.hpp"
+#include "KeyboardState.hpp"
 
 namespace bounce {
 

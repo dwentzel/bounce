@@ -5,8 +5,8 @@
  *      Author: daniel
  */
 
-#include "EntryPoint.h"
-#include "App.h"
+#include "EntryPoint.hpp"
+#include "App.hpp"
 
 namespace bounce {
 
