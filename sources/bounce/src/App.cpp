@@ -17,7 +17,7 @@
 
 #include "ShaderManager.h"
 
-#include "framework/LockFreeQueue.h"
+#include "LockFreeQueue.h"
 #include "logging/log.h"
 #include "logging/DefaultLogger.h"
 

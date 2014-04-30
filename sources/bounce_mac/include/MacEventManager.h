@@ -9,7 +9,7 @@
 #define MACEVENTMANAGER_H_
 
 #include <memory>
-#include "bounce/event/Event.h"
+#include "bounce/Event.h"
 
 namespace bounce_mac {
 

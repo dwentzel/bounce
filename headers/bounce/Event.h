@@ -2,7 +2,7 @@
 #define EVENT_H_
 
 #include <memory>
-#include "../framework/LockFreeQueue.h"
+#include "LockFreeQueue.h"
 
 namespace bounce {
 

@@ -1,8 +1,8 @@
 #import "AppDelegate.h"
 #import "GameView.h"
 #import "bounce/EntryPoint.h"
-#import "bounce/logging/log.h"
-#import "bounce/logging/DefaultLogger.h"
+#import "logging/log.h"
+#import "logging/DefaultLogger.h"
 #import "MacEventManager.h"
 
 @interface MyApplicationDelegate()

@@ -11,8 +11,8 @@
 #include <memory>
 
 #include "bounceGL.h"
-#include "event/Event.h"
-#include "framework/Timer.h"
+#include "Event.h"
+#include "Timer.h"
 #include "KeyboardState.h"
 
 namespace bounce {

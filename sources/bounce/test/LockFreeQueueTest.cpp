@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "framework/LockFreeQueue.h"
+#include "LockFreeQueue.h"
 
 namespace bounce {
 namespace tests {

@@ -9,7 +9,7 @@
 #define ENTRYPOINT_H_
 
 #include "ApplicationContext.h"
-#include "event/Event.h"
+#include "Event.h"
 
 namespace bounce {
 
