@@ -32,6 +32,22 @@ add_library(
 
 #source_group(\\ FILES ${SOURCES} ${HEADERS})
 #source_group(\\event FILES ${EVENT_SOURCES})
+if (MSVC)
+    message(MSVC)
+
+	set(GLEW_ROOT_DIR "${Bounce_SOURCE_DIR}/external/glew-1.10.0")
+	set(GLEW_INCLUDE_DIR "${GLEW_ROOT_DIR}/include")
+	set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/Win32/glew32.lib")
+	#set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/x64/glew.lib")
+    #add_library(glew STATIC IMPORTED)
+	#set_target_properties(glew PROPERTIES
+	#    IMPORTED_LOCATION $(Bounce_SOURCE_DIR)/external/glew-1.10.0/lib/Release/Win32/glew32.lib)
+	#include_directories($(Bounce_SOURCE_DIR)/external/glew-1.10.0/include)
+else ()
+    
+endif()
+
+include_directories("${Bounce_SOURCE_DIR}/external/glm")
 
 find_package(glew REQUIRED)
 if (GLEW_FOUND)

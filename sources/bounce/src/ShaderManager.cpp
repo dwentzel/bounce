@@ -17,9 +17,11 @@ void ShaderManager::compileShader(const int& shaderId, const std::string& shader
 
 	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &result);
 	glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
-	char vertexShaderErrorMessage[infoLogLength];
+	
+	GLchar* vertexShaderErrorMessage = new GLchar[infoLogLength];
 	glGetShaderInfoLog(shaderId, infoLogLength, 0, vertexShaderErrorMessage);
 	fprintf(stdout, "%s\n", vertexShaderErrorMessage);
+	delete[] vertexShaderErrorMessage;
 }
 
 std::string ShaderManager::loadShaderCode(const std::string& shaderFilePath) {
@@ -67,9 +69,11 @@ GLuint ShaderManager::loadShaders(const std::string& vertexFilePath,
 	int infoLogLength;
 	glGetProgramiv(programId, GL_LINK_STATUS, &result);
 	glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
-	char programErrorMessage[std::max(infoLogLength, 1)];
+	
+	GLchar *programErrorMessage = new GLchar[std::max(infoLogLength, 1)];
 	glGetProgramInfoLog(programId, infoLogLength, 0, programErrorMessage);
 	fprintf(stdout, "%s\n", programErrorMessage);
+	delete[] programErrorMessage;
 
 	glDeleteShader(vertexShaderId);
 	glDeleteShader(fragmentShaderId);
