@@ -1,11 +1,12 @@
-set(LIBNAME bounce)
+setup_module(bounce)
+#set(LIBNAME bounce)
 
-set(MODULE_PUBLIC_INCLUDE_DIR ${PUBLIC_INCLUDE_DIR}/${LIBNAME})
+#set(MODULE_PUBLIC_INCLUDE_DIR ${PUBLIC_INCLUDE_DIR}/${LIBNAME})
 
-include_directories(
-    ${PUBLIC_INCLUDE_DIR}
-    ${MODULE_PUBLIC_INCLUDE_DIR}
-    include)
+#include_directories(
+#    ${PUBLIC_INCLUDE_DIR}
+#    ${MODULE_PUBLIC_INCLUDE_DIR}
+#    include)
 
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/ApplicationContext.hpp
@@ -25,7 +26,7 @@ set(SOURCES
     src/ShaderManager.cpp)
 
 add_library(
-    ${LIBNAME}
+    ${MODULE_NAME}
     SHARED
     ${HEADERS}
     ${SOURCES})
@@ -36,16 +37,16 @@ add_library(
 find_package(glew REQUIRED)
 if (GLEW_FOUND)
     include_directories(${GLEW_INCLUDE_DIR})
-    target_link_libraries(${LIBNAME} ${GLEW_LIBRARIES})
+    target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
 endif (GLEW_FOUND)
 
 find_package(OpenGL REQUIRED)
 if (OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIR})
-    target_link_libraries(${LIBNAME} ${OPENGL_LIBRARIES})
+    target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
 endif (OPENGL_FOUND)
 
-target_link_libraries(${LIBNAME} logging)
+target_link_libraries(${MODULE_NAME} logging)
 
 #add_custom_target(copy_shaders ALL)
 
