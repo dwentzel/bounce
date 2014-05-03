@@ -222,11 +222,17 @@ void App::onEvent(const Event& event) {
 
 		if (keyboardState.isDown(Key::A)) {
 			horizontalAngle -= mouseSpeed;
-		} else if (keyboardState.isDown(Key::D)) {
+		}
+        
+        if (keyboardState.isDown(Key::D)) {
 			horizontalAngle += mouseSpeed;
-		} else if (keyboardState.isDown(Key::W)) {
+		}
+        
+        if (keyboardState.isDown(Key::W)) {
 			verticalAngle -= mouseSpeed;
-		} else if (keyboardState.isDown(Key::S)) {
+		}
+        
+        if (keyboardState.isDown(Key::S)) {
 			verticalAngle += mouseSpeed;
 		}
 

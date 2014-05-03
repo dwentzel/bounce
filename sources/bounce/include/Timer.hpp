@@ -21,6 +21,9 @@
 #ifdef systime
 #include <sys/time.h>
 #endif
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 namespace bounce {
 
@@ -29,11 +32,39 @@ private:
 #ifdef systime
 	timeval lastTime;
 #endif
+#ifdef _WIN32
+    SYSTEMTIME lastTime;
+#endif
 public:
 	void start();
 	void stop();
 	float getElapsedTime();
 };
+
+#ifdef _WIN32
+
+inline void Timer::start() {
+    GetSystemTime(&lastTime);
+}
+
+inline void Timer::stop() {
+
+}
+
+inline float Timer::getElapsedTime() {
+    SYSTEMTIME now;
+    float elapsedTime;
+    GetSystemTime(&now);
+
+    elapsedTime = (now.wSecond - lastTime.wSecond) * 1000.0f;
+    elapsedTime += (now.wMilliseconds - lastTime.wMilliseconds) / 1000.0f;
+
+    lastTime = now;
+
+    return elapsedTime;
+}
+
+#endif
 
 #ifdef systime
 

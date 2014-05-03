@@ -31,11 +31,12 @@ inline EventType Event::getType() const {
 }
 
 enum Key {
+    NO_KEY,
 	A, S, D, W
 };
 
 enum Modifier {
-
+    NO_MODIFIER
 };
 
 struct Keysym {

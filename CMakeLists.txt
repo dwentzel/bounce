@@ -1,27 +1,28 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(Bounce)
 
+set(BUILD_SHARED_LIBS OFF)
+
+message(${CMAKE_GENERATOR})
+
 #set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
-if (APPLE)
-    set(CXX_FLAGS "-Wall -std=c++11 -stdlib=libc++")
-
-    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
-    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
-else()
-    set(CXX_FLAGS "-Wall")
-endif()
-
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CXX_FLAGS}")
-
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+set(gtest_force_shared_crt ON)
 
 set(PUBLIC_INCLUDE_DIR ${Bounce_SOURCE_DIR}/headers)
+
+macro(setup_module MODULE)
+    set(MODULE_NAME ${MODULE})
+
+    set(MODULE_PUBLIC_INCLUDE_DIR ${PUBLIC_INCLUDE_DIR}/${MODULE_NAME})
+
+    include_directories(
+        ${PUBLIC_INCLUDE_DIR}
+        ${MODULE_PUBLIC_INCLUDE_DIR}
+        include)
+endmacro(setup_module)
 
 enable_testing()
 

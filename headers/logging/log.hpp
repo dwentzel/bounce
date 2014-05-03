@@ -11,9 +11,9 @@
 #ifdef NDEBUG
 #define LOG(x) if (0) std::cerr
 #else
-#define LOG(logLevel) LogManager::getInstance().log(logLevel)
-#define LOG_DEBUG LOG(LogLevel::Debug)
+#define LOG(logLevel) bounce::LogManager::getInstance().log(logLevel)
 #endif
+#define LOG_DEBUG LOG(bounce::LogLevel::Debug)
 
 #include "Logger.hpp"
 #include "LogManager.hpp"
