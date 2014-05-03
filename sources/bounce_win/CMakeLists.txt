@@ -7,14 +7,12 @@ set(HEADERS
     include/DebugLogger.hpp
     include/GLContext.hpp
     include/Window.hpp
-    include/WindowsEventManager.hpp
     include/windowProcedure.hpp)
 
 set(SOURCES
     src/Controller.cpp
     src/GLContext.cpp
     src/Window.cpp
-    src/WindowsEventManager.cpp
     src/main.cpp
     src/windowProcedure.cpp)
 

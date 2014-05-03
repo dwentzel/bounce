@@ -1,5 +1,5 @@
-#ifndef EVENT_H_
-#define EVENT_H_
+#ifndef BOUNCE_EVENT_HPP_
+#define BOUNCE_EVENT_HPP_
 
 #include <memory>
 #include "LockFreeQueue.hpp"
@@ -77,16 +77,25 @@ public:
 	}
 };
 
-typedef LockFreeQueue<std::unique_ptr<Event>> EventQueue;
+typedef std::unique_ptr<Event> EventPtr;
+typedef LockFreeQueue<EventPtr> EventQueue;
 
 class EventManager {
 public:
-	virtual ~EventManager() = 0;
-	virtual std::unique_ptr<Event> pollEvent() = 0;
+    EventManager();
+    ~EventManager();
+
+    EventPtr pollEvent();
+    void queueEvent(EventPtr event);
+
+private:
+    EventQueue eventQueue;
 };
 
-inline EventManager::~EventManager() {
-}
+
+inline EventManager::EventManager() {}
+
+inline EventManager::~EventManager() {}
 
 }
 

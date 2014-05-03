@@ -15,6 +15,7 @@ set(SOURCES
     src/App.cpp
     src/ApplicationContext.cpp
     src/EntryPoint.cpp
+    src/Event.cpp
     src/KeyboardState.cpp
     src/ShaderManager.cpp)
 
@@ -49,18 +50,18 @@ target_link_libraries(${MODULE_NAME} logging)
 ###########################################################
 # Tests
 
-set(TEST_EXE_NAME bounce_unit_tests)
+#set(TEST_EXE_NAME bounce_unit_tests)
 
-add_executable(${TEST_EXE_NAME}
-    test/LockFreeQueueTest.cpp
-    test/KeyboardStateTest.cpp)
+#add_executable(${TEST_EXE_NAME}
+#    test/LockFreeQueueTest.cpp
+#    test/KeyboardStateTest.cpp)
 
-target_include_directories(
-    ${TEST_EXE_NAME} PRIVATE
-    ${gtest_SOURCE_DIR}/include
-    ${gtest_SOURCE_DIR})
+#target_include_directories(
+#    ${TEST_EXE_NAME} PRIVATE
+#    ${gtest_SOURCE_DIR}/include
+#    ${gtest_SOURCE_DIR})
 
-target_link_libraries(${TEST_EXE_NAME} bounce)
-target_link_libraries(${TEST_EXE_NAME} gtest gtest_main)
+#target_link_libraries(${TEST_EXE_NAME} bounce)
+#target_link_libraries(${TEST_EXE_NAME} gtest gtest_main)
 
-add_test(${TEST_EXE_NAME} ${TEST_EXE_NAME})
+#add_test(${TEST_EXE_NAME} ${TEST_EXE_NAME})

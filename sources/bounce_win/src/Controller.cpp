@@ -1,24 +1,22 @@
 #include <process.h>
 #include "bounce\EntryPoint.hpp"
 #include "Controller.hpp"
-#include "WindowsEventManager.hpp"
 
 namespace bounce_win {
 
-    void Controller::runThread(void* param) {
+    void Controller::runThread(void* param)
+    {
         ((Controller*)param)->run();
     }
 
-    int Controller::create() {
-        // create a OpenGL rendering context
+    int Controller::create()
+    {
         if (!context->createContext(window, 32, 24, 8))
         {
             //Win::log(L"[ERROR] Failed to create OpenGL rendering context from ControllerGL::create().");
             return -1;
         }
 
-        // create a thread for OpenGL rendering
-        // The params of _beginthreadex() are security, stackSize, functionPtr, argPtr, initFlag, threadId.
         threadHandle = (HANDLE)_beginthreadex(0, 0, (unsigned(__stdcall *)(void *))runThread, this, 0, &threadId);
         if (threadHandle)
         {
@@ -33,14 +31,16 @@ namespace bounce_win {
         return 0;
     }
 
-    void flush(void* context) {
+    void flush(void* context)
+    {
         GLContext* glContext = (GLContext*)context;
 
         glContext->flush();
         Sleep(10);
     }
 
-    void Controller::run() {
+    void Controller::run()
+    {
         ::wglMakeCurrent(context->getDC(), context->getRC());
 
         bounce::EntryPoint entryPoint = bounce::EntryPoint();
@@ -53,7 +53,8 @@ namespace bounce_win {
         ::CloseHandle(threadHandle);
     }
 
-    int Controller::keyDown(int key, LPARAM lParam) {
+    int Controller::keyDown(int key, LPARAM lParam)
+    {
         bounce::Keysym keysym;
         keysym.mod = bounce::Modifier::NO_MODIFIER;
         keysym.sym = bounce::Key::NO_KEY;
@@ -85,7 +86,8 @@ namespace bounce_win {
         return 0;
     }
 
-    int Controller::keyUp(int key, LPARAM lParam) {
+    int Controller::keyUp(int key, LPARAM lParam)
+    {
         bounce::Keysym keysym;
         keysym.mod = bounce::Modifier::NO_MODIFIER;
         keysym.sym = bounce::Key::NO_KEY;

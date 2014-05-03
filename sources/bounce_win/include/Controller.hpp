@@ -1,8 +1,8 @@
-#ifndef CONTROLLER_H_
-#define CONTROLLER_H_
+#ifndef BOUNCE_WIN_CONTROLLER_HPP_
+#define BOUNCE_WIN_CONTROLLER_HPP_
 
 #include <windows.h>
-#include "WindowsEventManager.hpp"
+#include "bounce/Event.hpp"
 #include "GLContext.hpp"
 
 namespace bounce_win {
@@ -21,7 +21,7 @@ namespace bounce_win {
         static void runThread(void* param);
         void run();
         
-        WindowsEventManager eventManager;
+        bounce::EventManager eventManager;
 
         HWND window;
 
