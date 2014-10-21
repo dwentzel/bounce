@@ -1,23 +1,27 @@
 setup_module(bounce)
 
 set(HEADERS
-    ${MODULE_PUBLIC_INCLUDE_DIR}/ApplicationContext.hpp
-    ${MODULE_PUBLIC_INCLUDE_DIR}/Event.hpp
-    ${MODULE_PUBLIC_INCLUDE_DIR}/LockFreeQueue.hpp
-    ${MODULE_PUBLIC_INCLUDE_DIR}/EntryPoint.hpp
-    include/App.hpp
-    include/KeyboardState.hpp
-    include/ShaderManager.hpp
-    include/Timer.hpp
-    include/bounceGL.hpp)
+    ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
+    include/app.h
+    include/single_color_texture_generator.h
+    include/bounce_gl.h
+    include/keyboard_state.h
+    include/object.h
+    include/shader_manager.h
+    include/timer.h)
 
 set(SOURCES
-    src/App.cpp
-    src/ApplicationContext.cpp
-    src/EntryPoint.cpp
-    src/Event.cpp
-    src/KeyboardState.cpp
-    src/ShaderManager.cpp)
+    src/app.cc
+    src/application_context.cc
+    src/single_color_texture_generator.cc
+    src/entry_point.cc
+    src/event.cc
+    src/keyboard_state.cc
+    src/object.cc
+    src/shader_manager.cc)
 
 add_library(
     ${MODULE_NAME}

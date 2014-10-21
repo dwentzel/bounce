@@ -1,15 +1,14 @@
 setup_module(logging)
 
 set(HEADERS
-    ${MODULE_PUBLIC_INCLUDE_DIR}/DefaultLogger.hpp
-    ${MODULE_PUBLIC_INCLUDE_DIR}/LogManager.hpp
-    ${MODULE_PUBLIC_INCLUDE_DIR}/Logger.hpp
-    ${MODULE_PUBLIC_INCLUDE_DIR}/LogManager.hpp
-    ${MODULE_PUBLIC_INCLUDE_DIR}/log.hpp
-    include/DllDefines.hpp)
+    ${MODULE_PUBLIC_INCLUDE_DIR}/default_logger.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/log_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/logger.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/log_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/log.h)
 
 set(SOURCES
-    src/LogManager.cpp)
+    src/log_manager.cc)
 
 add_library(
     ${MODULE_NAME}

@@ -3,18 +3,18 @@ setup_module(bounce_win)
 add_definitions(-DUNICODE -D_UNICODE)
 
 set(HEADERS
-    include/Controller.hpp
-    include/DebugLogger.hpp
-    include/GLContext.hpp
-    include/Window.hpp
-    include/windowProcedure.hpp)
+    include/controller.h
+    include/debug_logger.h
+    include/gl_context.h
+    include/window.h
+    include/window_procedure.h)
 
 set(SOURCES
-    src/Controller.cpp
-    src/GLContext.cpp
-    src/Window.cpp
-    src/main.cpp
-    src/windowProcedure.cpp)
+    src/controller.cc
+    src/gl_context.cc
+    src/window.cc
+    src/main.cc
+    src/window_procedure.cc)
 
 add_executable(
     ${MODULE_NAME}
