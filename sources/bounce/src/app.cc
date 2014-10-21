@@ -8,6 +8,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <vector>
+
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -122,8 +124,6 @@ namespace bounce {
 
             KeyboardEvent keyboard_event = static_cast<const KeyboardEvent&>(event);
             keyboardState.processEvent(keyboard_event);
-
-            Key key = keyboard_event.getKeysym().sym;
 
             int horizontal_acceleration = 0;
             int vertical_acceleration = 0;

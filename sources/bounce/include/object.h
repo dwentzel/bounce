@@ -29,7 +29,7 @@ namespace bounce {
         const glm::mat4& model_matrix() { return model_matrix_; }
 
     private:
-        void UpdateSpeed(float delta_speed, int acceleration_direction, float* speed);
+        float UpdateSpeed(float delta_speed, int acceleration_direction, float speed);
 
         void CreateVertexData();
         void CreateNormalData();

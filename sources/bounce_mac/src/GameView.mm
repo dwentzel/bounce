@@ -15,7 +15,7 @@
     return YES;
 }
 
-- (void)setEventManager:(bounce_mac::MacEventManager*)  newEventManager {
+- (void)setEventManager:(bounce::EventManager*) newEventManager {
     eventManager = newEventManager;
 }
 
@@ -47,7 +47,7 @@
         if (event.type == NSKeyDown)
             eventManager->queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeydownEvent(keysym)));
         else if (event.type == NSKeyUp) {
-            NSLog(@"keyup");
+            //NSLog(@"keyup");
             eventManager->queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeyupEvent(keysym)));
         }
     }

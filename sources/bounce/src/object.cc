@@ -6,41 +6,45 @@
 
 #include "object.h"
 
-#include <Windows.h>
+//#include <Windows.h>
 
-void bounce::Object::UpdateSpeed(float delta_speed, int acceleration_direction, float* speed) {
+float bounce::Object::UpdateSpeed(float delta_speed, int acceleration_direction, float speed) {
+    float new_speed = speed;
+    
     if (acceleration_direction > 0) {
-        if (*speed < max_speed_) {
-            *speed += delta_speed;
+        if (new_speed < max_speed_) {
+            new_speed += delta_speed;
 
-            if (*speed > max_speed_) {
-                *speed = max_speed_;
+            if (new_speed > max_speed_) {
+                new_speed = max_speed_;
             }
         }
     }
     else if (acceleration_direction < 0) {
-        if (*speed > -max_speed_) {
-            *speed -= delta_speed;
+        if (new_speed > -max_speed_) {
+            new_speed -= delta_speed;
 
-            if (*speed < -max_speed_) {
-                *speed = -max_speed_;
+            if (new_speed < -max_speed_) {
+                new_speed = -max_speed_;
             }
         }
     }
     else {
-        if (*speed > 0) {
-            *speed -= delta_speed;
+        if (new_speed > 0) {
+            new_speed -= delta_speed;
         }
-        else if (*speed < 0) {
-            *speed += delta_speed;
+        else if (new_speed < 0) {
+            new_speed += delta_speed;
         }
     }
 
-    if (std::abs(*speed) < delta_speed) {
+    if (std::abs(new_speed) < delta_speed) {
         if (acceleration_direction == 0) {
-            *speed = 0.0f;
+            new_speed = 0.0f;
         }
     }
+    
+    return new_speed;
 }
 
 glm::quat RotationBetweenVectors(glm::vec3 start, glm::vec3 dest){
@@ -73,7 +77,6 @@ glm::quat RotationBetweenVectors(glm::vec3 start, glm::vec3 dest){
         rotationAxis.y * invs,
         rotationAxis.z * invs
         );
-
 }
 
 
@@ -81,12 +84,12 @@ void bounce::Object::Animate(float delta_time)
 {
     char debug_buffer[1000];
     sprintf(debug_buffer, "delta_time: %f\n", delta_time);
-    OutputDebugString(debug_buffer);
+    //OutputDebugString(debug_buffer);
 
     float delta_speed = rotation_acceleration_ * delta_time;
 
-    UpdateSpeed(delta_speed, horizontal_acceleration_direction_, &horizontal_speed_);
-    UpdateSpeed(delta_speed, vertical_acceleration_direction_, &vertical_speed_);
+    horizontal_speed_ = UpdateSpeed(delta_speed, horizontal_acceleration_direction_, horizontal_speed_);
+    vertical_speed_ = UpdateSpeed(delta_speed, vertical_acceleration_direction_, vertical_speed_);
 
     horizontal_angle_ += horizontal_speed_;
     vertical_angle_ += vertical_speed_;
@@ -105,15 +108,19 @@ void bounce::Object::Animate(float delta_time)
         horizontal_angle_ += PI2;
     }
 
-    glm::vec3 direction(
-        cos(vertical_angle_) * sin(horizontal_angle_),
-        sin(vertical_angle_),
-        cos(vertical_angle_) * cos(horizontal_angle_));
+//    glm::vec3 direction(
+//        cos(vertical_angle_) * sin(horizontal_angle_),
+//        sin(vertical_angle_),
+//        cos(vertical_angle_) * cos(horizontal_angle_));
     
-    //glm::quat horizontal = glm::angleAxis(horizontal_angle_, glm::normalize(glm::vec3(0.0f, cos(vertical_angle_), sin(vertical_angle_))));
-    //glm::quat vertical = glm::angleAxis(vertical_angle_, glm::normalize(glm::vec3(cos(horizontal_angle_), 0.0f, sin(horizontal_angle_))));
+//    glm::quat horizontal = glm::angleAxis(horizontal_angle_, glm::normalize(glm::vec3(0.0f, cos(vertical_angle_), sin(vertical_angle_))));
+//    glm::quat vertical = glm::angleAxis(vertical_angle_, glm::normalize(glm::vec3(cos(horizontal_angle_), 0.0f, sin(horizontal_angle_))));
 
-    //glm::quat rot = vertical * horizontal;
+    glm::quat horizontal = glm::angleAxis(horizontal_angle_, glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f)));
+    glm::quat vertical = glm::angleAxis(vertical_angle_, glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f)));
+
+    
+    glm::quat rot = vertical * horizontal;
 
     //model_matrix_ = glm::toMat4(rot);
 
@@ -121,7 +128,7 @@ void bounce::Object::Animate(float delta_time)
     //    glm::rotate(glm::mat4(1.0f), horizontal_angle_, glm::vec3(0, 1, 0))
     //    ;
 
-    glm::quat rot = RotationBetweenVectors(glm::vec3(1, 0, 0), direction);
+    //glm::quat rot = RotationBetweenVectors(glm::vec3(1, 0, 0), direction);
     model_matrix_ = glm::toMat4(rot);
     //model_matrix_ = glm::rotate(glm::mat4(1.0f), horizontal_angle_, glm::vec3(0, 1, 0));
 
@@ -221,37 +228,37 @@ void bounce::Object::CreateNormalData() {
     GLfloat* normal_data = new GLfloat[108];
     int i = 0;
 
-    for (i; i < 6; ++i) {
+    for (; i < 6; ++i) {
         normal_data[i * 3] = -1.0f;
         normal_data[i * 3 + 1] = 0.0f;
         normal_data[i * 3 + 2] = 0.0f;
     }
 
-    for (i; i < 12; ++i) {
+    for (; i < 12; ++i) {
         normal_data[i * 3] = 0.0f;
         normal_data[i * 3 + 1] = 0.0f;
         normal_data[i * 3 + 2] = -1.0f;
     }
 
-    for (i; i < 18; ++i) {
+    for (; i < 18; ++i) {
         normal_data[i * 3] = 1.0f;
         normal_data[i * 3 + 1] = 0.0f;
         normal_data[i * 3 + 2] = 0.0f;
     }
 
-    for (i; i < 24; ++i) {
+    for (; i < 24; ++i) {
         normal_data[i * 3] = 0.0f;
         normal_data[i * 3 + 1] = 0.0f;
         normal_data[i * 3 + 2] = 1.0f;
     }
 
-    for (i; i < 30; ++i) {
+    for (; i < 30; ++i) {
         normal_data[i * 3] = 0.0f;
         normal_data[i * 3 + 1] = -1.0f;
         normal_data[i * 3 + 2] = 0.0f;
     }
 
-    for (i; i < 36; ++i) {
+    for (; i < 36; ++i) {
         normal_data[i * 3] = 0.0f;
         normal_data[i * 3 + 1] = 1.0f;
         normal_data[i * 3 + 2] = 0.0f;
@@ -271,8 +278,6 @@ void bounce::Object::CreateColorData()
     int colorsPerSide = verticesPerSide * colorsPerVertex;
 
     for (int i = 0; i < sides; i++) {
-        GLfloat val = 0.5f; //((float) rand() / (RAND_MAX));
-
         for (int j = 0; j < verticesPerSide; j++) {
             int index = i * colorsPerSide + j * colorsPerVertex;
 

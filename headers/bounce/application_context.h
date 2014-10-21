@@ -23,6 +23,7 @@ public:
 
     ~ApplicationContext() {}
 
+    EventManager* event_manager_ptr() { return &event_manager_; }
     const EventManager& event_manager() const { return event_manager_; }
 
     void flush() const { flush_(context_); }

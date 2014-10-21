@@ -1,10 +1,9 @@
-#import "bounce/EntryPoint.hpp"
-#import "logging/log.hpp"
-#import "logging/DefaultLogger.hpp"
+#import "bounce/entry_point.h"
+#import "logging/log.h"
+#import "logging/default_logger.h"
 
 #import "AppDelegate.h"
 #import "GameView.h"
-#import "MacEventManager.hpp"
 
 @interface MyApplicationDelegate()
 - (void) draw;
@@ -54,7 +53,7 @@ void draw(void* context) {
     
     bounce::EntryPoint entryPoint;
     
-    entryPoint.run(*self.applicationContext, *self.eventManager, &draw, self);
+    entryPoint.run(*self.applicationContext);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -77,9 +76,11 @@ void draw(void* context) {
     [self.openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
     
     bounce::Logger* logger = new bounce::DefaultLogger();
-    bounce::LogManager::getInstance().setLogger(logger);
+    bounce::LogManager::instance().set_logger(logger);
     
-    self.eventManager = new bounce_mac::MacEventManager;
+    
+    self.applicationContext = new bounce::ApplicationContext(&draw, self);
+    self.eventManager = self.applicationContext->event_manager_ptr();
     
     GameView* gameView = [[GameView alloc] init];
     
@@ -90,6 +91,8 @@ void draw(void* context) {
     [self.openGLContext setView: gameView];
     
     //[self.openGLContext makeCurrentContext];
+    
+    
     
     [NSThread detachNewThreadSelector:@selector(runBounce) toTarget:self withObject:nil];
     //bounce::EntryPoint entryPoint;
