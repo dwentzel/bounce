@@ -6,14 +6,12 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ObjC++")
 
 set(HEADERS
     include/AppDelegate.h
-    include/GameView.h
-    include/MacEventManager.hpp)
+    include/GameView.h)
 
 set(SOURCES
     src/main.mm
     src/AppDelegate.mm
-    src/GameView.mm
-    src/MacEventManager.cpp)
+    src/GameView.mm)
 
 add_executable(
     ${MODULE_NAME}

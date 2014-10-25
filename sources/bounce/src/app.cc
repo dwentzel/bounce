@@ -20,6 +20,7 @@
 
 #include "app.h"
 #include "shader_manager.h"
+#include "game_entity.h"
 
 //#include "lock_free_queue.h"
 
@@ -46,28 +47,37 @@ namespace bounce {
     {
         srand(time(0));
 
-        glewExperimental = true; // Needed in core profile
-        if (glewInit() != GLEW_OK) {
-            fprintf(stderr, "Failed to initialize GLEW\n");
-            return -1;
-        }
+//        glewExperimental = true; // Needed in core profile
+//        if (glewInit() != GLEW_OK) {
+//            fprintf(stderr, "Failed to initialize GLEW\n");
+//            return -1;
+//        }
+//
+//        glEnable(GL_DEPTH_TEST);
+//        glDepthFunc(GL_LESS);
+//        glClearDepth(1.0);
+//
+//        GLuint vertexArrayId;
+//        glGenVertexArrays(1, &vertexArrayId);
+//        glBindVertexArray(vertexArrayId);
+//
+//        ShaderManager shaderManager;
+//
+//        programId = shaderManager.loadShaders(
+//            "shaders/triangleShader.vert.glsl",
+//            "shaders/triangleShader.frag.glsl");
+//
+//        matrixId = glGetUniformLocation(programId, "mvp");
 
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LESS);
-        glClearDepth(1.0);
-
-        GLuint vertexArrayId;
-        glGenVertexArrays(1, &vertexArrayId);
-        glBindVertexArray(vertexArrayId);
-
-        ShaderManager shaderManager;
-
-        programId = shaderManager.loadShaders(
-            "shaders/triangleShader.vert.glsl",
-            "shaders/triangleShader.frag.glsl");
-
-        matrixId = glGetUniformLocation(programId, "mvp");
-
+        GameEntity* cube = new GameEntity();
+        Mesh* cube_mesh = new Mesh();
+        RenderComponent* renderComponent = new RenderComponent(cube_mesh, matrixId);
+        cube->attachComponent(renderComponent);
+        
+        world_manager_.addEntity(cube);
+//
+        render_system_.startup();
+        
         return true;
     }
 
@@ -99,12 +109,13 @@ namespace bounce {
 
             //LOG(LogLevel::Debug) << deltaTime << "\n";
 
-            while ((event = eventManager.pollEvent()) != nullptr) {
+            while ((event = event_manager_.pollEvent()) != nullptr) {
                 onEvent(*event);
             }
 
-            onLoop();
-            onRender();
+//            onLoop();
+//            onRender();
+            render_system_.update();
         }
 
         onCleanup();
@@ -123,24 +134,24 @@ namespace bounce {
         if (eventType == EventType::Keydown || eventType == EventType::Keyup) {
 
             KeyboardEvent keyboard_event = static_cast<const KeyboardEvent&>(event);
-            keyboardState.processEvent(keyboard_event);
+            keyboard_state_.processEvent(keyboard_event);
 
             int horizontal_acceleration = 0;
             int vertical_acceleration = 0;
 
-            if (keyboardState.isDown(Key::A)) {
+            if (keyboard_state_.isDown(Key::A)) {
                 --horizontal_acceleration;
             }
 
-            if (keyboardState.isDown(Key::D)) {
+            if (keyboard_state_.isDown(Key::D)) {
                 ++horizontal_acceleration;
             }
 
-            if (keyboardState.isDown(Key::W)) {
+            if (keyboard_state_.isDown(Key::W)) {
                 ++vertical_acceleration;
             }
 
-            if (keyboardState.isDown(Key::S)) {
+            if (keyboard_state_.isDown(Key::S)) {
                 --vertical_acceleration;
             }
 
@@ -269,6 +280,7 @@ namespace bounce {
 
         glDisableVertexAttribArray(vertexArray);
         glDisableVertexAttribArray(colorArray);
+        glDisableVertexAttribArray(normalArray);
 
         onFlush();
     }

@@ -16,6 +16,8 @@
 #include "timer.h"
 #include "keyboard_state.h"
 #include "object.h"
+#include "render_system.h"
+#include "world_manager.h"
 
 namespace bounce {
 
@@ -25,17 +27,24 @@ private:
     GLuint programId;
 
     const ApplicationContext& application_context_;
-    const EventManager& eventManager;
-    KeyboardState keyboardState;
+    const EventManager& event_manager_;
+    KeyboardState keyboard_state_;
 
     Timer timer_;
     float delta_time_;
 
     Object object;
+    
+    
+    WorldManager world_manager_;
 
+    RenderSystem render_system_;
+    
 public:
 	App(const ApplicationContext& application_context) :
-		running(true), programId(0), application_context_(application_context), eventManager(application_context.event_manager()) {
+		running(true), programId(0), application_context_(application_context), event_manager_(application_context.event_manager()),
+        render_system_(application_context_, world_manager_)
+    {
 	
     }
 	virtual ~App();

@@ -26,68 +26,82 @@
 #endif
 
 namespace bounce {
-
-class Timer {
-private:
-#ifdef systime
-	timeval lastTime;
-#endif
-#ifdef _WIN32
-    ULONGLONG last_time_;
-#endif
-public:
-	void start();
-	void stop();
-	float getElapsedTime();
-};
-
-#ifdef _WIN32
-
-inline void Timer::start() {
-    last_time_ = GetTickCount64();
-}
-
-inline void Timer::stop() {
-
-}
-
-inline float Timer::getElapsedTime() {
-    ULONGLONG now = GetTickCount64();
-
-    float elapsedTime = now - last_time_;
     
-    last_time_ = now;
-
-    return elapsedTime;
-}
-
-#endif
-
+    class SystemTimer {
+    private:
 #ifdef systime
-
-inline void Timer::start() {
-	gettimeofday(&lastTime, NULL);
-}
-
-inline void Timer::stop() {
-
-}
-
-inline float Timer::getElapsedTime() {
-	timeval now;
-	float elapsedTime;
-	gettimeofday(&now, NULL);
-
-	elapsedTime = (now.tv_sec - lastTime.tv_sec) * 1000.0f;
-	elapsedTime += (now.tv_usec - lastTime.tv_usec) / 1000.0f;
-
-	lastTime = now;
-
-	return elapsedTime;
-}
-
+        timeval last_time_;
 #endif
-
+#ifdef _WIN32
+        ULONGLONG last_time_;
+#endif
+    public:
+        void reset();
+        float getElapsedTime();
+    };
+    
+#ifdef _WIN32
+    
+    inline void SystemTimer::reset() {
+        last_time_ = GetTickCount64();
+    }
+    
+    inline float SystemTimer::getElapsedTime() {
+        ULONGLONG now = GetTickCount64();
+        
+        float elapsedTime = now - last_time_;
+        
+        last_time_ = now;
+        
+        return elapsedTime;
+    }
+    
+#endif
+    
+#ifdef systime
+    
+    inline void SystemTimer::reset() {
+        gettimeofday(&last_time_, NULL);
+    }
+    
+    inline float SystemTimer::getElapsedTime() {
+        timeval now;
+        float elapsed_time;
+        gettimeofday(&now, NULL);
+        
+        elapsed_time = (now.tv_sec - last_time_.tv_sec) * 1000.0f;
+        elapsed_time += (now.tv_usec - last_time_.tv_usec) / 1000.0f;
+        
+        last_time_ = now;
+        
+        return elapsed_time;
+    }
+    
+#endif
+    
+    
+    class Timer {
+    private:
+        SystemTimer system_timer_;
+        
+    public:
+        void start();
+        void stop();
+        float getElapsedTime();
+    };
+    
+    inline void Timer::start() {
+        system_timer_.reset();
+    }
+    
+    inline void Timer::stop() {
+        
+    }
+    
+    inline float Timer::getElapsedTime() {
+        return system_timer_.getElapsedTime();
+    }
+    
 }
 
 #endif /* TIMER_H_ */

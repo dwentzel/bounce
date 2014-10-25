@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef Bounce_console_h
-#define Bounce_console_h
+#ifndef BOUNCE_CONSOLE_H
+#define BOUNCE_CONSOLE_H
 
 
 #endif

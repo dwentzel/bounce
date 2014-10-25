@@ -6,22 +6,36 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
     include/app.h
-    include/single_color_texture_generator.h
     include/bounce_gl.h
+    include/console.h
+    include/game_component.h
+    include/game_entity.h
+    include/game_system.h
     include/keyboard_state.h
+    include/mesh.h
     include/object.h
+    include/render_system.h
     include/shader_manager.h
-    include/timer.h)
+    include/single_color_texture_generator.h
+    include/timer.h
+    include/world_manager.h)
 
 set(SOURCES
     src/app.cc
     src/application_context.cc
-    src/single_color_texture_generator.cc
+    src/console.cc
     src/entry_point.cc
     src/event.cc
+    src/game_component.cc
+    src/game_entity.cc
+    src/game_system.cc
     src/keyboard_state.cc
+    src/mesh.cc
     src/object.cc
-    src/shader_manager.cc)
+    src/render_system.cc
+    src/shader_manager.cc
+    src/single_color_texture_generator.cc
+    src/world_manager.cc)
 
 add_library(
     ${MODULE_NAME}
