@@ -19,9 +19,22 @@
 #include <GL/gl.h>
 #endif
 
+#include <cstdio>
+#define CheckGlError() bounce::CheckOpenGlError(__FILE__,__LINE__)
+
+
+
 namespace bounce {
     const float PI = 3.14159265358979f;
     const float PI2 = PI * 2.0f;
+    
+    inline void CheckOpenGlError(char *file, int line) {
+        GLenum error = glGetError();
+        if (error != GL_NO_ERROR) {
+            std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file, line, glewGetErrorString(error));
+        }
+    };
+
 }
 
 

@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDER_SYSTEM_H
-#define BOUNCE_RENDER_SYSTEM_H
+#ifndef BOUNCE_RENDER_SYSTEM_H_
+#define BOUNCE_RENDER_SYSTEM_H_
 
 #include "bounce_gl.h"
 #include "game_system.h"
@@ -13,6 +13,8 @@ namespace bounce {
         GLuint program_id_;
         GLuint matrix_id_;
         
+        GLuint buffers_[3];
+        
         const ApplicationContext& application_context_;
         const WorldManager& world_manager_;
         
@@ -24,6 +26,14 @@ namespace bounce {
         virtual void startup();
         virtual void shutdown();
         virtual void update();
+        
+        GLuint matrix_id() const { return matrix_id_; }
+        
+        void BindArrayBuffer(int index);
+        void BufferArrayData(int count, GLfloat* data);
+        void VertexAttribPointer(int index, int size);
+        void EnableVertexAttribArray(int index);
+        void DisableVertexAttrib(int index);
     };
     
 }

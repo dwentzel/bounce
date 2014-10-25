@@ -23,6 +23,7 @@ namespace bounce {
         
     public:
         Mesh();
+        ~Mesh();
         
         const GLfloat* vertex_data() const { return vertex_data_; }
         int vertex_count() const { return vertex_count_; }

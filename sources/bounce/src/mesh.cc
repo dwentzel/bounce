@@ -3,12 +3,18 @@
 
 #include "object.h"
 
-bounce::Mesh::Mesh() {
+bounce::Mesh::Mesh() : vertex_count_(0), vertex_data_(0), color_count_(0), color_data_(0) {
     CreateVertexData();
     CreateColorData();
     CreateNormalData();
     CreateIndexData();
-    
+}
+
+bounce::Mesh::~Mesh() {
+    delete [] vertex_data_;
+    delete [] color_data_;
+    delete [] normal_data_;
+    delete [] index_data_;
 }
 
 void bounce::Mesh::CreateIndexData() {
@@ -33,21 +39,6 @@ void bounce::Mesh::CreateIndexData() {
 }
 
 void bounce::Mesh::CreateVertexData() {
-    //GLfloat* vertex_data = new GLfloat[32]
-    //{
-    //    -1.0f, -1.0f, -1.0f,
-    //    -1.0f, 1.0f, -1.0f,
-    //     1.0f, 1.0f, -1.0f,
-    //     1.0f, -1.0f, -1.0f,
-    //    -1.0f, -1.0f, 1.0f,
-    //    -1.0f, 1.0f,  1.0f,
-    //     1.0f, 1.0f,  1.0f,
-    //     1.0f, -1.0f, 1.0f,
-    //};
-    
-    //vertex_data_ = vertex_data;
-    //vertex_count_ = 32;
-    
     GLfloat* vertex_data = new GLfloat[144] {
         -1.0f, -1.0f, -1.0f, 1.0f,
         -1.0f, -1.0f, 1.0f, 1.0f,
@@ -166,25 +157,19 @@ void bounce::Mesh::CreateColorData()
             if (i % 4 == 0 || i % 5 == 0) {
                 color_data[index + 2] = 1.0f;
             }
-            
-            //			else {
-            //				colorDataArray[index] = val;
-            //				colorDataArray[index + 1] = val;
-            //				colorDataArray[index + 2] = val;
-            //			}
-            
-            //			std::cout << "i: " << i << " j: " << j << std::endl;
-            //			std::cout << index << " ";
-            //			std::cout << index + 1 << " ";
-            //			std::cout << index + 2 << " ";
-            //			std::cout << std::endl << std::endl;
-            
         }
     }
     
-    //	for (int i = 0; i < 108; i++) {
-    //		std::cout << colorDataArray[i] << std::endl;
-    //	}
+    for (int i = 0; i < 108; i++) {
+        if (i % 3 == 0) {
+            color_data[i] = 0.5f;
+        }
+        else {
+            color_data[i] = 1.0f;
+        
+        }
+        
+    }
     
     color_data_ = color_data;
     color_count_ = 108;

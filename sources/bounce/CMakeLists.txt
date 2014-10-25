@@ -13,11 +13,14 @@ set(HEADERS
     include/game_system.h
     include/keyboard_state.h
     include/mesh.h
+    include/message.h
     include/object.h
+    include/render_component.h
     include/render_system.h
     include/shader_manager.h
     include/single_color_texture_generator.h
     include/timer.h
+    include/transform_component.h
     include/world_manager.h)
 
 set(SOURCES
@@ -31,10 +34,13 @@ set(SOURCES
     src/game_system.cc
     src/keyboard_state.cc
     src/mesh.cc
+    src/message.cc
     src/object.cc
+    src/render_component.cc
     src/render_system.cc
     src/shader_manager.cc
     src/single_color_texture_generator.cc
+    src/transform_component.cc
     src/world_manager.cc)
 
 add_library(

@@ -22,6 +22,7 @@
 #include "shader_manager.h"
 #include "game_entity.h"
 
+#include "render_component.h"
 //#include "lock_free_queue.h"
 
 
@@ -69,14 +70,16 @@ namespace bounce {
 //
 //        matrixId = glGetUniformLocation(programId, "mvp");
 
+        render_system_.startup();
+        
         GameEntity* cube = new GameEntity();
         Mesh* cube_mesh = new Mesh();
-        RenderComponent* renderComponent = new RenderComponent(cube_mesh, matrixId);
-        cube->attachComponent(renderComponent);
+        RenderComponent* renderComponent = new RenderComponent(&render_system_, cube_mesh);
+        cube->AttachComponent(renderComponent);
         
         world_manager_.addEntity(cube);
 //
-        render_system_.startup();
+        
         
         return true;
     }
