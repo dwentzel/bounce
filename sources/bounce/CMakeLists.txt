@@ -8,12 +8,15 @@ set(HEADERS
     include/app.h
     include/bounce_gl.h
     include/console.h
+    include/control_component.h
     include/game_component.h
+    include/game_component_type.h
     include/game_entity.h
     include/game_system.h
     include/keyboard_state.h
     include/mesh.h
     include/message.h
+    include/movement_component.h
     include/object.h
     include/render_component.h
     include/render_system.h
@@ -27,6 +30,7 @@ set(SOURCES
     src/app.cc
     src/application_context.cc
     src/console.cc
+    src/control_component.cc
     src/entry_point.cc
     src/event.cc
     src/game_component.cc
@@ -35,6 +39,7 @@ set(SOURCES
     src/keyboard_state.cc
     src/mesh.cc
     src/message.cc
+    src/movement_component.cc
     src/object.cc
     src/render_component.cc
     src/render_system.cc

@@ -87,6 +87,55 @@ void bounce::Mesh::CreateVertexData() {
     vertex_count_ = 144;
 }
 
+void bounce::Mesh::CreateColorData() {
+    GLfloat* color_data = new GLfloat[108] {
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        
+        1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        
+        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f,
+        
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f
+    };
+    
+    color_data_ = color_data;
+    color_count_ = 108;
+}
+
 void bounce::Mesh::CreateNormalData() {
     GLfloat* normal_data = new GLfloat[108];
     int i = 0;
@@ -131,46 +180,46 @@ void bounce::Mesh::CreateNormalData() {
     normal_count_ = 108;
 }
 
-void bounce::Mesh::CreateColorData()
-{
-    GLfloat* color_data = new GLfloat[12 * 3 * 3];
-    
-    int sides = 6;
-    int verticesPerSide = 6;
-    int colorsPerVertex = 3;
-    int colorsPerSide = verticesPerSide * colorsPerVertex;
-    
-    for (int i = 0; i < sides; i++) {
-        for (int j = 0; j < verticesPerSide; j++) {
-            int index = i * colorsPerSide + j * colorsPerVertex;
-            
-            if (i == 1) {
-                color_data[index] = 1.0f;
-                color_data[index + 1] = 1.0f;
-            }
-            if (i % 2 == 0) {
-                color_data[index] = 1.0f;
-            }
-            if (i % 3 == 0) {
-                color_data[index + 1] = 1.0f;
-            }
-            if (i % 4 == 0 || i % 5 == 0) {
-                color_data[index + 2] = 1.0f;
-            }
-        }
-    }
-    
-    for (int i = 0; i < 108; i++) {
-        if (i % 3 == 0) {
-            color_data[i] = 0.5f;
-        }
-        else {
-            color_data[i] = 1.0f;
-        
-        }
-        
-    }
-    
-    color_data_ = color_data;
-    color_count_ = 108;
-}
+//void bounce::Mesh::CreateColorData()
+//{
+//    GLfloat* color_data = new GLfloat[12 * 3 * 3];
+//    
+//    int sides = 6;
+//    int verticesPerSide = 6;
+//    int colorsPerVertex = 3;
+//    int colorsPerSide = verticesPerSide * colorsPerVertex;
+//    
+//    for (int i = 0; i < sides; i++) {
+//        for (int j = 0; j < verticesPerSide; j++) {
+//            int index = i * colorsPerSide + j * colorsPerVertex;
+//            
+//            if (i == 1) {
+//                color_data[index] = 1.0f;
+//                color_data[index + 1] = 1.0f;
+//            }
+//            if (i % 2 == 0) {
+//                color_data[index] = 1.0f;
+//            }
+//            if (i % 3 == 0) {
+//                color_data[index + 1] = 1.0f;
+//            }
+//            if (i % 4 == 0 || i % 5 == 0) {
+//                color_data[index + 2] = 1.0f;
+//            }
+//        }
+//    }
+//    
+//    for (int i = 0; i < 108; i++) {
+//        if (i % 3 == 0) {
+//            color_data[i] = 0.5f;
+//        }
+//        else {
+//            color_data[i] = 1.0f;
+//        
+//        }
+//        
+//    }
+//    
+//    color_data_ = color_data;
+//    color_count_ = 108;
+//}

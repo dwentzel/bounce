@@ -10,6 +10,7 @@
 //		#define glGenVertexArrays  	glGenVertexArraysAPPLE
 //	//#endif
 //#endif
+#include <string>
 
 #include <GL/glew.h>
 
@@ -28,10 +29,10 @@ namespace bounce {
     const float PI = 3.14159265358979f;
     const float PI2 = PI * 2.0f;
     
-    inline void CheckOpenGlError(char *file, int line) {
+    inline void CheckOpenGlError(std::string file, int line) {
         GLenum error = glGetError();
         if (error != GL_NO_ERROR) {
-            std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file, line, glewGetErrorString(error));
+            std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file.c_str(), line, glewGetErrorString(error));
         }
     };
 

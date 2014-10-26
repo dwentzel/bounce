@@ -11,7 +11,6 @@
 #include "shader_manager.h"
 
 void bounce::RenderSystem::startup() {
-    
     CheckGlError();
     
     glewExperimental = true; // Needed in core profile
@@ -21,10 +20,13 @@ void bounce::RenderSystem::startup() {
         throw "Failed to initialze GLEW";
     }
     CheckGlError();
+    
     glEnable(GL_DEPTH_TEST);
     CheckGlError();
+    
     glDepthFunc(GL_LESS);
     CheckGlError();
+    
     glClearDepth(1.0);
     CheckGlError();
     
@@ -32,10 +34,7 @@ void bounce::RenderSystem::startup() {
     glGenVertexArrays(1, &vertexArrayId);
     glBindVertexArray(vertexArrayId);
     CheckGlError();
-    
-    fprintf(stdout, "glGenBuffers\n");
-    
-    GLuint buf;
+
     glGenBuffers(3, buffers_);
     
     CheckGlError();
@@ -85,10 +84,6 @@ void bounce::RenderSystem::update() {
     
     glm::mat4 view = glm::lookAt(position, glm::vec3(0, 0, 0),
                                  glm::vec3(0, 1, 0));
-    
-    
-    
-    
     
     const std::vector<GameEntity*>& entities = world_manager_.entities();
     

@@ -28,19 +28,19 @@ KeyboardState::~KeyboardState() {
 
 }
 
-void KeyboardState::processEvent(const KeyboardEvent& keyboardEvent) {
+void KeyboardState::ProcessEvent(const KeyboardEvent& keyboardEvent) {
 	if (keyboardEvent.getType() == EventType::Keydown) {
-		pressedKeys.insert(keyboardEvent.getKeysym().sym);
+		pressed_keys_.insert(keyboardEvent.getKeysym().sym);
 	}
 	else if (keyboardEvent.getType() == EventType::Keyup) {
-		pressedKeys.erase(keyboardEvent.getKeysym().sym);
+		pressed_keys_.erase(keyboardEvent.getKeysym().sym);
 	}
 }
 
-bool KeyboardState::isDown(const Key& key) {
+bool KeyboardState::IsDown(const Key& key) const {
 
-	std::unordered_set<Key>::const_iterator foundKey = pressedKeys.find(key);
-	return foundKey != pressedKeys.end();
+	std::unordered_set<Key>::const_iterator foundKey = pressed_keys_.find(key);
+	return foundKey != pressed_keys_.end();
 }
 
 } /* namespace bounce */
