@@ -10,28 +10,38 @@ void bounce::ControlComponent::Shutdown() {
 }
 
 void bounce::ControlComponent::Update() {
-    int horizontal_acceleration = 0;
-    int vertical_acceleration = 0;
+    int yaw_acceleration = 0;
+    int pitch_acceleration = 0;
+    int roll_acceleration = 0;
     
     if (keyboard_state_.IsDown(Key::A)) {
-        --horizontal_acceleration;
+        ++yaw_acceleration;
     }
     
     if (keyboard_state_.IsDown(Key::D)) {
-        ++horizontal_acceleration;
+        --yaw_acceleration;
     }
     
     if (keyboard_state_.IsDown(Key::W)) {
-        ++vertical_acceleration;
+        --pitch_acceleration;
     }
     
     if (keyboard_state_.IsDown(Key::S)) {
-        --vertical_acceleration;
+        ++pitch_acceleration;
     }
+    
+    if (keyboard_state_.IsDown(Key::Q)) {
+        ++roll_acceleration;
+    }
+    
+    if (keyboard_state_.IsDown(Key::E)) {
+        --roll_acceleration;
+    }
+    
     
     GameEntity* owner = this->owner();
     
-    owner->horizontal_acceleration_direction(horizontal_acceleration);
-    owner->vertical_acceleration_direction(vertical_acceleration);
-
+    owner->yaw_acceleration_direction(yaw_acceleration);
+    owner->pitch_acceleration_direction(pitch_acceleration);
+    owner->roll_acceleration_direction(roll_acceleration);
 }

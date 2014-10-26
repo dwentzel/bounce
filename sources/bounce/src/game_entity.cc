@@ -2,18 +2,11 @@
 #include "game_entity.h"
 #include "game_component.h"
 
-bounce::GameEntity::GameEntity() : horizontal_acceleration_direction_(0), vertical_acceleration_direction_(0), rotation_acceleration_(0.0002f), max_speed_(0.1f), horizontal_speed_(0.0f), vertical_speed_(0.0f), horizontal_angle_(0.0f), vertical_angle_(0.0f) {
-    //orientation_ = glm::quat(1, 1, 0.6, 0.9);
-    
-    horizontal_angle_ = 0.0f;
-    vertical_angle_ = 0.0f;
-    
-//    glm::quat horizontal = glm::angleAxis(horizontal_angle_, glm::normalize(glm::vec3(0.0f, cos(vertical_angle_), sin(vertical_angle_))));
-
-//    orientation_ = horizontal;
+bounce::GameEntity::GameEntity() : yaw_acceleration_direction_(0), pitch_acceleration_direction_(0), roll_acceleration_direction_(0),
+rotation_acceleration_(0.0002f), max_speed_(0.1f),
+yaw_speed_(0.0f), pitch_speed_(0.0f), roll_speed_(0.0f) {
     
     orientation_ = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-//    orientation_ = glm::quat(glm::normalize(glm::vec3(0.5f, 0.5f, 0.0f)));
 }
 
 void bounce::GameEntity::AttachComponent(bounce::GameComponent* component) {

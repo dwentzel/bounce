@@ -43,6 +43,10 @@
             keysym.sym = bounce::Key::D;
         else if (ch == 'w')
             keysym.sym = bounce::Key::W;
+        else if (ch == 'q')
+            keysym.sym = bounce::Key::Q;
+        else if (ch == 'e')
+            keysym.sym = bounce::Key::E;
         
         if (event.type == NSKeyDown)
             eventManager->queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeydownEvent(keysym)));

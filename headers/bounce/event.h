@@ -32,7 +32,7 @@ namespace bounce {
     
     enum Key {
         NO_KEY,
-        A, S, D, W
+        A, S, D, W, Q, E
     };
     
     enum Modifier {

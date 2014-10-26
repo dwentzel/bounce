@@ -109,14 +109,16 @@ void bounce::MovementComponent::Update() {
     float delta_time = timer_.frame_time();
     float delta_speed = owner->rotation_acceleration() * delta_time;
     
-    owner->horizontal_speed(UpdateSpeed(delta_speed, owner->horizontal_acceleration_direction(), owner->horizontal_speed()));
-    owner->vertical_speed(UpdateSpeed(delta_speed, owner->vertical_acceleration_direction(), owner->vertical_speed()));
+    owner->yaw_speed(UpdateSpeed(delta_speed, owner->yaw_acceleration_direction(), owner->yaw_speed()));
+    owner->pitch_speed(UpdateSpeed(delta_speed, owner->pitch_acceleration_direction(), owner->pitch_speed()));
+    owner->roll_speed(UpdateSpeed(delta_speed, owner->roll_acceleration_direction(), owner->roll_speed()));
     
     //float yaw = owner->horizontal_angle();
     //float pitch = owner->vertical_angle();
     
-    float yaw = owner->horizontal_speed();
-    float pitch = owner->vertical_speed();
+    float yaw = owner->yaw_speed();
+    float pitch = owner->pitch_speed();
+    float roll = owner->roll_speed();
     
 //    if (pitch > PI2) {
 //        pitch -= PI2;
@@ -137,25 +139,20 @@ void bounce::MovementComponent::Update() {
     glm::quat orientation = owner->orientation();
     
     glm::vec3 yaw_axis(0.0f, 1.0f, 0.0f);
-//    yaw_axis = glm::normalize(glm::rotate(orientation, yaw_axis));
-    //yaw_axis = orientation * yaw_axis * -orientation;
-//    PrintVector(yaw_axis);
-    
     glm::vec3 pitch_axis(1.0f, 0.0f, 0.0f);
-//    pitch_axis = glm::rotate(orientation, pitch_axis);
-    //pitch_axis = orientation * pitch_axis * -orientation;
-//    PrintVector(pitch_axis);
+    glm::vec3 roll_axis(0.0f, 0.0f, 1.0f);
     
     glm::quat pitch_rotation = glm::angleAxis(pitch, pitch_axis);
-    PrintQuaternion(pitch_rotation, "pitch");
+//    PrintQuaternion(pitch_rotation, "pitch");
     glm::quat yaw_rotation = glm::angleAxis(yaw, yaw_axis);
-    PrintQuaternion(yaw_rotation, "yaw");
-
-    glm::quat rot = orientation * pitch_rotation * yaw_rotation;
+//    PrintQuaternion(yaw_rotation, "yaw");
+    glm::quat roll_rotation = glm::angleAxis(roll, roll_axis);
+    
+    glm::quat rot = orientation * pitch_rotation * yaw_rotation * roll_rotation;
     
 //    glm::quat rot = glm::normalize(orientation * pitch_rotation * yaw_rotation);
     
-    PrintQuaternion(rot, "rot");
+//    PrintQuaternion(rot, "rot");
     
     owner->orientation(rot);
 }
