@@ -55,10 +55,7 @@ void bounce::MovementComponent::Shutdown() {
 void bounce::MovementComponent::Update() {
     GameEntity* owner = this->owner();
     
-    float delta_time = timer_.GetElapsedTime();
-    
-    fprintf(stdout, "%f", delta_time);
-    
+    float delta_time = timer_.frame_time();
     float delta_speed = owner->rotation_acceleration() * delta_time;
     
     owner->horizontal_speed(UpdateSpeed(delta_speed, owner->horizontal_acceleration_direction(), owner->horizontal_speed()));
@@ -86,8 +83,6 @@ void bounce::MovementComponent::Update() {
     
     glm::quat horizontal = glm::angleAxis(horizontal_angle, glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f)));
     glm::quat vertical = glm::angleAxis(vertical_angle, glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f)));
-    
-    
     glm::quat rot = vertical * horizontal;
     
     owner->horizontal_angle(horizontal_angle);

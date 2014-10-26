@@ -80,13 +80,15 @@ namespace bounce {
         RenderComponent* render_component = new RenderComponent(&render_system_, cube_mesh);
         cube->AttachComponent(render_component);
         
-        ControlComponent* control_component = new ControlComponent(keyboard_state_, timer_);
+//        ControlComponent* control_component = new ControlComponent(keyboard_state_, timer_);
+        ControlComponent* control_component = new ControlComponent(keyboard_state_);
         cube->AttachComponent(control_component);
         
         MovementComponent* movement_component = new MovementComponent(timer_);
+//        MovementComponent* movement_component = new MovementComponent();
         cube->AttachComponent(movement_component);
         
-        world_manager_.addEntity(cube);
+        world_manager_.AddEntity(cube);
 //
         
         
@@ -103,18 +105,21 @@ namespace bounce {
         EventPtr event = 0;
 
         timer_.Start();
-        //float deltaTime;
+        float delta_time;
         int frame_count = 0;
         float accumulated_time = 0.0f;
 
         while (running) {
-            delta_time_ = timer_.GetElapsedTime();
-            accumulated_time += delta_time_;
+            timer_.SetFrameTime();
+            timer_.Reset();
+            delta_time = timer_.frame_time();
+
+            accumulated_time += delta_time;
             ++frame_count;
 
             if (accumulated_time > 1000.0f) {
-//                float fps = frame_count * 1000.0f / accumulated_time;
-//                LOG(LogLevel::Debug) << "fps: " << fps << std::endl;
+                float fps = frame_count * 1000.0f / accumulated_time;
+                LOG(LogLevel::Debug) << "fps: " << fps << std::endl;
                 frame_count = 0;
                 accumulated_time = 0.0f;
             }
@@ -128,16 +133,15 @@ namespace bounce {
 //            onLoop();
 //            onRender();
             
-            std::vector<GameEntity*> entities = world_manager_.entities();
+            const GameEntityList& entities = world_manager_.entities();
             
-            for (std::vector<GameEntity*>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
+            for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
                 GameEntity* entity = *i;
                 
                 entity->UpdateComponentOfType(MOVEMENT_COMPONENT);
             }
             
             render_system_.update();
-            timer_.Reset();
         }
 
         onCleanup();
@@ -158,9 +162,9 @@ namespace bounce {
             KeyboardEvent keyboard_event = static_cast<const KeyboardEvent&>(event);
             keyboard_state_.ProcessEvent(keyboard_event);
 
-            std::vector<GameEntity*> entities = world_manager_.entities();
+            const GameEntityList& entities = world_manager_.entities();
             
-            for (std::vector<GameEntity*>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
+            for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
                 GameEntity* entity = *i;
                 
                 entity->UpdateComponentOfType(CONTROL_COMPONENT);

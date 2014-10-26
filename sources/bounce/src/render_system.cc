@@ -6,7 +6,7 @@
 #include <glm/gtx/transform.hpp>
 
 #include "render_system.h"
-#include "transform_component.h"
+#include "game_entity.h"
 #include "bounce_gl.h"
 #include "shader_manager.h"
 
@@ -85,9 +85,9 @@ void bounce::RenderSystem::update() {
     glm::mat4 view = glm::lookAt(position, glm::vec3(0, 0, 0),
                                  glm::vec3(0, 1, 0));
     
-    const std::vector<GameEntity*>& entities = world_manager_.entities();
+    const GameEntityList& entities = world_manager_.entities();
     
-    for (std::vector<GameEntity*>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
+    for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
         GameEntity* entity = *i;
         
         glm::mat4 model = glm::toMat4(entity->orientation());

@@ -5,8 +5,8 @@
  *      Author: daniel
  */
 
-#ifndef TIMER_H_
-#define TIMER_H_
+#ifndef BOUNCE_TIMER_H_
+#define BOUNCE_TIMER_H_
 
 
 #include <iostream>
@@ -28,7 +28,7 @@
 namespace bounce {
     
     class SystemTimer {
-    private:
+    private:        
 #ifdef systime
         timeval last_time_;
 #endif
@@ -79,14 +79,22 @@ namespace bounce {
     private:
         SystemTimer system_timer_;
         
+        float elapsed_time_;
+        
     public:
         void Start();
         void Stop();
-        float GetElapsedTime() const;
+        float GetElapsedTime();
         void Reset();
+        
+        void SetFrameTime();
+        
+        float frame_time() const;
+        
     };
     
     inline void Timer::Start() {
+        elapsed_time_ = 0.0f;
         system_timer_.Reset();
     }
     
@@ -94,7 +102,10 @@ namespace bounce {
         
     }
     
-    inline float Timer::GetElapsedTime() const {
+    inline float Timer::GetElapsedTime() {
+//        elapsed_time_ = system_timer_.GetElapsedTime();
+//        return elapsed_time_;
+        
         return system_timer_.GetElapsedTime();
     }
     
@@ -102,6 +113,14 @@ namespace bounce {
         system_timer_.Reset();
     }
     
+    inline void Timer::SetFrameTime() {
+        elapsed_time_ = system_timer_.GetElapsedTime();
+        system_timer_.Reset();
+    }
+    
+    inline float Timer::frame_time() const {
+        return elapsed_time_;
+    }
 }
 
-#endif /* TIMER_H_ */
+#endif // BOUNCE_TIMER_H_

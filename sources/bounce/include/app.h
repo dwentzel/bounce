@@ -24,17 +24,12 @@ namespace bounce {
 class App {
 private:
     bool running;
-    GLuint programId;
 
     const ApplicationContext& application_context_;
     const EventManager& event_manager_;
     KeyboardState keyboard_state_;
 
     Timer timer_;
-    float delta_time_;
-
-    Object object;
-    
     
     WorldManager world_manager_;
 
@@ -42,7 +37,7 @@ private:
     
 public:
 	App(const ApplicationContext& application_context) :
-		running(true), programId(0), application_context_(application_context), event_manager_(application_context.event_manager()),
+		running(true), application_context_(application_context), event_manager_(application_context.event_manager()),
         render_system_(application_context_, world_manager_)
     {
 	

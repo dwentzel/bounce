@@ -12,12 +12,15 @@ namespace bounce {
         std::vector<GameEntity*> game_entities_;
         
     public:
-        void addEntity(GameEntity* entity);
+        WorldManager();
+        void AddEntity(GameEntity* entity);
         const std::vector<GameEntity*>& entities() const;
     };
     
-    inline void WorldManager::addEntity(GameEntity* entity) {
-        game_entities_.insert(game_entities_.end(), entity);
+    inline WorldManager::WorldManager() {}
+    
+    inline void WorldManager::AddEntity(GameEntity* entity) {
+        game_entities_.push_back(entity);
     }
     
     inline const std::vector<GameEntity*>& WorldManager::entities() const {

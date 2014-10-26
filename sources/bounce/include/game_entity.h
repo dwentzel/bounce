@@ -66,6 +66,8 @@ namespace bounce {
         void HandleMessage(const Message& message);
     };
     
+    typedef std::vector<GameEntity*> GameEntityList;
+    
     inline float GameEntity::rotation_acceleration() const {
         return rotation_acceleration_;
     }

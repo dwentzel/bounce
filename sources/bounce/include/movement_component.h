@@ -9,12 +9,13 @@ namespace bounce {
     
     class MovementComponent : public GameComponent {
     private:
-        const Timer& timer_;
+        Timer& timer_;
         
         float UpdateSpeed(float delta_speed, int acceleration_direction, float speed);
         
     public:
-        MovementComponent(const Timer& timer);
+        MovementComponent(Timer& timer);
+        //MovementComponent();
         
         virtual void Startup();
         
@@ -23,7 +24,10 @@ namespace bounce {
         virtual void Update();
     };
     
-    inline MovementComponent::MovementComponent(const Timer& timer) : GameComponent(MOVEMENT_COMPONENT), timer_(timer) {}
+    inline MovementComponent::MovementComponent(Timer& timer) : GameComponent(MOVEMENT_COMPONENT), timer_(timer) {}
+
+//    inline MovementComponent::MovementComponent() : GameComponent(MOVEMENT_COMPONENT) {}
+
     
 }
 
