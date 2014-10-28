@@ -26,6 +26,9 @@
 #include "control_component.h"
 #include "movement_component.h"
 
+#include "importer.h"
+#include "model.h"
+
 //#include "lock_free_queue.h"
 
 
@@ -46,38 +49,24 @@ namespace bounce {
 //
 //    int xpos, ypos;
 
+    
+    Model model;
 
     bool App::onInit()
     {
         srand(time(0));
 
-//        glewExperimental = true; // Needed in core profile
-//        if (glewInit() != GLEW_OK) {
-//            fprintf(stderr, "Failed to initialize GLEW\n");
-//            return -1;
-//        }
-//
-//        glEnable(GL_DEPTH_TEST);
-//        glDepthFunc(GL_LESS);
-//        glClearDepth(1.0);
-//
-//        GLuint vertexArrayId;
-//        glGenVertexArrays(1, &vertexArrayId);
-//        glBindVertexArray(vertexArrayId);
-//
-//        ShaderManager shaderManager;
-//
-//        programId = shaderManager.loadShaders(
-//            "shaders/triangleShader.vert.glsl",
-//            "shaders/triangleShader.frag.glsl");
-//
-//        matrixId = glGetUniformLocation(programId, "mvp");
+
+        
+        Importer importer(vertex_buffer_);
+        
+        model = importer.ImportFile("models/simple_craft.dae");
 
         render_system_.startup();
         
         GameEntity* cube = new GameEntity();
-        Mesh* cube_mesh = new Mesh();
-        RenderComponent* render_component = new RenderComponent(&render_system_, cube_mesh);
+        //Mesh* cube_mesh = new Mesh();
+        RenderComponent* render_component = new RenderComponent(&render_system_, &model);
         cube->AttachComponent(render_component);
         
 //        ControlComponent* control_component = new ControlComponent(keyboard_state_, timer_);

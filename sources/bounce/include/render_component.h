@@ -2,7 +2,7 @@
 #define BOUNCE_RENDER_COMPONENT_H_
 
 #include "game_component.h"
-#include "mesh.h"
+#include "model.h"
 #include "render_system.h"
 
 namespace bounce {
@@ -11,11 +11,15 @@ namespace bounce {
     {
     private:
         RenderSystem* render_system_;
-        const Mesh* mesh_;
+        const Model* model_;
         
     public:
-        RenderComponent(RenderSystem* render_system, Mesh* mesh)
-        : GameComponent(RENDER_COMPONENT), render_system_(render_system), mesh_(mesh) {}
+//        RenderComponent(RenderSystem* render_system, Mesh* mesh)
+//        : GameComponent(RENDER_COMPONENT), render_system_(render_system), mesh_(mesh) {}
+
+        RenderComponent(RenderSystem* render_system, Model* model)
+        : GameComponent(RENDER_COMPONENT), render_system_(render_system), model_(model) {}
+
         
         virtual void Startup();
         

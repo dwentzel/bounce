@@ -17,6 +17,7 @@
 #include "keyboard_state.h"
 #include "object.h"
 #include "render_system.h"
+#include "vertex_buffer.h"
 #include "world_manager.h"
 
 namespace bounce {
@@ -27,6 +28,9 @@ private:
 
     const ApplicationContext& application_context_;
     const EventManager& event_manager_;
+   
+    VertexBuffer vertex_buffer_;
+    
     KeyboardState keyboard_state_;
 
     Timer timer_;
@@ -38,7 +42,7 @@ private:
 public:
 	App(const ApplicationContext& application_context) :
 		running(true), application_context_(application_context), event_manager_(application_context.event_manager()),
-        render_system_(application_context_, world_manager_)
+        render_system_(application_context_, world_manager_, vertex_buffer_)
     {
 	
     }

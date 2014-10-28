@@ -13,6 +13,6 @@ void main() {
     vec4 v = vec4(vertexPosition_modelspace);
     gl_Position = mvp * v;
     
-    fragmentColor = vec4(vertexColor, 1);
-    //fragmentColor = vec3(1, 1, 0);
+    //fragmentColor = vec4(vertexColor, 1);
+    fragmentColor = vec4(1, 1, 1, 1);
 }

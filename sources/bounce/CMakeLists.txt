@@ -13,9 +13,11 @@ set(HEADERS
     include/game_component_type.h
     include/game_entity.h
     include/game_system.h
+    include/importer.h
     include/keyboard_state.h
     include/mesh.h
     include/message.h
+    include/model.h
     include/movement_component.h
     include/object.h
     include/render_component.h
@@ -24,6 +26,7 @@ set(HEADERS
     include/single_color_texture_generator.h
     include/timer.h
     include/transform_component.h
+    include/vertex_buffer.h
     include/world_manager.h)
 
 set(SOURCES
@@ -36,9 +39,11 @@ set(SOURCES
     src/game_component.cc
     src/game_entity.cc
     src/game_system.cc
+    src/importer.cc
     src/keyboard_state.cc
     src/mesh.cc
     src/message.cc
+    src/model.cc
     src/movement_component.cc
     src/object.cc
     src/render_component.cc
@@ -46,6 +51,7 @@ set(SOURCES
     src/shader_manager.cc
     src/single_color_texture_generator.cc
     src/transform_component.cc
+    src/vertex_buffer.cc
     src/world_manager.cc)
 
 add_library(
@@ -59,6 +65,13 @@ if (MSVC)
 	set(GLEW_INCLUDE_DIR "${GLEW_ROOT_DIR}/include")
 	set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/Win32/glew32.lib")
 endif()
+
+find_package(assimp REQUIRED)
+if (ASSIMP_FOUND)
+	include_directories(${ASSIMP_INCLUDE_DIR})
+	target_link_libraries(${MODULE_NAME} ${ASSIMP_LIBRARIES})
+endif (ASSIMP_FOUND)
+
 
 find_package(glew REQUIRED)
 if (GLEW_FOUND)

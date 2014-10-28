@@ -3,6 +3,8 @@ project(Bounce)
 
 set(BUILD_SHARED_LIBS OFF)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+
 message(${CMAKE_GENERATOR})
 
 #set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)

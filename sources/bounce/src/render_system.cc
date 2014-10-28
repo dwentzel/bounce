@@ -35,7 +35,8 @@ void bounce::RenderSystem::startup() {
     glBindVertexArray(vertexArrayId);
     CheckGlError();
 
-    glGenBuffers(3, buffers_);
+    //glGenBuffers(3, buffers_);
+    glGenBuffers(1, buffers_);
     
     CheckGlError();
     
@@ -44,6 +45,19 @@ void bounce::RenderSystem::startup() {
         fprintf(stdout, "framebuffer not complete\n");
     }
     CheckGlError();
+    
+    glBindBuffer(GL_ARRAY_BUFFER, buffers_[0]);
+    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
+    
+    // Vertex positions
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
+    // Texture coordinates
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    // Normal vectors
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
     
     ShaderManager shader_manager;
     
@@ -55,7 +69,7 @@ void bounce::RenderSystem::startup() {
 }
 
 void bounce::RenderSystem::shutdown() {
-    glDeleteBuffers(3, buffers_);
+    glDeleteBuffers(1, buffers_);
 }
 
 namespace {
@@ -104,27 +118,41 @@ void bounce::RenderSystem::update() {
     
 }
 
-void bounce::RenderSystem::BindArrayBuffer(int index) {
-    glBindBuffer(GL_ARRAY_BUFFER, buffers_[index]);
-    CheckGlError();
+void bounce::RenderSystem::RenderModel(const Model* model)
+{
+    const std::vector<int>& start_indices = model->mesh_start_indices();
+    const std::vector<int>& sizes = model->mesh_sizes();
+    
+    for (std::vector<int>::size_type i = 0; i != start_indices.size(); ++i) {
+        int start_index = start_indices[i];
+        int size = sizes[i];
+        
+        glDrawArrays(GL_TRIANGLES, start_index, size);
+    }
+    
 }
 
-void bounce::RenderSystem::BufferArrayData(int count, GLfloat* data) {
-    glBufferData(GL_ARRAY_BUFFER, count * sizeof(GLfloat), data, GL_STATIC_DRAW);
-    CheckGlError();
-}
-
-void bounce::RenderSystem::VertexAttribPointer(int index, int size) {
-    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    CheckGlError();
-}
-
-void bounce::RenderSystem::EnableVertexAttribArray(int index) {
-    glEnableVertexAttribArray(index);
-    CheckGlError();
-}
-
-void bounce::RenderSystem::DisableVertexAttrib(int index) {
-    glDisableVertexAttribArray(index);
-    CheckGlError();
-}
+//void bounce::RenderSystem::BindArrayBuffer(int index) {
+//    glBindBuffer(GL_ARRAY_BUFFER, buffers_[index]);
+//    CheckGlError();
+//}
+//
+//void bounce::RenderSystem::BufferArrayData(int count, GLfloat* data) {
+//    glBufferData(GL_ARRAY_BUFFER, count * sizeof(GLfloat), data, GL_STATIC_DRAW);
+//    CheckGlError();
+//}
+//
+//void bounce::RenderSystem::VertexAttribPointer(int index, int size) {
+//    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
+//    CheckGlError();
+//}
+//
+//void bounce::RenderSystem::EnableVertexAttribArray(int index) {
+//    glEnableVertexAttribArray(index);
+//    CheckGlError();
+//}
+//
+//void bounce::RenderSystem::DisableVertexAttrib(int index) {
+//    glDisableVertexAttribArray(index);
+//    CheckGlError();
+//}
