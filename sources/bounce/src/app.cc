@@ -56,9 +56,7 @@ namespace bounce {
     {
         srand(time(0));
 
-
-        
-        Importer importer(vertex_buffer_);
+        Importer importer(material_manager_, vertex_buffer_);
         
         model = importer.ImportFile("models/simple_craft.dae");
 

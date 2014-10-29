@@ -4,6 +4,7 @@
 #include "bounce_gl.h"
 #include "game_system.h"
 #include "application_context.h"
+#include "material.h"
 #include "vertex_buffer.h"
 #include "world_manager.h"
 #include "model.h"
@@ -13,16 +14,27 @@ namespace bounce {
     class RenderSystem : public GameSystem {
     private:
         GLuint program_id_;
-        GLuint matrix_id_;
+        GLuint mvp_matrix_id_;
+        GLuint view_matrix_id_;
+        GLuint model_matrix_id_;
+        GLuint light_id_;
         
         GLuint buffers_[3];
         
         const ApplicationContext& application_context_;
         const WorldManager& world_manager_;
+        const MaterialManager& material_manager_;
         const VertexBuffer& vertex_buffer_;
         
     public:
-        RenderSystem(const ApplicationContext& application_context, const WorldManager& world_manager, const VertexBuffer& vertex_buffer) : application_context_(application_context), world_manager_(world_manager), vertex_buffer_(vertex_buffer) {
+        RenderSystem(
+                     const ApplicationContext& application_context,
+                     const WorldManager& world_manager,
+                     const MaterialManager& material_manager,
+                     const VertexBuffer& vertex_buffer)
+        : application_context_(application_context), world_manager_(world_manager),
+          material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+        {
             
         }
         

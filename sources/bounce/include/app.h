@@ -18,6 +18,7 @@
 #include "object.h"
 #include "render_system.h"
 #include "vertex_buffer.h"
+#include "material.h"
 #include "world_manager.h"
 
 namespace bounce {
@@ -31,6 +32,8 @@ private:
    
     VertexBuffer vertex_buffer_;
     
+    MaterialManager material_manager_;
+    
     KeyboardState keyboard_state_;
 
     Timer timer_;
@@ -42,7 +45,7 @@ private:
 public:
 	App(const ApplicationContext& application_context) :
 		running(true), application_context_(application_context), event_manager_(application_context.event_manager()),
-        render_system_(application_context_, world_manager_, vertex_buffer_)
+        render_system_(application_context_, world_manager_, material_manager_, vertex_buffer_)
     {
 	
     }

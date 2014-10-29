@@ -15,6 +15,7 @@ set(HEADERS
     include/game_system.h
     include/importer.h
     include/keyboard_state.h
+    include/material.h
     include/mesh.h
     include/message.h
     include/model.h
@@ -41,6 +42,7 @@ set(SOURCES
     src/game_system.cc
     src/importer.cc
     src/keyboard_state.cc
+    src/material.cc
     src/mesh.cc
     src/message.cc
     src/model.cc

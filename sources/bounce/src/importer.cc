@@ -51,7 +51,47 @@ bounce::Model bounce::Importer::ImportFile(const std::string& filename)
         int mesh_vertex_count = mesh->mNumVertices;
         total_vertex_count += mesh_vertex_count;
         model.AddMeshSize((vertex_buffer_.current_size() - vbo_size) / vertex_total_size);
-        
-        return model;
     }
+    
+    int material_count = scene->mNumMaterials;
+    
+    for (int i = 0; i < material_count; ++i) {
+        model.AddMeshMaterialIndex(material_manager_.next_index());
+        
+        Material& new_material = material_manager_.CreateMaterial();
+        
+        const aiMaterial* material = scene->mMaterials[i];
+        
+        aiColor3D color_diffuse;
+        if (material->Get(AI_MATKEY_COLOR_DIFFUSE, color_diffuse) != AI_SUCCESS) {
+            
+        }
+        new_material.diffuse(&color_diffuse);
+        
+        aiColor3D color_specular;
+        if (material->Get(AI_MATKEY_COLOR_SPECULAR, color_specular) != AI_SUCCESS) {
+            
+        }
+        new_material.specular(&color_specular);
+
+        aiColor3D color_ambient;
+        if (material->Get(AI_MATKEY_COLOR_AMBIENT, color_ambient) != AI_SUCCESS) {
+            
+        }
+        new_material.ambient(&color_ambient);
+
+        aiColor3D color_emissive;
+        if (material->Get(AI_MATKEY_COLOR_EMISSIVE, color_emissive) != AI_SUCCESS) {
+            
+        }
+        new_material.emissive(&color_emissive);
+
+        float shininess;
+        if (material->Get(AI_MATKEY_SHININESS, shininess) != AI_SUCCESS) {
+            
+        }
+        new_material.shininess(shininess);
+    }
+    
+    return model;
 }
