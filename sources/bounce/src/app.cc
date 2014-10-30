@@ -58,7 +58,7 @@ namespace bounce {
 
         Importer importer(material_manager_, vertex_buffer_);
         
-        model = importer.ImportFile("models/simple_craft.fbx");
+        model = importer.ImportFile("models/simple_craft.dae");
 
         render_system_.startup();
         

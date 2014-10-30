@@ -21,12 +21,13 @@
 #endif
 
 #include <cstdio>
+#include <cassert>
 #define CheckGlError() bounce::CheckOpenGlError(__FILE__,__LINE__)
-
+#define ASSERT_NO_GL_ERROR() bounce::AssertNoGlError(__FILE__,__LINE__)
 
 
 namespace bounce {
-    const float PI = 3.14159265358979f;
+    const float PI = 3.1415926535897932384626433832795f;
     const float PI2 = PI * 2.0f;
     
     inline void CheckOpenGlError(std::string file, int line) {
@@ -35,6 +36,15 @@ namespace bounce {
             std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file.c_str(), line, glewGetErrorString(error));
         }
     };
+    
+    inline void AssertNoGlError(std::string file, int line)
+    {
+        GLenum error = glGetError();
+        if (error != GL_NO_ERROR) {
+            std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file.c_str(), line, glewGetErrorString(error));
+            exit(-1);
+        }
+    }
 
 }
 

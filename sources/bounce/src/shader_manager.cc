@@ -7,7 +7,8 @@
 
 using namespace bounce;
 
-void ShaderManager::compileShader(const int& shaderId, const std::string& shaderCode) {
+void ShaderManager::compileShader(const int& shaderId, const std::string& shaderCode)
+{
 	GLint result = GL_FALSE;
 	int infoLogLength;
 
@@ -24,7 +25,8 @@ void ShaderManager::compileShader(const int& shaderId, const std::string& shader
 	delete[] vertexShaderErrorMessage;
 }
 
-std::string ShaderManager::loadShaderCode(const std::string& shaderFilePath) {
+std::string ShaderManager::loadShaderCode(const std::string& shaderFilePath)
+{
 	std::string shaderCode;
 	std::ifstream shaderStream(shaderFilePath, std::ios::in);
 
@@ -40,45 +42,45 @@ std::string ShaderManager::loadShaderCode(const std::string& shaderFilePath) {
 }
 
 GLuint ShaderManager::loadShaders(const std::string& vertexFilePath,
-		const std::string& fragmentFilePath) {
+		const std::string& fragmentFilePath)
+{
 
-	GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-	GLuint fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
+	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
-	std::string vertexShaderCode;
-	vertexShaderCode = loadShaderCode(vertexFilePath);
+	std::string vertex_shader_code;
+	vertex_shader_code = loadShaderCode(vertexFilePath);
 	//std::cout << "vsc: " << vertexShaderCode << std::endl;
 
-	std::string fragmentShaderCode;
-	fragmentShaderCode = loadShaderCode(fragmentFilePath);
+	std::string fragment_shader_code;
+	fragment_shader_code = loadShaderCode(fragmentFilePath);
 	//std::cout << "fsc: " << fragmentShaderCode << std::endl;
 
 	std::cout << "Compiling shader: " << vertexFilePath << std::endl;
-	compileShader(vertexShaderId, vertexShaderCode);
-
+	compileShader(vertex_shader_id, vertex_shader_code);
+    
 	std::cout << "Compiling shader: " << fragmentFilePath << std::endl;
-	compileShader(fragmentShaderId, fragmentShaderCode);
-
+	compileShader(fragment_shader_id, fragment_shader_code);
+    
 	std::cout << "Linking program\n";
-	GLuint programId = glCreateProgram();
-	glAttachShader(programId, vertexShaderId);
-	glAttachShader(programId, fragmentShaderId);
-	glLinkProgram(programId);
-
+	GLuint program_id = glCreateProgram();
+	glAttachShader(program_id, vertex_shader_id);
+	glAttachShader(program_id, fragment_shader_id);
+	glLinkProgram(program_id);
+    ASSERT_NO_GL_ERROR();
+    
 	GLint result = GL_FALSE;
-	int infoLogLength;
-	glGetProgramiv(programId, GL_LINK_STATUS, &result);
-	glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
+	int info_log_length;
+	glGetProgramiv(program_id, GL_LINK_STATUS, &result);
+	glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
 	
-	GLchar *programErrorMessage = new GLchar[std::max(infoLogLength, 1)];
-	glGetProgramInfoLog(programId, infoLogLength, 0, programErrorMessage);
-	fprintf(stdout, "%s\n", programErrorMessage);
-	delete[] programErrorMessage;
+	GLchar *program_error_message = new GLchar[std::max(info_log_length, 1)];
+	glGetProgramInfoLog(program_id, info_log_length, 0, program_error_message);
+	fprintf(stdout, "%s\n", program_error_message);
+	delete[] program_error_message;
 
-	glDeleteShader(vertexShaderId);
-	glDeleteShader(fragmentShaderId);
+	glDeleteShader(vertex_shader_id);
+	glDeleteShader(fragment_shader_id);
 
-	return programId;
-
-	return 0;
+	return program_id;
 }

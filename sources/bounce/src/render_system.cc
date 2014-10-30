@@ -21,6 +21,18 @@ void bounce::RenderSystem::startup() {
     }
     CheckGlError();
     
+    const GLubyte* m = glGetString(GL_VENDOR);
+    fprintf(stdout, "GL_VENDOR: %s\n", m);
+
+    m = glGetString(GL_RENDERER);
+    fprintf(stdout, "GL_RENDERER: %s\n", m);
+    
+    m = glGetString(GL_VERSION);
+    fprintf(stdout, "GL_VERSION: %s\n", m);
+    
+    m = glGetString(GL_EXTENSIONS);
+    fprintf(stdout, "GL_EXTENSIONS: %s\n", m);
+    
     glEnable(GL_DEPTH_TEST);
     CheckGlError();
     
@@ -110,7 +122,7 @@ void bounce::RenderSystem::update() {
     
     glUniformMatrix4fv(view_matrix_id_, 1, GL_FALSE, &view_matrix[0][0]);
     
-    glm::vec3 lightPos = glm::vec3(4,4,4);
+    glm::vec3 lightPos = glm::vec3(0,3,2);
     glUniform3f(light_id_, lightPos.x, lightPos.y, lightPos.z);
     
     const GameEntityList& entities = world_manager_.entities();

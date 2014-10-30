@@ -31,6 +31,7 @@ void main(){
 	float LightPower = 50.0f;
 	
 	// Material properties
+    vec3 MaterialEmissiveColor = Material_emissive;
 	vec3 MaterialDiffuseColor = Material_diffuse;
 	vec3 MaterialAmbientColor = Material_ambient;
 	vec3 MaterialSpecularColor = Material_specular;
@@ -62,11 +63,12 @@ void main(){
 	//  - Looking elsewhere -> < 1
 	float cosAlpha = clamp(dot(E,R), 0,1);
 	
-	color = 
+	color =
+        Material_emissive +
 		// Ambient : simulates indirect lighting
 		MaterialAmbientColor +
 		// Diffuse : "color" of the object
 		MaterialDiffuseColor * LightColor * LightPower * cosTheta / (distance*distance) +
 		// Specular : reflective highlight, like a mirror
-		MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5) / (distance*distance);
+		MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha, Material_shininess) / (distance*distance);
 }
