@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.72.0 commit date:2014-10-21, commit time:11:38, hash:9e963ae</authoring_tool>
     </contributor>
-    <created>2014-10-29T22:03:39</created>
-    <modified>2014-10-29T22:03:39</modified>
+    <created>2014-10-30T21:08:08</created>
+    <modified>2014-10-30T21:08:08</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -79,7 +79,7 @@
   </library_lights>
   <library_images/>
   <library_effects>
-    <effect id="Ship-effect">
+    <effect id="Material_002-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -90,10 +90,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.64 0.64 0.64 1</color>
+              <color sid="diffuse">0.01282347 0.2182142 0.64 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.5 0.5 0.5 1</color>
+              <color sid="specular">0.05620328 0.3540258 0.5 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -107,8 +107,8 @@
     </effect>
   </library_effects>
   <library_materials>
-    <material id="Ship-material" name="Ship">
-      <instance_effect url="#Ship-effect"/>
+    <material id="Material_002-material" name="Material_002">
+      <instance_effect url="#Material_002-effect"/>
     </material>
   </library_materials>
   <library_geometries>
@@ -137,7 +137,7 @@
         <vertices id="Cone-mesh-vertices">
           <input semantic="POSITION" source="#Cone-mesh-positions"/>
         </vertices>
-        <polylist material="Ship-material" count="20">
+        <polylist material="Material_002-material" count="20">
           <input semantic="VERTEX" source="#Cone-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Cone-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -154,7 +154,7 @@
         <instance_geometry url="#Cone-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Ship-material" target="#Ship-material"/>
+              <instance_material symbol="Material_002-material" target="#Material_002-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>

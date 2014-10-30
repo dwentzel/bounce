@@ -30,6 +30,15 @@ target_link_libraries(${MODULE_NAME} ${COCOA_LIBRARY} bounce)
 #    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/Release
 #)
 
+#set(RESOURCE_GUI
+#${PROJECT_SOURCE_DIR}/resources/shaders/triangleShader.vert.glsl
+#)
+
+#set_source_files_properties(
+#${RESOURCE_GUI}
+#PROPERTIES
+#RESOURCE Resources)
+
 file(GLOB ShellScript ${PROJECT_SOURCE_DIR}/bounce.sh)
 
 add_custom_command(TARGET ${MODULE_NAME} POST_BUILD

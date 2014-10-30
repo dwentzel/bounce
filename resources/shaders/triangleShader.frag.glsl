@@ -1,6 +1,7 @@
 #version 330 core
 #extension GL_ARB_explicit_attrib_location : enable
 
+
 // Interpolated values from the vertex shaders
 in vec2 UV;
 in vec3 Position_worldspace;
@@ -31,7 +32,7 @@ void main(){
 	
 	// Material properties
 	vec3 MaterialDiffuseColor = Material_diffuse;
-	vec3 MaterialAmbientColor = Material_ambient * MaterialDiffuseColor;
+	vec3 MaterialAmbientColor = Material_ambient;
 	vec3 MaterialSpecularColor = Material_specular;
 
 	// Distance to the light
@@ -48,7 +49,9 @@ void main(){
 	//  - light is perpendicular to the triangle -> 0
 	//  - light is behind the triangle -> 0
 	float cosTheta = clamp(dot(n,l), 0,1);
-	
+//    float cosTheta = dot(n,l);
+    
+    
 	// Eye vector (towards the camera)
 	vec3 E = normalize(EyeDirection_cameraspace);
 	// Direction in which the triangle reflects the light
@@ -66,5 +69,4 @@ void main(){
 		MaterialDiffuseColor * LightColor * LightPower * cosTheta / (distance*distance) +
 		// Specular : reflective highlight, like a mirror
 		MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5) / (distance*distance);
-
 }

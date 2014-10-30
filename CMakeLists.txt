@@ -30,3 +30,4 @@ enable_testing()
 
 add_subdirectory(external)
 add_subdirectory(sources)
+add_subdirectory(resources)
