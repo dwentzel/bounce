@@ -1,19 +1,20 @@
-#ifndef SHADERMANAGER_H_
-#define SHADERMANAGER_H_
+#ifndef BOUNCE_SHADERMANAGER_H_
+#define BOUNCE_SHADERMANAGER_H_
 
 #include <string>
 
 namespace bounce {
-
-class ShaderManager {
-public:
-	GLuint loadShaders(const std::string& vertexShaderFilePath,
-			const std::string& fragmentShaderFilePath);
-
-private:
-	void compileShader(const int& shaderId, const std::string& shaderCode);
-	std::string loadShaderCode(const std::string& shaderFilePath);
-};
-
+    
+    class ShaderManager {
+    public:
+        GLuint LoadShaders(const std::string& vertex_shader_file_path,
+                           const std::string& fragment_shader_file_path);
+        
+    private:
+        void CompileShader(const int& shader_id, const std::string& shader_code);
+        std::string LoadShaderCode(const std::string& shader_file_path);
+    };
+    
 }
-#endif
+
+#endif // BOUNCE_SHADERMANAGER_H_

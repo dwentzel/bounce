@@ -7,25 +7,25 @@
 
 using namespace bounce;
 
-void ShaderManager::compileShader(const int& shaderId, const std::string& shaderCode)
+void ShaderManager::CompileShader(const int& shader_id, const std::string& shader_code)
 {
 	GLint result = GL_FALSE;
-	int infoLogLength;
+	int info_log_length;
 
-	const char* sourcePointer = shaderCode.c_str();
-	glShaderSource(shaderId, 1, &sourcePointer, 0);
-	glCompileShader(shaderId);
+	const char* source_pointer = shader_code.c_str();
+	glShaderSource(shader_id, 1, &source_pointer, 0);
+	glCompileShader(shader_id);
 
-	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &result);
-	glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
+	glGetShaderiv(shader_id, GL_COMPILE_STATUS, &result);
+	glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &info_log_length);
 	
-	GLchar* vertexShaderErrorMessage = new GLchar[infoLogLength];
-	glGetShaderInfoLog(shaderId, infoLogLength, 0, vertexShaderErrorMessage);
-	fprintf(stdout, "%s\n", vertexShaderErrorMessage);
-	delete[] vertexShaderErrorMessage;
+	GLchar* vertex_shader_error_message = new GLchar[info_log_length];
+	glGetShaderInfoLog(shader_id, info_log_length, 0, vertex_shader_error_message);
+	fprintf(stdout, "%s\n", vertex_shader_error_message);
+	delete[] vertex_shader_error_message;
 }
 
-std::string ShaderManager::loadShaderCode(const std::string& shaderFilePath)
+std::string ShaderManager::LoadShaderCode(const std::string& shaderFilePath)
 {
 	std::string shaderCode;
 	std::ifstream shaderStream(shaderFilePath, std::ios::in);
@@ -41,7 +41,7 @@ std::string ShaderManager::loadShaderCode(const std::string& shaderFilePath)
 	return shaderCode;
 }
 
-GLuint ShaderManager::loadShaders(const std::string& vertexFilePath,
+GLuint ShaderManager::LoadShaders(const std::string& vertexFilePath,
 		const std::string& fragmentFilePath)
 {
 
@@ -49,18 +49,18 @@ GLuint ShaderManager::loadShaders(const std::string& vertexFilePath,
 	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
 	std::string vertex_shader_code;
-	vertex_shader_code = loadShaderCode(vertexFilePath);
+	vertex_shader_code = LoadShaderCode(vertexFilePath);
 	//std::cout << "vsc: " << vertexShaderCode << std::endl;
 
 	std::string fragment_shader_code;
-	fragment_shader_code = loadShaderCode(fragmentFilePath);
+	fragment_shader_code = LoadShaderCode(fragmentFilePath);
 	//std::cout << "fsc: " << fragmentShaderCode << std::endl;
 
 	std::cout << "Compiling shader: " << vertexFilePath << std::endl;
-	compileShader(vertex_shader_id, vertex_shader_code);
+	CompileShader(vertex_shader_id, vertex_shader_code);
     
 	std::cout << "Compiling shader: " << fragmentFilePath << std::endl;
-	compileShader(fragment_shader_id, fragment_shader_code);
+	CompileShader(fragment_shader_id, fragment_shader_code);
     
 	std::cout << "Linking program\n";
 	GLuint program_id = glCreateProgram();

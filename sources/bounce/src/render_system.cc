@@ -76,7 +76,7 @@ void bounce::RenderSystem::startup() {
     
     ShaderManager shader_manager;
     
-    program_id_ = shader_manager.loadShaders(
+    program_id_ = shader_manager.LoadShaders(
                                              "shaders/triangleShader.vert.glsl",
                                              "shaders/triangleShader.frag.glsl");
     
