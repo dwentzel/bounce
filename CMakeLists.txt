@@ -3,7 +3,18 @@ project(Bounce)
 
 set(BUILD_SHARED_LIBS OFF)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+
+if (MSVC)
+    #set(CMAKE_FIND_LIBRARY_PREFIXES "")
+    #set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
+elseif (APPLE)
+
+elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+
+endif ()
+
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 message(${CMAKE_GENERATOR})
 

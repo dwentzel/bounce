@@ -1,4 +1,4 @@
-#include <functional>
+#include <algorithm>
 #include "game_entity.h"
 #include "game_component.h"
 

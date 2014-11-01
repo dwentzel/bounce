@@ -69,10 +69,14 @@ if (MSVC)
 endif()
 
 find_package(assimp REQUIRED)
-if (ASSIMP_FOUND)
-	include_directories(${ASSIMP_INCLUDE_DIR})
-	target_link_libraries(${MODULE_NAME} ${ASSIMP_LIBRARIES})
-endif (ASSIMP_FOUND)
+if (assimp_FOUND)
+    message("assimp_INCLUDE_DIR: ${assimp_INCLUDE_DIR}")
+	include_directories(${assimp_INCLUDE_DIR})
+    message("assimp_LIBRARIES: ${assimp_LIBRARIES}")
+	target_link_libraries(${MODULE_NAME} ${assimp_LIBRARIES})
+else (assimp_FOUND)
+    message("Could not find assimp")
+endif (assimp_FOUND)
 
 
 find_package(glew REQUIRED)

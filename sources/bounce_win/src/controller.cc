@@ -78,6 +78,12 @@ namespace bounce_win {
         case 0x44:
             keysym.sym = bounce::Key::D;
             break;
+        case 0x45:
+            keysym.sym = bounce::Key::E;
+            break;
+        case 0x51:
+            keysym.sym = bounce::Key::Q;
+            break;
         case 0x53:
             keysym.sym = bounce::Key::S;
             break;
