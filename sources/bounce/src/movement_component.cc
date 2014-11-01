@@ -134,7 +134,7 @@ void bounce::MovementComponent::Update() {
 //        yaw += PI2;
 //    }
     
-    fprintf(stdout, "yaw: %f, pitch: %f\n", yaw, pitch);
+    fprintf(stdout, "yaw: %f, pitch: %f, roll: %f\n", yaw, pitch, roll);
     
     glm::quat orientation = owner->orientation();
     
