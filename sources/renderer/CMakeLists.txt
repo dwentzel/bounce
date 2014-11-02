@@ -3,10 +3,13 @@ setup_module(renderer)
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/material.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/vertex_buffer.h)
+    ${MODULE_PUBLIC_INCLUDE_DIR}/vertex_buffer.h
+    include/renderer.h
+)
 
 set(SOURCES
     src/model.cc
+    src/renderer.cc
     src/vertex_buffer.cc
 )
 
