@@ -27,7 +27,7 @@ namespace bounce {
 }
 
 void bounce::RenderSystem::startup() {
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     glewExperimental = true; // Needed in core profile
     if (glewInit() != GLEW_OK) {
@@ -35,7 +35,7 @@ void bounce::RenderSystem::startup() {
         //return -1;
         throw "Failed to initialze GLEW";
     }
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     const GLubyte* m = glGetString(GL_VENDOR);
     LOG_INFO << L"GL_VENDOR: " << m << std::endl;
@@ -50,32 +50,32 @@ void bounce::RenderSystem::startup() {
     LOG_INFO << L"GL_EXTENSIONS: " << m << std::endl;
     
     glEnable(GL_DEPTH_TEST);
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     glDepthFunc(GL_LESS);
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     glClearDepth(1.0);
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     glEnable(GL_CULL_FACE);
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     GLuint vertexArrayId;
     glGenVertexArrays(1, &vertexArrayId);
     glBindVertexArray(vertexArrayId);
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     //glGenBuffers(3, buffers_);
     glGenBuffers(1, buffers_);
     
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE) {
         fprintf(stdout, "framebuffer not complete\n");
     }
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     glBindBuffer(GL_ARRAY_BUFFER, buffers_[0]);
     glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
@@ -120,10 +120,10 @@ namespace {
 
 void bounce::RenderSystem::update() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     glUseProgram(program_id_);
-    CheckGlError();
+    CHECK_GL_ERROR();
     
     glm::vec3 direction(cos(verticalAngle) * sin(horizontalAngle),
                         sin(verticalAngle), cos(verticalAngle) * cos(verticalAngle));
@@ -151,7 +151,7 @@ void bounce::RenderSystem::update() {
         
         glUniformMatrix4fv(mvp_matrix_id_, 1, GL_FALSE, &mvp[0][0]);
         glUniformMatrix4fv(model_matrix_id_, 1, GL_FALSE, &model[0][0]);
-        CheckGlError();
+        CHECK_GL_ERROR();
         
         entity->UpdateComponentOfType(RENDER_COMPONENT);
     }
@@ -185,7 +185,7 @@ void bounce::RenderSystem::RenderModel(const Model* model)
         glUniform1f(shininess_index, material.shininess());
         
         glDrawArrays(GL_TRIANGLES, start_index, size);
-        CheckGlError();
+        CHECK_GL_ERROR();
     }
     
 }

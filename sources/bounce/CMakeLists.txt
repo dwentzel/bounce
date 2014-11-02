@@ -2,11 +2,11 @@ setup_module(bounce)
 
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
     include/app.h
+    include/bounce_gl.h
     include/console.h
     include/control_component.h
     include/game_component.h

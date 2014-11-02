@@ -25,7 +25,7 @@
 
 #include "logging/log.h"
 
-#define CheckGlError() bounce::CheckOpenGlError(__FILE__,__LINE__)
+#define CHECK_GL_ERROR() bounce::CheckOpenGlError(__FILE__,__LINE__)
 #define ASSERT_NO_GL_ERROR() bounce::AssertNoGlError(__FILE__,__LINE__)
 
 
