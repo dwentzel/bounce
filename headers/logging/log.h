@@ -8,13 +8,18 @@
 #ifndef BOUNCE_LOG_H_
 #define BOUNCE_LOG_H_
 
-#ifdef NDEBUG
-#define LOG(x) if (0) std::cerr
-#else
-#define LOG(log_level) bounce::LogManager::instance().Log(log_level)
-#endif
-#define LOG_DEBUG LOG(bounce::LogLevel::Debug)
+//#ifdef NDEBUG
+//#define LOG(x) if (0) std::cerr
+//#else
+#define LOG(log_level) \
+if (log_level > bounce::LogManager::instance().max_log_level()) ; \
+else bounce::LogManager::instance().Log(log_level)
+//#endif
 
+#define LOG_ERROR LOG(bounce::LOG_LEVEL_ERROR)
+#define LOG_WARNING LOG(bounce::LOG_LEVEL_WARNING)
+#define LOG_INFO LOG(bounce::LOG_LEVEL_INFO)
+#define LOG_DEBUG LOG(bounce::LOG_LEVEL_DEBUG)
 
 #include "logger.h"
 #include "log_manager.h"

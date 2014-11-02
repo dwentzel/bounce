@@ -3,6 +3,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
+#include "logging/log.h"
+
 #include "movement_component.h"
 #include "bounce_gl.h"
 
@@ -92,13 +94,12 @@ namespace {
     }
     
     void PrintVector(const glm::vec3& vector) {
-        
-        std::fprintf(stdout, "vector: %f, %f, %f\n", vector.x, vector.y, vector.z);
-        
+        LOG_DEBUG << "vector x: " << vector.x << ", y: " << vector.y << ", z: " << vector.z << "\n";
     }
     
-    void PrintQuaternion(const glm::quat& quaternion, std::string name) {
-        fprintf(stdout, "%s w: %f, x: %f, y: %f, z: %f\n", name.c_str(), quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+    void PrintQuaternion(const glm::quat& quaternion, std::wstring name) {
+        LOG_DEBUG << "quaternion name: " << name << ", w: " << quaternion.w << ", x: "
+            << quaternion.x << ", y: " << quaternion.y << ", z: " << quaternion.z;
     }
     
 }
@@ -113,28 +114,11 @@ void bounce::MovementComponent::Update() {
     owner->pitch_speed(UpdateSpeed(delta_speed, owner->pitch_acceleration_direction(), owner->pitch_speed()));
     owner->roll_speed(UpdateSpeed(delta_speed, owner->roll_acceleration_direction(), owner->roll_speed()));
     
-    //float yaw = owner->horizontal_angle();
-    //float pitch = owner->vertical_angle();
-    
     float yaw = owner->yaw_speed();
     float pitch = owner->pitch_speed();
     float roll = owner->roll_speed();
     
-//    if (pitch > PI2) {
-//        pitch -= PI2;
-//    }
-//    else if (pitch < 0.0f) {
-//        pitch += PI2;
-//    }
-//    
-//    if (yaw > PI2) {
-//        yaw -= PI2;
-//    }
-//    else if (yaw < 0.0f) {
-//        yaw += PI2;
-//    }
-    
-    fprintf(stdout, "yaw: %f, pitch: %f, roll: %f\n", yaw, pitch, roll);
+    LOG_DEBUG << "yaw: " << yaw << ", pitch: " << pitch << ", roll: " << roll << "\n";
     
     glm::quat orientation = owner->orientation();
     

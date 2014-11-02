@@ -5,33 +5,49 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
+#include "logging/log.h"
+
 #include "render_system.h"
 #include "game_entity.h"
 #include "bounce_gl.h"
 #include "shader_manager.h"
+
+
+namespace bounce {
+    std::wostream& operator<<(std::wostream& out, const GLubyte* data)
+    {
+        if (data == nullptr) {
+            out << L"(null)";
+        }
+        else {
+            out << std::string(reinterpret_cast<const char*>(data));
+        }
+        return out;
+    }
+}
 
 void bounce::RenderSystem::startup() {
     CheckGlError();
     
     glewExperimental = true; // Needed in core profile
     if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "Failed to initialize GLEW\n");
+        LOG_ERROR << L"Failed to initialize GLEW" << std::endl;
         //return -1;
         throw "Failed to initialze GLEW";
     }
     CheckGlError();
     
     const GLubyte* m = glGetString(GL_VENDOR);
-    fprintf(stdout, "GL_VENDOR: %s\n", m);
-
+    LOG_INFO << L"GL_VENDOR: " << m << std::endl;
+    
     m = glGetString(GL_RENDERER);
-    fprintf(stdout, "GL_RENDERER: %s\n", m);
+    LOG_INFO << L"GL_RENDERER: " << m << std::endl;
     
     m = glGetString(GL_VERSION);
-    fprintf(stdout, "GL_VERSION: %s\n", m);
+    LOG_INFO << L"GL_VERSION: " << m << std::endl;
     
     m = glGetString(GL_EXTENSIONS);
-    fprintf(stdout, "GL_EXTENSIONS: %s\n", m);
+    LOG_INFO << L"GL_EXTENSIONS: " << m << std::endl;
     
     glEnable(GL_DEPTH_TEST);
     CheckGlError();

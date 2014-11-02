@@ -106,7 +106,7 @@ namespace bounce {
 
             if (accumulated_time > 1000.0f) {
                 float fps = frame_count * 1000.0f / accumulated_time;
-                LOG(LogLevel::Debug) << "fps: " << fps << std::endl;
+                LOG_DEBUG << "fps: " << fps << std::endl;
                 frame_count = 0;
                 accumulated_time = 0.0f;
             }

@@ -1,22 +1,28 @@
-#ifndef DEFAULTLOGGER_H_
-#define DEFAULTLOGGER_H_
+#ifndef BOUNCE_LOGGING_DEFAULT_LOGGER_H_
+#define BOUNCE_LOGGING_DEFAULT_LOGGER_H_
 
 #include <iostream>
 
 namespace bounce {
-
-class DefaultLogger : public Logger {
-public:
-	~DefaultLogger() {
-		std::cout << "Default logger destroyed." << std::endl;
-	}
-
-	std::wostream& Log(const LogLevel& logLevel) {
-		return std::wcout;
-	}
-};
-
+    
+    class DefaultLogger : public Logger
+    {
+    private:
+        LogStream log_stream;
+        
+    public:
+        ~DefaultLogger()
+        {
+//            std::wcout << "Default logger destroyed." << std::endl;
+        }
+        
+        LogStream& Log(const LogLevel& logLevel)
+        {
+            return log_stream;
+        }
+    };
+    
 }
 
 
-#endif
+#endif // BOUNCE_LOGGING_DEFAULT_LOGGER_H_

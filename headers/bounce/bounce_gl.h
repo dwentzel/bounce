@@ -22,6 +22,9 @@
 
 #include <cstdio>
 #include <cassert>
+
+#include "logging/log.h"
+
 #define CheckGlError() bounce::CheckOpenGlError(__FILE__,__LINE__)
 #define ASSERT_NO_GL_ERROR() bounce::AssertNoGlError(__FILE__,__LINE__)
 
@@ -33,7 +36,8 @@ namespace bounce {
     inline void CheckOpenGlError(std::string file, int line) {
         GLenum error = glGetError();
         if (error != GL_NO_ERROR) {
-            std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file.c_str(), line, glewGetErrorString(error));
+            LOG_WARNING << "GL error in file " << file << " @ " << line << ": " << glewGetErrorString(error);
+//            std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file.c_str(), line, glewGetErrorString(error));
         }
     };
     

@@ -6,8 +6,6 @@
 
 #include "object.h"
 
-//#include <Windows.h>
-
 float bounce::Object::UpdateSpeed(float delta_speed, int acceleration_direction, float speed) {
     float new_speed = speed;
     
@@ -82,10 +80,6 @@ glm::quat RotationBetweenVectors(glm::vec3 start, glm::vec3 dest){
 
 void bounce::Object::Animate(float delta_time)
 {
-    char debug_buffer[1000];
-    sprintf(debug_buffer, "delta_time: %f\n", delta_time);
-    //OutputDebugString(debug_buffer);
-
     float delta_speed = rotation_acceleration_ * delta_time;
 
     horizontal_speed_ = UpdateSpeed(delta_speed, horizontal_acceleration_direction_, horizontal_speed_);
@@ -130,13 +124,6 @@ void bounce::Object::Animate(float delta_time)
 
     //glm::quat rot = RotationBetweenVectors(glm::vec3(1, 0, 0), direction);
     model_matrix_ = glm::toMat4(rot);
-    //model_matrix_ = glm::rotate(glm::mat4(1.0f), horizontal_angle_, glm::vec3(0, 1, 0));
-
-    //model_matrix_ = glm::rotate(model_matrix_, vertical_angle_, direction);
-    
-    
-        //glm::rotate(glm::mat4(1.0f), horizontal_angle_, glm::vec3(0, 1, 0))
-        //;
 }
 
 void bounce::Object::CreateIndexData() {

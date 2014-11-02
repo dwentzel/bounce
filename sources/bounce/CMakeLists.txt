@@ -2,11 +2,11 @@ setup_module(bounce)
 
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
     include/app.h
-    include/bounce_gl.h
     include/console.h
     include/control_component.h
     include/game_component.h
@@ -20,7 +20,7 @@ set(HEADERS
     include/message.h
 #    include/model.h
     include/movement_component.h
-    include/object.h
+#    include/object.h
     include/render_component.h
     include/render_system.h
     include/shader_manager.h
@@ -47,7 +47,7 @@ set(SOURCES
     src/message.cc
 #    src/model.cc
     src/movement_component.cc
-    src/object.cc
+#    src/object.cc
     src/render_component.cc
     src/render_system.cc
     src/shader_manager.cc
