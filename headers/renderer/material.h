@@ -1,5 +1,5 @@
-#ifndef BOUNCE_MATERIAL_H_
-#define BOUNCE_MATERIAL_H_
+#ifndef BOUNCE_RENDERER_MATERIAL_H_
+#define BOUNCE_RENDERER_MATERIAL_H_
 
 #include <vector>
 //#include
@@ -117,4 +117,4 @@ namespace bounce {
     }
 }
 
-#endif // BOUNCE_MATERIAL_H_
+#endif // BOUNCE_RENDERER_MATERIAL_H_

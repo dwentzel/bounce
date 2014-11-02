@@ -1,5 +1,5 @@
-#ifndef BOUNCE_VERTEX_BUFFER_H_
-#define BOUNCE_VERTEX_BUFFER_H_
+#ifndef BOUNCE_RENDERER_VERTEX_BUFFER_H_
+#define BOUNCE_RENDERER_VERTEX_BUFFER_H_
 
 #include <cstddef>
 
@@ -18,7 +18,6 @@ namespace bounce {
         size_t current_size() const;
         const void* buffer() const;
     };
-    
 }
 
-#endif // BOUNCE_VERTEX_BUFFER_H_
+#endif // BOUNCE_RENDERER_VERTEX_BUFFER_H_

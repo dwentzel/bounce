@@ -1,5 +1,5 @@
-#ifndef BOUNCE_MODEL_H_
-#define BOUNCE_MODEL_H_
+#ifndef BOUNCE_RENDERER_MODEL_H_
+#define BOUNCE_RENDERER_MODEL_H_
 
 #include <vector>
 
@@ -40,4 +40,4 @@ namespace bounce {
     
 }
 
-#endif // BOUNCE_MODEL_H_
+#endif // BOUNCE_RENDERER_MODEL_H_

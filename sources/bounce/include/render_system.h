@@ -4,10 +4,10 @@
 #include "bounce_gl.h"
 #include "game_system.h"
 #include "application_context.h"
-#include "material.h"
-#include "vertex_buffer.h"
+#include "renderer/material.h"
+#include "renderer/vertex_buffer.h"
 #include "world_manager.h"
-#include "model.h"
+#include "renderer/model.h"
 
 namespace bounce {
     

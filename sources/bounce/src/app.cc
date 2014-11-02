@@ -26,8 +26,8 @@
 #include "control_component.h"
 #include "movement_component.h"
 
-#include "importer.h"
-#include "model.h"
+#include "importer/importer.h"
+#include "renderer/model.h"
 
 //#include "lock_free_queue.h"
 

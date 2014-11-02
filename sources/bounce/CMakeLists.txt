@@ -13,12 +13,12 @@ set(HEADERS
     include/game_component_type.h
     include/game_entity.h
     include/game_system.h
-    include/importer.h
+#    include/importer.h
     include/keyboard_state.h
-    include/material.h
+#    include/material.h
     include/mesh.h
     include/message.h
-    include/model.h
+#    include/model.h
     include/movement_component.h
     include/object.h
     include/render_component.h
@@ -27,7 +27,7 @@ set(HEADERS
     include/single_color_texture_generator.h
     include/timer.h
     include/transform_component.h
-    include/vertex_buffer.h
+#    include/vertex_buffer.h
     include/world_manager.h)
 
 set(SOURCES
@@ -40,12 +40,12 @@ set(SOURCES
     src/game_component.cc
     src/game_entity.cc
     src/game_system.cc
-    src/importer.cc
+#    src/importer.cc
     src/keyboard_state.cc
-    src/material.cc
+#    src/material.cc
     src/mesh.cc
     src/message.cc
-    src/model.cc
+#    src/model.cc
     src/movement_component.cc
     src/object.cc
     src/render_component.cc
@@ -53,7 +53,7 @@ set(SOURCES
     src/shader_manager.cc
     src/single_color_texture_generator.cc
     src/transform_component.cc
-    src/vertex_buffer.cc
+#    src/vertex_buffer.cc
     src/world_manager.cc)
 
 add_library(
@@ -68,39 +68,25 @@ if (MSVC)
 	set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/Win32/glew32.lib")
 endif()
 
-find_package(ASSIMP REQUIRED)
-if (ASSIMP_FOUND)
-#   message("assimp_DIR: ${assimp_DIR}")
-    message("ASSIMP_INCLUDE_DIR: ${ASSIMP_INCLUDE_DIR}")
-	include_directories(${ASSIMP_INCLUDE_DIR})
-    message("ASSIMP_LIBRARIES: ${ASSIMP_LIBRARIES}")
-
-#link_libraries(${ASSIMP_LIBRARY_DIRS})
-    if (APPLE)
-        target_link_libraries(${MODULE_NAME} /usr/local/lib/lib${ASSIMP_LIBRARIES}.dylib)
-    else (APPLE)
-        target_link_libraries(${MODULE_NAME} ${ASSIMP_LIBRARIES})
-    endif (APPLE)
-else (ASSIMP_FOUND)
-    message("Could not find assimp")
-endif (ASSIMP_FOUND)
-
-
 find_package(GLEW REQUIRED)
 if (GLEW_FOUND)
+#    message("GLEW_INCLUDE_DIR: ${GLEW_INCLUDE_DIR}")
+#    message("GLEW_LIBRARIES: ${GLEW_LIBRARIES}")
     include_directories(${GLEW_INCLUDE_DIR})
     target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
 endif (GLEW_FOUND)
 
 find_package(OPENGL REQUIRED)
 if (OPENGL_FOUND)
+#    message("OPENGL_INCLUDE_DIR: ${OPENGL_INCLUDE_DIR}")
+#    message("OPENGL_LIBRARIES: ${OPENGL_LIBRARIES}")
     include_directories(${OPENGL_INCLUDE_DIR})
     target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
 endif (OPENGL_FOUND)
 
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
 
-target_link_libraries(${MODULE_NAME} logging)
+target_link_libraries(${MODULE_NAME} logging renderer importer)
 
 ###########################################################
 # Tests

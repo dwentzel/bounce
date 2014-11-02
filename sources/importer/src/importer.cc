@@ -3,8 +3,6 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "model.h"
-
 bounce::Model bounce::Importer::ImportFile(const std::string& filename)
 {
     Assimp::Importer importer;

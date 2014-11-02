@@ -3,19 +3,26 @@ project(Bounce)
 
 set(BUILD_SHARED_LIBS OFF)
 
-message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 
 if (MSVC)
-    #set(CMAKE_FIND_LIBRARY_PREFIXES "")
-    #set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
+#   set(CMAKE_FIND_LIBRARY_PREFIXES "")
+#   set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
 elseif (APPLE)
-
+#    set(CMAKE_FIND_LIBRARY_PREFIXES "lib")
+#    set(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".dylib")
 elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_FIND_LIBRARY_PREFIXES "lib")
-    set(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".dylib")
+#    message("GNUCC")
 endif ()
 
-message("Generator: ${CMAKE_GENERATOR}")
+message(STATUS "Library prefixes: ${CMAKE_FIND_LIBRARY_PREFIXES}")
+message(STATUS "Library suffixes: ${CMAKE_FIND_LIBRARY_SUFFIXES}")
+
+message(STATUS "Generator: ${CMAKE_GENERATOR}")
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${Bounce_SOURCE_DIR}/cmake/modules")
+message(STATUS "CMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}")
+
 
 #set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)

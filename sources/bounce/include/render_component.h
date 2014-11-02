@@ -2,7 +2,7 @@
 #define BOUNCE_RENDER_COMPONENT_H_
 
 #include "game_component.h"
-#include "model.h"
+#include "renderer/model.h"
 #include "render_system.h"
 
 namespace bounce {

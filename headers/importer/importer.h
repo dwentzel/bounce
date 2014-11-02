@@ -4,9 +4,9 @@
 #include <string>
 #include <vector>
 #include <assimp/Importer.hpp>
-#include "material.h"
-#include "vertex_buffer.h"
-#include "model.h"
+#include "renderer/material.h"
+#include "renderer/vertex_buffer.h"
+#include "renderer/model.h"
 
 namespace bounce {
 

@@ -17,8 +17,8 @@
 #include "keyboard_state.h"
 #include "object.h"
 #include "render_system.h"
-#include "vertex_buffer.h"
-#include "material.h"
+#include "renderer/vertex_buffer.h"
+#include "renderer/material.h"
 #include "world_manager.h"
 
 namespace bounce {
