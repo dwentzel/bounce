@@ -16,7 +16,7 @@ namespace bounce {
 class LogManager {
 private:
 	LogManager() : logger_(nullptr) {};
-    LogManager(const LogManager&);
+    LogManager(const LogManager&) = delete;
 	~LogManager();
 
     void operator=(const LogManager&);
@@ -31,7 +31,7 @@ public:
 
 	void set_logger(Logger* logger);
 	
-    std::ostream& Log(const LogLevel& log_level);
+    std::wostream& Log(const LogLevel& log_level);
 };
 
 

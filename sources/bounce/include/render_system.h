@@ -26,6 +26,9 @@ namespace bounce {
         const MaterialManager& material_manager_;
         const VertexBuffer& vertex_buffer_;
         
+        RenderSystem(const RenderSystem&) = delete;
+        RenderSystem& operator=(const RenderSystem&) = delete;
+
     public:
         RenderSystem(
                      const ApplicationContext& application_context,

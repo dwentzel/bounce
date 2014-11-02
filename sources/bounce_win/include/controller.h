@@ -22,7 +22,8 @@ namespace bounce_win {
     private:
         static void run_thread(void* param);
         void run();
-        
+        bounce::Key KeyCodeToKey(int keycode);
+
         bounce::ApplicationContext application_context_;
 
         HWND window_;

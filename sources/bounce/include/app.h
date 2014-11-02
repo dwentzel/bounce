@@ -41,6 +41,9 @@ private:
     WorldManager world_manager_;
 
     RenderSystem render_system_;
+
+    App(const App&) = delete;
+    App& operator=(const App&) = delete;
     
 public:
 	App(const ApplicationContext& application_context) :

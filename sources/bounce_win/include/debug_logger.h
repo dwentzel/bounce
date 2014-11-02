@@ -1,32 +1,46 @@
 #ifndef BOUNCE_WIN_DEBUGLOGGER_H_
 #define BOUNCE_WIN_DEBUGLOGGER_H_
 
+#include <ostream>
 #include <sstream>
 #include "logging/logger.h"
 
 namespace bounce_win {
 
-    struct DebugStream : public std::ostringstream
+    class DebugStream : public std::wostream
     {
-    public:
-        //DebugStream() {}
+    private:
+        class DebugStreamBuffer : public std::wstringbuf
+        {
+        private:
+            //std:stringstream 
+        public:
+            virtual int sync()
+            {
+                OutputDebugString(str().c_str());
+                return 0;
+            }
+        };
 
-        template<typename T>
-        const DebugStream& operator<<(const T& v) const {
-            OutputDebugString(v);
-        }
+
+        DebugStreamBuffer buffer;
+
+    public:
+        DebugStream() : std::wostream(&buffer) {}
+
     };
 
-    class DebugLogger : public bounce::Logger {
+    class DebugLogger : public bounce::Logger 
+    {
+    private:
+        DebugStream stream;
+
     public:
         DebugLogger() {}
 
-        std::ostream& Log(const bounce::LogLevel& log_level) {
-            return stream;
+        std::wostream& Log(const bounce::LogLevel& log_level) {
+                return stream;
         }
-
-    private:
-        DebugStream stream;
     };
 }
 

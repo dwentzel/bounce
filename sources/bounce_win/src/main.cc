@@ -19,7 +19,7 @@ int WINAPI WinMain(
     bounce::Logger* logger = new bounce_win::DebugLogger();
     bounce::LogManager::instance().set_logger(logger);
 
-    LOG(bounce::LogLevel::Debug) << "STARTED";
+    LOG(bounce::LogLevel::Debug) << "STARTED" << std::endl;
 
     bounce_win::GLContext* context = new bounce_win::GLContext();
     bounce_win::Controller* controller = new bounce_win::Controller(context);

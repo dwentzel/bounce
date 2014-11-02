@@ -20,7 +20,9 @@ message(STATUS "Library suffixes: ${CMAKE_FIND_LIBRARY_SUFFIXES}")
 
 message(STATUS "Generator: ${CMAKE_GENERATOR}")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${Bounce_SOURCE_DIR}/cmake/modules")
+if (APPLE)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${Bounce_SOURCE_DIR}/cmake/modules/osx")
+endif (APPLE)
 message(STATUS "CMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}")
 
 
@@ -33,6 +35,7 @@ set(gtest_force_shared_crt ON)
 set(PUBLIC_INCLUDE_DIR ${Bounce_SOURCE_DIR}/headers)
 
 macro(setup_module MODULE)
+    message(STATUS "Setting up module ${MODULE}")
     set(MODULE_NAME ${MODULE})
 
     set(MODULE_PUBLIC_INCLUDE_DIR ${PUBLIC_INCLUDE_DIR}/${MODULE_NAME})

@@ -86,7 +86,7 @@ endif (OPENGL_FOUND)
 
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
 
-target_link_libraries(${MODULE_NAME} logging renderer importer)
+target_link_libraries(${MODULE_NAME} logging importer renderer)
 
 ###########################################################
 # Tests

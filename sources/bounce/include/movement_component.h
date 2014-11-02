@@ -13,6 +13,9 @@ namespace bounce {
         
         float UpdateSpeed(float delta_speed, int acceleration_direction, float speed);
         
+        MovementComponent(const MovementComponent&) = delete;
+        MovementComponent& operator=(const MovementComponent&) = delete;
+
     public:
         MovementComponent(Timer& timer);
         //MovementComponent();

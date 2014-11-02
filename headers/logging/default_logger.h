@@ -11,8 +11,8 @@ public:
 		std::cout << "Default logger destroyed." << std::endl;
 	}
 
-	std::ostream& Log(const LogLevel& logLevel) {
-		return std::cout;
+	std::wostream& Log(const LogLevel& logLevel) {
+		return std::wcout;
 	}
 };
 

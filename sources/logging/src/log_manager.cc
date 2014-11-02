@@ -14,7 +14,7 @@ void LogManager::set_logger(Logger* logger) {
 }
 
 
-std::ostream& LogManager::Log(const LogLevel& log_level) {
+std::wostream& LogManager::Log(const LogLevel& log_level) {
 	return logger_->Log(log_level);
 }
 

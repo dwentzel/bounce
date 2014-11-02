@@ -19,7 +19,7 @@ protected:
 public:
 	virtual ~Logger() = 0;
 
-	virtual std::ostream& Log(const LogLevel& logLevel) = 0;
+	virtual std::wostream& Log(const LogLevel& logLevel) = 0;
 };
 
 

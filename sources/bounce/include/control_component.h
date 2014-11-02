@@ -13,6 +13,9 @@ namespace bounce {
         
 //        const Timer& timer_;
         
+        ControlComponent(const ControlComponent&) = delete;
+        ControlComponent& operator=(const ControlComponent&) = delete;
+
     public:
 //        ControlComponent(const KeyboardState& keyboard_state, const Timer& timer);
   

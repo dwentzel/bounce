@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include <assimp/Importer.hpp>
 #include "renderer/material.h"
 #include "renderer/vertex_buffer.h"
 #include "renderer/model.h"
@@ -15,6 +14,9 @@ namespace bounce {
         MaterialManager& material_manager_;
         VertexBuffer& vertex_buffer_;
         
+        Importer(const Importer&) = delete;
+        Importer& operator=(const Importer&) = delete;
+
     public:
         Importer(MaterialManager& material_manager, VertexBuffer& vertex_buffer);
         Model ImportFile(const std::string& filename);

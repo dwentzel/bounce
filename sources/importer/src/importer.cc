@@ -1,5 +1,6 @@
 #include "importer.h"
 
+#include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
@@ -23,9 +24,9 @@ bounce::Model bounce::Importer::ImportFile(const std::string& filename)
     
     Model model;
     
-    for (int i = 0; i < scene->mNumMeshes; ++i) {
+    for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
         aiMesh* mesh = scene->mMeshes[i];
-        int mesh_face_count = mesh->mNumFaces;
+        unsigned int mesh_face_count = mesh->mNumFaces;
         
         model.AddMeshMaterialIndex(mesh->mMaterialIndex);
         
@@ -33,7 +34,7 @@ bounce::Model bounce::Importer::ImportFile(const std::string& filename)
         
         model.AddMeshStartIndex(vbo_size / vertex_total_size);
         
-        for (int j = 0; j < mesh_face_count; ++j) {
+        for (unsigned int j = 0; j < mesh_face_count; ++j) {
             const aiFace& face = mesh->mFaces[j];
             
             for (int k = 0; k < 3; ++k) {

@@ -63,39 +63,38 @@ namespace bounce_win {
         ::CloseHandle(thread_handle_);
     }
 
-    int Controller::keyDown(int key, LPARAM lParam)
+    bounce::Key Controller::KeyCodeToKey(int key)
     {
-        bounce::Keysym keysym;
-        keysym.mod = bounce::Modifier::NO_MODIFIER;
-        keysym.sym = bounce::Key::NO_KEY;
-
-        bool triggerEvent = true;
-
         switch (key) {
         case 0x41:
-            keysym.sym = bounce::Key::A;
-            break;
+            return bounce::Key::A;
         case 0x44:
-            keysym.sym = bounce::Key::D;
-            break;
+            return bounce::Key::D;
         case 0x45:
-            keysym.sym = bounce::Key::E;
-            break;
+            return bounce::Key::E;
         case 0x51:
-            keysym.sym = bounce::Key::Q;
-            break;
+            return bounce::Key::Q;
         case 0x53:
-            keysym.sym = bounce::Key::S;
-            break;
+            return bounce::Key::S;
         case 0x57:
-            keysym.sym = bounce::Key::W;
-            break;
+            return bounce::Key::W;
         default:
-            triggerEvent = false;
-            break;
+            return bounce::Key::NO_KEY;
         }
+    }
 
-        if (triggerEvent) {
+    int Controller::keyDown(int key_code, LPARAM lParam)
+    {
+
+
+
+        bounce::Key key = KeyCodeToKey(key_code);
+
+        if (key != bounce::NO_KEY) {
+            bounce::Keysym keysym;
+            keysym.mod = bounce::Modifier::NO_MODIFIER;
+            keysym.sym = key;
+
             application_context_.event_manager().queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeydownEvent(keysym)));
         }
 
