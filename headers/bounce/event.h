@@ -77,6 +77,11 @@ namespace bounce {
         }
     };
     
+    class QuitEvent : public Event {
+    public:
+        QuitEvent() : Event(Quit) {}
+    };
+    
     typedef std::unique_ptr<Event> EventPtr;
     typedef LockFreeQueue<EventPtr> EventQueue;
     

@@ -16,14 +16,22 @@
 @synthesize eventManager;
 @synthesize applicationContext;
 
-//@synthesize window = _window;
-//@synthesize view = _view;
+
+NSThread* bounceThread;
 
 - (id)init {
     if (self = [super init]) {
         // allocate and initialize window and stuff here ..
     }
     return self;
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [bounceThread cancel];
+    
+    while (![bounceThread isFinished]) {
+        
+    }
 }
 
 //- (void)applicationWillFinishLaunching:(NSNotification *)notification {
@@ -41,9 +49,11 @@ void draw(void* context) {
 }
 
 - (void)draw {
-    //NSLog(@"Drawing...");
-    
-    //[self.openGLContext makeCurrentContext];
+
+    if (bounceThread.isCancelled)
+    {
+        self.eventManager->queueEvent(bounce::EventPtr(new bounce::QuitEvent()));
+    }
     
     [self.openGLContext flushBuffer];
 }
@@ -77,8 +87,7 @@ void draw(void* context) {
     
     bounce::Logger* logger = new bounce::DefaultLogger();
     bounce::LogManager::instance().set_logger(logger);
-    
-    
+        
     self.applicationContext = new bounce::ApplicationContext(&draw, self);
     self.eventManager = self.applicationContext->event_manager_ptr();
     
@@ -86,26 +95,11 @@ void draw(void* context) {
     
     gameView.eventManager = self.eventManager;
     
-    //[self.openGLContext setView:[self.window contentView]];
     [self.window setContentView: gameView];
     [self.openGLContext setView: gameView];
     
-    //[self.openGLContext makeCurrentContext];
-    
-    
-    
-    [NSThread detachNewThreadSelector:@selector(runBounce) toTarget:self withObject:nil];
-    //bounce::EntryPoint entryPoint;
-    //bounce_mac::MacEventManager eventManager;
-    //entryPoint.run(eventManager, &draw, self);
-    
-    
-//    [NSTimer
-//     scheduledTimerWithTimeInterval:.1
-//     target:self
-//     selector:@selector(draw)
-//     userInfo:nil
-//     repeats:YES];
+    bounceThread = [[NSThread alloc]initWithTarget:self selector:@selector(runBounce) object:nil];
+    [bounceThread start];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)_app {

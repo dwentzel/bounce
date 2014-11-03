@@ -159,11 +159,13 @@ void bounce::RenderSystem::update() {
     application_context_.flush();
 }
 
-void bounce::RenderSystem::RenderModel(const Model* model)
+void bounce::RenderSystem::RenderModel(unsigned int model_handle)
 {
-    const std::vector<int>& start_indices = model->mesh_start_indices();
-    const std::vector<int>& sizes = model->mesh_sizes();
-    const std::vector<int>& material_indices = model->material_indices();
+    const Model& model = model_manager_.GetModel(model_handle);
+    
+    const std::vector<int>& start_indices = model.mesh_start_indices();
+    const std::vector<int>& sizes = model.mesh_sizes();
+    const std::vector<int>& material_indices = model.material_indices();
     
     for (std::vector<int>::size_type i = 0; i != start_indices.size(); ++i) {
         int start_index = start_indices[i];

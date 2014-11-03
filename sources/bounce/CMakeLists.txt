@@ -1,20 +1,20 @@
 setup_module(bounce)
 
 set(HEADERS
-    ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
     include/app.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
     include/bounce_gl.h
     include/console.h
     include/control_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     include/game_component.h
     include/game_component_type.h
     include/game_entity.h
     include/game_system.h
 #    include/importer.h
     include/keyboard_state.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
 #    include/material.h
     include/mesh.h
     include/message.h

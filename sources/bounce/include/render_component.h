@@ -11,14 +11,11 @@ namespace bounce {
     {
     private:
         RenderSystem* render_system_;
-        const Model* model_;
+        const unsigned int model_handle_;
         
     public:
-//        RenderComponent(RenderSystem* render_system, Mesh* mesh)
-//        : GameComponent(RENDER_COMPONENT), render_system_(render_system), mesh_(mesh) {}
-
-        RenderComponent(RenderSystem* render_system, Model* model)
-        : GameComponent(RENDER_COMPONENT), render_system_(render_system), model_(model) {}
+        RenderComponent(RenderSystem* render_system, unsigned int model_handle)
+        : GameComponent(RENDER_COMPONENT), render_system_(render_system), model_handle_(model_handle) {}
 
         
         virtual void Startup();

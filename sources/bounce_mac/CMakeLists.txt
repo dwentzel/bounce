@@ -6,11 +6,13 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ObjC++")
 
 set(HEADERS
     include/AppDelegate.h
+    include/BounceRunner.h
     include/GameView.h)
 
 set(SOURCES
     src/main.mm
     src/AppDelegate.mm
+    src/BounceRunner.mm
     src/GameView.mm)
 
 add_executable(

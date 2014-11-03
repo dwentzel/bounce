@@ -4,3 +4,6 @@ build/
 .settings
 .project
 .cproject
+*~
+*\.blend1
+^\#*

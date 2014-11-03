@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     MyApplicationDelegate * appDelegate = [[[MyApplicationDelegate alloc] init] autorelease];
     
     appDelegate.window = window;
-    [NSApp setDelegate: appDelegate];
+    [(NSApplication*)NSApp setDelegate: appDelegate];
     [NSApp run];
     return 0;
 

@@ -3,7 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "renderer/material.h"
+#include "renderer/model_manager.h"
+#include "renderer/material_manager.h"
 #include "renderer/vertex_buffer.h"
 #include "renderer/model.h"
 
@@ -11,6 +12,7 @@ namespace bounce {
 
     class Importer {
     private:
+        ModelManager& model_manager_;
         MaterialManager& material_manager_;
         VertexBuffer& vertex_buffer_;
         
@@ -18,12 +20,16 @@ namespace bounce {
         Importer& operator=(const Importer&) = delete;
 
     public:
-        Importer(MaterialManager& material_manager, VertexBuffer& vertex_buffer);
-        Model ImportFile(const std::string& filename);
+        Importer(ModelManager& model_manager_,
+                 MaterialManager& material_manager,
+                 VertexBuffer& vertex_buffer);
+        int ImportFile(const std::string& filename);
     };
     
-    inline Importer::Importer(MaterialManager& material_manager, VertexBuffer& vertex_buffer)
-    : material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+    inline Importer::Importer(ModelManager& model_manager,
+                              MaterialManager& material_manager,
+                              VertexBuffer& vertex_buffer)
+    : model_manager_(model_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
     {}
     
 }

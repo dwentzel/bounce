@@ -80,41 +80,6 @@ namespace bounce {
     {
         shininess_ = s;
     }
-
-    
-    class MaterialManager {
-    private:
-        std::vector<Material> materials_;
-        
-    public:
-        Material& CreateMaterial();
-        
-        const Material& GetMaterial(int index) const;
-        
-        int size() const;
-        int next_index() const;
-    };
-    
-    inline Material& MaterialManager::CreateMaterial()
-    {
-        materials_.push_back(Material());
-        return *materials_.rbegin();
-    }
-    
-    inline int MaterialManager::size() const
-    {
-        return materials_.size();
-    }
-    
-    inline int MaterialManager::next_index() const
-    {
-        return materials_.size();
-    }
-    
-    inline const Material& MaterialManager::GetMaterial(int index) const
-    {
-        return materials_[index];
-    }
 }
 
 #endif // BOUNCE_RENDERER_MATERIAL_H_

@@ -38,47 +38,29 @@ namespace bounce {
         //delete window;
     }
 
-    GLuint matrixId;
-
-//    glm::vec3 position = glm::vec3(0, 0, 15);
-//    float horizontalAngle = 0.0f;
-//    float verticalAngle = 0.0f;
-//    float initialFoV = 45.0f;
-//    float speed = 3.0f;
-//    float mouseSpeed = 0.5f;
-//
-//    int xpos, ypos;
-
-    
-    Model model;
-
     bool App::onInit()
     {
         srand(time(0));
 
-        Importer importer(material_manager_, vertex_buffer_);
+        Importer importer(model_manager_, material_manager_, vertex_buffer_);
+
         
-        model = importer.ImportFile("models/simple_craft.dae");
+        unsigned int model_handle = importer.ImportFile("models/simple_craft.dae");
 
         render_system_.startup();
         
         GameEntity* cube = new GameEntity();
-        //Mesh* cube_mesh = new Mesh();
-        RenderComponent* render_component = new RenderComponent(&render_system_, &model);
+        RenderComponent* render_component = new RenderComponent(&render_system_, model_handle);
         cube->AttachComponent(render_component);
         
-//        ControlComponent* control_component = new ControlComponent(keyboard_state_, timer_);
         ControlComponent* control_component = new ControlComponent(keyboard_state_);
         cube->AttachComponent(control_component);
         
         MovementComponent* movement_component = new MovementComponent(timer_);
-//        MovementComponent* movement_component = new MovementComponent();
         cube->AttachComponent(movement_component);
         
         world_manager_.AddEntity(cube);
-//
-        
-        
+
         return true;
     }
 
@@ -96,7 +78,7 @@ namespace bounce {
         int frame_count = 0;
         float accumulated_time = 0.0f;
 
-        while (running) {
+        while (running_) {
             timer_.SetFrameTime();
             timer_.Reset();
             delta_time = timer_.frame_time();
@@ -141,7 +123,7 @@ namespace bounce {
         EventType event_type = event.getType();
 
         if (event_type == EventType::Quit) {
-            running = false;
+            running_ = false;
         }
 
         if (event_type == EventType::Keydown || event_type == EventType::Keyup) {

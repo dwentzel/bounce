@@ -4,7 +4,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-bounce::Model bounce::Importer::ImportFile(const std::string& filename)
+int bounce::Importer::ImportFile(const std::string& filename)
 {
     Assimp::Importer importer;
     
@@ -22,7 +22,8 @@ bounce::Model bounce::Importer::ImportFile(const std::string& filename)
     
     int total_vertex_count = 0;
     
-    Model model;
+    unsigned int model_handle = model_manager_.next_handle();
+    Model& model = model_manager_.CreateModel();
     
     for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
         aiMesh* mesh = scene->mMeshes[i];
@@ -92,5 +93,5 @@ bounce::Model bounce::Importer::ImportFile(const std::string& filename)
         new_material.shininess(shininess);
     }
     
-    return model;
+    return model_handle;
 }
