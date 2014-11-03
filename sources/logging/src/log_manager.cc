@@ -1,22 +1,14 @@
-/*
- * LogManager.cpp
- *
- *  Created on: 31 maj 2013
- *      Author: daniel
- */
+#include "log_manager.h"
 
-#include "logging/log_manager.h"
+#include "stdout_log_output.h"
 
-namespace bounce {
-    
-    void LogManager::set_logger(Logger* logger) {
-        logger_ = std::unique_ptr<Logger>(logger);
-    }
-    
-    
-//    LogStream& LogManager::Log(const LogLevel& log_level) {
-//        return log_stream_;
-//        //return logger_->Log(log_level);
-//    }
-    
-} /* namespace bounce */
+bounce::LogManager::LogManager() : max_log_level_(LOG_LEVEL_DEBUG)
+{
+    log_stream_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
+}
+
+
+
+bounce::LogManager::~LogManager() {
+    //delete logger;
+}

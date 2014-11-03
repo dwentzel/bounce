@@ -14,7 +14,8 @@ namespace bounce {
         ModelManager& operator=(const ModelManager&) = delete;
         
     public:
-        ModelManager() {}
+        ModelManager();
+        ~ModelManager();
         
         Model& CreateModel();
         

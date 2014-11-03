@@ -24,14 +24,7 @@ namespace bounce {
                  MaterialManager& material_manager,
                  VertexBuffer& vertex_buffer);
         int ImportFile(const std::string& filename);
-    };
-    
-    inline Importer::Importer(ModelManager& model_manager,
-                              MaterialManager& material_manager,
-                              VertexBuffer& vertex_buffer)
-    : model_manager_(model_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
-    {}
-    
+    };    
 }
 
 #endif // BOUNCE_IMPORTER_H_

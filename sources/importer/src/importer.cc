@@ -4,6 +4,15 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+bounce::Importer::Importer(ModelManager& model_manager,
+                           MaterialManager& material_manager,
+                           VertexBuffer& vertex_buffer)
+: model_manager_(model_manager),
+  material_manager_(material_manager),
+  vertex_buffer_(vertex_buffer)
+{}
+
+
 int bounce::Importer::ImportFile(const std::string& filename)
 {
     Assimp::Importer importer;

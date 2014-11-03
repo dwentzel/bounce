@@ -21,6 +21,17 @@ else bounce::LogManager::instance().Log(log_level)
 #define LOG_INFO LOG(bounce::LOG_LEVEL_INFO)
 #define LOG_DEBUG LOG(bounce::LOG_LEVEL_DEBUG)
 
+namespace bounce {
+
+    enum LogLevel {
+        LOG_LEVEL_ERROR,
+        LOG_LEVEL_WARNING,
+        LOG_LEVEL_INFO,
+        LOG_LEVEL_DEBUG
+    };
+    
+}
+
 #include "logger.h"
 #include "log_manager.h"
 

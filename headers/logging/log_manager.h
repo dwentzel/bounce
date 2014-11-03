@@ -10,91 +10,19 @@
 
 #include <memory>
 #include <vector>
-#include "logger.h"
-
+#include "log.h"
+#include "log_stream.h"
 
 namespace bounce {
     
-    class LogOutput {
-    public:
-        virtual ~LogOutput() = 0;
-        virtual void output(const std::wstring& message) = 0;
-    };
-    
-    inline LogOutput::~LogOutput() {}
-    
-    class StdoutLogOutput : public LogOutput {
-    public:
-        virtual void output(const std::wstring& message);
-    };
-    
-    inline void StdoutLogOutput::output(const std::wstring& message)
-    {
-        std::wcout << message;
-    }
-    
-    class LogStreamBuffer : public std::wstringbuf {
-    private:
-        std::vector<std::unique_ptr<LogOutput>> outputs_;
-    public:
-        virtual int sync()
-        {
-            std::wstring data = str();
-            //                std::wcout << str();
-            
-            for (std::vector<std::unique_ptr<LogOutput>>::iterator i = outputs_.begin(); i != outputs_.end(); ++i) {
-                (*i)->output(data);
-            }
-            
-            str(L"");
-            return 0;
-        }
-        
-        void AddOutput(std::unique_ptr<LogOutput> output) {
-            outputs_.push_back(std::move(output));
-        }
-    };
-    
-    class LogStream : public std::wostream {
-    private:
-        
-        LogStreamBuffer buffer_;
-        
-    public:
-        LogStream();
-        
-        void AddOutput(std::unique_ptr<LogOutput> output);
-        
-    };
-    
-    inline LogStream::LogStream() : std::wostream(&buffer_) {}
-    
-    inline void LogStream::AddOutput(std::unique_ptr<LogOutput> output)
-    {
-        buffer_.AddOutput(std::move(output));
-    }
-    
-    inline std::wostream& operator<<(std::wostream& out, const std::string& str)
-    {
-        std::copy(str.begin(), str.end(), std::ostream_iterator<char, wchar_t>(out));
-        return out;
-    }
-    
-    //std::LogStream&
-    
     class LogManager {
     private:
-        LogManager() : logger_(nullptr), max_log_level_(LOG_LEVEL_DEBUG)
-        {
-            log_stream_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
-        }
+        LogManager();
         
         LogManager(const LogManager&) = delete;
         ~LogManager();
         
         void operator=(const LogManager&);
-        
-        std::unique_ptr<Logger> logger_;
         
         LogStream log_stream_;
         
@@ -125,11 +53,6 @@ namespace bounce {
             return log_stream_;
         }
     };
-    
-    
-    inline LogManager::~LogManager() {
-        //delete logger;
-    }
     
 }
 #endif // BOUNCE_LOGMANAGER_H_
