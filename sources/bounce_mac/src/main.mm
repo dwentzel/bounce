@@ -1,7 +1,11 @@
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
+#import "logging/log_manager.h"
 
 int main(int argc, char** argv) {
+    
+    bounce::LogManager::instance().Startup();
+    
     [NSAutoreleasePool new];
     [NSApplication sharedApplication];
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];

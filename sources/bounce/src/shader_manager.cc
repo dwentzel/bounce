@@ -56,13 +56,13 @@ GLuint ShaderManager::LoadShaders(const std::string& vertexFilePath,
 	fragment_shader_code = LoadShaderCode(fragmentFilePath);
 	//std::cout << "fsc: " << fragmentShaderCode << std::endl;
 
-	std::cout << "Compiling shader: " << vertexFilePath << std::endl;
+	LOG_DEBUG << "Compiling shader: " << vertexFilePath << std::endl;
 	CompileShader(vertex_shader_id, vertex_shader_code);
     
-	std::cout << "Compiling shader: " << fragmentFilePath << std::endl;
+	LOG_DEBUG << "Compiling shader: " << fragmentFilePath << std::endl;
 	CompileShader(fragment_shader_id, fragment_shader_code);
     
-	std::cout << "Linking program\n";
+	LOG_DEBUG << "Linking program\n";
 	GLuint program_id = glCreateProgram();
 	glAttachShader(program_id, vertex_shader_id);
 	glAttachShader(program_id, fragment_shader_id);
@@ -76,8 +76,11 @@ GLuint ShaderManager::LoadShaders(const std::string& vertexFilePath,
 	
 	GLchar *program_error_message = new GLchar[std::max(info_log_length, 1)];
 	glGetProgramInfoLog(program_id, info_log_length, 0, program_error_message);
-	fprintf(stdout, "%s\n", program_error_message);
-	delete[] program_error_message;
+
+    LOG_WARNING << "Linking program: " << program_error_message;
+//    fprintf(stdout, "%s\n", program_error_message);
+	
+    delete[] program_error_message;
 
 	glDeleteShader(vertex_shader_id);
 	glDeleteShader(fragment_shader_id);

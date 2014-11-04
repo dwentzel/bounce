@@ -1,7 +1,7 @@
 #include "log_stream.h"
 
 
-bounce::LogStream::LogStream() : std::wostream(&buffer_)
+bounce::LogStream::LogStream(LogStreamBuffer& buffer) : buffer_(buffer), std::wostream(&buffer_)
 {
 }
 

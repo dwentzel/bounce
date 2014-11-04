@@ -1,18 +1,16 @@
 #include "log_stream_buffer.h"
 
+bounce::LogStreamBuffer::LogStreamBuffer(LogMessageQueue& message_queue)
+: message_queue_(message_queue)
+{
+}
+
 int bounce::LogStreamBuffer::sync()
 {
     std::wstring data = str();
     
-    for (std::vector<std::unique_ptr<LogOutput>>::iterator i = outputs_.begin(); i != outputs_.end(); ++i) {
-        (*i)->output(data);
-    }
+    message_queue_.produce(LogMessagePtr(new std::wstring(data)));
     
     str(L"");
     return 0;
-}
-
-void bounce::LogStreamBuffer::AddOutput(std::unique_ptr<LogOutput> output)
-{
-    outputs_.push_back(std::move(output));
 }

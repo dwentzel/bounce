@@ -14,7 +14,6 @@ float bounce::MovementComponent::UpdateSpeed(float delta_speed, int acceleration
     float new_speed = speed;
     float max_speed = owner()->max_speed();
     
-    
     if (acceleration_direction > 0) {
         if (new_speed < max_speed) {
             new_speed += delta_speed;

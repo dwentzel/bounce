@@ -2,7 +2,7 @@
 #define BOUNCE_EVENT_HPP_
 
 #include <memory>
-#include "lock_free_queue.h"
+#include "framework/lock_free_queue.h"
 
 namespace bounce {
     

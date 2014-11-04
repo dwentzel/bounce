@@ -6,8 +6,8 @@
 namespace bounce {
 
     class StdoutLogOutput : public LogOutput {
-    public:
-        virtual void output(const std::wstring& message);
+    public:        
+        virtual void Output(const LogMessage& message);
     };
 
 }

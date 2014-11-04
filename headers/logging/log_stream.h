@@ -9,13 +9,12 @@ namespace bounce {
 
     class LogStream : public std::wostream {
     private:
-        
-        LogStreamBuffer buffer_;
+        LogStreamBuffer& buffer_;
         
     public:
-        LogStream();
+        LogStream(LogStreamBuffer& buffer);
         
-        void AddOutput(std::unique_ptr<LogOutput> output);
+//        void AddOutput(std::unique_ptr<LogOutput> output);
         
     };
     

@@ -29,4 +29,8 @@
     [super dealloc];
 }
 
+- (void)RunBounce
+{
+}
+
 @end

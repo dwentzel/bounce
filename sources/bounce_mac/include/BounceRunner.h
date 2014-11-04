@@ -3,7 +3,7 @@
 @interface BounceRunner : NSObject
 {
     NSAutoreleasePool *pPool;
-    NSOpenGLContext* openGLContext;
+//    NSOpenGLContext* openGLContext;
 }
 
 @property(assign) NSOpenGLContext* openGLContext;
