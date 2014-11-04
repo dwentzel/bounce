@@ -13,7 +13,10 @@ int main(int argc, char** argv) {
     id appName = [[NSProcessInfo processInfo] processName];
     id quitTitle = [@"Quit " stringByAppendingString:appName];
     id quitMenuItem = [[[NSMenuItem alloc] initWithTitle:quitTitle
-                                                  action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
+                                                  action:@selector(terminate:)
+                                           keyEquivalent:@"q"]
+                       autorelease];
+    
     [appMenu addItem:quitMenuItem];
     [appMenuItem setSubmenu:appMenu];
     id window = [[[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 640, 480)

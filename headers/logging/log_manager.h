@@ -44,8 +44,6 @@ namespace bounce {
             max_log_level_ = log_level;
         }
         
-        void set_logger(Logger* logger);
-        
         std::wostream& Log(const LogLevel& log_level)
         {
             //            log_stream_ << log_level;

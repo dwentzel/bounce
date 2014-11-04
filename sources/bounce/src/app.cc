@@ -16,7 +16,6 @@
 #include <glm/gtx/transform.hpp>
 
 #include "logging/log.h"
-#include "logging/default_logger.h"
 
 #include "app.h"
 #include "shader_manager.h"

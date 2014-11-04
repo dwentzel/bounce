@@ -32,7 +32,6 @@ namespace bounce {
     
 }
 
-#include "logger.h"
 #include "log_manager.h"
 
 #endif /* LOG_H_ */

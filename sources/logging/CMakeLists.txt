@@ -1,7 +1,7 @@
 setup_module(logging)
 
 set(HEADERS
-    ${MODULE_PUBLIC_INCLUDE_DIR}/default_logger.h
+#    ${MODULE_PUBLIC_INCLUDE_DIR}/default_logger.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/log_manager.h
 #    ${MODULE_PUBLIC_INCLUDE_DIR}/logger.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/log_manager.h
@@ -20,10 +20,6 @@ set(SOURCES
     src/log_target.cc
     src/stdout_log_output.cc
 )
-
-
-message("the sources: ${SOURCES}")
-
 
 add_library(
     ${MODULE_NAME}

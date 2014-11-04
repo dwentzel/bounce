@@ -1,6 +1,5 @@
 #import "bounce/entry_point.h"
 #import "logging/log.h"
-#import "logging/default_logger.h"
 
 #import "AppDelegate.h"
 #import "GameView.h"
@@ -84,10 +83,7 @@ void draw(void* context) {
     
     GLint one = 1;
     [self.openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
-    
-//    bounce::Logger* logger = new bounce::DefaultLogger();
-//    bounce::LogManager::instance().set_logger(logger);
-    
+        
     self.applicationContext = new bounce::ApplicationContext(&draw, self);
     self.eventManager = self.applicationContext->event_manager_ptr();
     

@@ -24,14 +24,12 @@
     
     if (event.type == NSKeyDown || event.type == NSKeyUp)
     {
-        unsigned int quals = event.modifierFlags;
+//        unsigned int quals = event.modifierFlags;
         NSString* str = event.characters;
         NSString* strWithout = event.charactersIgnoringModifiers;
         
-        //NSLog(str);
-        
         unichar ch = str.length ? [str characterAtIndex: 0] : 0;
-        unichar without = strWithout.length ? [strWithout characterAtIndex: 0] : 0;
+//        unichar without = strWithout.length ? [strWithout characterAtIndex: 0] : 0;
         
         bounce::Keysym keysym;
         
