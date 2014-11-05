@@ -10,12 +10,10 @@
 
 #include <memory>
 
+#include "framework/timer.h"
 #include "application_context.h"
-#include "bounce_gl.h"
 #include "event.h"
-#include "timer.h"
 #include "keyboard_state.h"
-#include "object.h"
 #include "render_system.h"
 #include "renderer/vertex_buffer.h"
 #include "renderer/model_manager.h"

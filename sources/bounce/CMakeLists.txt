@@ -1,34 +1,34 @@
 setup_module(bounce)
 
 set(HEADERS
-    include/app.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/app.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
-    include/bounce_gl.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_main.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     include/console.h
     include/control_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     include/game_component.h
-    include/game_component_type.h
-    include/game_entity.h
-    include/game_system.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_type.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/game_system.h
 #    include/importer.h
-    include/keyboard_state.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
 #    ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
 #    include/material.h
     include/mesh.h
-    include/message.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
 #    include/model.h
     include/movement_component.h
 #    include/object.h
     include/render_component.h
-    include/render_system.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/render_system.h
     include/shader_manager.h
     include/single_color_texture_generator.h
-    include/timer.h
     include/transform_component.h
 #    include/vertex_buffer.h
-    include/world_manager.h)
+    ${MODULE_PUBLIC_INCLUDE_DIR}/world_manager.h)
 
 set(SOURCES
     src/app.cc

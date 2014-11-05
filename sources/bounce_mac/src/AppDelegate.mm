@@ -1,4 +1,7 @@
+#import "bounce/bounce_main.h"
+
 #import "bounce/entry_point.h"
+
 #import "logging/log.h"
 
 #import "AppDelegate.h"
@@ -48,11 +51,22 @@ void draw(void* context) {
 }
 
 - (void)draw {
-
+    
     if (bounceThread.isCancelled)
     {
         self.eventManager->queueEvent(bounce::EventPtr(new bounce::QuitEvent()));
     }
+    
+    NSEvent *event =
+    [NSApp
+     nextEventMatchingMask:NSAnyEventMask
+     untilDate:[NSDate distantFuture]
+     inMode:NSDefaultRunLoopMode
+     dequeue:YES];
+    
+    [NSApp sendEvent:event];
+    
+    [NSApp updateWindows];
     
     [self.openGLContext flushBuffer];
 }
@@ -65,7 +79,7 @@ void draw(void* context) {
     entryPoint.run(*self.applicationContext);
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+- (void)createWindow {
     NSOpenGLPixelFormatAttribute attr[] = {
         NSOpenGLPFAOpenGLProfile,
         NSOpenGLProfileVersion3_2Core,
@@ -83,9 +97,8 @@ void draw(void* context) {
     
     GLint one = 1;
     [self.openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
-        
-    self.applicationContext = new bounce::ApplicationContext(&draw, self);
-    self.eventManager = self.applicationContext->event_manager_ptr();
+    
+
     
     GameView* gameView = [[GameView alloc] init];
     
@@ -93,9 +106,18 @@ void draw(void* context) {
     
     [self.window setContentView: gameView];
     [self.openGLContext setView: gameView];
+    [self.openGLContext makeCurrentContext];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    bounceThread = [[NSThread alloc]initWithTarget:self selector:@selector(runBounce) object:nil];
-    [bounceThread start];
+    self.applicationContext = new bounce::ApplicationContext(&draw, self);
+    self.eventManager = self.applicationContext->event_manager_ptr();
+    
+    bounce_main(self.applicationContext);
+    
+    //bounceThread = [[NSThread alloc]initWithTarget:self selector:@selector(runBounce) object:nil];
+    //[bounceThread start];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)_app {

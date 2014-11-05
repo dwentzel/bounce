@@ -30,10 +30,13 @@ void bounce::RenderSystem::startup() {
     CHECK_GL_ERROR();
     
     glewExperimental = true; // Needed in core profile
-    if (glewInit() != GLEW_OK) {
+    
+    GLenum glew_error = glewInit();
+    if (glew_error != GLEW_OK) {
+        std::cout << glewGetErrorString(glew_error) << std::endl;
         LOG_ERROR << L"Failed to initialize GLEW" << std::endl;
-        //return -1;
-        throw "Failed to initialze GLEW";
+        
+        exit(-1);
     }
     CHECK_GL_ERROR();
     

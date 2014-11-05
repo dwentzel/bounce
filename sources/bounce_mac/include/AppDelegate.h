@@ -2,11 +2,13 @@
 #import "bounce/application_context.h"
 
 @interface MyApplicationDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
-	NSWindow* window;
+    NSWindow* window;
 	NSOpenGLContext* openGLContext;
 	bounce::EventManager* eventManager;
 	//@private NSView* _view;
 }
+
+- (void)createWindow;
 
 @property(assign) NSWindow* window;
 @property(assign) NSOpenGLContext* openGLContext;

@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
     appDelegate.window = window;
     [(NSApplication*)NSApp setDelegate: appDelegate];
     [NSApp run];
+        
     return 0;
 
 }

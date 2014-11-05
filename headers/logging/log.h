@@ -13,7 +13,7 @@
 //#else
 #define LOG(log_level) \
 if (log_level > bounce::LogManager::instance().max_log_level()) ; \
-else bounce::LogManager::instance().Log(log_level)
+else bounce::LogSync(bounce::LogManager::instance().Log(log_level))
 //#endif
 
 #define LOG_ERROR LOG(bounce::LOG_LEVEL_ERROR)
@@ -35,6 +35,7 @@ namespace bounce {
     std::wostream& operator<<(std::wostream& out, const std::string& str);    
 }
 
+#include "log_sync.h"
 #include "log_manager.h"
 
 #endif /* LOG_H_ */

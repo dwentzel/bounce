@@ -5,20 +5,25 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ObjC++")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ObjC++")
 
 set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_mac.h
     include/AppDelegate.h
+    include/bounce_application.h
     include/BounceRunner.h
     include/GameView.h)
 
 set(SOURCES
     src/main.mm
     src/AppDelegate.mm
+    src/bounce_application.mm
+    src/bounce_mac.mm
     src/BounceRunner.mm
     src/GameView.mm)
 
-add_executable(
+add_library(
     ${MODULE_NAME}
     ${HEADERS}
-    ${SOURCES})
+    ${SOURCES}
+)
     
 
 #source_group(\\ FILES ${SOURCES})

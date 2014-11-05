@@ -3,7 +3,7 @@
 
 #include "game_component.h"
 #include "game_component_type.h"
-#include "timer.h"
+#include "framework/timer.h"
 
 namespace bounce {
     
