@@ -60,7 +60,7 @@ void draw(void* context) {
     NSEvent *event =
     [NSApp
      nextEventMatchingMask:NSAnyEventMask
-     untilDate:[NSDate distantFuture]
+     untilDate:nil
      inMode:NSDefaultRunLoopMode
      dequeue:YES];
     
