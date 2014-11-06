@@ -14,27 +14,27 @@ void bounce::ControlComponent::Update() {
     int pitch_acceleration = 0;
     int roll_acceleration = 0;
     
-    if (keyboard_state_.IsDown(Key::Q)) {
+    if (keyboard_state_.IsDown(KEY_Q)) {
         ++yaw_acceleration;
     }
     
-    if (keyboard_state_.IsDown(Key::E)) {
+    if (keyboard_state_.IsDown(KEY_E)) {
         --yaw_acceleration;
     }
     
-    if (keyboard_state_.IsDown(Key::W)) {
+    if (keyboard_state_.IsDown(KEY_W)) {
         --pitch_acceleration;
     }
     
-    if (keyboard_state_.IsDown(Key::S)) {
+    if (keyboard_state_.IsDown(KEY_S)) {
         ++pitch_acceleration;
     }
     
-    if (keyboard_state_.IsDown(Key::A)) {
+    if (keyboard_state_.IsDown(KEY_A)) {
         ++roll_acceleration;
     }
     
-    if (keyboard_state_.IsDown(Key::D)) {
+    if (keyboard_state_.IsDown(KEY_D)) {
         --roll_acceleration;
     }
     

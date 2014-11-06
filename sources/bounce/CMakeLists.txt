@@ -15,6 +15,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_system.h
 #    include/importer.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
 #    ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
 #    include/material.h
     include/mesh.h

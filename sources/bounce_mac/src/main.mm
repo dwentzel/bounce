@@ -3,6 +3,7 @@
 #import "AppDelegate.h"
 #import "logging/log_manager.h"
 #import "bounce_mac.h"
+#import "bounce_window.h"
 #import "GameView.h"
 
 void pollEvents()
@@ -47,18 +48,18 @@ void bounce_ui::CreateWindow()
     [openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
     
     
-    id window = [[[NSWindow alloc]
+    id window = [[[BounceWindow alloc]
                   initWithContentRect:NSMakeRect(0, 0, 640, 480)
                   styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO]
                  autorelease];
     [window cascadeTopLeftFromPoint:NSMakePoint(20,20)];
     //[window setTitle:appName];
     [window makeKeyAndOrderFront:nil];
-    
+    [window setEventManager:eventManager];
     
     
     GameView* gameView = [[GameView alloc] init];
-    gameView.eventManager = eventManager;
+    //gameView.eventManager = eventManager;
     
     [window setContentView: gameView];
     [openGLContext setView: gameView];
@@ -73,6 +74,7 @@ int main(int argc, char** argv) {
     eventManager = context->event_manager_ptr();
     
     [NSAutoreleasePool new];
+    //NSApp = [NSApplication sharedApplication];
     NSApp = [BounceApplication sharedApplication];
     
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
@@ -95,7 +97,7 @@ int main(int argc, char** argv) {
     
     BounceApplicationDelegate * appDelegate = [[[BounceApplicationDelegate alloc] init] autorelease];
     appDelegate.applicationContext = context;
-    //    appDelegate.window = window;
+    
     [(NSApplication*)NSApp setDelegate: appDelegate];
     [NSApp run];
     

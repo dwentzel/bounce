@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "framework/lock_free_queue.h"
+#include "keys.h"
 
 namespace bounce {
     
@@ -30,19 +31,6 @@ namespace bounce {
         return type;
     }
     
-    enum Key {
-        NO_KEY,
-        A, S, D, W, Q, E
-    };
-    
-    enum Modifier {
-        NO_MODIFIER
-    };
-    
-    struct Keysym {
-        Key sym;
-        Modifier mod;
-    };
     
     class KeyboardEvent: public Event {
     private:
