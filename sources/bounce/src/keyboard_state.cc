@@ -28,12 +28,13 @@ KeyboardState::~KeyboardState() {
 
 }
 
-void KeyboardState::ProcessEvent(const KeyboardEvent& keyboardEvent) {
-	if (keyboardEvent.getType() == EventType::Keydown) {
-		pressed_keys_.insert(keyboardEvent.getKeysym().sym);
+void KeyboardState::ProcessEvent(const KeyboardEvent& keyboardEvent)
+{
+	if (keyboardEvent.type() == EVENT_KEYDOWN) {
+		pressed_keys_.insert(keyboardEvent.keysym().sym);
 	}
-	else if (keyboardEvent.getType() == EventType::Keyup) {
-		pressed_keys_.erase(keyboardEvent.getKeysym().sym);
+	else if (keyboardEvent.type() == EVENT_KEYUP) {
+		pressed_keys_.erase(keyboardEvent.keysym().sym);
 	}
 }
 

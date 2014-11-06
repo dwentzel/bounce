@@ -8,66 +8,56 @@
 namespace bounce {
     
     enum EventType {
-        Keydown, Keyup, Quit
+        EVENT_KEYDOWN,
+        EVENT_KEYUP,
+        EVENT_QUIT
     };
     
     class Event {
     private:
-        EventType type;
+        EventType type_;
     public:
-        EventType getType() const;
+        EventType type() const;
         virtual ~Event() = 0;
     protected:
-        Event(EventType type) :
-        type(type) {
-        }
+        Event(EventType type);
     };
     
-    inline Event::~Event() {
-        //std::cout << "Delete event" << std::endl;
+    inline EventType Event::type() const {
+        return type_;
     }
     
-    inline EventType Event::getType() const {
-        return type;
-    }
     
     
     class KeyboardEvent: public Event {
     private:
-        Keysym keysym;
+        Keysym keysym_;
         
     protected:
-        KeyboardEvent(EventType eventType, Keysym keysym) :
-        Event(eventType), keysym(keysym) {
-        }
+        KeyboardEvent(EventType eventType, Keysym keysym);
         
     public:
-        const Keysym& getKeysym() const;
+        const Keysym& keysym() const;
+        
     };
     
-    inline const Keysym& KeyboardEvent::getKeysym() const {
-        return keysym;
+    inline const Keysym& KeyboardEvent::keysym() const {
+        return keysym_;
     }
     
     class KeydownEvent: public KeyboardEvent {
     public:
-        KeydownEvent(Keysym keysym) :
-        KeyboardEvent(EventType::Keydown, keysym) {
-            
-        }
+        KeydownEvent(Keysym keysym);
     };
     
     class KeyupEvent: public KeyboardEvent {
     public:
-        KeyupEvent(Keysym keysym) :
-        KeyboardEvent(EventType::Keyup, keysym) {
-            
-        }
+        KeyupEvent(Keysym keysym);
     };
     
     class QuitEvent : public Event {
     public:
-        QuitEvent() : Event(Quit) {}
+        QuitEvent();
     };
     
     typedef std::unique_ptr<Event> EventPtr;

@@ -121,13 +121,13 @@ namespace bounce {
 
     void App::onEvent(const Event& event) {
 
-        EventType event_type = event.getType();
+        EventType event_type = event.type();
 
-        if (event_type == EventType::Quit) {
+        if (event_type == EVENT_QUIT) {
             running_ = false;
         }
 
-        if (event_type == EventType::Keydown || event_type == EventType::Keyup) {
+        if (event_type == EVENT_KEYDOWN || event_type == EVENT_KEYUP) {
 
             KeyboardEvent keyboard_event = static_cast<const KeyboardEvent&>(event);
             keyboard_state_.ProcessEvent(keyboard_event);
