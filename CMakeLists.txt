@@ -46,6 +46,27 @@ macro(setup_module MODULE)
         include)
 endmacro(setup_module)
 
+macro(setup_testing)
+    set(TEST_EXE_NAME ${MODULE_NAME}_unit_tests)
+
+    add_executable(
+        ${TEST_EXE_NAME}
+        ${TEST_HEADERS}
+        ${TEST_SOURCES}
+    )
+
+    target_include_directories(
+        ${TEST_EXE_NAME} PRIVATE
+        ${gtest_SOURCE_DIR}/include
+        ${gtest_SOURCE_DIR}
+    )
+
+    target_link_libraries(${TEST_EXE_NAME} ${MODULE_NAME})
+    target_link_libraries(${TEST_EXE_NAME} gtest gtest_main)
+
+    add_test(${TEST_EXE_NAME} ${TEST_EXE_NAME})
+endmacro(setup_testing)
+
 enable_testing()
 
 add_subdirectory(external)

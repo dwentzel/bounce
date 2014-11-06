@@ -3,7 +3,7 @@
 #include "stdout_log_output.h"
 
 bounce::LogManager::LogManager()
-: log_worker_context_(message_queue_), buffer_(message_queue_), log_stream_(&buffer_), max_log_level_(LOG_LEVEL_DEBUG)
+: log_worker_context_(message_queue_), buffer_(message_queue_), log_stream_(&buffer_), max_log_level_(LOG_LEVEL_ERROR)
 {
     //buffer_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
     log_worker_context_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
@@ -11,6 +11,8 @@ bounce::LogManager::LogManager()
 
 bounce::LogManager::~LogManager()
 {
+    log_worker_.Stop();
+    worker_thread_->join();
     //delete logger;
 }
 
@@ -21,5 +23,6 @@ void bounce::LogManager::Startup()
 
 void bounce::LogManager::Shutdown()
 {
+    log_worker_.Stop();
     worker_thread_->join();
 }

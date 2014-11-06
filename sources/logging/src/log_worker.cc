@@ -54,3 +54,8 @@ void bounce::LogWorker::Run(LogWorkerContext& context)
         std::this_thread::sleep_for(d);
     }
 }
+
+void bounce::LogWorker::Stop()
+{
+    running_.store(false);
+}

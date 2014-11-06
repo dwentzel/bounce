@@ -1,7 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "bounce/application_context.h"
 
-@interface MyApplicationDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
+@interface BounceApplicationDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     NSWindow* window;
 	NSOpenGLContext* openGLContext;
 	bounce::EventManager* eventManager;

@@ -26,8 +26,8 @@ class App {
 private:
     bool running_;
 
-    const ApplicationContext& application_context_;
-    const EventManager& event_manager_;
+    ApplicationContext& application_context_;
+    EventManager& event_manager_;
    
     VertexBuffer vertex_buffer_;
     ModelManager model_manager_;
@@ -44,7 +44,7 @@ private:
     App& operator=(const App&) = delete;
     
 public:
-	App(const ApplicationContext& application_context) :
+	App(ApplicationContext& application_context) :
 		running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
         render_system_(application_context_, world_manager_, model_manager_, material_manager_, vertex_buffer_)
     {

@@ -28,7 +28,7 @@ namespace bounce {
     
     class LogWorker {
     private:
-        std::atomic<bool> running_;
+        std::atomic<int> running_;
         
     public:
         LogWorker();

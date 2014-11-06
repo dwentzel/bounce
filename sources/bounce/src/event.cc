@@ -2,11 +2,23 @@
 
 namespace bounce {
 
-    EventPtr EventManager::pollEvent() const
+    
+    EventManager::EventManager()
+    {
+//        event_queue_ = new EventQueue();
+    }
+    
+    EventManager::~EventManager()
+    {
+    
+    }
+    
+    
+    EventPtr EventManager::PollEvent()
     {
         EventPtr event;
 
-        if (event_queue_->consume(event)) {
+        if (event_queue_.consume(event)) {
             return event;
         }
         else {
@@ -14,7 +26,8 @@ namespace bounce {
         }
     }
 
-    void EventManager::queueEvent(EventPtr event) const {
-        event_queue_->produce(std::move(event));
+    void EventManager::QueueEvent(EventPtr event)
+    {
+        event_queue_.produce(std::move(event));
     }
 }

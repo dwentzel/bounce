@@ -94,7 +94,9 @@ namespace bounce {
 
 //            LOG(LogLevel::Debug) << deltaTime << "\n";
 
-            while ((event = event_manager_.pollEvent()) != nullptr) {
+            application_context_.Update();
+            
+            while ((event = event_manager_.PollEvent()) != nullptr) {
                 onEvent(*event);
             }
 

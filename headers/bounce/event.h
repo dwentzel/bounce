@@ -90,18 +90,12 @@ namespace bounce {
         EventManager();
         ~EventManager();
         
-        EventPtr pollEvent() const;
-        void queueEvent(EventPtr event) const;
+        EventPtr PollEvent();
+        void QueueEvent(EventPtr event);
         
     private:
-        std::unique_ptr<EventQueue> event_queue_;
+        EventQueue event_queue_;
     };
-    
-    
-    inline EventManager::EventManager() : event_queue_(new EventQueue) {}
-    
-    inline EventManager::~EventManager() {}
-    
 }
 
 #endif

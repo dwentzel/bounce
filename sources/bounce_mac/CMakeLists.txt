@@ -9,6 +9,7 @@ set(HEADERS
     include/AppDelegate.h
     include/bounce_application.h
     include/BounceRunner.h
+    include/bounce_window.h
     include/GameView.h)
 
 set(SOURCES
@@ -17,6 +18,7 @@ set(SOURCES
     src/bounce_application.mm
     src/bounce_mac.mm
     src/BounceRunner.mm
+    src/bounce_window.mm
     src/GameView.mm)
 
 add_library(

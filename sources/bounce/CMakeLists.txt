@@ -7,7 +7,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     include/console.h
     include/control_component.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
+#    ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     include/game_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_type.h
@@ -35,7 +35,7 @@ set(SOURCES
     src/application_context.cc
     src/console.cc
     src/control_component.cc
-    src/entry_point.cc
+#    src/entry_point.cc
     src/event.cc
     src/game_component.cc
     src/game_entity.cc
@@ -91,18 +91,9 @@ target_link_libraries(${MODULE_NAME} logging importer renderer)
 ###########################################################
 # Tests
 
-#set(TEST_EXE_NAME bounce_unit_tests)
+set(TEST_SOURCES
+    test/event_manager_test.cc
+    test/keyboard_state_test.cc
+)
 
-#add_executable(${TEST_EXE_NAME}
-#    test/LockFreeQueueTest.cpp
-#    test/KeyboardStateTest.cpp)
-
-#target_include_directories(
-#    ${TEST_EXE_NAME} PRIVATE
-#    ${gtest_SOURCE_DIR}/include
-#    ${gtest_SOURCE_DIR})
-
-#target_link_libraries(${TEST_EXE_NAME} bounce)
-#target_link_libraries(${TEST_EXE_NAME} gtest gtest_main)
-
-#add_test(${TEST_EXE_NAME} ${TEST_EXE_NAME})
+setup_testing()
