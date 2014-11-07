@@ -11,14 +11,18 @@
 #include <memory>
 
 #include "framework/timer.h"
-#include "application_context.h"
-#include "event.h"
-#include "keyboard_state.h"
-#include "render_system.h"
+
 #include "renderer/vertex_buffer.h"
 #include "renderer/model_manager.h"
 #include "renderer/material_manager.h"
-#include "world_manager.h"
+#include "renderer/opengl_renderer.h"
+
+#include "bounce/application_context.h"
+#include "bounce/event.h"
+#include "bounce/keyboard_state.h"
+#include "bounce/render_system.h"
+#include "bounce/world_manager.h"
+
 
 namespace bounce {
 
@@ -32,6 +36,9 @@ private:
     VertexBuffer vertex_buffer_;
     ModelManager model_manager_;
     MaterialManager material_manager_;
+
+    OpenGLRenderer renderer_;
+    
     KeyboardState keyboard_state_;
 
     Timer timer_;
@@ -46,7 +53,8 @@ private:
 public:
 	App(ApplicationContext& application_context) :
 		running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
-        render_system_(application_context_, world_manager_, model_manager_, material_manager_, vertex_buffer_)
+        renderer_(model_manager_, material_manager_, vertex_buffer_),
+        render_system_(application_context_, world_manager_, renderer_)
     {
 	
     }

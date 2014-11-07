@@ -18,15 +18,16 @@
 #include "logging/log.h"
 
 #include "app.h"
-#include "shader_manager.h"
-#include "game_entity.h"
-
-#include "render_component.h"
-#include "control_component.h"
-#include "movement_component.h"
 
 #include "importer/importer.h"
 #include "renderer/model.h"
+
+#include "bounce/game_entity.h"
+
+#include "bounce/render_component.h"
+#include "bounce/control_component.h"
+#include "bounce/movement_component.h"
+
 
 //#include "lock_free_queue.h"
 

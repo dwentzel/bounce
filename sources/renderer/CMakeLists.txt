@@ -5,15 +5,17 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/material_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/opengl_renderer.h
+    include/shader_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/vertex_buffer.h
-    include/renderer.h
 )
 
 set(SOURCES
     src/material_manager.cc
     src/model.cc
     src/model_manager.cc
-    src/renderer.cc
+    src/opengl_renderer.cc
+    src/shader_manager.cc
     src/vertex_buffer.cc
 )
 
@@ -23,3 +25,29 @@ add_library(
     ${HEADERS}
     ${SOURCES}
 )
+
+target_link_libraries(${MODULE_NAME} framework)
+
+if (MSVC)
+    set(GLEW_ROOT_DIR "${Bounce_SOURCE_DIR}/external/glew-1.10.0")
+    set(GLEW_INCLUDE_DIR "${GLEW_ROOT_DIR}/include")
+    set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/Win32/glew32.lib")
+endif()
+
+find_package(GLEW REQUIRED)
+if (GLEW_FOUND)
+#    message("GLEW_INCLUDE_DIR: ${GLEW_INCLUDE_DIR}")
+#    message("GLEW_LIBRARIES: ${GLEW_LIBRARIES}")
+    include_directories(${GLEW_INCLUDE_DIR})
+    target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
+endif (GLEW_FOUND)
+
+find_package(OPENGL REQUIRED)
+if (OPENGL_FOUND)
+#    message("OPENGL_INCLUDE_DIR: ${OPENGL_INCLUDE_DIR}")
+#    message("OPENGL_LIBRARIES: ${OPENGL_LIBRARIES}")
+    include_directories(${OPENGL_INCLUDE_DIR})
+    target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
+endif (OPENGL_FOUND)
+
+include_directories("${Bounce_SOURCE_DIR}/external/glm")

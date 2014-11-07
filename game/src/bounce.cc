@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "bounce/app.h"
+#include "app.h"
 
 int bounce_main(bounce::ApplicationContext* context)
 {

@@ -1,30 +1,27 @@
 setup_module(bounce)
 
 set(HEADERS
-    ${MODULE_PUBLIC_INCLUDE_DIR}/app.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_main.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     include/console.h
-    include/control_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
-    include/game_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/game_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_type.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
-    include/movement_component.h
-    include/render_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/movement_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/render_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_system.h
-    include/shader_manager.h
-    include/single_color_texture_generator.h
+#    include/single_color_texture_generator.h
     include/transform_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/world_manager.h)
 
 set(SOURCES
-    src/app.cc
     src/application_context.cc
     src/console.cc
     src/control_component.cc
@@ -37,8 +34,7 @@ set(SOURCES
     src/movement_component.cc
     src/render_component.cc
     src/render_system.cc
-    src/shader_manager.cc
-    src/single_color_texture_generator.cc
+#    src/single_color_texture_generator.cc
     src/transform_component.cc
     src/world_manager.cc)
 

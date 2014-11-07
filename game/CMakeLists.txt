@@ -1,10 +1,11 @@
 setup_module(game)
 
 set(HEADERS
-
+    include/app.h
 )
 
 set(SOURCES
+    src/app.cc
     src/bounce.cc
 )
 
@@ -14,7 +15,7 @@ add_executable(
     ${SOURCES}
 )
 
-target_link_libraries(${MODULE_NAME} bounce_mac)
+target_link_libraries(${MODULE_NAME} bounce_mac renderer)
 
 
 if (CMAKE_GENERATOR STREQUAL Xcode)

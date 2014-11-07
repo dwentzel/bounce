@@ -68,6 +68,8 @@ bounce::Key UnicharToKey(unichar ch)
             return bounce::KEY_Y;
         case 'z':
             return bounce::KEY_Z;
+        default:
+            return bounce::NO_KEY;
     }
 }
 
