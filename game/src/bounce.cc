@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "bounce_mac/bounce_mac.h"
 #include "bounce/app.h"
 
 int bounce_main(bounce::ApplicationContext* context)

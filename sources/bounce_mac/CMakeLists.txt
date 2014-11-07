@@ -8,7 +8,6 @@ set(HEADERS
     include/app_delegate.h
     include/bounce_application.h
     include/bounce_window.h
-    include/game_view.h
     include/osx_application_context.h
 )
 
@@ -17,7 +16,6 @@ set(SOURCES
     src/app_delegate.mm
     src/bounce_application.mm
     src/bounce_window.mm
-    src/game_view.mm
     src/osx_application_context.mm
 )
 
