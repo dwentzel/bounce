@@ -159,7 +159,7 @@ void bounce::RenderSystem::update() {
         entity->UpdateComponentOfType(RENDER_COMPONENT);
     }
     
-    application_context_.flush();
+    application_context_.Flush();
 }
 
 void bounce::RenderSystem::RenderModel(unsigned int model_handle)

@@ -1,4 +1,4 @@
-#import "GameView.h"
+#import "game_view.h"
 
 @interface GameView()
 {

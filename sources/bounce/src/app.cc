@@ -156,7 +156,7 @@ namespace bounce {
     }
 
     void App::onFlush() {
-        application_context_.flush();
+        application_context_.Flush();
     }
 
 } /* namespace bounce */

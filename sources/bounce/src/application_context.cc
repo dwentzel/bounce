@@ -1,5 +1,7 @@
 #include "application_context.h"
 
-namespace bounce {
+bounce::ApplicationContext::ApplicationContext()
+{}
 
-}
+bounce::ApplicationContext::~ApplicationContext()
+{}

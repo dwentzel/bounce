@@ -10,22 +10,22 @@ namespace bounce {
     class ApplicationContext {
     private:
         EventManager event_manager_;
-        void(*flush_)();
-        void(*poll_)();
-
-    public:
-        ApplicationContext(void(*flush)(), void(*poll)()) : event_manager_(), flush_(flush), poll_(poll)
-        {}
         
-        ~ApplicationContext() {}
+    protected:
+        ApplicationContext();
+        
+    public:
+        
+        virtual ~ApplicationContext() = 0;
         
         EventManager* event_manager_ptr() { return &event_manager_; }
         EventManager& event_manager() { return event_manager_; }
         
-        void flush() const { flush_(); }
+        virtual void Flush() const = 0;// { flush_(); }
         
-        void Update() const { poll_(); }
+        virtual void Update() const = 0;// { poll_(); }
         
+        virtual void CreateWindow() = 0;
     };
     
 }

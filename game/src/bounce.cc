@@ -8,7 +8,7 @@ int bounce_main(bounce::ApplicationContext* context)
     
     std::wcout << L"bounce_main" << std::endl;
     
-    bounce_ui::CreateWindow();
+    context->CreateWindow();
     
     bounce::App app(*context);
     

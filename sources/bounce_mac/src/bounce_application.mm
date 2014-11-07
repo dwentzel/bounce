@@ -1,38 +1,36 @@
 #import "bounce_application.h"
+#import "bounce/bounce_main.h"
 
 @implementation BounceApplication
 
 bool shouldKeepRunning;
 
+- (void)setApplicationContext:(bounce::ApplicationContext *)context {
+    applicationContext = context;
+}
+
 - (void)run
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
+    if (applicationContext == nil) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"applicationContext == nil"
+                                     userInfo:nil];
+    }
+    
     [self finishLaunching];
     
-    shouldKeepRunning = YES;
-    do
-    {
-        [pool release];
-        pool = [[NSAutoreleasePool alloc] init];
-        
-        NSEvent *event =
-        [self
-         nextEventMatchingMask:NSAnyEventMask
-         untilDate:[NSDate distantFuture]
-         inMode:NSDefaultRunLoopMode
-         dequeue:YES];
-        
-        [self sendEvent:event];
-        [self updateWindows];
-    } while (shouldKeepRunning);
+    applicationContext->Update();
     
+    bounce_main(applicationContext);
+        
     [pool release];
 }
 
-- (void)terminate:(id)sender
-{
-    shouldKeepRunning = NO;
-}
+//- (void)terminate:(id)sender
+//{
+//    shouldKeepRunning = NO;
+//}
 
 @end
