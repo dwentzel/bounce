@@ -7,28 +7,20 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     include/console.h
     include/control_component.h
-#    ${MODULE_PUBLIC_INCLUDE_DIR}/entry_point.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     include/game_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_type.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_system.h
-#    include/importer.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
-#    ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
-#    include/material.h
-    include/mesh.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
-#    include/model.h
     include/movement_component.h
-#    include/object.h
     include/render_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_system.h
     include/shader_manager.h
     include/single_color_texture_generator.h
     include/transform_component.h
-#    include/vertex_buffer.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/world_manager.h)
 
 set(SOURCES
@@ -36,25 +28,18 @@ set(SOURCES
     src/application_context.cc
     src/console.cc
     src/control_component.cc
-#    src/entry_point.cc
     src/event.cc
     src/game_component.cc
     src/game_entity.cc
     src/game_system.cc
-#    src/importer.cc
     src/keyboard_state.cc
-#    src/material.cc
-    src/mesh.cc
     src/message.cc
-#    src/model.cc
     src/movement_component.cc
-#    src/object.cc
     src/render_component.cc
     src/render_system.cc
     src/shader_manager.cc
     src/single_color_texture_generator.cc
     src/transform_component.cc
-#    src/vertex_buffer.cc
     src/world_manager.cc)
 
 add_library(

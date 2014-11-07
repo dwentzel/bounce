@@ -10,6 +10,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    src/material_manager.cc
     src/model.cc
     src/model_manager.cc
     src/renderer.cc
