@@ -1,5 +1,4 @@
 #include "control_component.h"
-#include "bounce_gl.h"
 
 void bounce::ControlComponent::Startup() {
     

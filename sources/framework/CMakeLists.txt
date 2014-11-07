@@ -29,19 +29,3 @@ set(TEST_SOURCES
 )
 
 setup_testing(framework)
-
-#set(TEST_EXE_NAME framework_unit_tests)
-
-#add_executable(${TEST_EXE_NAME}
-#    test/lock_free_queue_test.cc
-#)
-
-#target_include_directories(
-#    ${TEST_EXE_NAME} PRIVATE
-#    ${gtest_SOURCE_DIR}/include
-#    ${gtest_SOURCE_DIR})
-
-#target_link_libraries(${TEST_EXE_NAME} ${MODULE_NAME})
-#target_link_libraries(${TEST_EXE_NAME} gtest gtest_main)
-
-#add_test(${TEST_EXE_NAME} ${TEST_EXE_NAME})

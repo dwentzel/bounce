@@ -7,7 +7,7 @@
 #include <glm/gtx/transform.hpp>
 
 #include "framework/renderer.h"
-#include "bounce/bounce_gl.h"
+#include "bounce_gl.h"
 #include "model_manager.h"
 #include "material_manager.h"
 #include "vertex_buffer.h"

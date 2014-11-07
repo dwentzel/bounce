@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "bounce/bounce_gl.h"
+#include "bounce_gl.h"
 #include "shader_manager.h"
 
 using namespace bounce;

@@ -6,7 +6,6 @@
 #include "logging/log.h"
 
 #include "movement_component.h"
-#include "bounce_gl.h"
 
 #include <cstdio>
 

@@ -3,7 +3,6 @@ setup_module(bounce)
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_main.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     include/console.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
@@ -50,21 +49,21 @@ if (MSVC)
 	set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/Win32/glew32.lib")
 endif()
 
-find_package(GLEW REQUIRED)
-if (GLEW_FOUND)
+#find_package(GLEW REQUIRED)
+#if (GLEW_FOUND)
 #    message("GLEW_INCLUDE_DIR: ${GLEW_INCLUDE_DIR}")
 #    message("GLEW_LIBRARIES: ${GLEW_LIBRARIES}")
-    include_directories(${GLEW_INCLUDE_DIR})
-    target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
-endif (GLEW_FOUND)
+#    include_directories(${GLEW_INCLUDE_DIR})
+#    target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
+#endif (GLEW_FOUND)
 
-find_package(OPENGL REQUIRED)
-if (OPENGL_FOUND)
+#find_package(OPENGL REQUIRED)
+#if (OPENGL_FOUND)
 #    message("OPENGL_INCLUDE_DIR: ${OPENGL_INCLUDE_DIR}")
 #    message("OPENGL_LIBRARIES: ${OPENGL_LIBRARIES}")
-    include_directories(${OPENGL_INCLUDE_DIR})
-    target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
-endif (OPENGL_FOUND)
+#    include_directories(${OPENGL_INCLUDE_DIR})
+#    target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
+#endif (OPENGL_FOUND)
 
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
 

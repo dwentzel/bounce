@@ -1,6 +1,7 @@
 setup_module(renderer)
 
 set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/material.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/material_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
@@ -36,8 +37,6 @@ endif()
 
 find_package(GLEW REQUIRED)
 if (GLEW_FOUND)
-#    message("GLEW_INCLUDE_DIR: ${GLEW_INCLUDE_DIR}")
-#    message("GLEW_LIBRARIES: ${GLEW_LIBRARIES}")
     include_directories(${GLEW_INCLUDE_DIR})
     target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
 endif (GLEW_FOUND)
