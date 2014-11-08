@@ -11,6 +11,7 @@
 #include "model_manager.h"
 #include "material_manager.h"
 #include "vertex_buffer.h"
+#include "shader_manager.h"
 
 namespace bounce
 {
@@ -23,18 +24,20 @@ namespace bounce
         GLuint model_matrix_id_;
         GLuint light_id_;
         
-        GLuint buffers_[3];
+        GLuint buffers_[1];
+
+        std::string vertex_shader_file_path_;
+        std::string fragment_shader_file_path_;
         
-        glm::mat4 projection_matrix_;
-        glm::mat4 view_matrix_;
-        glm::mat4 model_matrix_;
+        ShaderManager shader_manager_;
         
         const ModelManager& model_manager_;
         const MaterialManager& material_manager_;
         const VertexBuffer& vertex_buffer_;
         
     public:
-        OpenGLRenderer(const ModelManager& model_manager, const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
+        OpenGLRenderer(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path,
+                       const ModelManager& model_manager, const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
         
         virtual void Startup();
         virtual void Shutdown();
@@ -43,8 +46,13 @@ namespace bounce
         virtual void SetModelMatrix(const float* model_matrix);
         virtual void SetMVPMatrix(const float* mvp_matrix);
         virtual void SetupNewFrame();
+
+//        void LoadVertexShader(const std::string& shader_code_file_path);
+//        void LoadFragmentShader(const std::string& shader_code_file_path);
+//
+//        void LinkProgram();
         
-        void Update();
+        
         void RenderModel(unsigned int model_handle);
     };
     

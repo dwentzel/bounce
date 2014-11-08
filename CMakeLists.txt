@@ -5,6 +5,8 @@ set(BUILD_SHARED_LIBS OFF)
 
 message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 
+
+
 if (MSVC)
 #   set(CMAKE_FIND_LIBRARY_PREFIXES "")
 #   set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
@@ -74,3 +76,6 @@ add_subdirectory(sources)
 add_subdirectory(resources)
 add_subdirectory(tools)
 add_subdirectory(game)
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(TARGET game PROPERTY FOLDER GAMEE)

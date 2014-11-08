@@ -7,7 +7,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/opengl_renderer.h
-    include/shader_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/shader_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/vertex_buffer.h
 )
 

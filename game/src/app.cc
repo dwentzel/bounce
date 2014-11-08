@@ -45,9 +45,13 @@ namespace bounce {
         Importer importer(model_manager_, material_manager_, vertex_buffer_);
 
         
-        unsigned int model_handle = importer.ImportFile("models/simple_craft.dae");
+        unsigned int model_handle = importer.ImportFile(application_context_.root_path() + "/simple_craft.dae");
 
         render_system_.startup();
+//        renderer_.LoadVertexShader(application_context_.root_path() + "/triangleShader.vert.glsl");
+//        renderer_.LoadFragmentShader(application_context_.root_path() + "/triangleShader.frag.glsl");
+//        renderer_.LinkProgram();
+        
         
         GameEntity* cube = new GameEntity();
         RenderComponent* render_component = new RenderComponent(&render_system_, model_handle);

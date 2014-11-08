@@ -115,7 +115,7 @@ void bounce::MovementComponent::Update() {
     float pitch = owner->pitch_speed();
     float roll = owner->roll_speed();
     
-    LOG_DEBUG << "yaw: " << yaw << ", pitch: " << pitch << ", roll: " << roll << "\n";
+//    LOG_DEBUG << "yaw: " << yaw << ", pitch: " << pitch << ", roll: " << roll << "\n";
     
     glm::quat orientation = owner->orientation();
     

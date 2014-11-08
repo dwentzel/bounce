@@ -9,6 +9,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/log_sync.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/log_worker.h
     include/stdout_log_output.h
+    include/file_log_output.h
 )
 
 set(SOURCES
@@ -19,6 +20,7 @@ set(SOURCES
     src/log_sync.cc
     src/log_worker.cc
     src/stdout_log_output.cc
+    src/file_log_output.cc
 )
 
 add_library(

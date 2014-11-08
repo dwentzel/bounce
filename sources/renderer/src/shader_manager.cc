@@ -1,13 +1,9 @@
 #include <fstream>
 #include <iostream>
-#include <vector>
-#include <algorithm>
 #include "bounce_gl.h"
 #include "shader_manager.h"
 
-using namespace bounce;
-
-void ShaderManager::CompileShader(const int& shader_id, const std::string& shader_code)
+void bounce::ShaderManager::CompileShader(const int& shader_id, const std::string& shader_code)
 {
 	GLint result = GL_FALSE;
 	int info_log_length;
@@ -25,7 +21,7 @@ void ShaderManager::CompileShader(const int& shader_id, const std::string& shade
 	delete[] vertex_shader_error_message;
 }
 
-std::string ShaderManager::LoadShaderCode(const std::string& shaderFilePath)
+std::string bounce::ShaderManager::LoadShaderCode(const std::string& shaderFilePath)
 {
 	std::string shaderCode;
 	std::ifstream shaderStream(shaderFilePath, std::ios::in);
@@ -41,49 +37,63 @@ std::string ShaderManager::LoadShaderCode(const std::string& shaderFilePath)
 	return shaderCode;
 }
 
-GLuint ShaderManager::LoadShaders(const std::string& vertexFilePath,
-		const std::string& fragmentFilePath)
+void bounce::ShaderManager::LoadVertexShader(const std::string& shader_code_file_path)
 {
+    vertex_shader_id_ = glCreateShader(GL_VERTEX_SHADER);
+    LoadShader(shader_code_file_path, vertex_shader_id_);
+}
 
-	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
-	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
+void bounce::ShaderManager::LoadFragmentShader(const std::string& shader_code_file_path)
+{
+    fragment_shader_id_ = glCreateShader(GL_FRAGMENT_SHADER);
+    LoadShader(shader_code_file_path, fragment_shader_id_);
+}
 
-	std::string vertex_shader_code;
-	vertex_shader_code = LoadShaderCode(vertexFilePath);
-	//std::cout << "vsc: " << vertexShaderCode << std::endl;
 
-	std::string fragment_shader_code;
-	fragment_shader_code = LoadShaderCode(fragmentFilePath);
-	//std::cout << "fsc: " << fragmentShaderCode << std::endl;
-
-	LOG_DEBUG << "Compiling shader: " << vertexFilePath << std::endl;
-	CompileShader(vertex_shader_id, vertex_shader_code);
+void bounce::ShaderManager::LoadShader(const std::string& shader_code_file_path, GLuint shader_id)
+{
+    std::string vertex_shader_code;
+    vertex_shader_code = LoadShaderCode(shader_code_file_path);
     
-	LOG_DEBUG << "Compiling shader: " << fragmentFilePath << std::endl;
-	CompileShader(fragment_shader_id, fragment_shader_code);
+    LOG_DEBUG << "Compiling shader: " << shader_code_file_path << std::endl;
+    CompileShader(shader_id, vertex_shader_code);
     
-	LOG_DEBUG << "Linking program\n";
-	GLuint program_id = glCreateProgram();
-	glAttachShader(program_id, vertex_shader_id);
-	glAttachShader(program_id, fragment_shader_id);
-	glLinkProgram(program_id);
+//    LOG_DEBUG << "Linking program\n";
+
+    CHECK_GL_ERROR();
+    glAttachShader(program_id_, shader_id);
+    CHECK_GL_ERROR();
+
+
+}
+
+void bounce::ShaderManager::LinkProgram()
+{
     ASSERT_NO_GL_ERROR();
     
-	GLint result = GL_FALSE;
-	int info_log_length;
-	glGetProgramiv(program_id, GL_LINK_STATUS, &result);
-	glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
-	
-	GLchar *program_error_message = new GLchar[std::max(info_log_length, 1)];
-	glGetProgramInfoLog(program_id, info_log_length, 0, program_error_message);
-
+    glLinkProgram(program_id_);
+    ASSERT_NO_GL_ERROR();
+    
+    GLint result = GL_FALSE;
+    int info_log_length;
+    glGetProgramiv(program_id_, GL_LINK_STATUS, &result);
+    glGetProgramiv(program_id_, GL_INFO_LOG_LENGTH, &info_log_length);
+    
+    GLchar *program_error_message = new GLchar[std::max(info_log_length, 1)];
+    glGetProgramInfoLog(program_id_, info_log_length, 0, program_error_message);
+    
     LOG_WARNING << "Linking program: " << program_error_message;
-//    fprintf(stdout, "%s\n", program_error_message);
-	
+    //    fprintf(stdout, "%s\n", program_error_message);
+    
     delete[] program_error_message;
-
-	glDeleteShader(vertex_shader_id);
-	glDeleteShader(fragment_shader_id);
-
-	return program_id;
+    
+    glDeleteShader(vertex_shader_id_);
+    glDeleteShader(fragment_shader_id_);
 }
+
+void bounce::ShaderManager::program_id(GLuint id)
+{
+    program_id_ = id;
+}
+
+

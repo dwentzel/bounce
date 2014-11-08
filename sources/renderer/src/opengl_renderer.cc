@@ -4,21 +4,12 @@
 
 #include "shader_manager.h"
 
-namespace bounce {
-    std::wostream& operator<<(std::wostream& out, const GLubyte* data)
-    {
-        if (data == nullptr) {
-            out << L"(null)";
-        }
-        else {
-            out << std::string(reinterpret_cast<const char*>(data));
-        }
-        return out;
-    }
-}
 
-bounce::OpenGLRenderer::OpenGLRenderer(const ModelManager& model_manager, const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
-: model_manager_(model_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+
+bounce::OpenGLRenderer::OpenGLRenderer(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path,
+                                       const ModelManager& model_manager, const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
+: vertex_shader_file_path_(vertex_shader_file_path), fragment_shader_file_path_(fragment_shader_file_path),
+model_manager_(model_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
 }
@@ -102,62 +93,44 @@ void bounce::OpenGLRenderer::Startup()
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
     
-    ShaderManager shader_manager;
+    program_id_ = glCreateProgram();
     
-    program_id_ = shader_manager.LoadShaders(
-                                             "shaders/triangleShader.vert.glsl",
-                                             "shaders/triangleShader.frag.glsl");
+    shader_manager_.program_id(program_id_);
+
+    shader_manager_.LoadVertexShader(vertex_shader_file_path_);
+    shader_manager_.LoadFragmentShader(fragment_shader_file_path_);
+    shader_manager_.LinkProgram();
+    
+//    program_id_ = shader_manager_.LoadShaders(
+//                                             "shaders/triangleShader.vert.glsl",
+//                                             "shaders/triangleShader.frag.glsl");
     
     mvp_matrix_id_ = glGetUniformLocation(program_id_, "MVP");
     view_matrix_id_ = glGetUniformLocation(program_id_, "V");
     model_matrix_id_ = glGetUniformLocation(program_id_, "M");
     
     light_id_ = glGetUniformLocation(program_id_, "LightPosition_worldspace");
+    
+    CHECK_GL_ERROR();
 }
 
 void bounce::OpenGLRenderer::Shutdown() {
     glDeleteBuffers(1, buffers_);
 }
 
-//void bounce::OpenGLRenderer::Update() {
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    CHECK_GL_ERROR();
-//    
-//    glUseProgram(program_id_);
-//    CHECK_GL_ERROR();
-//    
-//    glm::vec3 direction(cos(verticalAngle) * sin(horizontalAngle),
-//                        sin(verticalAngle), cos(verticalAngle) * cos(verticalAngle));
-//    
-//    glm::vec3 position(0, 0, 5);
-//    float fov = initialFoV;
-//    
-//    glm::mat4 projection_matrix = glm::perspective(fov, 4.0f / 3.0f, 0.1f, 100.0f);
-//    
-//    glm::mat4 view_matrix = glm::lookAt(position, glm::vec3(0, 0, 0),
-//                                        glm::vec3(0, 1, 0));
-//    
-//    glUniformMatrix4fv(view_matrix_id_, 1, GL_FALSE, &view_matrix[0][0]);
-//    
-//    glm::vec3 lightPos = glm::vec3(0,3,2);
-//    glUniform3f(light_id_, lightPos.x, lightPos.y, lightPos.z);
-//    
-//    const GameEntityList& entities = world_manager_.entities();
-//    
-//    for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
-//        GameEntity* entity = *i;
-//        
-//        glm::mat4 model = glm::toMat4(entity->orientation());
-//        glm::mat4 mvp = projection_matrix * view_matrix * model;
-//        
-//        glUniformMatrix4fv(mvp_matrix_id_, 1, GL_FALSE, &mvp[0][0]);
-//        glUniformMatrix4fv(model_matrix_id_, 1, GL_FALSE, &model[0][0]);
-//        CHECK_GL_ERROR();
-//        
-//        entity->UpdateComponentOfType(RENDER_COMPONENT);
-//    }
-//    
-//    application_context_.Flush();
+//void bounce::OpenGLRenderer::LoadVertexShader(const std::string& shader_code_file_path)
+//{
+//    shader_manager_.LoadVertexShader(shader_code_file_path);
+//}
+//
+//void bounce::OpenGLRenderer::LoadFragmentShader(const std::string& shader_code_file_path)
+//{
+//    shader_manager_.LoadFragmentShader(shader_code_file_path);
+//}
+//
+//void bounce::OpenGLRenderer::LinkProgram()
+//{
+//    shader_manager_.LinkProgram();
 //}
 
 void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)

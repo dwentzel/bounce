@@ -9,11 +9,31 @@ set(SOURCES
     src/bounce.cc
 )
 
+set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
+set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
+
+set(RESOURCES
+    ${shaders_PATH}/triangleShader.vert.glsl
+    ${shaders_PATH}/triangleShader.frag.glsl
+    ${models_PATH}/simple_craft.dae
+)
+
+set(MACOSX_BUNDLE BUNDLE_NAME ${MODULE_NAME})
 add_executable(
     ${MODULE_NAME}
+    MACOSX_BUNDLE
     ${HEADERS}
     ${SOURCES}
+    ${RESOURCES}
 )
+
+set_source_files_properties(
+    ${RESOURCES}
+    PROPERTIES
+    MACOSX_PACKAGE_LOCATION Resources
+)
+
+set_target_properties(${MODULE_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
 
 target_link_libraries(${MODULE_NAME} bounce_mac renderer)
 

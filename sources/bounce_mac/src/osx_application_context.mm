@@ -4,6 +4,28 @@
 #import <AppKit/NSView.h>
 #import "bounce_window.h"
 
+bounce_mac::OsxApplicationContext::OsxApplicationContext()
+{
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+    char path[PATH_MAX];
+    if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX)) // Error: expected unqualified-id before 'if'
+    {
+        // error!
+    }
+    CFRelease(resourcesURL); // error: expected constructor, destructor or type conversion before '(' token
+    
+    root_path_ = path;
+    
+//    chdir(path); // error: expected constructor, destructor or type conversion before '(' token
+//    std::cout << "Current Path: " << path << std::endl;
+}
+
+const std::string& bounce_mac::OsxApplicationContext::root_path() const
+{
+    return root_path_;
+}
+
 void bounce_mac::OsxApplicationContext::Flush() const
 {
     [openGLContext flushBuffer];

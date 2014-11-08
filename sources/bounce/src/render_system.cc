@@ -10,19 +10,6 @@
 #include "render_system.h"
 #include "game_entity.h"
 
-//namespace bounce {
-//    std::wostream& operator<<(std::wostream& out, const GLubyte* data)
-//    {
-//        if (data == nullptr) {
-//            out << L"(null)";
-//        }
-//        else {
-//            out << std::string(reinterpret_cast<const char*>(data));
-//        }
-//        return out;
-//    }
-//}
-
 void bounce::RenderSystem::startup()
 {
     renderer_.Startup();

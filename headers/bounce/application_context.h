@@ -26,6 +26,8 @@ namespace bounce {
         virtual void Update() const = 0;// { poll_(); }
         
         virtual void CreateWindow() = 0;
+        
+        virtual const std::string& root_path() const = 0;
     };
     
 }

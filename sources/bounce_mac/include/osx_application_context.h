@@ -3,6 +3,7 @@
 
 #import "bounce/application_context.h"
 #import <AppKit/NSOpenGL.h>
+#import <string>
 
 namespace bounce_mac {
 
@@ -10,12 +11,17 @@ namespace bounce_mac {
     private:
         NSOpenGLContext* openGLContext;
         
+        std::string root_path_;
+        
     public:
-
+        OsxApplicationContext();
+        
         virtual void Flush() const;
         virtual void Update() const;
         
         virtual void CreateWindow();
+        
+        virtual const std::string& root_path() const;
     };
 
 }
