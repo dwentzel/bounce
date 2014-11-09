@@ -66,34 +66,4 @@ void bounce::RenderSystem::update() {
 void bounce::RenderSystem::RenderModel(unsigned int model_handle)
 {
     renderer_.RenderModel(model_handle);
-    
-//    const Model& model = model_manager_.GetModel(model_handle);
-//    
-//    const std::vector<int>& start_indices = model.mesh_start_indices();
-//    const std::vector<int>& sizes = model.mesh_sizes();
-//    const std::vector<int>& material_indices = model.material_indices();
-//    
-//    for (std::vector<int>::size_type i = 0; i != start_indices.size(); ++i) {
-//        int start_index = start_indices[i];
-//        int size = sizes[i];
-//        int material_index = material_indices[i];
-//        
-//        const Material& material = material_manager_.GetMaterial(material_index);
-//        
-//        GLuint diffuse_index = glGetUniformLocation(program_id_, "Material_diffuse");
-//        GLuint ambient_index = glGetUniformLocation(program_id_, "Material_ambient");
-//        GLuint specular_index = glGetUniformLocation(program_id_, "Material_specular");
-//        GLuint emissive_index = glGetUniformLocation(program_id_, "Material_emissive");
-//        GLuint shininess_index = glGetUniformLocation(program_id_, "Material_shininess");
-//        
-//        glUniform3fv(diffuse_index, 1, material.diffuse());
-//        glUniform3fv(ambient_index, 1, material.ambient());
-//        glUniform3fv(specular_index, 1, material.specular());
-//        glUniform3fv(emissive_index, 1, material.emissive());
-//        glUniform1f(shininess_index, material.shininess());
-//        
-//        glDrawArrays(GL_TRIANGLES, start_index, size);
-//        CHECK_GL_ERROR();
-//    }
-    
 }

@@ -33,6 +33,17 @@
 
 
 namespace bounce {
+    
+    App::App(ApplicationContext& application_context) :
+        running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
+        renderer_(
+                  application_context_.root_path() + "/shaders/triangleShader.vert.glsl",
+                  application_context_.root_path() + "/shaders/triangleShader.frag.glsl",
+        model_manager_, material_manager_, vertex_buffer_),
+        render_system_(application_context_, world_manager_, renderer_)
+    {
+        
+    }
 
     App::~App() {
         //delete window;
@@ -45,7 +56,7 @@ namespace bounce {
         Importer importer(model_manager_, material_manager_, vertex_buffer_);
 
         
-        unsigned int model_handle = importer.ImportFile(application_context_.root_path() + "/simple_craft.dae");
+        unsigned int model_handle = importer.ImportFile(application_context_.root_path() + "/models/simple_craft.dae");
 
         render_system_.startup();
 //        renderer_.LoadVertexShader(application_context_.root_path() + "/triangleShader.vert.glsl");

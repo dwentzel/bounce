@@ -9,33 +9,64 @@ set(SOURCES
     src/bounce.cc
 )
 
-set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
-set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
+if (APPLE)
+    set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
+    set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
 
-set(RESOURCES
-    ${shaders_PATH}/triangleShader.vert.glsl
-    ${shaders_PATH}/triangleShader.frag.glsl
-    ${models_PATH}/simple_craft.dae
-)
+    set(MODELS
+        ${models_PATH}/simple_craft.dae
+    )
 
-set(MACOSX_BUNDLE BUNDLE_NAME ${MODULE_NAME})
-add_executable(
-    ${MODULE_NAME}
-    MACOSX_BUNDLE
-    ${HEADERS}
-    ${SOURCES}
-    ${RESOURCES}
-)
+    set(SHADERS
+        ${shaders_PATH}/triangleShader.frag.glsl
+        ${shaders_PATH}/triangleShader.vert.glsl
+    )
 
-set_source_files_properties(
-    ${RESOURCES}
-    PROPERTIES
-    MACOSX_PACKAGE_LOCATION Resources
-)
+    set(RESOURCES
+        ${RESOURCES}
+    )
 
-set_target_properties(${MODULE_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
+    set(MACOSX_BUNDLE BUNDLE_NAME ${MODULE_NAME})
 
-target_link_libraries(${MODULE_NAME} bounce_mac renderer)
+    add_executable(
+        ${MODULE_NAME}
+        MACOSX_BUNDLE
+        ${HEADERS}
+        ${SOURCES}
+        ${MODELS}
+        ${SHADERS}
+    )
+
+    set_source_files_properties(
+        ${MODELS}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION Resources/models
+    )
+
+    set_source_files_properties(
+        ${SHADERS}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION Resources/shaders
+    )
+
+    source_group(Resources\\models FILES ${MODELS})
+    source_group(Resources\\shaders FILES ${SHADERS})
+
+
+
+    set_target_properties(${MODULE_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
+
+    target_link_libraries(${MODULE_NAME} bounce_mac renderer)
+else (APPLE)
+    add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E
+            copy_directory "${PROJECT_SOURCE_DIR}/resources/shaders" "$<TARGET_FILE_DIR:game>/shaders")
+
+    add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E
+            copy_directory "${PROJECT_SOURCE_DIR}/resources/models" "$<TARGET_FILE_DIR:game>/models")
+
+endif (APPLE)
 
 if (CMAKE_GENERATOR STREQUAL Xcode)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/build/Debug")
@@ -80,10 +111,3 @@ endif()
 include_directories(${GLEW_INCLUDE_DIR})
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
 
-add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E
-        copy_directory "${PROJECT_SOURCE_DIR}/resources/shaders" "$<TARGET_FILE_DIR:game>/shaders")
-
-add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E
-        copy_directory "${PROJECT_SOURCE_DIR}/resources/models" "$<TARGET_FILE_DIR:game>/models")

@@ -77,5 +77,5 @@ add_subdirectory(resources)
 add_subdirectory(tools)
 add_subdirectory(game)
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set_property(TARGET game PROPERTY FOLDER GAMEE)
+#set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+#set_property(TARGET game PROPERTY FOLDER GAMEE)

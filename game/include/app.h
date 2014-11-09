@@ -51,16 +51,9 @@ private:
     App& operator=(const App&) = delete;
     
 public:
-	App(ApplicationContext& application_context) :
-		running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
-        renderer_(application_context_.root_path() + "/triangleShader.vert.glsl",
-                  application_context_.root_path() + "/triangleShader.frag.glsl",
-                  model_manager_, material_manager_, vertex_buffer_),
-        render_system_(application_context_, world_manager_, renderer_)
-    {
+    App(ApplicationContext& application_context);
 	
-    }
-	virtual ~App();
+    ~App();
 
 	int onExecute();
 
