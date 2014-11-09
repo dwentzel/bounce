@@ -12,9 +12,17 @@ set(SOURCES
 if (APPLE)
     set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
     set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
+    set(textures_PATH ${PROJECT_SOURCE_DIR}/resources/textures)
+
 
     set(MODELS
         ${models_PATH}/simple_craft.dae
+#        ${models_PATH}/simple_craft.fbx
+#        ${models_PATH}/simple_craft.blend
+    )
+
+    set(TEXTURES
+        ${textures_PATH}/Hull_Texture.bmp
     )
 
     set(SHADERS
@@ -34,6 +42,7 @@ if (APPLE)
         ${HEADERS}
         ${SOURCES}
         ${MODELS}
+        ${TEXTURES}
         ${SHADERS}
     )
 
@@ -44,12 +53,19 @@ if (APPLE)
     )
 
     set_source_files_properties(
+        ${TEXTURES}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION Resources/textures
+    )
+
+    set_source_files_properties(
         ${SHADERS}
         PROPERTIES
         MACOSX_PACKAGE_LOCATION Resources/shaders
     )
 
     source_group(Resources\\models FILES ${MODELS})
+    source_group(Resources\\textures FILES ${TEXTURES})
     source_group(Resources\\shaders FILES ${SHADERS})
 
 

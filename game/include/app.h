@@ -14,6 +14,7 @@
 
 #include "renderer/vertex_buffer.h"
 #include "renderer/model_manager.h"
+#include "renderer/texture_manager.h"
 #include "renderer/material_manager.h"
 #include "renderer/opengl_renderer.h"
 
@@ -35,6 +36,7 @@ private:
    
     VertexBuffer vertex_buffer_;
     ModelManager model_manager_;
+    TextureManager texture_manager_;
     MaterialManager material_manager_;
 
     OpenGLRenderer renderer_;

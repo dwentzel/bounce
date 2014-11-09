@@ -7,9 +7,11 @@
 
 
 bounce::OpenGLRenderer::OpenGLRenderer(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path,
-                                       const ModelManager& model_manager, const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
+                                       const ModelManager& model_manager,
+                                       const TextureManager& texture_manager,
+                                       const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
 : vertex_shader_file_path_(vertex_shader_file_path), fragment_shader_file_path_(fragment_shader_file_path),
-model_manager_(model_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
 }
@@ -51,6 +53,7 @@ void bounce::OpenGLRenderer::Startup()
     
     m = glGetString(GL_EXTENSIONS);
     LOG_INFO << L"GL_EXTENSIONS: " << m << std::endl;
+    CHECK_GL_ERROR();
     
     glEnable(GL_DEPTH_TEST);
     CHECK_GL_ERROR();
@@ -148,6 +151,26 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         
         const Material& material = material_manager_.GetMaterial(material_index);
         
+        int texture_handle = material.texture_handle();
+
+        GLuint texture_id;
+        glGenTextures(1, &texture_id);
+
+        if (texture_handle > -1) {
+            const Texture& texture = texture_manager_.GetTexture(texture_handle);
+            
+
+            
+            glBindTexture(GL_TEXTURE_2D, texture_id);
+            
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height()
+                         , 0, GL_RGB, GL_UNSIGNED_BYTE, texture.data());
+            
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            
+        }
+        
         GLuint diffuse_index = glGetUniformLocation(program_id_, "Material_diffuse");
         GLuint ambient_index = glGetUniformLocation(program_id_, "Material_ambient");
         GLuint specular_index = glGetUniformLocation(program_id_, "Material_specular");
@@ -162,6 +185,8 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         
         glDrawArrays(GL_TRIANGLES, start_index, size);
         CHECK_GL_ERROR();
+        
+        glDeleteTextures(1, &texture_id);
     }
     
 }

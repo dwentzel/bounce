@@ -36,10 +36,11 @@ namespace bounce {
     
     App::App(ApplicationContext& application_context) :
         running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
+        texture_manager_(application_context_.root_path() + "/textures"),
         renderer_(
                   application_context_.root_path() + "/shaders/triangleShader.vert.glsl",
                   application_context_.root_path() + "/shaders/triangleShader.frag.glsl",
-        model_manager_, material_manager_, vertex_buffer_),
+                  model_manager_, texture_manager_, material_manager_, vertex_buffer_),
         render_system_(application_context_, world_manager_, renderer_)
     {
         
@@ -53,7 +54,7 @@ namespace bounce {
     {
         srand(time(0));
 
-        Importer importer(model_manager_, material_manager_, vertex_buffer_);
+        Importer importer(model_manager_, texture_manager_, material_manager_, vertex_buffer_);
 
         
         unsigned int model_handle = importer.ImportFile(application_context_.root_path() + "/models/simple_craft.dae");

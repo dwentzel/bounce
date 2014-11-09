@@ -5,9 +5,11 @@
 #include <assimp/postprocess.h>
 
 bounce::Importer::Importer(ModelManager& model_manager,
+                           TextureManager& texture_manager,
                            MaterialManager& material_manager,
                            VertexBuffer& vertex_buffer)
 : model_manager_(model_manager),
+  texture_manager_(texture_manager),
   material_manager_(material_manager),
   vertex_buffer_(vertex_buffer)
 {}
@@ -49,7 +51,7 @@ int bounce::Importer::ImportFile(const std::string& filename)
             
             for (int k = 0; k < 3; ++k) {
                 aiVector3D vertex_position = mesh->mVertices[face.mIndices[k]];
-                aiVector3D uv = mesh->HasTextureCoords(0) ? mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.0f);
+                aiVector3D uv = mesh->HasTextureCoords(0) ? mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.0f);                
                 aiVector3D normal = mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(1.0f, 1.0f, 1.0f);
                 vertex_buffer_.AddData(&vertex_position, sizeof(aiVector3D));
                 vertex_buffer_.AddData(&uv, sizeof(aiVector2D));
@@ -70,6 +72,27 @@ int bounce::Importer::ImportFile(const std::string& filename)
         Material& new_material = material_manager_.CreateMaterial();
         
         const aiMaterial* material = scene->mMaterials[i];
+        
+//        aiString name;
+//        if (material->Get(AI_MATKEY_NAME, name) != AI_SUCCESS) {
+//            
+//        }
+        
+        aiString texture;
+        if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texture) == AI_SUCCESS) {
+            std::string path(texture.C_Str());
+            
+            int texture_index = texture_manager_.IndexOf(path);
+            
+            if (texture_index == -1) {
+                texture_index = texture_manager_.next_handle();
+                texture_manager_.LoadTexture(path);
+                new_material.texture_handle(texture_index);
+            }
+            else {
+                new_material.texture_handle(texture_index);
+            }
+        }
         
         aiColor3D color_diffuse;
         if (material->Get(AI_MATKEY_COLOR_DIFFUSE, color_diffuse) != AI_SUCCESS) {

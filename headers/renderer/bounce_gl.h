@@ -29,26 +29,13 @@
 #define ASSERT_NO_GL_ERROR() bounce::AssertNoGlError(__FILE__,__LINE__)
 
 namespace bounce {
-    inline std::wostream& operator<<(std::wostream& out, const GLubyte* data)
-    {
-        if (data == nullptr) {
-            out << L"(null)";
-        }
-        else {
-            out << std::string(reinterpret_cast<const char*>(data));
-        }
-        return out;
-    }
-}
-
-namespace bounce {
     const float PI = 3.1415926535897932384626433832795f;
     const float PI2 = PI * 2.0f;
     
     inline void CheckOpenGlError(std::string file, int line) {
         GLenum error = glGetError();
         if (error != GL_NO_ERROR) {
-            LOG_WARNING << "GL error in file " << file << " @ " << line << ": " << glewGetErrorString(error);
+            LOG_WARNING << "GL error in file " << file << " @ " << line << ": " << glewGetErrorString(error) << std::endl;
 //            std::fprintf(stderr, "gl error in file %s @ %d: %s\n", file.c_str(), line, glewGetErrorString(error));
         }
     };

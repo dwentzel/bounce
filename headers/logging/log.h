@@ -32,7 +32,18 @@ namespace bounce {
         LOG_LEVEL_DEBUG
     };
     
-    std::wostream& operator<<(std::wostream& out, const std::string& str);    
+    std::wostream& operator<<(std::wostream& out, const std::string& str);
+    
+    inline std::wostream& operator<<(std::wostream& out, const unsigned char* data)
+    {
+        if (data == nullptr) {
+            out << L"(null)";
+        }
+        else {
+            out << std::string(reinterpret_cast<const char*>(data));
+        }
+        return out;
+    }
 }
 
 #include "log_sync.h"

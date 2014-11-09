@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "renderer/model_manager.h"
+#include "renderer/texture_manager.h"
 #include "renderer/material_manager.h"
 #include "renderer/vertex_buffer.h"
 #include "renderer/model.h"
@@ -13,6 +14,7 @@ namespace bounce {
     class Importer {
     private:
         ModelManager& model_manager_;
+        TextureManager& texture_manager_;
         MaterialManager& material_manager_;
         VertexBuffer& vertex_buffer_;
         
@@ -21,6 +23,7 @@ namespace bounce {
 
     public:
         Importer(ModelManager& model_manager_,
+                 TextureManager& texture_manager_,
                  MaterialManager& material_manager,
                  VertexBuffer& vertex_buffer);
         int ImportFile(const std::string& filename);

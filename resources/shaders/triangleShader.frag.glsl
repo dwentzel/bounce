@@ -32,7 +32,8 @@ void main(){
 	
 	// Material properties
     vec3 MaterialEmissiveColor = Material_emissive;
-	vec3 MaterialDiffuseColor = Material_diffuse;
+//	vec3 MaterialDiffuseColor = Material_diffuse;
+    vec3 MaterialDiffuseColor = texture( myTextureSampler, UV ).rgb;
 	vec3 MaterialAmbientColor = Material_ambient;
 	vec3 MaterialSpecularColor = Material_specular;
 

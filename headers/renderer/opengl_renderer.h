@@ -9,6 +9,7 @@
 #include "framework/renderer.h"
 #include "bounce_gl.h"
 #include "model_manager.h"
+#include "texture_manager.h"
 #include "material_manager.h"
 #include "vertex_buffer.h"
 #include "shader_manager.h"
@@ -32,12 +33,15 @@ namespace bounce
         ShaderManager shader_manager_;
         
         const ModelManager& model_manager_;
+        const TextureManager& texture_manager_;
         const MaterialManager& material_manager_;
         const VertexBuffer& vertex_buffer_;
         
     public:
         OpenGLRenderer(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path,
-                       const ModelManager& model_manager, const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
+                       const ModelManager& model_manager,
+                       const TextureManager& texture_manager,
+                       const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
         
         virtual void Startup();
         virtual void Shutdown();

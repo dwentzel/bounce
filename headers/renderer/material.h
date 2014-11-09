@@ -2,7 +2,7 @@
 #define BOUNCE_RENDERER_MATERIAL_H_
 
 #include <vector>
-//#include
+//#include <string>
 
 namespace bounce {
     
@@ -14,7 +14,16 @@ namespace bounce {
         float emissive_[3];
         float shininess_;
         
+        int texture_handle_;
+        
+//        std::string name_;
+        
     public:
+        Material();
+        
+        int texture_handle() const;
+        void texture_handle(int handle);
+        
         const float* diffuse() const;
         void diffuse(void* data);
         
