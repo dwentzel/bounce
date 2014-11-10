@@ -3,28 +3,21 @@
 
 #include <string>
 #include "bounce_gl.h"
+#include "shader_program.h"
 
 namespace bounce {
     
     class ShaderManager {
     private:
-        GLuint vertex_shader_id_;
-        GLuint fragment_shader_id_;
-        GLuint program_id_;
-        
-        void CompileShader(const int& shader_id, const std::string& shader_code);
-        std::string LoadShaderCode(const std::string& shader_code_file_path);
-    
-        void LoadShader(const std::string& shader_code_file_path, GLuint shader_id);
+        std::vector<ShaderProgram> shader_programs_;
+
     public:
-        void LoadVertexShader(const std::string& shader_code_file_path);
-        void LoadFragmentShader(const std::string& shader_code_file_path);
-        void LinkProgram();
+        ShaderProgram& CreateProgram();
         
-        void program_id(GLuint id);
+        ShaderProgram& GetShaderProgram(unsigned int program_handle);
         
-//        GLuint LoadShaders(const std::string& vertex_shader_file_path,
-//                           const std::string& fragment_shader_file_path);
+        unsigned int next_handle() const;
+        
     };
     
 }

@@ -7,7 +7,9 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/opengl_renderer.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/shader.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/shader_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/shader_program.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/texture.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/texture_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/vertex_buffer.h
@@ -19,7 +21,9 @@ set(SOURCES
     src/model.cc
     src/model_manager.cc
     src/opengl_renderer.cc
+    src/shader.cc
     src/shader_manager.cc
+    src/shader_program.cc
     src/texture.cc
     src/texture_manager.cc
     src/vertex_buffer.cc

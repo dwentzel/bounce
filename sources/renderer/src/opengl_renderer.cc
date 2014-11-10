@@ -21,10 +21,11 @@ void bounce::OpenGLRenderer::SetupNewFrame()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     CHECK_GL_ERROR();
     
-    glUseProgram(program_id_);
+    current_program_->UseProgram();
     CHECK_GL_ERROR();
     
-    glUniform3f(light_id_, 0, 3, 2);
+    float light_position[3] = { 0.0, 3.0, 2.0 };
+    current_program_->SetUniform("LightPosition_worldspace", &light_position[0]);
 }
 
 void bounce::OpenGLRenderer::Startup()
@@ -96,23 +97,24 @@ void bounce::OpenGLRenderer::Startup()
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
     
-    program_id_ = glCreateProgram();
+    unsigned int program_handle = shader_manager_.next_handle();
+    ShaderProgram& program = shader_manager_.CreateProgram();
+    program.LoadVertexShader(vertex_shader_file_path_);
+    program.LoadFragmentShader(fragment_shader_file_path_);
+    program.LinkProgram();
     
-    shader_manager_.program_id(program_id_);
-
-    shader_manager_.LoadVertexShader(vertex_shader_file_path_);
-    shader_manager_.LoadFragmentShader(fragment_shader_file_path_);
-    shader_manager_.LinkProgram();
+    program.LoadUniformLocation("MVP");
+    program.LoadUniformLocation("V");
+    program.LoadUniformLocation("M");
+    program.LoadUniformLocation("LightPosition_worldspace");
     
-//    program_id_ = shader_manager_.LoadShaders(
-//                                             "shaders/triangleShader.vert.glsl",
-//                                             "shaders/triangleShader.frag.glsl");
+    program.LoadUniformLocation("Material_diffuse");
+    program.LoadUniformLocation("Material_ambient");
+    program.LoadUniformLocation("Material_specular");
+    program.LoadUniformLocation("Material_emissive");
+    program.LoadUniformLocation("Material_shininess");
     
-    mvp_matrix_id_ = glGetUniformLocation(program_id_, "MVP");
-    view_matrix_id_ = glGetUniformLocation(program_id_, "V");
-    model_matrix_id_ = glGetUniformLocation(program_id_, "M");
-    
-    light_id_ = glGetUniformLocation(program_id_, "LightPosition_worldspace");
+    current_program_ = std::shared_ptr<ShaderProgram>(&program);
     
     CHECK_GL_ERROR();
 }
@@ -120,21 +122,6 @@ void bounce::OpenGLRenderer::Startup()
 void bounce::OpenGLRenderer::Shutdown() {
     glDeleteBuffers(1, buffers_);
 }
-
-//void bounce::OpenGLRenderer::LoadVertexShader(const std::string& shader_code_file_path)
-//{
-//    shader_manager_.LoadVertexShader(shader_code_file_path);
-//}
-//
-//void bounce::OpenGLRenderer::LoadFragmentShader(const std::string& shader_code_file_path)
-//{
-//    shader_manager_.LoadFragmentShader(shader_code_file_path);
-//}
-//
-//void bounce::OpenGLRenderer::LinkProgram()
-//{
-//    shader_manager_.LinkProgram();
-//}
 
 void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
 {
@@ -168,17 +155,11 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         }
         
-        GLuint diffuse_index = glGetUniformLocation(program_id_, "Material_diffuse");
-        GLuint ambient_index = glGetUniformLocation(program_id_, "Material_ambient");
-        GLuint specular_index = glGetUniformLocation(program_id_, "Material_specular");
-        GLuint emissive_index = glGetUniformLocation(program_id_, "Material_emissive");
-        GLuint shininess_index = glGetUniformLocation(program_id_, "Material_shininess");
-        
-        glUniform3fv(diffuse_index, 1, material.diffuse());
-        glUniform3fv(ambient_index, 1, material.ambient());
-        glUniform3fv(specular_index, 1, material.specular());
-        glUniform3fv(emissive_index, 1, material.emissive());
-        glUniform1f(shininess_index, material.shininess());
+        current_program_->SetUniform("Material_diffuse", material.diffuse());
+        current_program_->SetUniform("Material_ambient", material.ambient());
+        current_program_->SetUniform("Material_specular", material.specular());
+        current_program_->SetUniform("Material_emissive", material.emissive());
+        current_program_->SetUniform("Material_shininess", material.shininess());
         
         glDrawArrays(GL_TRIANGLES, start_index, size);
         CHECK_GL_ERROR();

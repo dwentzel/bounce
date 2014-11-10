@@ -1,6 +1,8 @@
 #ifndef BOUNCE_RENDERER_OPENGL_RENDERER_H_
 #define BOUNCE_RENDERER_OPENGL_RENDERER_H_
 
+#include <memory>
+
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -19,11 +21,13 @@ namespace bounce
     
     class OpenGLRenderer : public Renderer {
     private:
-        GLuint program_id_;
-        GLuint mvp_matrix_id_;
-        GLuint view_matrix_id_;
-        GLuint model_matrix_id_;
-        GLuint light_id_;
+//        GLuint program_id_;
+//        GLuint mvp_matrix_id_;
+//        GLuint view_matrix_id_;
+//        GLuint model_matrix_id_;
+//        GLuint light_id_;
+
+        std::shared_ptr<ShaderProgram> current_program_;
         
         GLuint buffers_[1];
 
@@ -62,17 +66,17 @@ namespace bounce
     
     inline void OpenGLRenderer::SetViewMatrix(const float* view_matrix)
     {
-        glUniformMatrix4fv(view_matrix_id_, 1, GL_FALSE, view_matrix);
+        current_program_->SetViewMatrix(view_matrix);
     }
     
     inline void OpenGLRenderer::SetModelMatrix(const float* model_matrix)
     {
-        glUniformMatrix4fv(model_matrix_id_, 1, GL_FALSE, model_matrix);
+        current_program_->SetModelMatrix(model_matrix);
     }
     
     inline void OpenGLRenderer::SetMVPMatrix(const float* mvp_matrix)
     {
-        glUniformMatrix4fv(mvp_matrix_id_, 1, GL_FALSE, mvp_matrix);
+        current_program_->SetMVPMatrix(mvp_matrix);
     }
 
     
