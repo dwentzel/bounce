@@ -19,6 +19,7 @@ int bounce::Importer::ImportFile(const std::string& filename)
 {
     Assimp::Importer importer;
     
+    
     const aiScene* scene = importer.ReadFile(filename,
                                              aiProcess_CalcTangentSpace |
                                              aiProcess_Triangulate |
