@@ -4,6 +4,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include "logging/log.h"
+
 bounce::Importer::Importer(ModelManager& model_manager,
                            TextureManager& texture_manager,
                            MaterialManager& material_manager,
@@ -19,7 +21,6 @@ int bounce::Importer::ImportFile(const std::string& filename)
 {
     Assimp::Importer importer;
     
-    
     const aiScene* scene = importer.ReadFile(filename,
                                              aiProcess_CalcTangentSpace |
                                              aiProcess_Triangulate |
@@ -27,7 +28,7 @@ int bounce::Importer::ImportFile(const std::string& filename)
                                              aiProcess_SortByPType);
     
     if (!scene) {
-        
+        LOG_ERROR << "Could not read scene from " << filename << std::endl;
     }
     
     const int vertex_total_size = sizeof(aiVector3D) * 2 + sizeof(aiVector2D);
