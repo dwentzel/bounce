@@ -3,22 +3,31 @@
 
 #include "bounce_gl.h"
 #include <string>
-#include <unordered_map>
+
+#include "material.h"
 
 namespace bounce {
 
+    struct MaterialUniforms {
+        GLuint diffuse_id;
+        GLuint ambient_id;
+        GLuint specular_id;
+        GLuint emissive_id;
+        GLuint shininess_id;
+    };
+    
     class ShaderProgram {
     private:
         GLuint program_id_;
         GLuint vertex_shader_id_;
         GLuint fragment_shader_id_;
         
-//        GLuint mvp_matrix_id_;
-//        GLuint view_matrix_id_;
-//        GLuint model_matrix_id_;
-//        GLuint light_id_;
+        MaterialUniforms material_uniforms_;
         
-        std::unordered_map<std::string, GLint> uniform_location_map_;
+        GLuint mvp_matrix_id_;
+        GLuint view_matrix_id_;
+        GLuint model_matrix_id_;
+        GLuint light_position_id_;
         
         void CompileShader(const int& shader_id, const std::string& shader_code);
         std::string LoadShaderCode(const std::string& shader_code_file_path);
@@ -34,10 +43,11 @@ namespace bounce {
         
         void UseProgram();
 
-        void LoadUniformLocation(const std::string& uniform);
+        void LoadUniforms();
         
-        void SetUniform(const std::string& uniform, const float* data);
-        void SetUniform(const std::string& uniform, float data);
+        void SetLightPosition(const float* light_position_data);
+        
+        void SetMaterial(const Material& material);
         
         void SetViewMatrix(const float* view_matrix);
         void SetModelMatrix(const float* model_matrix);

@@ -57,7 +57,7 @@ void bounce::ShaderProgram::CompileShader(const int& shader_id, const std::strin
     }
     else {
         LogShaderInfoLog(LOG_LEVEL_WARNING, shader_id);
-    }    
+    }
 }
 
 std::string bounce::ShaderProgram::LoadShaderCode(const std::string& shaderFilePath)
@@ -129,38 +129,63 @@ void bounce::ShaderProgram::UseProgram()
     glUseProgram(program_id_);
 }
 
-void bounce::ShaderProgram::LoadUniformLocation(const std::string& uniform)
+void bounce::ShaderProgram::LoadUniforms()
 {
-    GLint location = glGetUniformLocation(program_id_, uniform.c_str());
-    uniform_location_map_.emplace(uniform, location);
+    mvp_matrix_id_ = glGetUniformLocation(program_id_, "MVP");
+    view_matrix_id_ = glGetUniformLocation(program_id_, "V");
+    model_matrix_id_ = glGetUniformLocation(program_id_, "M");
+    light_position_id_ = glGetUniformLocation(program_id_, "LightPosition_worldspace");
+    
+    material_uniforms_.diffuse_id = glGetUniformLocation(program_id_, "Material_diffuse");
+    material_uniforms_.ambient_id = glGetUniformLocation(program_id_, "Material_ambient");
+    material_uniforms_.specular_id = glGetUniformLocation(program_id_, "Material_specular");
+    material_uniforms_.emissive_id = glGetUniformLocation(program_id_, "Material_emissive");
+    material_uniforms_.shininess_id = glGetUniformLocation(program_id_, "Material_shininess");
 }
 
-void bounce::ShaderProgram::SetUniform(const std::string& uniform, const float* data)
-{
-    GLint uniform_index = uniform_location_map_[uniform];
-    glUniform3fv(uniform_index, 1, data);
-}
+//void bounce::ShaderProgram::LoadUniformLocation(const std::string& uniform)
+//{
+//    GLint location = glGetUniformLocation(program_id_, uniform.c_str());
+//    uniform_location_map_.emplace(uniform, location);
+//}
+//
+//void bounce::ShaderProgram::SetUniform(const std::string& uniform, const float* data)
+//{
+//    GLint uniform_index = uniform_location_map_[uniform];
+//    glUniform3fv(uniform_index, 1, data);
+//}
+//
+//void bounce::ShaderProgram::SetUniform(const std::string& uniform, float data)
+//{
+//    GLint uniform_index = uniform_location_map_[uniform];
+//    glUniform1f(uniform_index, data);
+//}
 
-void bounce::ShaderProgram::SetUniform(const std::string& uniform, float data)
+void bounce::ShaderProgram::SetLightPosition(const float* light_position_data)
 {
-    GLint uniform_index = uniform_location_map_[uniform];
-    glUniform1f(uniform_index, data);
+    glUniform3fv(light_position_id_, 1, light_position_data);
 }
 
 void bounce::ShaderProgram::SetViewMatrix(const float* view_matrix)
 {
-    GLint uniform_index = uniform_location_map_["V"];
-    glUniformMatrix4fv(uniform_index, 1, GL_FALSE, view_matrix);
+    glUniformMatrix4fv(view_matrix_id_, 1, GL_FALSE, view_matrix);
 }
 
 void bounce::ShaderProgram::SetModelMatrix(const float* model_matrix)
 {
-    GLint uniform_index = uniform_location_map_["M"];
-    glUniformMatrix4fv(uniform_index, 1, GL_FALSE, model_matrix);
+    glUniformMatrix4fv(model_matrix_id_, 1, GL_FALSE, model_matrix);
 }
 
 void bounce::ShaderProgram::SetMVPMatrix(const float* mvp_matrix)
 {
-    GLint uniform_index = uniform_location_map_["MVP"];
-    glUniformMatrix4fv(uniform_index, 1, GL_FALSE, mvp_matrix);
+    glUniformMatrix4fv(mvp_matrix_id_, 1, GL_FALSE, mvp_matrix);
+}
+
+void bounce::ShaderProgram::SetMaterial(const bounce::Material &material)
+{
+    glUniform3fv(material_uniforms_.diffuse_id, 1, material.diffuse());
+    glUniform3fv(material_uniforms_.ambient_id, 1, material.ambient());
+    glUniform3fv(material_uniforms_.specular_id, 1, material.specular());
+    glUniform3fv(material_uniforms_.emissive_id, 1, material.emissive());
+    glUniform1f(material_uniforms_.shininess_id, material.shininess());
 }

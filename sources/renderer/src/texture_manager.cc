@@ -79,12 +79,12 @@ void bounce::TextureManager::LoadTexture(const std::string& texture)
         file.seekg(header.offset);
         file.read((char*)pixel_data, header.size);
         
-        uint8_t swap_byte;
-        for (unsigned long i = 0; i < header.size; i += 3) {
-            swap_byte = pixel_data[i];
-            pixel_data[i] = pixel_data[i + 2];
-            pixel_data[i + 2] = swap_byte;
-        }
+//        uint8_t swap_byte;
+//        for (unsigned long i = 0; i < header.size; i += 3) {
+//            swap_byte = pixel_data[i];
+//            pixel_data[i] = pixel_data[i + 2];
+//            pixel_data[i + 2] = swap_byte;
+//        }
         
         textures_.emplace_back(header.size, width, height, pixel_data);
     }

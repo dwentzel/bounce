@@ -25,7 +25,7 @@ void bounce::OpenGLRenderer::SetupNewFrame()
     CHECK_GL_ERROR();
     
     float light_position[3] = { 0.0, 3.0, 2.0 };
-    current_program_->SetUniform("LightPosition_worldspace", &light_position[0]);
+    current_program_->SetLightPosition(light_position);
 }
 
 void bounce::OpenGLRenderer::Startup()
@@ -55,6 +55,16 @@ void bounce::OpenGLRenderer::Startup()
     m = glGetString(GL_EXTENSIONS);
     LOG_INFO << L"GL_EXTENSIONS: " << m << std::endl;
     CHECK_GL_ERROR();
+    
+    unsigned int program_handle = shader_manager_.next_handle();
+    ShaderProgram& program = shader_manager_.CreateProgram();
+    program.LoadVertexShader(vertex_shader_file_path_);
+    program.LoadFragmentShader(fragment_shader_file_path_);
+    program.LinkProgram();
+    
+    program.LoadUniforms();
+    
+    current_program_ = std::shared_ptr<ShaderProgram>(&program);
     
     glEnable(GL_DEPTH_TEST);
     CHECK_GL_ERROR();
@@ -97,25 +107,6 @@ void bounce::OpenGLRenderer::Startup()
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
     
-    unsigned int program_handle = shader_manager_.next_handle();
-    ShaderProgram& program = shader_manager_.CreateProgram();
-    program.LoadVertexShader(vertex_shader_file_path_);
-    program.LoadFragmentShader(fragment_shader_file_path_);
-    program.LinkProgram();
-    
-    program.LoadUniformLocation("MVP");
-    program.LoadUniformLocation("V");
-    program.LoadUniformLocation("M");
-    program.LoadUniformLocation("LightPosition_worldspace");
-    
-    program.LoadUniformLocation("Material_diffuse");
-    program.LoadUniformLocation("Material_ambient");
-    program.LoadUniformLocation("Material_specular");
-    program.LoadUniformLocation("Material_emissive");
-    program.LoadUniformLocation("Material_shininess");
-    
-    current_program_ = std::shared_ptr<ShaderProgram>(&program);
-    
     CHECK_GL_ERROR();
 }
 
@@ -149,17 +140,13 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
             glBindTexture(GL_TEXTURE_2D, texture_id);
             
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height(),
-                         0, GL_RGB, GL_UNSIGNED_BYTE, texture.data());
+                         0, GL_BGR, GL_UNSIGNED_BYTE, texture.data());
             
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         }
         
-        current_program_->SetUniform("Material_diffuse", material.diffuse());
-        current_program_->SetUniform("Material_ambient", material.ambient());
-        current_program_->SetUniform("Material_specular", material.specular());
-        current_program_->SetUniform("Material_emissive", material.emissive());
-        current_program_->SetUniform("Material_shininess", material.shininess());
+        current_program_->SetMaterial(material);
         
         glDrawArrays(GL_TRIANGLES, start_index, size);
         CHECK_GL_ERROR();
