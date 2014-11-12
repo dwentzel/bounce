@@ -134,36 +134,54 @@ void bounce::ShaderProgram::LoadUniforms()
     mvp_matrix_id_ = glGetUniformLocation(program_id_, "MVP");
     view_matrix_id_ = glGetUniformLocation(program_id_, "V");
     model_matrix_id_ = glGetUniformLocation(program_id_, "M");
+    
+    light_count_location_ = glGetUniformLocation(program_id_, "LightCount");
+    
     light_position_id_ = glGetUniformLocation(program_id_, "LightPosition_worldspace");
     
-    material_uniforms_.diffuse_id = glGetUniformLocation(program_id_, "Material_diffuse");
-    material_uniforms_.ambient_id = glGetUniformLocation(program_id_, "Material_ambient");
-    material_uniforms_.specular_id = glGetUniformLocation(program_id_, "Material_specular");
-    material_uniforms_.emissive_id = glGetUniformLocation(program_id_, "Material_emissive");
-    material_uniforms_.shininess_id = glGetUniformLocation(program_id_, "Material_shininess");
+    material_locations_.diffuse_id = glGetUniformLocation(program_id_, "Material_diffuse");
+    material_locations_.ambient_id = glGetUniformLocation(program_id_, "Material_ambient");
+    material_locations_.specular_id = glGetUniformLocation(program_id_, "Material_specular");
+    material_locations_.emissive_id = glGetUniformLocation(program_id_, "Material_emissive");
+    material_locations_.shininess_id = glGetUniformLocation(program_id_, "Material_shininess");
+    
+//    struct DirectionalLight {
+//        vec3 color;
+//        float diffuse_intensity;
+//        float ambient_intensity;
+//    };
+//    
+//    uniform DirectionalLight directionalLights[10];
+    
+    for (int i = 0; i < 10; ++i) {
+        std::stringstream oss;
+        oss << "[" << i << "]";
+        std::string index(oss.str());
+        
+        light_location_[i].position = glGetUniformLocation(program_id_, ("LightPosition_worldspace" + index).c_str());
+//        light_location_[i].direction = glGetUniformLocation(program_id_, ("directionalLights" + index + ".direction").c_str());
+        light_location_[i].color = glGetUniformLocation(program_id_, ("directionalLights" + index + ".color").c_str());
+        light_location_[i].diffuse_intensity = glGetUniformLocation(program_id_, ("directionalLights" + index + ".diffuse_intensity").c_str());
+        light_location_[i].ambient_intensity = glGetUniformLocation(program_id_, ("directionalLights" + index + ".ambient_intensity").c_str());
+    }
 }
 
-//void bounce::ShaderProgram::LoadUniformLocation(const std::string& uniform)
+//void bounce::ShaderProgram::SetLightPosition(const float* light_position_data)
 //{
-//    GLint location = glGetUniformLocation(program_id_, uniform.c_str());
-//    uniform_location_map_.emplace(uniform, location);
-//}
-//
-//void bounce::ShaderProgram::SetUniform(const std::string& uniform, const float* data)
-//{
-//    GLint uniform_index = uniform_location_map_[uniform];
-//    glUniform3fv(uniform_index, 1, data);
-//}
-//
-//void bounce::ShaderProgram::SetUniform(const std::string& uniform, float data)
-//{
-//    GLint uniform_index = uniform_location_map_[uniform];
-//    glUniform1f(uniform_index, data);
+//    glUniform3fv(light_position_id_, 1, light_position_data);
 //}
 
-void bounce::ShaderProgram::SetLightPosition(const float* light_position_data)
+void bounce::ShaderProgram::SetLightCount(unsigned int light_count)
 {
-    glUniform3fv(light_position_id_, 1, light_position_data);
+    glUniform1i(light_count_location_, light_count);
+}
+
+void bounce::ShaderProgram::SetLight(unsigned int index, const struct DirectionalLight& light)
+{
+    glUniform3fv(light_location_[index].position, 1, &light.position[0]);
+    glUniform3fv(light_location_[index].color, 1, &light.color[0]);
+    glUniform1f(light_location_[index].ambient_intensity, light.ambient_intensity);
+    glUniform1f(light_location_[index].diffuse_intensity, light.diffuse_intensity);
 }
 
 void bounce::ShaderProgram::SetViewMatrix(const float* view_matrix)
@@ -183,9 +201,9 @@ void bounce::ShaderProgram::SetMVPMatrix(const float* mvp_matrix)
 
 void bounce::ShaderProgram::SetMaterial(const bounce::Material &material)
 {
-    glUniform3fv(material_uniforms_.diffuse_id, 1, material.diffuse());
-    glUniform3fv(material_uniforms_.ambient_id, 1, material.ambient());
-    glUniform3fv(material_uniforms_.specular_id, 1, material.specular());
-    glUniform3fv(material_uniforms_.emissive_id, 1, material.emissive());
-    glUniform1f(material_uniforms_.shininess_id, material.shininess());
+    glUniform3fv(material_locations_.diffuse_id, 1, material.diffuse());
+    glUniform3fv(material_locations_.ambient_id, 1, material.ambient());
+    glUniform3fv(material_locations_.specular_id, 1, material.specular());
+    glUniform3fv(material_locations_.emissive_id, 1, material.emissive());
+    glUniform1f(material_locations_.shininess_id, material.shininess());
 }

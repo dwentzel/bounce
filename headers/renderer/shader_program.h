@@ -8,12 +8,28 @@
 
 namespace bounce {
 
-    struct MaterialUniforms {
+    struct MaterialLocations {
         GLuint diffuse_id;
         GLuint ambient_id;
         GLuint specular_id;
         GLuint emissive_id;
         GLuint shininess_id;
+    };
+    
+    struct DirectionalLightLocation {
+        GLuint position;
+        GLuint color;
+        GLuint ambient_intensity;
+        GLuint direction;
+        GLuint diffuse_intensity;
+    };
+    
+    struct DirectionalLight {
+        float* position;
+//        float* direction;
+        float* color;
+        float ambient_intensity;
+        float diffuse_intensity;
     };
     
     class ShaderProgram {
@@ -22,7 +38,10 @@ namespace bounce {
         GLuint vertex_shader_id_;
         GLuint fragment_shader_id_;
         
-        MaterialUniforms material_uniforms_;
+        GLuint light_count_location_;
+        
+        struct MaterialLocations material_locations_;
+        struct DirectionalLightLocation light_location_[10];
         
         GLuint mvp_matrix_id_;
         GLuint view_matrix_id_;
@@ -45,7 +64,11 @@ namespace bounce {
 
         void LoadUniforms();
         
-        void SetLightPosition(const float* light_position_data);
+//        void SetLightPosition(const float* light_position_data);
+        
+        void SetLightCount(unsigned int light_count);
+        
+        void SetLight(unsigned int index, const struct DirectionalLight& light);
         
         void SetMaterial(const Material& material);
         

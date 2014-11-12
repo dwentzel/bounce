@@ -23,9 +23,43 @@ void bounce::OpenGLRenderer::SetupNewFrame()
     
     current_program_->UseProgram();
     CHECK_GL_ERROR();
+
+    float light_position0[3] = { 0.0, 2.0, 0.0 };
+    float light_color0[3] = { 0.0, 1.0, 0.0 };
     
-    float light_position[3] = { 0.0, 3.0, 2.0 };
-    current_program_->SetLightPosition(light_position);
+    DirectionalLight light0;
+    light0.position = &light_position0[0];
+    light0.color = &light_color0[0];
+    light0.ambient_intensity = 0.0f;
+    light0.diffuse_intensity = 20.0f;
+
+    current_program_->SetLight(0, light0);
+
+    float light_position1[3] = { 2.0, 0.0, 0.0 };
+    float light_color1[3] = { 1.0, 0.0, 0.0 };
+    
+    DirectionalLight light1;
+    light1.position = &light_position1[0];
+    light1.color = &light_color1[0];
+    light1.ambient_intensity = 0.0f;
+    light1.diffuse_intensity = 20.0f;
+
+    current_program_->SetLight(1, light1);
+    
+    float light_position2[3] = { 0.0, 0.0, 2.0 };
+    float light_color2[3] = { 0.0, 0.0, 1.0 };
+    
+    DirectionalLight light2;
+    light2.position = &light_position2[0];
+    light2.color = &light_color2[0];
+    light2.ambient_intensity = 0.0f;
+    light2.diffuse_intensity = 20.0f;
+    
+    current_program_->SetLight(2, light2);
+    
+    current_program_->SetLightCount(3);
+//    float light_position[3] = { 0.0, 3.0, 2.0 };
+//    current_program_->SetLightPosition(light_position);
 }
 
 void bounce::OpenGLRenderer::Startup()
@@ -56,7 +90,7 @@ void bounce::OpenGLRenderer::Startup()
     LOG_INFO << L"GL_EXTENSIONS: " << m << std::endl;
     CHECK_GL_ERROR();
     
-    unsigned int program_handle = shader_manager_.next_handle();
+//    unsigned int program_handle = shader_manager_.next_handle();
     ShaderProgram& program = shader_manager_.CreateProgram();
     program.LoadVertexShader(vertex_shader_file_path_);
     program.LoadFragmentShader(fragment_shader_file_path_);
