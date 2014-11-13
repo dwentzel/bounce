@@ -9,15 +9,17 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-void bounce::RenderComponent::Startup() {
-
+void bounce::RenderComponent::Startup()
+{
+    render_system_->AddModel(model_handle_);
 }
 
-void bounce::RenderComponent::Shutdown() {
-    
+void bounce::RenderComponent::Shutdown()
+{
+    render_system_->RemoveModel(model_handle_);
 }
 
 void bounce::RenderComponent::Update()
 {
-    render_system_->RenderModel(model_handle_);
+//    render_system_->RenderModel(model_handle_);
 }

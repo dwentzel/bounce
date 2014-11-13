@@ -7,7 +7,8 @@ bounce::ShaderProgram& bounce::ShaderManager::CreateProgram()
 {
     GLuint program_id = glCreateProgram();
     
-    shader_programs_.emplace_back(program_id);
+//    shader_programs_.emplace_back(program_id);
+//    shader_programs_.emplace_back();
     return (*shader_programs_.rbegin());
 }
 

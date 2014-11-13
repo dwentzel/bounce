@@ -55,11 +55,11 @@ void bounce_mac::OsxApplicationContext::CreateWindow()
     NSOpenGLPixelFormatAttribute attr[] = {
         NSOpenGLPFAOpenGLProfile,
         NSOpenGLProfileVersion3_2Core,
-        NSOpenGLPFAColorSize, 24,
+        NSOpenGLPFAColorSize, 32,
         NSOpenGLPFAAlphaSize, 8,
         NSOpenGLPFAAccelerated,
         NSOpenGLPFADoubleBuffer,
-        NSOpenGLPFADepthSize, 32,
+        NSOpenGLPFADepthSize, 24,
         0
     };
     

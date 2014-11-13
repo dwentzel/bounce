@@ -50,6 +50,7 @@ message("CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
 add_subdirectory(framework)
 add_subdirectory(logging)
 add_subdirectory(renderer)
+add_subdirectory(renderer_test)
 add_subdirectory(importer)
 add_subdirectory(bounce)
 

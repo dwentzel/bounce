@@ -38,8 +38,10 @@ namespace bounce {
         running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
         texture_manager_(application_context_.root_path() + "/textures"),
         renderer_(
-                  application_context_.root_path() + "/shaders/triangleShader.vert.glsl",
-                  application_context_.root_path() + "/shaders/triangleShader.frag.glsl",
+                  application_context_.root_path() + "/shaders/geometry_pass.vert.glsl",
+                  application_context_.root_path() + "/shaders/geometry_pass.frag.glsl",
+//                  application_context_.root_path() + "/shaders/triangleShader.vert.glsl",
+//                  application_context_.root_path() + "/shaders/triangleShader.frag.glsl",
                   model_manager_, texture_manager_, material_manager_, vertex_buffer_),
         render_system_(application_context_, world_manager_, renderer_)
     {
@@ -68,6 +70,8 @@ namespace bounce {
         GameEntity* cube = new GameEntity();
         RenderComponent* render_component = new RenderComponent(&render_system_, model_handle);
         cube->AttachComponent(render_component);
+        
+        render_component->Startup();
         
         ControlComponent* control_component = new ControlComponent(keyboard_state_);
         cube->AttachComponent(control_component);

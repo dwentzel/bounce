@@ -2,6 +2,8 @@ setup_module(renderer)
 
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/g_buffer.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/geometry_pass_program.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/material.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/material_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
@@ -16,6 +18,8 @@ set(HEADERS
 )
 
 set(SOURCES
+    src/g_buffer.cc
+    src/geometry_pass_program.cc
     src/material.cc
     src/material_manager.cc
     src/model.cc

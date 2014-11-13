@@ -1,6 +1,8 @@
 #ifndef BOUNCE_RENDER_SYSTEM_H_
 #define BOUNCE_RENDER_SYSTEM_H_
 
+#include <vector>
+
 #include "framework/renderer.h"
 
 #include "game_system.h"
@@ -15,6 +17,8 @@ namespace bounce {
         const WorldManager& world_manager_;
         
         Renderer& renderer_;
+        
+        std::vector<unsigned int> model_handles_;
         
         RenderSystem(const RenderSystem&) = delete;
         RenderSystem& operator=(const RenderSystem&) = delete;
@@ -33,7 +37,9 @@ namespace bounce {
         virtual void shutdown();
         virtual void update();
 
-        void RenderModel(unsigned int model_handle);
+        void AddModel(unsigned int model_handle);
+        void RemoveModel(unsigned int model_handle);
+//        void RenderModel(unsigned int model_handle);
     };
     
 }

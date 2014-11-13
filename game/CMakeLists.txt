@@ -28,6 +28,8 @@ if (APPLE)
     set(SHADERS
         ${shaders_PATH}/triangleShader.frag.glsl
         ${shaders_PATH}/triangleShader.vert.glsl
+        ${shaders_PATH}/geometry_pass.frag.glsl
+        ${shaders_PATH}/geometry_pass.vert.glsl
     )
 
     set(RESOURCES
