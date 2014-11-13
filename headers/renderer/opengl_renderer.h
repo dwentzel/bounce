@@ -16,10 +16,13 @@
 #include "vertex_buffer.h"
 //#include "shader_manager.h"
 #include "geometry_pass_program.h"
+#include "directional_light_pass_program.h"
+#include "point_light_pass_program.h"
 #include "g_buffer.h"
 
 namespace bounce
 {
+
     
     class OpenGLRenderer : public Renderer {
     private:
@@ -32,6 +35,8 @@ namespace bounce
         std::string fragment_shader_file_path_;
         
         GeometryPassProgram geometry_pass_program_;
+        DirectionalLightPassProgram directional_light_pass_program_;
+        PointLightPassProgram point_light_pass_program_;
         
         std::vector<unsigned int> model_handles_;
         
@@ -41,6 +46,10 @@ namespace bounce
         const VertexBuffer& vertex_buffer_;
         
         void RunGeometryPass();
+        void BeginLightPasses();
+        void RunPointLightsPass();
+        void RunDirectionalLightPass();
+        
         void RunLightPass();
         void RenderModel(unsigned int model_handle);
         
@@ -68,28 +77,28 @@ namespace bounce
     
     inline void OpenGLRenderer::SetModelMatrix(const float* model_matrix)
     {
-        current_program_->SetModelMatrix(model_matrix);
+//        current_program_->SetModelMatrix(model_matrix);
     }
     
     inline void OpenGLRenderer::SetViewMatrix(const float* view_matrix)
     {
-        current_program_->SetViewMatrix(view_matrix);
+//        current_program_->SetViewMatrix(view_matrix);
     }
 
     inline void OpenGLRenderer::SetWorldMatrix(const float* world_matrix)
     {
-        current_program_->SetWorldMatrix(world_matrix);
+//        current_program_->SetWorldMatrix(world_matrix);
     }
 
     
     inline void OpenGLRenderer::SetWVPMatrix(const float* wvp_matrix)
     {
-        current_program_->SetWVPMatrix(wvp_matrix);
+//        current_program_->SetWVPMatrix(wvp_matrix);
     }
 
     inline void OpenGLRenderer::SetMWVPMatrix(const float* mwvp_matrix)
     {
-        current_program_->SetMWVPMatrix(mwvp_matrix);
+//        current_program_->SetMWVPMatrix(mwvp_matrix);
     }
     
     

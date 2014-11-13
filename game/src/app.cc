@@ -55,6 +55,8 @@ namespace bounce {
     bool App::onInit()
     {
         srand(time(0));
+        
+        ShaderProgram::base_path(application_context_.root_path() + "/shaders");
 
         Importer importer(model_manager_, texture_manager_, material_manager_, vertex_buffer_);
 

@@ -23,27 +23,15 @@ namespace bounce {
         GLuint direction;
         GLuint diffuse_intensity;
     };
-    
-    struct DirectionalLight {
-        float* position;
-//        float* direction;
-        float* color;
-        float ambient_intensity;
-        float diffuse_intensity;
-    };
-    
+        
     class ShaderProgram {
     private:
+        static std::string base_path_;
+        
         GLint program_id_;
         GLint vertex_shader_id_;
         GLint fragment_shader_id_;
-
-        GLint mwvp_matrix_id_;
-        GLint wvp_matrix_id_;
-        GLint view_matrix_id_;
-        GLint world_matrix_id_;
-        GLint model_matrix_id_;
-
+        
 //        GLuint light_count_location_;
 //        
 //        struct MaterialLocations material_locations_;
@@ -56,17 +44,21 @@ namespace bounce {
         std::string LoadShaderCode(const std::string& shader_code_file_path);
         
         void LoadShader(const std::string& shader_code_file_path, GLuint shader_id);
-
+        
+        GLint GetUniformLocation(const std::string& name);
+        
         ShaderProgram();
         
-    public:
-//        ShaderProgram(GLuint program_id);
+        GLint program_id() const;
         
-        void Init();
-
         void LoadVertexShader(const std::string& shader_code_file_path);
         void LoadFragmentShader(const std::string& shader_code_file_path);
         void LinkProgram();
+        
+    public:
+        static void base_path(const std::string& path);
+        
+        void Init();
         
         void UseProgram();
 
@@ -77,14 +69,12 @@ namespace bounce {
         void SetLight(unsigned int index, const struct DirectionalLight& light);
         
         void SetMaterial(const Material& material);
-        
-        void SetModelMatrix(const float* model_matrix);
-        void SetWorldMatrix(const float* world_matrix);
-        void SetViewMatrix(const float* view_matrix);
-        void SetWVPMatrix(const float* wvp_matrix);
-        void SetMWVPMatrix(const float* mwvp_matrix);
     };
 
+    inline GLint ShaderProgram::program_id() const
+    {
+        return program_id_;
+    }
 }
 
 #endif // BOUNCE_RENDERER_SHADER_PROGRAM_

@@ -14,7 +14,7 @@ bounce::OpenGLRenderer::OpenGLRenderer(const std::string& vertex_shader_file_pat
 : vertex_shader_file_path_(vertex_shader_file_path), fragment_shader_file_path_(fragment_shader_file_path),
 model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
-    
+    current_program_ = nullptr;
 }
 
 
@@ -94,11 +94,9 @@ void bounce::OpenGLRenderer::Startup()
     //    ShaderProgram& program = shader_manager_.CreateProgram();
     
     geometry_pass_program_.Init();
-    geometry_pass_program_.LoadVertexShader(vertex_shader_file_path_);
-    geometry_pass_program_.LoadFragmentShader(fragment_shader_file_path_);
-    geometry_pass_program_.LinkProgram();
-    geometry_pass_program_.LoadUniforms();
-    
+    point_light_pass_program_.Init();
+    directional_light_pass_program_.Init();
+
     current_program_ = &geometry_pass_program_;
     
     //    current_program_ = std::shared_ptr<ShaderProgram>(&program);
@@ -168,24 +166,59 @@ void bounce::OpenGLRenderer::AddModel(unsigned int model_handle)
 void bounce::OpenGLRenderer::RenderFrame()
 {
     RunGeometryPass();
+    
+    BeginLightPasses();
+    
     RunLightPass();
 }
 
 void bounce::OpenGLRenderer::RunGeometryPass()
 {
     CHECK_GL_ERROR();
+
     current_program_ = &geometry_pass_program_;
     geometry_pass_program_.UseProgram();
     
     g_buffer_.BindForWriting();
     
+    glDepthMask(GL_TRUE);
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glEnable(GL_DEPTH_TEST);
+    
+    glDisable(GL_BLEND);
     
     for (std::vector<unsigned int>::iterator i = model_handles_.begin(); i != model_handles_.end() ; ++i) {
         RenderModel(*i);
     }
     
+    glDepthMask(GL_FALSE);
+    glDisable(GL_DEPTH_TEST);
+    
     CHECK_GL_ERROR();
+}
+
+void bounce::OpenGLRenderer::BeginLightPasses()
+{
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_ONE, GL_ONE);
+    
+    g_buffer_.BindForReading();
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void bounce::OpenGLRenderer::RunPointLightsPass()
+{
+    point_light_pass_program_.UseProgram();
+    
+    
+}
+
+void bounce::OpenGLRenderer::RunDirectionalLightPass()
+{
+    
 }
 
 void bounce::OpenGLRenderer::RunLightPass()

@@ -41,10 +41,14 @@ namespace {
     }
 }
 
+std::string bounce::ShaderProgram::base_path_;
 
+void bounce::ShaderProgram::base_path(const std::string &path)
+{
+    base_path_ = path;
+}
 
 bounce::ShaderProgram::ShaderProgram()
-//: program_id_(program_id)
 {
     
 }
@@ -91,6 +95,9 @@ std::string bounce::ShaderProgram::LoadShaderCode(const std::string& shaderFileP
         }
         shaderStream.close();
     }
+    else {
+        LOG_ERROR << "Failed to open " << shaderFilePath << std::endl;
+    }
     
     return shaderCode;
 }
@@ -121,13 +128,13 @@ void bounce::ShaderProgram::LoadShader(const std::string& shader_code_file_path,
     CHECK_GL_ERROR();
     
     std::string shader_code;
-    shader_code = LoadShaderCode(shader_code_file_path);
+    shader_code = LoadShaderCode(base_path_ + "/" +shader_code_file_path);
     
     LOG_DEBUG << "Compiling shader: " << shader_code_file_path << std::endl;
     CompileShader(shader_id, shader_code);
     
-    
     glAttachShader(program_id_, shader_id);
+    
     CHECK_GL_ERROR();
 }
 
@@ -154,6 +161,13 @@ void bounce::ShaderProgram::LinkProgram()
     CHECK_GL_ERROR();
 }
 
+GLint bounce::ShaderProgram::GetUniformLocation(const std::string& name)
+{
+    CHECK_GL_ERROR();
+    return glGetUniformLocation(program_id_, name.c_str());
+    CHECK_GL_ERROR();
+}
+
 void bounce::ShaderProgram::UseProgram()
 {
     CHECK_GL_ERROR();
@@ -164,11 +178,11 @@ void bounce::ShaderProgram::UseProgram()
 void bounce::ShaderProgram::LoadUniforms()
 {
     CHECK_GL_ERROR();
-    mwvp_matrix_id_ = glGetUniformLocation(program_id_, "MWVP");
-    wvp_matrix_id_ = glGetUniformLocation(program_id_, "WVP");
-    view_matrix_id_ = glGetUniformLocation(program_id_, "V");
-    world_matrix_id_ = glGetUniformLocation(program_id_, "W");
-    model_matrix_id_ = glGetUniformLocation(program_id_, "M");
+    //    mwvp_matrix_id_ = glGetUniformLocation(program_id_, "MWVP");
+    //    wvp_matrix_id_ = glGetUniformLocation(program_id_, "WVP");
+    //    view_matrix_id_ = glGetUniformLocation(program_id_, "V");
+    //    world_matrix_id_ = glGetUniformLocation(program_id_, "W");
+    //    model_matrix_id_ = glGetUniformLocation(program_id_, "M");
     //
     //    light_count_location_ = glGetUniformLocation(program_id_, "LightCount");
     //
@@ -221,40 +235,7 @@ void bounce::ShaderProgram::SetLight(unsigned int index, const struct Directiona
     //    glUniform1f(light_location_[index].diffuse_intensity, light.diffuse_intensity);
 }
 
-void bounce::ShaderProgram::SetModelMatrix(const float* model_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(model_matrix_id_, 1, GL_FALSE, model_matrix);
-    CHECK_GL_ERROR();
-}
 
-void bounce::ShaderProgram::SetWorldMatrix(const float* model_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(world_matrix_id_, 1, GL_FALSE, model_matrix);
-    CHECK_GL_ERROR();
-}
-
-void bounce::ShaderProgram::SetViewMatrix(const float* view_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(view_matrix_id_, 1, GL_FALSE, view_matrix);
-    CHECK_GL_ERROR();
-}
-
-void bounce::ShaderProgram::SetWVPMatrix(const float* wvp_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(wvp_matrix_id_, 1, GL_FALSE, wvp_matrix);
-    CHECK_GL_ERROR();
-}
-
-void bounce::ShaderProgram::SetMWVPMatrix(const float* mwvp_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(mwvp_matrix_id_, 1, GL_FALSE, mwvp_matrix);
-    CHECK_GL_ERROR();
-}
 
 void bounce::ShaderProgram::SetMaterial(const bounce::Material &material)
 {
