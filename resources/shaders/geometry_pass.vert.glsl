@@ -18,7 +18,7 @@ out vec3 WorldPos0;
 void main()
 {
     gl_Position = MWVP * vec4(Position, 1.0);
-    TexCoord0 = (M * vec4(TexCoord, 0.0, 1.0)).xy;
+    TexCoord0 = TexCoord;
     Normal0 = (W * M * vec4(Normal, 0.0)).xyz;
     WorldPos0 = (W * M * vec4(Position, 1.0)).xyz;
 }

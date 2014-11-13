@@ -222,6 +222,7 @@ void bounce::OpenGLRenderer::RunLightPass()
 void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
 {
     CHECK_GL_ERROR();
+    
     const Model& model = model_manager_.GetModel(model_handle);
     
     const std::vector<int>& start_indices = model.mesh_start_indices();
@@ -240,22 +241,21 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         GLuint texture_id;
         glGenTextures(1, &texture_id);
         
-        //        if (texture_handle > -1) {
-        //            const Texture& texture = texture_manager_.GetTexture(texture_handle);
-        //
-        //            glBindTexture(GL_TEXTURE_2D, texture_id);
-        //
-        //            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height(),
-        //                         0, GL_BGR, GL_UNSIGNED_BYTE, texture.data());
-        //
-        //            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        //            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        //        }
+        if (texture_handle > -1) {
+            const Texture& texture = texture_manager_.GetTexture(texture_handle);
+            
+            glBindTexture(GL_TEXTURE_2D, texture_id);
+            
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height(),
+                         0, GL_BGR, GL_UNSIGNED_BYTE, texture.data());
+            
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        }
         
-        //        current_program_->SetMaterial(material);
+        current_program_->SetMaterial(material);
         
         glDrawArrays(GL_TRIANGLES, start_index, size);
-        
         
         glDeleteTextures(1, &texture_id);
         CHECK_GL_ERROR();
