@@ -1,6 +1,5 @@
 #version 330 core
 #pragma debug(on)
-#extension GL_ARB_explicit_attrib_location : enable
 
 layout (location = 0) in vec3 Position;
 layout (location = 1) in vec2 TexCoord;
@@ -18,13 +17,8 @@ out vec3 WorldPos0;
 
 void main()
 {
-    gl_Position = WVP * vec4(Position, 1.0);
-//    gl_Position = vec4(Position, 1.0);
-    TexCoord0 = TexCoord;
-//    TexCoord0 = vec2(0,0);
-    Normal0 = (W * vec4(Normal, 0.0)).xyz;
-//    Normal0 = vec3(0,0,0);
-    WorldPos0 = (W * vec4(Position, 1.0)).xyz;
-//    WorldPos0 = (vec4(Position, 1.0)).xyz;
-//    WorldPos0 = vec3(0,0,0);
+    gl_Position = MWVP * vec4(Position, 1.0);
+    TexCoord0 = (M * vec4(TexCoord, 0.0, 1.0)).xy;
+    Normal0 = (W * M * vec4(Normal, 0.0)).xyz;
+    WorldPos0 = (W * M * vec4(Position, 1.0)).xyz;
 }

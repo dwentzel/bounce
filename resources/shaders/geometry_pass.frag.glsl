@@ -1,4 +1,4 @@
-#version 330
+#version 330 core
 #pragma debug(on)
 
 in vec2 TexCoord0;
@@ -18,9 +18,4 @@ void main()
     DiffuseOut = texture(gColorMap, TexCoord0).xyz;
     NormalOut = normalize(Normal0);
     TexCoordOut = vec3(TexCoord0, 0.0);
-    
-//    WorldPosOut = vec3(0,0,0);
-//    DiffuseOut = vec3(0,0,0);
-//    NormalOut = vec3(0,0,0);
-//    TexCoordOut = vec3(0,0,0);
 }
