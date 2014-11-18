@@ -41,7 +41,12 @@ namespace {
     }
 }
 
+std::string bounce::ShaderProgram::base_path_;
 
+void bounce::ShaderProgram::base_path(const std::string& path)
+{
+    ShaderProgram::base_path_ = path;
+}
 
 bounce::ShaderProgram::ShaderProgram()
 //: program_id_(program_id)
@@ -49,7 +54,7 @@ bounce::ShaderProgram::ShaderProgram()
     
 }
 
-void bounce::ShaderProgram::Init()
+void bounce::ShaderProgram::CreateProgram()
 {
     CHECK_GL_ERROR();
     program_id_ = glCreateProgram();
@@ -91,6 +96,9 @@ std::string bounce::ShaderProgram::LoadShaderCode(const std::string& shaderFileP
         }
         shaderStream.close();
     }
+    else {
+        LOG_ERROR << "Could not find file " << shaderFilePath << std::endl;
+    }
     
     return shaderCode;
 }
@@ -121,7 +129,7 @@ void bounce::ShaderProgram::LoadShader(const std::string& shader_code_file_path,
     CHECK_GL_ERROR();
     
     std::string shader_code;
-    shader_code = LoadShaderCode(shader_code_file_path);
+    shader_code = LoadShaderCode(base_path_ + "/" + shader_code_file_path);
     
     LOG_DEBUG << "Compiling shader: " << shader_code_file_path << std::endl;
     CompileShader(shader_id, shader_code);
@@ -154,6 +162,11 @@ void bounce::ShaderProgram::LinkProgram()
     CHECK_GL_ERROR();
 }
 
+GLint bounce::ShaderProgram::GetUniformLocation(const GLchar* uniform)
+{
+    return glGetUniformLocation(program_id_, uniform);
+}
+
 void bounce::ShaderProgram::UseProgram()
 {
     CHECK_GL_ERROR();
@@ -161,47 +174,47 @@ void bounce::ShaderProgram::UseProgram()
     CHECK_GL_ERROR();
 }
 
-void bounce::ShaderProgram::LoadUniforms()
-{
-    CHECK_GL_ERROR();
-    mwvp_matrix_id_ = glGetUniformLocation(program_id_, "MWVP");
-    wvp_matrix_id_ = glGetUniformLocation(program_id_, "WVP");
-    view_matrix_id_ = glGetUniformLocation(program_id_, "V");
-    world_matrix_id_ = glGetUniformLocation(program_id_, "W");
-    model_matrix_id_ = glGetUniformLocation(program_id_, "M");
-    //
-    //    light_count_location_ = glGetUniformLocation(program_id_, "LightCount");
-    //
-    //    light_position_id_ = glGetUniformLocation(program_id_, "LightPosition_worldspace");
-    //
-    //    material_locations_.diffuse_id = glGetUniformLocation(program_id_, "Material_diffuse");
-    //    material_locations_.ambient_id = glGetUniformLocation(program_id_, "Material_ambient");
-    //    material_locations_.specular_id = glGetUniformLocation(program_id_, "Material_specular");
-    //    material_locations_.emissive_id = glGetUniformLocation(program_id_, "Material_emissive");
-    //    material_locations_.shininess_id = glGetUniformLocation(program_id_, "Material_shininess");
-    //
-    ////    struct DirectionalLight {
-    ////        vec3 color;
-    ////        float diffuse_intensity;
-    ////        float ambient_intensity;
-    ////    };
-    ////
-    ////    uniform DirectionalLight directionalLights[10];
-    //
-    //    for (int i = 0; i < 10; ++i) {
-    //        std::stringstream oss;
-    //        oss << "[" << i << "]";
-    //        std::string index(oss.str());
-    //
-    //        light_location_[i].position = glGetUniformLocation(program_id_, ("LightPosition_worldspace" + index).c_str());
-    ////        light_location_[i].direction = glGetUniformLocation(program_id_, ("directionalLights" + index + ".direction").c_str());
-    //        light_location_[i].color = glGetUniformLocation(program_id_, ("directionalLights" + index + ".color").c_str());
-    //        light_location_[i].diffuse_intensity = glGetUniformLocation(program_id_, ("directionalLights" + index + ".diffuse_intensity").c_str());
-    //        light_location_[i].ambient_intensity = glGetUniformLocation(program_id_, ("directionalLights" + index + ".ambient_intensity").c_str());
-    //    }
-    
-    CHECK_GL_ERROR();
-}
+//void bounce::ShaderProgram::LoadUniforms()
+//{
+//    CHECK_GL_ERROR();
+//    mwvp_matrix_id_ = glGetUniformLocation(program_id_, "MWVP");
+//    wvp_matrix_id_ = glGetUniformLocation(program_id_, "WVP");
+//    view_matrix_id_ = glGetUniformLocation(program_id_, "V");
+//    world_matrix_id_ = glGetUniformLocation(program_id_, "W");
+//    model_matrix_id_ = glGetUniformLocation(program_id_, "M");
+//    //
+//    //    light_count_location_ = glGetUniformLocation(program_id_, "LightCount");
+//    //
+//    //    light_position_id_ = glGetUniformLocation(program_id_, "LightPosition_worldspace");
+//    //
+//    //    material_locations_.diffuse_id = glGetUniformLocation(program_id_, "Material_diffuse");
+//    //    material_locations_.ambient_id = glGetUniformLocation(program_id_, "Material_ambient");
+//    //    material_locations_.specular_id = glGetUniformLocation(program_id_, "Material_specular");
+//    //    material_locations_.emissive_id = glGetUniformLocation(program_id_, "Material_emissive");
+//    //    material_locations_.shininess_id = glGetUniformLocation(program_id_, "Material_shininess");
+//    //
+//    ////    struct DirectionalLight {
+//    ////        vec3 color;
+//    ////        float diffuse_intensity;
+//    ////        float ambient_intensity;
+//    ////    };
+//    ////
+//    ////    uniform DirectionalLight directionalLights[10];
+//    //
+//    //    for (int i = 0; i < 10; ++i) {
+//    //        std::stringstream oss;
+//    //        oss << "[" << i << "]";
+//    //        std::string index(oss.str());
+//    //
+//    //        light_location_[i].position = glGetUniformLocation(program_id_, ("LightPosition_worldspace" + index).c_str());
+//    ////        light_location_[i].direction = glGetUniformLocation(program_id_, ("directionalLights" + index + ".direction").c_str());
+//    //        light_location_[i].color = glGetUniformLocation(program_id_, ("directionalLights" + index + ".color").c_str());
+//    //        light_location_[i].diffuse_intensity = glGetUniformLocation(program_id_, ("directionalLights" + index + ".diffuse_intensity").c_str());
+//    //        light_location_[i].ambient_intensity = glGetUniformLocation(program_id_, ("directionalLights" + index + ".ambient_intensity").c_str());
+//    //    }
+//    
+//    CHECK_GL_ERROR();
+//}
 
 //void bounce::ShaderProgram::SetLightPosition(const float* light_position_data)
 //{
@@ -221,40 +234,7 @@ void bounce::ShaderProgram::SetLight(unsigned int index, const struct Directiona
     //    glUniform1f(light_location_[index].diffuse_intensity, light.diffuse_intensity);
 }
 
-void bounce::ShaderProgram::SetModelMatrix(const float* model_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(model_matrix_id_, 1, GL_FALSE, model_matrix);
-    CHECK_GL_ERROR();
-}
 
-void bounce::ShaderProgram::SetWorldMatrix(const float* model_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(world_matrix_id_, 1, GL_FALSE, model_matrix);
-    CHECK_GL_ERROR();
-}
-
-void bounce::ShaderProgram::SetViewMatrix(const float* view_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(view_matrix_id_, 1, GL_FALSE, view_matrix);
-    CHECK_GL_ERROR();
-}
-
-void bounce::ShaderProgram::SetWVPMatrix(const float* wvp_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(wvp_matrix_id_, 1, GL_FALSE, wvp_matrix);
-    CHECK_GL_ERROR();
-}
-
-void bounce::ShaderProgram::SetMWVPMatrix(const float* mwvp_matrix)
-{
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(mwvp_matrix_id_, 1, GL_FALSE, mwvp_matrix);
-    CHECK_GL_ERROR();
-}
 
 void bounce::ShaderProgram::SetMaterial(const bounce::Material &material)
 {

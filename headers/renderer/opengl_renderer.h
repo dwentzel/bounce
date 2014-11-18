@@ -28,9 +28,6 @@ namespace bounce
         
         GLuint buffers_[1];
         
-        std::string vertex_shader_file_path_;
-        std::string fragment_shader_file_path_;
-        
         GeometryPassProgram geometry_pass_program_;
         
         std::vector<unsigned int> model_handles_;
@@ -45,8 +42,7 @@ namespace bounce
         void RenderModel(unsigned int model_handle);
         
     public:
-        OpenGLRenderer(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path,
-                       const ModelManager& model_manager,
+        OpenGLRenderer(const ModelManager& model_manager,
                        const TextureManager& texture_manager,
                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
         
@@ -68,28 +64,28 @@ namespace bounce
     
     inline void OpenGLRenderer::SetModelMatrix(const float* model_matrix)
     {
-        current_program_->SetModelMatrix(model_matrix);
+        geometry_pass_program_.SetModelMatrix(model_matrix);
     }
     
     inline void OpenGLRenderer::SetViewMatrix(const float* view_matrix)
     {
-        current_program_->SetViewMatrix(view_matrix);
+        geometry_pass_program_.SetViewMatrix(view_matrix);
     }
 
     inline void OpenGLRenderer::SetWorldMatrix(const float* world_matrix)
     {
-        current_program_->SetWorldMatrix(world_matrix);
+        geometry_pass_program_.SetWorldMatrix(world_matrix);
     }
 
     
     inline void OpenGLRenderer::SetWVPMatrix(const float* wvp_matrix)
     {
-        current_program_->SetWVPMatrix(wvp_matrix);
+        geometry_pass_program_.SetWVPMatrix(wvp_matrix);
     }
 
     inline void OpenGLRenderer::SetMWVPMatrix(const float* mwvp_matrix)
     {
-        current_program_->SetMWVPMatrix(mwvp_matrix);
+        geometry_pass_program_.SetMWVPMatrix(mwvp_matrix);
     }
     
     

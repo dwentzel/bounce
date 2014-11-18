@@ -7,12 +7,10 @@
 
 
 
-bounce::OpenGLRenderer::OpenGLRenderer(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path,
-                                       const ModelManager& model_manager,
+bounce::OpenGLRenderer::OpenGLRenderer(const ModelManager& model_manager,
                                        const TextureManager& texture_manager,
                                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
-: vertex_shader_file_path_(vertex_shader_file_path), fragment_shader_file_path_(fragment_shader_file_path),
-model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+: model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
 }
@@ -94,10 +92,10 @@ void bounce::OpenGLRenderer::Startup()
     //    ShaderProgram& program = shader_manager_.CreateProgram();
     
     geometry_pass_program_.Init();
-    geometry_pass_program_.LoadVertexShader(vertex_shader_file_path_);
-    geometry_pass_program_.LoadFragmentShader(fragment_shader_file_path_);
-    geometry_pass_program_.LinkProgram();
-    geometry_pass_program_.LoadUniforms();
+//    geometry_pass_program_.LoadVertexShader(vertex_shader_file_path_);
+//    geometry_pass_program_.LoadFragmentShader(fragment_shader_file_path_);
+//    geometry_pass_program_.LinkProgram();
+//    geometry_pass_program_.LoadUniforms();
     
     current_program_ = &geometry_pass_program_;
     

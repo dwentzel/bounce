@@ -34,39 +34,29 @@ namespace bounce {
     
     class ShaderProgram {
     private:
+        static std::string base_path_;
+        
         GLint program_id_;
         GLint vertex_shader_id_;
         GLint fragment_shader_id_;
-
-        GLint mwvp_matrix_id_;
-        GLint wvp_matrix_id_;
-        GLint view_matrix_id_;
-        GLint world_matrix_id_;
-        GLint model_matrix_id_;
-
-//        GLuint light_count_location_;
-//        
-//        struct MaterialLocations material_locations_;
-//        struct DirectionalLightLocation light_location_[10];
-//        
-//        GLuint light_position_id_;
         
     protected:
         void CompileShader(const int& shader_id, const std::string& shader_code);
         std::string LoadShaderCode(const std::string& shader_code_file_path);
         
         void LoadShader(const std::string& shader_code_file_path, GLuint shader_id);
-
-        ShaderProgram();
-        
-    public:
-//        ShaderProgram(GLuint program_id);
-        
-        void Init();
-
         void LoadVertexShader(const std::string& shader_code_file_path);
         void LoadFragmentShader(const std::string& shader_code_file_path);
         void LinkProgram();
+
+        void CreateProgram();
+        
+        GLint GetUniformLocation(const GLchar* uniform);
+        
+        ShaderProgram();
+        
+    public:
+        static void base_path(const std::string& path);
         
         void UseProgram();
 
@@ -78,11 +68,7 @@ namespace bounce {
         
         void SetMaterial(const Material& material);
         
-        void SetModelMatrix(const float* model_matrix);
-        void SetWorldMatrix(const float* world_matrix);
-        void SetViewMatrix(const float* view_matrix);
-        void SetWVPMatrix(const float* wvp_matrix);
-        void SetMWVPMatrix(const float* mwvp_matrix);
+
     };
 
 }
