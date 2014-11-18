@@ -38,7 +38,7 @@ namespace bounce {
 
         void AddModel(unsigned int model_handle);
         void RemoveModel(unsigned int model_handle);
-//        void RenderModel(unsigned int model_handle);
+        void RenderModel(unsigned int model_handle);
     };
     
 }

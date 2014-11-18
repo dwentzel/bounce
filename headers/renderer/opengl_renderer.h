@@ -14,16 +14,14 @@
 #include "texture_manager.h"
 #include "material_manager.h"
 #include "vertex_buffer.h"
-//#include "shader_manager.h"
 #include "geometry_pass_program.h"
 #include "g_buffer.h"
 
 namespace bounce
 {
     
-    class OpenGLRenderer : public Renderer {
+    class OpenGLRenderer {
     private:
-//        ShaderProgram* current_program_;
         GBuffer g_buffer_;
         
         GLuint buffers_[1];
@@ -37,9 +35,10 @@ namespace bounce
         const MaterialManager& material_manager_;
         const VertexBuffer& vertex_buffer_;
         
-        void RunGeometryPass();
+        void BeginGeometryPass();
+        void EndGeometryPass();
         void RunLightPass();
-        void RenderModel(unsigned int model_handle);
+        
         
     public:
         OpenGLRenderer(const ModelManager& model_manager,
@@ -49,41 +48,44 @@ namespace bounce
         virtual void Startup();
         virtual void Shutdown();
 
-        virtual void SetModelMatrix(const float* model_matrix);
-        virtual void SetViewMatrix(const float* view_matrix);
-        virtual void SetWorldMatrix(const float* world_matrix);
-        virtual void SetWVPMatrix(const float* wvp_matrix);
-        virtual void SetMWVPMatrix(const float* mwvp_matrix);
+        virtual void SetModelMatrix(const glm::mat4& model_matrix);
+        virtual void SetViewMatrix(const glm::mat4& view_matrix);
+        virtual void SetWorldMatrix(const glm::mat4& world_matrix);
+        virtual void SetWVPMatrix(const glm::mat4& wvp_matrix);
+        virtual void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
         
         virtual void ClearModels();
         virtual void AddModel(unsigned int model_handle);
         
-        virtual void RenderFrame();
+        void BeginFrame();
+        void EndFrame();
+        
+        void RenderModel(unsigned int model_handle);
         
     };
     
-    inline void OpenGLRenderer::SetModelMatrix(const float* model_matrix)
+    inline void OpenGLRenderer::SetModelMatrix(const glm::mat4& model_matrix)
     {
         geometry_pass_program_.SetModelMatrix(model_matrix);
     }
     
-    inline void OpenGLRenderer::SetViewMatrix(const float* view_matrix)
+    inline void OpenGLRenderer::SetViewMatrix(const glm::mat4& view_matrix)
     {
         geometry_pass_program_.SetViewMatrix(view_matrix);
     }
 
-    inline void OpenGLRenderer::SetWorldMatrix(const float* world_matrix)
+    inline void OpenGLRenderer::SetWorldMatrix(const glm::mat4& world_matrix)
     {
         geometry_pass_program_.SetWorldMatrix(world_matrix);
     }
 
     
-    inline void OpenGLRenderer::SetWVPMatrix(const float* wvp_matrix)
+    inline void OpenGLRenderer::SetWVPMatrix(const glm::mat4& wvp_matrix)
     {
         geometry_pass_program_.SetWVPMatrix(wvp_matrix);
     }
 
-    inline void OpenGLRenderer::SetMWVPMatrix(const float* mwvp_matrix)
+    inline void OpenGLRenderer::SetMWVPMatrix(const glm::mat4& mwvp_matrix)
     {
         geometry_pass_program_.SetMWVPMatrix(mwvp_matrix);
     }

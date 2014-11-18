@@ -21,5 +21,5 @@ void bounce::RenderComponent::Shutdown()
 
 void bounce::RenderComponent::Update()
 {
-//    render_system_->RenderModel(model_handle_);
+    render_system_->RenderModel(model_handle_);
 }

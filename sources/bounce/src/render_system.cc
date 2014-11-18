@@ -40,13 +40,16 @@ void bounce::RenderSystem::update() {
     
     glm::mat4 view_matrix = glm::lookAt(position, glm::vec3(0.0f, 0.0f, 0.0f),
                                         glm::vec3(0.0f, 1.0f, 0.0f));
-    renderer_.SetViewMatrix(&view_matrix[0][0]);
     
     glm::mat4 world_matrix = glm::mat4(1.0f);
-    renderer_.SetWorldMatrix(&world_matrix[0][0]);
-    
     glm::mat4 wvp_matrix = projection_matrix * view_matrix * world_matrix;
-    renderer_.SetWVPMatrix(&wvp_matrix[0][0]);
+
+
+    renderer_.BeginFrame();
+    
+    renderer_.SetViewMatrix(view_matrix);
+    renderer_.SetWorldMatrix(world_matrix);
+    renderer_.SetWVPMatrix(wvp_matrix);
     
     const GameEntityList& entities = world_manager_.entities();
     
@@ -58,13 +61,14 @@ void bounce::RenderSystem::update() {
         glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
         
         
-        renderer_.SetMWVPMatrix(&mwvp_matrix[0][0]);
-        renderer_.SetModelMatrix(&model_matrix[0][0]);
+        renderer_.SetMWVPMatrix(mwvp_matrix);
+        renderer_.SetModelMatrix(model_matrix);
         
-        //        entity->UpdateComponentOfType(RENDER_COMPONENT);
+//        renderer_.RenderModel(entity->model_handle)
+        entity->UpdateComponentOfType(RENDER_COMPONENT);
     }
     
-    renderer_.RenderFrame();
+    renderer_.EndFrame();
     
     application_context_.Flush();
 }
@@ -80,7 +84,7 @@ void bounce::RenderSystem::RemoveModel(unsigned int model_handle)
     LOG_ERROR << "bounce::RenderSystem::RemoveModel not implemented" << std::endl;
 }
 
-//void bounce::RenderSystem::RenderModel(unsigned int model_handle)
-//{
-//    renderer_.RenderModel(model_handle);
-//}
+void bounce::RenderSystem::RenderModel(unsigned int model_handle)
+{
+    renderer_.RenderModel(model_handle);
+}

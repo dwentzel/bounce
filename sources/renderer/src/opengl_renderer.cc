@@ -145,27 +145,39 @@ void bounce::OpenGLRenderer::AddModel(unsigned int model_handle)
     model_handles_.push_back(model_handle);
 }
 
-void bounce::OpenGLRenderer::RenderFrame()
+//void bounce::OpenGLRenderer::RenderFrame()
+//{
+//    RunGeometryPass();
+//    RunLightPass();
+//}
+
+void bounce::OpenGLRenderer::BeginFrame()
 {
-    RunGeometryPass();
+    BeginGeometryPass();
+}
+
+void bounce::OpenGLRenderer::EndFrame()
+{
+    EndGeometryPass();
     RunLightPass();
 }
 
-void bounce::OpenGLRenderer::RunGeometryPass()
+void bounce::OpenGLRenderer::BeginGeometryPass()
 {
     CHECK_GL_ERROR();
-
+    
     geometry_pass_program_.UseProgram();
     
     g_buffer_.BindForWriting();
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    for (std::vector<unsigned int>::iterator i = model_handles_.begin(); i != model_handles_.end() ; ++i) {
-        RenderModel(*i);
-    }
-    
     CHECK_GL_ERROR();
+}
+
+void bounce::OpenGLRenderer::EndGeometryPass()
+{
+    
 }
 
 void bounce::OpenGLRenderer::RunLightPass()
