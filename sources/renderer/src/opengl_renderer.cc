@@ -90,17 +90,17 @@ void bounce::OpenGLRenderer::Startup()
     
     geometry_pass_program_.Init();
     
-    glEnable(GL_DEPTH_TEST);
-    CHECK_GL_ERROR();
+//    glEnable(GL_DEPTH_TEST);
+//    CHECK_GL_ERROR();
     
-    glDepthFunc(GL_LESS);
-    CHECK_GL_ERROR();
+//    glDepthFunc(GL_LESS);
+//    CHECK_GL_ERROR();
     
-    glClearDepth(1.0);
-    CHECK_GL_ERROR();
-    
-    glEnable(GL_CULL_FACE);
-    CHECK_GL_ERROR();
+//    glClearDepth(1.0);
+//    CHECK_GL_ERROR();
+//    
+//    glEnable(GL_CULL_FACE);
+//    CHECK_GL_ERROR();
     
     g_buffer_.Init(WINDOW_WIDTH, WINDOW_HEIGHT);
     
@@ -145,11 +145,6 @@ void bounce::OpenGLRenderer::AddModel(unsigned int model_handle)
     model_handles_.push_back(model_handle);
 }
 
-//void bounce::OpenGLRenderer::RenderFrame()
-//{
-//    RunGeometryPass();
-//    RunLightPass();
-//}
 
 void bounce::OpenGLRenderer::BeginFrame()
 {
@@ -159,6 +154,7 @@ void bounce::OpenGLRenderer::BeginFrame()
 void bounce::OpenGLRenderer::EndFrame()
 {
     EndGeometryPass();
+    BeginLightPasses();
     RunLightPass();
 }
 
@@ -170,14 +166,31 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     
     g_buffer_.BindForWriting();
     
+    glDepthMask(GL_TRUE);
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glEnable(GL_DEPTH_TEST);
+    
+    glDisable(GL_BLEND);
     
     CHECK_GL_ERROR();
 }
 
 void bounce::OpenGLRenderer::EndGeometryPass()
 {
+    glDepthMask(GL_FALSE);
+    glDisable(GL_DEPTH_TEST);
+}
+
+void bounce::OpenGLRenderer::BeginLightPasses()
+{
+    glEnable(GL_BLEND);
+   	glBlendEquation(GL_FUNC_ADD);
+   	glBlendFunc(GL_ONE, GL_ONE);
     
+    g_buffer_.BindForReading();
+//    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void bounce::OpenGLRenderer::RunLightPass()

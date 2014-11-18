@@ -37,6 +37,7 @@ namespace bounce
         
         void BeginGeometryPass();
         void EndGeometryPass();
+        void BeginLightPasses();
         void RunLightPass();
         
         
