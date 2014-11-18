@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "framework/renderer.h"
+#include "renderer/opengl_renderer.h"
 
 #include "game_system.h"
 #include "application_context.h"
@@ -16,7 +16,7 @@ namespace bounce {
         const ApplicationContext& application_context_;
         const WorldManager& world_manager_;
         
-        Renderer& renderer_;
+        OpenGLRenderer& renderer_;
         
         std::vector<unsigned int> model_handles_;
         
@@ -24,10 +24,9 @@ namespace bounce {
         RenderSystem& operator=(const RenderSystem&) = delete;
 
     public:
-        RenderSystem(
-                     const ApplicationContext& application_context,
+        RenderSystem(const ApplicationContext& application_context,
                      const WorldManager& world_manager,
-                     Renderer& renderer)
+                     OpenGLRenderer& renderer)
         : application_context_(application_context), world_manager_(world_manager), renderer_(renderer)
         {
             

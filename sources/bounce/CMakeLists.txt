@@ -53,7 +53,7 @@ endif()
 #if (GLEW_FOUND)
 #    message("GLEW_INCLUDE_DIR: ${GLEW_INCLUDE_DIR}")
 #    message("GLEW_LIBRARIES: ${GLEW_LIBRARIES}")
-#    include_directories(${GLEW_INCLUDE_DIR})
+    include_directories(${GLEW_INCLUDE_DIR})
 #    target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
 #endif (GLEW_FOUND)
 
