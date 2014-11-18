@@ -30,6 +30,9 @@ if (APPLE)
         ${shaders_PATH}/triangleShader.vert.glsl
         ${shaders_PATH}/geometry_pass.frag.glsl
         ${shaders_PATH}/geometry_pass.vert.glsl
+        ${shaders_PATH}/light_pass.vert.glsl
+        ${shaders_PATH}/directional_light_pass.frag.glsl
+
     )
 
     set(RESOURCES

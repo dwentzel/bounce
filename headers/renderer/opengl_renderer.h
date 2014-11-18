@@ -15,6 +15,7 @@
 #include "material_manager.h"
 #include "vertex_buffer.h"
 #include "geometry_pass_program.h"
+#include "directional_light_pass_program.h"
 #include "g_buffer.h"
 
 namespace bounce
@@ -27,6 +28,7 @@ namespace bounce
         GLuint buffers_[1];
         
         GeometryPassProgram geometry_pass_program_;
+        DirectionalLightPassProgram directional_light_pass_program_;
         
         std::vector<unsigned int> model_handles_;
         

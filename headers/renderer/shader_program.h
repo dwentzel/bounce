@@ -8,29 +8,29 @@
 
 namespace bounce {
 
-    struct MaterialLocations {
-        GLuint diffuse_id;
-        GLuint ambient_id;
-        GLuint specular_id;
-        GLuint emissive_id;
-        GLuint shininess_id;
-    };
-    
-    struct DirectionalLightLocation {
-        GLuint position;
-        GLuint color;
-        GLuint ambient_intensity;
-        GLuint direction;
-        GLuint diffuse_intensity;
-    };
-    
-    struct DirectionalLight {
-        float* position;
-//        float* direction;
-        float* color;
-        float ambient_intensity;
-        float diffuse_intensity;
-    };
+//    struct MaterialLocations {
+//        GLuint diffuse_id;
+//        GLuint ambient_id;
+//        GLuint specular_id;
+//        GLuint emissive_id;
+//        GLuint shininess_id;
+//    };
+//    
+//    struct DirectionalLightLocation {
+//        GLuint position;
+//        GLuint color;
+//        GLuint ambient_intensity;
+//        GLuint direction;
+//        GLuint diffuse_intensity;
+//    };
+//    
+//    struct DirectionalLight {
+//        float* position;
+////        float* direction;
+//        float* color;
+//        float ambient_intensity;
+//        float diffuse_intensity;
+//    };
     
     class ShaderProgram {
     private:
