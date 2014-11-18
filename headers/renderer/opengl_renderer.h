@@ -23,7 +23,7 @@ namespace bounce
     
     class OpenGLRenderer : public Renderer {
     private:
-        ShaderProgram* current_program_;
+//        ShaderProgram* current_program_;
         GBuffer g_buffer_;
         
         GLuint buffers_[1];

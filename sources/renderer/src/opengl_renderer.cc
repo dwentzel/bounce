@@ -88,18 +88,7 @@ void bounce::OpenGLRenderer::Startup()
     //    LOG_INFO << L"GL_EXTENSIONS: " << m << std::endl;
     //    CHECK_GL_ERROR();
     
-    //    unsigned int program_handle = shader_manager_.next_handle();
-    //    ShaderProgram& program = shader_manager_.CreateProgram();
-    
     geometry_pass_program_.Init();
-//    geometry_pass_program_.LoadVertexShader(vertex_shader_file_path_);
-//    geometry_pass_program_.LoadFragmentShader(fragment_shader_file_path_);
-//    geometry_pass_program_.LinkProgram();
-//    geometry_pass_program_.LoadUniforms();
-    
-    current_program_ = &geometry_pass_program_;
-    
-    //    current_program_ = std::shared_ptr<ShaderProgram>(&program);
     
     glEnable(GL_DEPTH_TEST);
     CHECK_GL_ERROR();
@@ -122,13 +111,6 @@ void bounce::OpenGLRenderer::Startup()
     
     //glGenBuffers(3, buffers_);
     glGenBuffers(1, buffers_);
-    
-    CHECK_GL_ERROR();
-    
-    GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    if (status != GL_FRAMEBUFFER_COMPLETE) {
-        fprintf(stdout, "framebuffer not complete\n");
-    }
     CHECK_GL_ERROR();
     
     glBindBuffer(GL_ARRAY_BUFFER, buffers_[0]);
@@ -172,7 +154,7 @@ void bounce::OpenGLRenderer::RenderFrame()
 void bounce::OpenGLRenderer::RunGeometryPass()
 {
     CHECK_GL_ERROR();
-    current_program_ = &geometry_pass_program_;
+
     geometry_pass_program_.UseProgram();
     
     g_buffer_.BindForWriting();
@@ -251,7 +233,7 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         }
         
-        current_program_->SetMaterial(material);
+//        current_program_->SetMaterial(material);
         
         glDrawArrays(GL_TRIANGLES, start_index, size);
         
