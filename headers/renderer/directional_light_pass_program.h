@@ -16,7 +16,7 @@ namespace bounce {
         } directional_light_location_;
 
     public:
-        virtual bool Init();
+        bool Init();
         
         void SetDirectionalLight(const DirectionalLight& light);
         

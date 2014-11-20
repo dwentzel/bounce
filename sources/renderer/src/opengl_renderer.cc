@@ -89,7 +89,15 @@ void bounce::OpenGLRenderer::Startup()
     //    CHECK_GL_ERROR();
     
     geometry_pass_program_.Init();
+    geometry_pass_program_.UseProgram();
+    geometry_pass_program_.SetColorTextureUnit(0);
     
+    directional_light_pass_program_.Init();
+    directional_light_pass_program_.UseProgram();
+    directional_light_pass_program_.SetPositionTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
+    directional_light_pass_program_.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
+    directional_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
+    directional_light_pass_program_.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 //    glEnable(GL_DEPTH_TEST);
 //    CHECK_GL_ERROR();
     
@@ -107,24 +115,25 @@ void bounce::OpenGLRenderer::Startup()
     GLuint vertexArrayId;
     glGenVertexArrays(1, &vertexArrayId);
     glBindVertexArray(vertexArrayId);
-    CHECK_GL_ERROR();
     
     //glGenBuffers(3, buffers_);
-    glGenBuffers(1, buffers_);
-    CHECK_GL_ERROR();
+    glGenBuffers(2, buffers_);
     
     glBindBuffer(GL_ARRAY_BUFFER, buffers_[0]);
     glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
     
-    // Vertex positions
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
-    // Texture coordinates
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    // Normal vectors
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
+    
+    GLfloat quad[] = {
+        1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, 1.0f,
+        -1.0f, -1.0f, 1.0f,
+        -1.0f, -1.0f, 1.0f,
+        1.0f, -1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f
+    };
+    
+    glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(GLfloat), quad, GL_STATIC_DRAW);
     
     CHECK_GL_ERROR();
 }
@@ -155,6 +164,7 @@ void bounce::OpenGLRenderer::EndFrame()
 {
     EndGeometryPass();
     BeginLightPasses();
+    RunDirectionalLightPass();
     RunLightPass();
 }
 
@@ -163,6 +173,7 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     CHECK_GL_ERROR();
     
     geometry_pass_program_.UseProgram();
+    CHECK_GL_ERROR();
     
     g_buffer_.BindForWriting();
     
@@ -174,11 +185,27 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     
     glDisable(GL_BLEND);
     
+    glBindBuffer(GL_ARRAY_BUFFER, buffers_[0]);
+    
+    // Vertex positions
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
+    // Texture coordinates
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    // Normal vectors
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    
     CHECK_GL_ERROR();
 }
 
 void bounce::OpenGLRenderer::EndGeometryPass()
 {
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+    
     glDepthMask(GL_FALSE);
     glDisable(GL_DEPTH_TEST);
 }
@@ -191,6 +218,26 @@ void bounce::OpenGLRenderer::BeginLightPasses()
     
     g_buffer_.BindForReading();
 //    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void bounce::OpenGLRenderer::RunDirectionalLightPass()
+{
+    directional_light_pass_program_.UseProgram();
+    CHECK_GL_ERROR();
+//    m_DSDirLightPassTech.SetEyeWorldPos(m_pGameCamera->GetPos());
+
+    glm::mat4 wvp_matrix = glm::mat4(1.0f);
+    directional_light_pass_program_.SetWVP(wvp_matrix);
+    
+    
+    glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glDrawArrays(GL_TRIANGLES, 0, 18);
+    
+    glDisableVertexAttribArray(0);
+    
 }
 
 void bounce::OpenGLRenderer::RunLightPass()

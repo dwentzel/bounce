@@ -26,6 +26,9 @@ bool bounce::GeometryPassProgram::Init()
     world_matrix_location_ = GetUniformLocation("W");
     model_matrix_location_ = GetUniformLocation("M");
     
+    color_texture_unit_location_ = GetUniformLocation("gColorMap");
+    
+    
     if (mwvp_matrix_location_ == GL_INVALID_INDEX
         || wvp_matrix_location_ == GL_INVALID_INDEX
         || view_matrix_location_ == GL_INVALID_INDEX
@@ -71,4 +74,9 @@ void bounce::GeometryPassProgram::SetMWVPMatrix(const glm::mat4& mwvp_matrix)
     CHECK_GL_ERROR();
     glUniformMatrix4fv(mwvp_matrix_location_, 1, GL_FALSE, &mwvp_matrix[0][0]);
     CHECK_GL_ERROR();
+}
+
+void bounce::GeometryPassProgram::SetColorTextureUnit(unsigned int texture_unit)
+{
+    glUniform1i(color_texture_unit_location_, texture_unit);
 }

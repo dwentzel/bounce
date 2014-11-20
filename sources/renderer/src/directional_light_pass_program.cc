@@ -7,18 +7,19 @@ bool bounce::DirectionalLightPassProgram::Init()
     
     LoadVertexShader("light_pass.vert.glsl");
     LoadFragmentShader("directional_light_pass.frag.glsl");
+    LinkProgram();
     
     directional_light_location_.color = GetUniformLocation("gDirectionalLight.Base.Color");
     directional_light_location_.ambient_intensity = GetUniformLocation("gDirectionalLight.Base.AmbientIntensity");
     directional_light_location_.direction = GetUniformLocation("gDirectionalLight.Direction");
     directional_light_location_.diffuse_intensity = GetUniformLocation("gDirectionalLight.Base.DiffuseIntensity");
     
-//    if (directional_light_location_.ambient_intensity == INVALID_UNIFORM_LOCATION ||
-//        directional_light_location_.color == INVALID_UNIFORM_LOCATION ||
-//        directional_light_location_.diffuse_intensity == INVALID_UNIFORM_LOCATION ||
-//        directional_light_location_.direction == INVALID_UNIFORM_LOCATION) {
-//        return false;
-//    }
+    //    if (directional_light_location_.ambient_intensity == INVALID_UNIFORM_LOCATION ||
+    //        directional_light_location_.color == INVALID_UNIFORM_LOCATION ||
+    //        directional_light_location_.diffuse_intensity == INVALID_UNIFORM_LOCATION ||
+    //        directional_light_location_.direction == INVALID_UNIFORM_LOCATION) {
+    //        return false;
+    //    }
     
     return LightPassProgram::Init();
 }

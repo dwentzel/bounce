@@ -12,12 +12,14 @@ namespace bounce {
 
     class GeometryPassProgram : public ShaderProgram {
     private:
-        GLint mwvp_matrix_location_;
-        GLint wvp_matrix_location_;
-        GLint view_matrix_location_;
-        GLint world_matrix_location_;
-        GLint model_matrix_location_;
+        GLuint mwvp_matrix_location_;
+        GLuint wvp_matrix_location_;
+        GLuint view_matrix_location_;
+        GLuint world_matrix_location_;
+        GLuint model_matrix_location_;
 
+        GLuint color_texture_unit_location_;
+        
     public:
         GeometryPassProgram();
         ~GeometryPassProgram();
@@ -29,6 +31,8 @@ namespace bounce {
         void SetViewMatrix(const glm::mat4& view_matrix);
         void SetWVPMatrix(const glm::mat4& wvp_matrix);
         void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
+        
+        void SetColorTextureUnit(unsigned int texture_unit);
     };
 
 }

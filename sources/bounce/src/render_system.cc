@@ -33,12 +33,12 @@ void bounce::RenderSystem::update() {
     glm::vec3 direction(cos(verticalAngle) * sin(horizontalAngle),
                         sin(verticalAngle), cos(verticalAngle) * cos(verticalAngle));
     
-    glm::vec3 position(0, 0, 5);
+    glm::vec3 camera_position(2, 3, 5);
     float fov = initialFoV;
     
     glm::mat4 projection_matrix = glm::perspective(fov, 4.0f / 3.0f, 0.1f, 100.0f);
     
-    glm::mat4 view_matrix = glm::lookAt(position, glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::mat4 view_matrix = glm::lookAt(camera_position, glm::vec3(0.0f, 0.0f, 0.0f),
                                         glm::vec3(0.0f, 1.0f, 0.0f));
     
     glm::mat4 world_matrix = glm::mat4(1.0f);

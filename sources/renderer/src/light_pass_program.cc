@@ -3,13 +3,21 @@
 bool bounce::LightPassProgram::Init()
 {
     WVP_location_ = GetUniformLocation("gWVP");
+    CHECK_GL_ERROR();
     position_texture_unit_location_ = GetUniformLocation("gPositionMap");
+    CHECK_GL_ERROR();
     color_texture_unit_location_ = GetUniformLocation("gColorMap");
+    CHECK_GL_ERROR();
     normal_texture_unit_location_ = GetUniformLocation("gNormalMap");
+    CHECK_GL_ERROR();
     eye_world_position_location_ = GetUniformLocation("gEyeWorldPos");
+    CHECK_GL_ERROR();
     material_specular_intensity_location_ = GetUniformLocation("gMatSpecularIntensity");
+    CHECK_GL_ERROR();
     material_specular_power_location_ = GetUniformLocation("gSpecularPower");
+    CHECK_GL_ERROR();
     screen_size_location_ = GetUniformLocation("gScreenSize");
+    CHECK_GL_ERROR();
     
 //    if (m_WVPLocation == INVALID_UNIFORM_LOCATION ||
 //        m_posTextureUnitLocation == INVALID_UNIFORM_LOCATION ||

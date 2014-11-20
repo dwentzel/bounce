@@ -37,6 +37,7 @@ struct SpotLight
 uniform sampler2D gPositionMap;
 uniform sampler2D gColorMap;
 uniform sampler2D gNormalMap;
+
 uniform DirectionalLight gDirectionalLight;
 uniform PointLight gPointLight;
 uniform SpotLight gSpotLight;
@@ -46,10 +47,7 @@ uniform float gSpecularPower;
 uniform int gLightType;
 uniform vec2 gScreenSize;
 
-vec4 CalcLightInternal(BaseLight Light,
-vec3 LightDirection,
-vec3 WorldPos,
-vec3 Normal)
+vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, vec3 WorldPos, vec3 Normal)
 {
     vec4 AmbientColor = vec4(Light.Color, 1.0) * Light.AmbientIntensity;
     float DiffuseFactor = dot(Normal, -LightDirection);
@@ -74,10 +72,7 @@ vec3 Normal)
 
 vec4 CalcDirectionalLight(vec3 WorldPos, vec3 Normal)
 {
-    return CalcLightInternal(gDirectionalLight.Base,
-    gDirectionalLight.Direction,
-    WorldPos,
-    Normal);
+    return CalcLightInternal(gDirectionalLight.Base, gDirectionalLight.Direction, WorldPos, Normal);
 }
 
 vec4 CalcPointLight(vec3 WorldPos, vec3 Normal)
@@ -88,15 +83,14 @@ vec4 CalcPointLight(vec3 WorldPos, vec3 Normal)
     
     vec4 Color = CalcLightInternal(gPointLight.Base, LightDirection, WorldPos, Normal);
     
-    float Attenuation =  gPointLight.Atten.Constant +
+    float attenuation =  gPointLight.Atten.Constant +
     gPointLight.Atten.Linear * Distance +
     gPointLight.Atten.Exp * Distance * Distance;
     
-    Attenuation = max(1.0, Attenuation);
+    attenuation = max(1.0, attenuation);
     
-    return Color / Attenuation;
+    return Color / attenuation;
 }
-
 
 vec2 CalcTexCoord()
 {
@@ -114,4 +108,6 @@ void main()
     Normal = normalize(Normal);
     
     FragColor = vec4(Color, 1.0) * CalcDirectionalLight(WorldPos, Normal);
+    
+    FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }

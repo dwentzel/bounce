@@ -25,7 +25,7 @@ namespace bounce
     private:
         GBuffer g_buffer_;
         
-        GLuint buffers_[1];
+        GLuint buffers_[2];
         
         GeometryPassProgram geometry_pass_program_;
         DirectionalLightPassProgram directional_light_pass_program_;
@@ -40,6 +40,7 @@ namespace bounce
         void BeginGeometryPass();
         void EndGeometryPass();
         void BeginLightPasses();
+        void RunDirectionalLightPass();
         void RunLightPass();
         
         

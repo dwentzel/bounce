@@ -169,9 +169,7 @@ GLint bounce::ShaderProgram::GetUniformLocation(const GLchar* uniform)
 
 void bounce::ShaderProgram::UseProgram()
 {
-    CHECK_GL_ERROR();
     glUseProgram(program_id_);
-    CHECK_GL_ERROR();
 }
 
 //void bounce::ShaderProgram::LoadUniforms()
