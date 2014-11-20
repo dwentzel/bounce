@@ -98,6 +98,20 @@ void bounce::OpenGLRenderer::Startup()
     directional_light_pass_program_.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
     directional_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
     directional_light_pass_program_.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+    
+//    m_dirLight.AmbientIntensity = 0.1f;
+//    m_dirLight.Color = COLOR_CYAN;
+//    m_dirLight.DiffuseIntensity = 0.5f;
+//    m_dirLight.Direction = Vector3f(1.0f, 0.0f, 0.0f);
+    
+    DirectionalLight directional_light;
+    directional_light.ambient_intensity = 0.1f;
+    directional_light.color = glm::vec3(1.0f, 1.0f, 1.0f);
+    directional_light.diffuse_intensity = 0.7f;
+    directional_light.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+    
+    
+    directional_light_pass_program_.SetDirectionalLight(directional_light);
 //    glEnable(GL_DEPTH_TEST);
 //    CHECK_GL_ERROR();
     
@@ -125,12 +139,12 @@ void bounce::OpenGLRenderer::Startup()
     glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
     
     GLfloat quad[] = {
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f
+        1.0f, 1.0f, 0.0f,
+        -1.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f
     };
     
     glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(GLfloat), quad, GL_STATIC_DRAW);
@@ -165,7 +179,7 @@ void bounce::OpenGLRenderer::EndFrame()
     EndGeometryPass();
     BeginLightPasses();
     RunDirectionalLightPass();
-    RunLightPass();
+    //RunLightPass();
 }
 
 void bounce::OpenGLRenderer::BeginGeometryPass()
@@ -217,15 +231,15 @@ void bounce::OpenGLRenderer::BeginLightPasses()
    	glBlendFunc(GL_ONE, GL_ONE);
     
     g_buffer_.BindForReading();
-//    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void bounce::OpenGLRenderer::RunDirectionalLightPass()
 {
     directional_light_pass_program_.UseProgram();
     CHECK_GL_ERROR();
-//    m_DSDirLightPassTech.SetEyeWorldPos(m_pGameCamera->GetPos());
-
+    directional_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
+    
     glm::mat4 wvp_matrix = glm::mat4(1.0f);
     directional_light_pass_program_.SetWVP(wvp_matrix);
     
@@ -265,9 +279,9 @@ void bounce::OpenGLRenderer::RunLightPass()
                       HalfWidth, HalfHeight, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     
     
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
+//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//                      HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     CHECK_GL_ERROR();
 }
 
@@ -296,6 +310,7 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         if (texture_handle > -1) {
             const Texture& texture = texture_manager_.GetTexture(texture_handle);
             
+            glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture_id);
             
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height(),

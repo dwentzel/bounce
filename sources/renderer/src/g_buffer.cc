@@ -2,7 +2,8 @@
 
 bounce::GBuffer::GBuffer()
 {
-    
+    fbo_ = 0;
+    depth_texture_ = 0;
 }
 
 bounce::GBuffer::~GBuffer()
@@ -20,9 +21,11 @@ bool bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height
     glGenTextures(GBUFFER_NUM_TEXTURES, textures_);
     glGenTextures(1, &depth_texture_);
     
-    for (int i = 0; i < GBUFFER_NUM_TEXTURES; ++i) {
+    for (unsigned int i = 0; i < GBUFFER_NUM_TEXTURES; ++i) {
         glBindTexture(GL_TEXTURE_2D, textures_[i]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, window_width, window_height, 0, GL_RGB, GL_FLOAT, nullptr);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, textures_[i], 0);
     }
     
@@ -30,8 +33,8 @@ bool bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, window_width, window_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
     glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_texture_, 0);
     
-    GLenum draw_buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
-    glDrawBuffers(4, (GLenum*)draw_buffers);
+    GLenum draw_buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+    glDrawBuffers(3, draw_buffers);
     
     GLenum status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
     
@@ -57,8 +60,16 @@ void bounce::GBuffer::BindForWriting()
 
 void bounce::GBuffer::BindForReading()
 {
-    CHECK_GL_ERROR();
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo_);
+//    CHECK_GL_ERROR();
+//    glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo_);
+//    CHECK_GL_ERROR();
+//
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    
+    for (unsigned int i = 0 ; i < GBUFFER_NUM_TEXTURES; i++) {
+        glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D, textures_[GBUFFER_TEXTURE_TYPE_POSITION + i]);
+    }
     CHECK_GL_ERROR();
 }
 
