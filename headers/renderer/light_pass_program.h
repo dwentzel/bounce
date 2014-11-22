@@ -22,8 +22,11 @@ namespace bounce {
         GLuint material_specular_power_location_;
         GLuint screen_size_location_;
 
-    public:
+    protected:
+        LightPassProgram(const ResourceLoader& resource_loader);
         bool Init();
+        
+    public:
         
         void SetWVP(const glm::mat4& wvp_matrix);
         void SetPositionTextureUnit(unsigned int texture_unit);

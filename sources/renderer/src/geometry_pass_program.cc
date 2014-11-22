@@ -1,6 +1,7 @@
 #include "geometry_pass_program.h"
 
-bounce::GeometryPassProgram::GeometryPassProgram()
+bounce::GeometryPassProgram::GeometryPassProgram(const ResourceLoader& resource_loader)
+: ShaderProgram(resource_loader)
 {
     
 }

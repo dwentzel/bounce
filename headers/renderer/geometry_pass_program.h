@@ -21,7 +21,7 @@ namespace bounce {
         GLuint color_texture_unit_location_;
         
     public:
-        GeometryPassProgram();
+        GeometryPassProgram(const ResourceLoader& resource_loader);
         ~GeometryPassProgram();
         
         bool Init();

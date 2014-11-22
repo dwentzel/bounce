@@ -78,11 +78,11 @@ void bounce::SphereMesh::ImportFile(const std::string& filename)
 
 void bounce::SphereMesh::Render()
 {
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
-    glBufferData(GL_ARRAY_BUFFER, vertex_count_ * sizeof(float), &vertices_[0], GL_STATIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count_ * sizeof(unsigned int), &indices_[0], GL_STATIC_DRAW);
+//    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+//    glBufferData(GL_ARRAY_BUFFER, vertex_count_ * sizeof(float), &vertices_[0], GL_STATIC_DRAW);
+//    
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count_ * sizeof(unsigned int), &indices_[0], GL_STATIC_DRAW);
     
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
     glEnableVertexAttribArray(0);

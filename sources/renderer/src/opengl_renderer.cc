@@ -8,10 +8,12 @@
 #include "sphere_mesh.cc"
 
 
-bounce::OpenGLRenderer::OpenGLRenderer(const ModelManager& model_manager,
+bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
+                                       const ModelManager& model_manager,
                                        const TextureManager& texture_manager,
                                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
-: model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+: geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
+  model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
 }
@@ -121,23 +123,23 @@ void bounce::OpenGLRenderer::Startup()
     point_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
     point_light_pass_program_.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     
-    point_lights_[0].diffuse_intensity = 0.7f;
+    point_lights_[0].diffuse_intensity = 3.7f;
     point_lights_[0].color = glm::vec3(0.0f, 1.0f, 0.0f);
-    point_lights_[0].position = glm::vec3(0.0f, 0.5f, 0.5f);
+    point_lights_[0].position = glm::vec3(0.0f, 1.0f, 0.5f);
     point_lights_[0].attenuation.constant = 0.0f;
     point_lights_[0].attenuation.linear = 0.0f;
     point_lights_[0].attenuation.exp = 0.3f;
     
-    point_lights_[1].diffuse_intensity = 0.7f;
+    point_lights_[1].diffuse_intensity = 2.7f;
     point_lights_[1].color = glm::vec3(1.0f, 0.0f, 0.0f);
-    point_lights_[1].position = glm::vec3(0.5f, 0.5f, 0.5f);
+    point_lights_[1].position = glm::vec3(0.0f, 1.0f, 1.5f);
     point_lights_[1].attenuation.constant = 0.0f;
     point_lights_[1].attenuation.linear = 0.0f;
     point_lights_[1].attenuation.exp = 0.3f;
     
     point_lights_[2].diffuse_intensity = 0.7f;
     point_lights_[2].color = glm::vec3(0.0f, 0.0f, 1.0f);
-    point_lights_[2].position = glm::vec3(0.5f, 0.5f, 0.5f);
+    point_lights_[2].position = glm::vec3(0.5f, 0.0f, 0.5f);
     point_lights_[2].attenuation.constant = 0.0f;
     point_lights_[2].attenuation.linear = 0.0f;
     point_lights_[2].attenuation.exp = 0.3f;
@@ -286,11 +288,11 @@ void bounce::OpenGLRenderer::RunPointLightsPass()
 //    Pipeline p;
 //    p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
 //    p.SetPerspectiveProj(m_persProjInfo);
+
+    point_light_pass_program_.SetWVP(wvp_matrix_);
     
-   	for (unsigned int i = 0 ; i < 3; i++) {
+   	for (unsigned int i = 1 ; i < 3; i++) {
         point_light_pass_program_.SetPointLight(point_lights_[i]);
-        glm::mat4 wvp_matrix = glm::mat4(1.0f);
-        point_light_pass_program_.SetWVP(wvp_matrix_);
         
 //        point_light_pass_program_.SetWVP(glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f)));
 //   	    p.WorldPos(m_pointLight[i].Position);

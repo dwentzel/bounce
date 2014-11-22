@@ -1,5 +1,11 @@
 #include "point_light_pass_program.h"
 
+bounce::PointLightPassProgram::PointLightPassProgram(const ResourceLoader& resource_loader)
+: LightPassProgram(resource_loader)
+{
+    
+}
+
 bool bounce::PointLightPassProgram::Init()
 {
     CreateProgram();

@@ -16,6 +16,8 @@ namespace bounce {
         } directional_light_location_;
 
     public:
+        DirectionalLightPassProgram(const ResourceLoader& resource_loader);
+        
         bool Init();
         
         void SetDirectionalLight(const DirectionalLight& light);

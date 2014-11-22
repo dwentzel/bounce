@@ -55,7 +55,8 @@ namespace bounce
         glm::mat4 wvp_matrix_;
         
     public:
-        OpenGLRenderer(const ModelManager& model_manager,
+        OpenGLRenderer(const ResourceLoader& resource_loader,
+                       const ModelManager& model_manager,
                        const TextureManager& texture_manager,
                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
         

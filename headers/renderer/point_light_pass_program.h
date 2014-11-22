@@ -21,6 +21,8 @@ namespace bounce {
         } point_light_location_;
         
     public:
+        PointLightPassProgram(const ResourceLoader& resource_loader);
+        
         bool Init();
         
         void SetPointLight(const PointLight& light);

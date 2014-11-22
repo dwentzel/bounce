@@ -1,5 +1,10 @@
 #include "directional_light_pass_program.h"
 
+bounce::DirectionalLightPassProgram::DirectionalLightPassProgram(const ResourceLoader& resource_loader)
+: LightPassProgram(resource_loader)
+{
+    
+}
 
 bool bounce::DirectionalLightPassProgram::Init()
 {

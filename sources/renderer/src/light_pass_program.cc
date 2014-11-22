@@ -1,5 +1,11 @@
 #include "light_pass_program.h"
 
+bounce::LightPassProgram::LightPassProgram(const ResourceLoader& resource_loader)
+: ShaderProgram(resource_loader)
+{
+    
+}
+
 bool bounce::LightPassProgram::Init()
 {
     WVP_location_ = GetUniformLocation("WVP");

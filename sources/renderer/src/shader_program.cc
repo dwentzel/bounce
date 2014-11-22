@@ -41,15 +41,15 @@ namespace {
     }
 }
 
-std::string bounce::ShaderProgram::base_path_;
+//std::string bounce::ShaderProgram::base_path_;
+//
+//void bounce::ShaderProgram::base_path(const std::string& path)
+//{
+//    ShaderProgram::base_path_ = path;
+//}
 
-void bounce::ShaderProgram::base_path(const std::string& path)
-{
-    ShaderProgram::base_path_ = path;
-}
-
-bounce::ShaderProgram::ShaderProgram()
-//: program_id_(program_id)
+bounce::ShaderProgram::ShaderProgram(const ResourceLoader& resource_loader)
+: resource_loader_(resource_loader)
 {
     
 }
@@ -128,8 +128,8 @@ void bounce::ShaderProgram::LoadShader(const std::string& shader_code_file_path,
 {
     CHECK_GL_ERROR();
     
-    std::string shader_code;
-    shader_code = LoadShaderCode(base_path_ + "/" + shader_code_file_path);
+    std::string shader_code = resource_loader_.LoadShaderData(shader_code_file_path);
+    //shader_code = LoadShaderCode(base_path_ + "/" + shader_code_file_path);
     
     LOG_DEBUG << "Compiling shader: " << shader_code_file_path << std::endl;
     CompileShader(shader_id, shader_code);

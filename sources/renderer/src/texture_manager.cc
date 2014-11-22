@@ -49,7 +49,6 @@ namespace {
     public:
         
     };
-
 }
 
 void bounce::TextureManager::LoadTexture(const std::string& texture)
@@ -87,6 +86,7 @@ void bounce::TextureManager::LoadTexture(const std::string& texture)
 //        }
         
         textures_.emplace_back(header.size, width, height, pixel_data);
+        file.close();
     }
     else {
         LOG_WARNING << L"Could not find file " << texture_path << std::endl;

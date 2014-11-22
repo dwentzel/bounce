@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "framework/timer.h"
+#include "framework/resource_loader.h"
 
 #include "renderer/vertex_buffer.h"
 #include "renderer/model_manager.h"
@@ -33,7 +34,9 @@ private:
 
     ApplicationContext& application_context_;
     EventManager& event_manager_;
-   
+ 
+    ResourceLoader resource_loader_;
+    
     VertexBuffer vertex_buffer_;
     ModelManager model_manager_;
     TextureManager texture_manager_;

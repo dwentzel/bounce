@@ -4,17 +4,18 @@
 #include "bounce_gl.h"
 #include <string>
 
+#include "framework/resource_loader.h"
 #include "material.h"
 
 namespace bounce {
     
     class ShaderProgram {
     private:
-        static std::string base_path_;
-        
         GLint program_id_;
         GLint vertex_shader_id_;
         GLint fragment_shader_id_;
+        
+        const ResourceLoader& resource_loader_;
         
     protected:
         void CompileShader(const int& shader_id, const std::string& shader_code);
@@ -29,7 +30,7 @@ namespace bounce {
         
         GLint GetUniformLocation(const GLchar* uniform);
         
-        ShaderProgram();
+        ShaderProgram(const ResourceLoader& resource_loader);
         
     public:
         static void base_path(const std::string& path);
