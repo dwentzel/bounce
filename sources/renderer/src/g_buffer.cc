@@ -53,39 +53,21 @@ bool bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height
 
 void bounce::GBuffer::BindForWriting()
 {
-    CHECK_GL_ERROR();
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo_);
-    CHECK_GL_ERROR();
 }
 
 void bounce::GBuffer::BindForReading()
 {
-//    CHECK_GL_ERROR();
-//    glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo_);
-//    CHECK_GL_ERROR();
-//
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     
     for (unsigned int i = 0 ; i < GBUFFER_NUM_TEXTURES; i++) {
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D, textures_[GBUFFER_TEXTURE_TYPE_POSITION + i]);
     }
-    CHECK_GL_ERROR();
 }
 
 void bounce::GBuffer::SetReadBuffer(GBufferTextureType texture_type)
 {
-    CHECK_GL_ERROR();
     glReadBuffer(GL_COLOR_ATTACHMENT0 + texture_type);
-//    GLenum result = glGetError();
-//    
-//    if (result == GL_INVALID_ENUM) {
-//        LOG_ERROR << "Invalid enum" << std::endl;
-//    }
-//    else if (result == GL_INVALID_OPERATION) {
-//        LOG_ERROR << "INVALID OPERATION" << std::endl;
-//    }
-    
-    CHECK_GL_ERROR();
 }
 

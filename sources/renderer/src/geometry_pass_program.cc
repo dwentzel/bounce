@@ -36,9 +36,11 @@ bool bounce::GeometryPassProgram::Init()
         || model_matrix_location_ == GL_INVALID_INDEX) {
         
         LOG_ERROR << "Invalid uniform location in GeometryPassProgram";
+        return false;
     }
     
     CHECK_GL_ERROR();
+    return true;
 }
 
 void bounce::GeometryPassProgram::SetModelMatrix(const glm::mat4& model_matrix)

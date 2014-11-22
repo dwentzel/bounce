@@ -5,6 +5,7 @@ set(SHADERS
     geometry_pass.frag.glsl
     light_pass.vert.glsl
     directional_light_pass.frag.glsl
+    point_light_pass.frag.glsl
 )
 
 add_custom_target(shaders SOURCES ${SHADERS})

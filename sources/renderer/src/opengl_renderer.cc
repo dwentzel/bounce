@@ -5,6 +5,7 @@
 #include "shader_manager.h"
 #include "g_buffer.h"
 
+#include "sphere_mesh.cc"
 
 
 bounce::OpenGLRenderer::OpenGLRenderer(const ModelManager& model_manager,
@@ -112,17 +113,34 @@ void bounce::OpenGLRenderer::Startup()
     
     
     directional_light_pass_program_.SetDirectionalLight(directional_light);
-//    glEnable(GL_DEPTH_TEST);
-//    CHECK_GL_ERROR();
     
-//    glDepthFunc(GL_LESS);
-//    CHECK_GL_ERROR();
+    point_light_pass_program_.Init();
+    point_light_pass_program_.UseProgram();
+    point_light_pass_program_.SetPositionTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
+    point_light_pass_program_.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
+    point_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
+    point_light_pass_program_.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     
-//    glClearDepth(1.0);
-//    CHECK_GL_ERROR();
-//    
-//    glEnable(GL_CULL_FACE);
-//    CHECK_GL_ERROR();
+    point_lights_[0].diffuse_intensity = 0.7f;
+    point_lights_[0].color = glm::vec3(0.0f, 1.0f, 0.0f);
+    point_lights_[0].position = glm::vec3(0.0f, 0.5f, 0.5f);
+    point_lights_[0].attenuation.constant = 0.0f;
+    point_lights_[0].attenuation.linear = 0.0f;
+    point_lights_[0].attenuation.exp = 0.3f;
+    
+    point_lights_[1].diffuse_intensity = 0.7f;
+    point_lights_[1].color = glm::vec3(1.0f, 0.0f, 0.0f);
+    point_lights_[1].position = glm::vec3(0.5f, 0.5f, 0.5f);
+    point_lights_[1].attenuation.constant = 0.0f;
+    point_lights_[1].attenuation.linear = 0.0f;
+    point_lights_[1].attenuation.exp = 0.3f;
+    
+    point_lights_[2].diffuse_intensity = 0.7f;
+    point_lights_[2].color = glm::vec3(0.0f, 0.0f, 1.0f);
+    point_lights_[2].position = glm::vec3(0.5f, 0.5f, 0.5f);
+    point_lights_[2].attenuation.constant = 0.0f;
+    point_lights_[2].attenuation.linear = 0.0f;
+    point_lights_[2].attenuation.exp = 0.3f;
     
     g_buffer_.Init(WINDOW_WIDTH, WINDOW_HEIGHT);
     
@@ -148,6 +166,9 @@ void bounce::OpenGLRenderer::Startup()
     };
     
     glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(GLfloat), quad, GL_STATIC_DRAW);
+    
+    sphere_.ImportFile("/Users/daniel/Repos/bounce/resources/models/sphere.dae");
+    
     
     CHECK_GL_ERROR();
 }
@@ -178,7 +199,9 @@ void bounce::OpenGLRenderer::EndFrame()
 {
     EndGeometryPass();
     BeginLightPasses();
+    RunPointLightsPass();
     RunDirectionalLightPass();
+
     //RunLightPass();
 }
 
@@ -243,6 +266,8 @@ void bounce::OpenGLRenderer::RunDirectionalLightPass()
     glm::mat4 wvp_matrix = glm::mat4(1.0f);
     directional_light_pass_program_.SetWVP(wvp_matrix);
     
+
+//    sphere_.Render();
     
     glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
     glEnableVertexAttribArray(0);
@@ -251,7 +276,29 @@ void bounce::OpenGLRenderer::RunDirectionalLightPass()
     glDrawArrays(GL_TRIANGLES, 0, 18);
     
     glDisableVertexAttribArray(0);
+}
+
+void bounce::OpenGLRenderer::RunPointLightsPass()
+{
+    point_light_pass_program_.UseProgram();
+    point_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
     
+//    Pipeline p;
+//    p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
+//    p.SetPerspectiveProj(m_persProjInfo);
+    
+   	for (unsigned int i = 0 ; i < 3; i++) {
+        point_light_pass_program_.SetPointLight(point_lights_[i]);
+        glm::mat4 wvp_matrix = glm::mat4(1.0f);
+        point_light_pass_program_.SetWVP(wvp_matrix_);
+        
+//        point_light_pass_program_.SetWVP(glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f)));
+//   	    p.WorldPos(m_pointLight[i].Position);
+//   	    float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
+//   	    p.Scale(BSphereScale, BSphereScale, BSphereScale);
+//   	    m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
+   	    sphere_.Render();
+   	} 
 }
 
 void bounce::OpenGLRenderer::RunLightPass()

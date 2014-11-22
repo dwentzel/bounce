@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
+
 #include "framework/renderer.h"
 #include "bounce_gl.h"
 #include "model_manager.h"
@@ -16,7 +17,9 @@
 #include "vertex_buffer.h"
 #include "geometry_pass_program.h"
 #include "directional_light_pass_program.h"
+#include "point_light_pass_program.h"
 #include "g_buffer.h"
+#include "sphere_mesh.h"
 
 namespace bounce
 {
@@ -27,8 +30,13 @@ namespace bounce
         
         GLuint buffers_[2];
         
+        SphereMesh sphere_;
+        
         GeometryPassProgram geometry_pass_program_;
         DirectionalLightPassProgram directional_light_pass_program_;
+        PointLightPassProgram point_light_pass_program_;
+        
+        PointLight point_lights_[3];
         
         std::vector<unsigned int> model_handles_;
         
@@ -41,8 +49,10 @@ namespace bounce
         void EndGeometryPass();
         void BeginLightPasses();
         void RunDirectionalLightPass();
+        void RunPointLightsPass();
         void RunLightPass();
         
+        glm::mat4 wvp_matrix_;
         
     public:
         OpenGLRenderer(const ModelManager& model_manager,
@@ -86,6 +96,7 @@ namespace bounce
     
     inline void OpenGLRenderer::SetWVPMatrix(const glm::mat4& wvp_matrix)
     {
+        wvp_matrix_ = wvp_matrix;
         geometry_pass_program_.SetWVPMatrix(wvp_matrix);
     }
 

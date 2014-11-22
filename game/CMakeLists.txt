@@ -32,6 +32,7 @@ if (APPLE)
         ${shaders_PATH}/geometry_pass.vert.glsl
         ${shaders_PATH}/light_pass.vert.glsl
         ${shaders_PATH}/directional_light_pass.frag.glsl
+        ${shaders_PATH}/point_light_pass.frag.glsl
 
     )
 
