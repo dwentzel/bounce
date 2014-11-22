@@ -6,11 +6,13 @@
 
 #include "logging/log.h"
 
-bounce::Importer::Importer(ModelManager& model_manager,
+bounce::Importer::Importer(const ResourceLoader& resource_loader,
+                           ModelManager& model_manager,
                            TextureManager& texture_manager,
                            MaterialManager& material_manager,
                            VertexBuffer& vertex_buffer)
-: model_manager_(model_manager),
+: resource_loader_(resource_loader),
+  model_manager_(model_manager),
   texture_manager_(texture_manager),
   material_manager_(material_manager),
   vertex_buffer_(vertex_buffer)
@@ -19,13 +21,15 @@ bounce::Importer::Importer(ModelManager& model_manager,
 
 int bounce::Importer::ImportFile(const std::string& filename)
 {
+    std::string data = resource_loader_.LoadModelData(filename);
+    
     Assimp::Importer importer;
     
-    const aiScene* scene = importer.ReadFile(filename,
+    const aiScene* scene = importer.ReadFileFromMemory(data.c_str(), data.size(),
                                              aiProcess_CalcTangentSpace |
                                              aiProcess_Triangulate |
                                              aiProcess_JoinIdenticalVertices |
-                                             aiProcess_SortByPType);
+                                                       aiProcess_SortByPType);
     
     if (!scene) {
         LOG_ERROR << "Could not read scene from " << filename << std::endl;

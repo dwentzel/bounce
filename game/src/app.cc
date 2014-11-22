@@ -54,10 +54,10 @@ namespace bounce {
     {
         srand(time(0));
 
-        Importer importer(model_manager_, texture_manager_, material_manager_, vertex_buffer_);
+        Importer importer(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_);
 
         
-        unsigned int model_handle = importer.ImportFile(application_context_.root_path() + "/models/simple_craft.dae");
+        unsigned int model_handle = importer.ImportFile("simple_craft.dae");
 
         render_system_.startup();        
         
