@@ -1,7 +1,6 @@
 #ifndef BOUNCE_RENDERER_LIGHT_MANAGER_
 #define BOUNCE_RENDERER_LIGHT_MANAGER_
 
-#include <functional>
 #include <vector>
 
 #include "lights.h"
@@ -10,12 +9,15 @@ namespace bounce {
 
     class LightManager {
     private:
-        std::vector<std::reference_wrapper<const PointLight>> point_lights_;
+        std::vector<PointLight> point_lights_;
         
     public:
-        void AddPointLight(const PointLight& point_light);
+        unsigned int GenerateLight();
+        //void AddPointLight(const PointLight& point_light);
         
-        const std::vector<std::reference_wrapper<const PointLight>> point_lights() const;
+        PointLight& GetLight(unsigned int handle);
+        
+        const std::vector<PointLight> point_lights() const;
         
     };
 }

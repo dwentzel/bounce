@@ -213,9 +213,9 @@ void bounce::OpenGLRenderer::RunPointLightsPass()
     
 //    for (const PointLight light : light_manager_.point_lights())
     
-    std::vector<std::reference_wrapper<const PointLight>> lights = light_manager_.point_lights();
+    std::vector<PointLight> lights = light_manager_.point_lights();
     
-    for (std::vector<std::reference_wrapper<const PointLight>>::const_iterator light = lights.begin();
+    for (std::vector<PointLight>::const_iterator light = lights.begin();
          light != lights.end();
          ++light)
     {

@@ -7,7 +7,8 @@ namespace bounce {
         CONTROL_COMPONENT,
         MOVEMENT_COMPONENT,
         TRANSFORM_COMPONENT,
-        POINT_LIGHT_COMPONENT
+        POINT_LIGHT_COMPONENT,
+        POSITION_COMPONENT
     };
 }
 

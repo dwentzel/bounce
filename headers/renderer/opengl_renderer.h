@@ -8,7 +8,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-
 #include "framework/renderer.h"
 #include "bounce_gl.h"
 #include "light_manager.h"
@@ -65,7 +64,8 @@ namespace bounce
                        const LightManager& light_manager,
                        const ModelManager& model_manager,
                        const TextureManager& texture_manager,
-                       const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
+                       const MaterialManager& material_manager,
+                       const VertexBuffer& vertex_buffer);
 
         ~OpenGLRenderer();
         
