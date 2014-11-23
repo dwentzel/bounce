@@ -11,6 +11,7 @@
 
 #include "framework/renderer.h"
 #include "bounce_gl.h"
+#include "light_manager.h"
 #include "model_manager.h"
 #include "texture_manager.h"
 #include "material_manager.h"
@@ -30,12 +31,9 @@ namespace bounce
         GBuffer g_buffer_;
         
         GLuint model_vertex_array_;
-        GLuint directional_vertex_array_;
         
         GLuint model_vertex_buffer_;
         GLuint directional_vertex_buffer_;
-        
-        PointLight point_lights_[3];
         
         std::vector<unsigned int> model_handles_;
         
@@ -47,7 +45,7 @@ namespace bounce
         PointLightPassProgram point_light_pass_program_;
         MeshLoader mesh_loader_;
         
-        
+        const LightManager& light_manager_;
         const ModelManager& model_manager_;
         const TextureManager& texture_manager_;
         const MaterialManager& material_manager_;
@@ -64,6 +62,7 @@ namespace bounce
         
     public:
         OpenGLRenderer(const ResourceLoader& resource_loader,
+                       const LightManager& light_manager,
                        const ModelManager& model_manager,
                        const TextureManager& texture_manager,
                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);

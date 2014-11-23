@@ -14,6 +14,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/movement_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_system.h
 #    include/single_color_texture_generator.h
@@ -31,6 +32,7 @@ set(SOURCES
     src/keyboard_state.cc
     src/message.cc
     src/movement_component.cc
+    src/point_light_component.cc
     src/render_component.cc
     src/render_system.cc
 #    src/single_color_texture_generator.cc

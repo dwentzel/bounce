@@ -9,11 +9,12 @@
 
 
 bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
+                                       const LightManager& light_manager,
                                        const ModelManager& model_manager,
                                        const TextureManager& texture_manager,
                                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
 : geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
-  mesh_loader_(resource_loader),
+  mesh_loader_(resource_loader), light_manager_(light_manager),
   model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
@@ -88,28 +89,7 @@ void bounce::OpenGLRenderer::Startup()
     point_light_pass_program_.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
     point_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
     point_light_pass_program_.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    
-    point_lights_[0].diffuse_intensity = 3.7f;
-    point_lights_[0].color = glm::vec3(0.0f, 1.0f, 0.0f);
-    point_lights_[0].position = glm::vec3(0.0f, 1.0f, 0.5f);
-    point_lights_[0].attenuation.constant = 0.0f;
-    point_lights_[0].attenuation.linear = 0.0f;
-    point_lights_[0].attenuation.exp = 0.3f;
-    
-    point_lights_[1].diffuse_intensity = 2.7f;
-    point_lights_[1].color = glm::vec3(1.0f, 0.0f, 0.0f);
-    point_lights_[1].position = glm::vec3(0.0f, 1.0f, 1.5f);
-    point_lights_[1].attenuation.constant = 0.0f;
-    point_lights_[1].attenuation.linear = 0.0f;
-    point_lights_[1].attenuation.exp = 0.3f;
-    
-    point_lights_[2].diffuse_intensity = 0.7f;
-    point_lights_[2].color = glm::vec3(0.0f, 0.0f, 1.0f);
-    point_lights_[2].position = glm::vec3(0.5f, 0.0f, 0.5f);
-    point_lights_[2].attenuation.constant = 0.0f;
-    point_lights_[2].attenuation.linear = 0.0f;
-    point_lights_[2].attenuation.exp = 0.3f;
-    
+        
     g_buffer_.Init(WINDOW_WIDTH, WINDOW_HEIGHT);
     
     glGenVertexArrays(1, &model_vertex_array_);
@@ -132,33 +112,8 @@ void bounce::OpenGLRenderer::Startup()
     
     glBindVertexArray(0);
     
-//    glGenVertexArrays(1, &directional_vertex_array_);
-//    glBindVertexArray(directional_vertex_array_);
-//    
-//    glGenBuffers(1, &directional_vertex_buffer_);
-//    glBindBuffer(GL_ARRAY_BUFFER, directional_vertex_buffer_);
-//    
-//    GLfloat quad[] = {
-//        1.0f, 1.0f, 0.0f,
-//        -1.0f, 1.0f, 0.0f,
-//        -1.0f, -1.0f, 0.0f,
-//        -1.0f, -1.0f, 0.0f,
-//        1.0f, -1.0f, 0.0f,
-//        1.0f, 1.0f, 0.0f
-//    };
-//    
-//    glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(GLfloat), quad, GL_STATIC_DRAW);
-//    
-//    glEnableVertexAttribArray(0);
-//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//    
-//    glBindVertexArray(0);
-    
     sphere_ = mesh_loader_.Load("sphere.dae");
     quad_ = mesh_loader_.Load("quad.dae");
-    
-    //sphere_.ImportFile("/Users/daniel/Repos/bounce/resources/models/sphere.dae");
-    
     
     CHECK_GL_ERROR();
 }
@@ -220,10 +175,6 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
 
 void bounce::OpenGLRenderer::EndGeometryPass()
 {
-//    glDisableVertexAttribArray(0);
-//    glDisableVertexAttribArray(1);
-//    glDisableVertexAttribArray(2);
-    
     glDepthMask(GL_FALSE);
     glDisable(GL_DEPTH_TEST);
 }
@@ -241,25 +192,11 @@ void bounce::OpenGLRenderer::BeginLightPasses()
 void bounce::OpenGLRenderer::RunDirectionalLightPass()
 {
     directional_light_pass_program_.UseProgram();
-    CHECK_GL_ERROR();
     directional_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
     
     glm::mat4 wvp_matrix = glm::mat4(1.0f);
     directional_light_pass_program_.SetWVP(wvp_matrix);
     
-
-//    sphere_.Render();
-    
-//    glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
-//    glEnableVertexAttribArray(0);
-//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-//    glBindVertexArray(directional_vertex_array_);
-//    
-//    glDrawArrays(GL_TRIANGLES, 0, 18);
-//    
-////    glDisableVertexAttribArray(0);
-//    glBindVertexArray(0);
     quad_->Render();
 }
 
@@ -274,16 +211,28 @@ void bounce::OpenGLRenderer::RunPointLightsPass()
 
     point_light_pass_program_.SetWVP(wvp_matrix_);
     
-   	for (unsigned int i = 1 ; i < 3; i++) {
-        point_light_pass_program_.SetPointLight(point_lights_[i]);
-        
-//        point_light_pass_program_.SetWVP(glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f)));
-//   	    p.WorldPos(m_pointLight[i].Position);
-//   	    float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
-//   	    p.Scale(BSphereScale, BSphereScale, BSphereScale);
-//   	    m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
-   	    sphere_->Render();
-   	} 
+//    for (const PointLight light : light_manager_.point_lights())
+    
+    std::vector<std::reference_wrapper<const PointLight>> lights = light_manager_.point_lights();
+    
+    for (std::vector<std::reference_wrapper<const PointLight>>::const_iterator light = lights.begin();
+         light != lights.end();
+         ++light)
+    {
+        point_light_pass_program_.SetPointLight((*light));
+        sphere_->Render();
+    }
+    
+//   	for (unsigned int i = 1 ; i < 3; i++) {
+//        point_light_pass_program_.SetPointLight(point_lights_[i]);
+//        
+////        point_light_pass_program_.SetWVP(glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f)));
+////   	    p.WorldPos(m_pointLight[i].Position);
+////   	    float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
+////   	    p.Scale(BSphereScale, BSphereScale, BSphereScale);
+////   	    m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
+//   	    sphere_->Render();
+//   	} 
 }
 
 void bounce::OpenGLRenderer::RunLightPass()

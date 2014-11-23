@@ -14,6 +14,7 @@
 #include "framework/resource_loader.h"
 
 #include "renderer/vertex_buffer.h"
+#include "renderer/light_manager.h"
 #include "renderer/model_manager.h"
 #include "renderer/texture_manager.h"
 #include "renderer/material_manager.h"
@@ -38,6 +39,7 @@ private:
     ResourceLoader resource_loader_;
     
     VertexBuffer vertex_buffer_;
+    LightManager light_manager_;
     ModelManager model_manager_;
     TextureManager texture_manager_;
     MaterialManager material_manager_;

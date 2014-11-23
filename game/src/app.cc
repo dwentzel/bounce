@@ -27,6 +27,7 @@
 #include "bounce/render_component.h"
 #include "bounce/control_component.h"
 #include "bounce/movement_component.h"
+#include "bounce/point_light_component.h"
 
 
 //#include "lock_free_queue.h"
@@ -40,7 +41,7 @@ namespace bounce {
         running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
         resource_loader_(application_context_.root_path()),
         texture_manager_(application_context_.root_path() + "/textures"),
-        renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
+        renderer_(resource_loader_, light_manager_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
         render_system_(application_context_, world_manager_, renderer_)
     {
         
@@ -60,6 +61,53 @@ namespace bounce {
         unsigned int model_handle = importer.ImportFile("simple_craft.dae");
 
         render_system_.startup();        
+        
+        GameEntity* light0 = new GameEntity();
+
+        PointLight point_light0;
+        point_light0.diffuse_intensity = 3.7f;
+        point_light0.color = glm::vec3(0.0f, 1.0f, 0.0f);
+        point_light0.position = glm::vec3(0.0f, 1.0f, 0.5f);
+        point_light0.attenuation.constant = 0.0f;
+        point_light0.attenuation.linear = 0.0f;
+        point_light0.attenuation.exp = 0.3f;
+
+        PointLightComponent* light_component0 = new PointLightComponent(light_manager_, point_light0);
+        light0->AttachComponent(light_component0);
+        light_component0->Startup();
+        world_manager_.AddEntity(light0);
+        
+        GameEntity* light1 = new GameEntity();
+        
+        PointLight point_light1;
+        point_light1.diffuse_intensity = 2.7f;
+        point_light1.color = glm::vec3(1.0f, 0.0f, 0.0f);
+        point_light1.position = glm::vec3(0.0f, 1.0f, 1.5f);
+        point_light1.attenuation.constant = 0.0f;
+        point_light1.attenuation.linear = 0.0f;
+        point_light1.attenuation.exp = 0.3f;
+        
+        PointLightComponent* light_component1 = new PointLightComponent(light_manager_, point_light1);
+        light1->AttachComponent(light_component1);
+        light_component1->Startup();
+        world_manager_.AddEntity(light1);
+        
+        
+        GameEntity* light2 = new GameEntity();
+        
+        PointLight point_light2;
+        point_light2.diffuse_intensity = 0.7f;
+        point_light2.color = glm::vec3(0.0f, 0.0f, 1.0f);
+        point_light2.position = glm::vec3(0.5f, 0.0f, 0.5f);
+        point_light2.attenuation.constant = 0.0f;
+        point_light2.attenuation.linear = 0.0f;
+        point_light2.attenuation.exp = 0.3f;
+        
+        PointLightComponent* light_component2 = new PointLightComponent(light_manager_, point_light2);
+        light2->AttachComponent(light_component2);
+        light_component2->Startup();
+        world_manager_.AddEntity(light2);
+        
         
         GameEntity* cube = new GameEntity();
         RenderComponent* render_component = new RenderComponent(&render_system_, model_handle);
