@@ -19,7 +19,8 @@
 #include "directional_light_pass_program.h"
 #include "point_light_pass_program.h"
 #include "g_buffer.h"
-#include "sphere_mesh.h"
+#include "mesh_loader.h"
+#include "mesh.h"
 
 namespace bounce
 {
@@ -28,17 +29,24 @@ namespace bounce
     private:
         GBuffer g_buffer_;
         
-        GLuint buffers_[2];
+        GLuint model_vertex_array_;
+        GLuint directional_vertex_array_;
         
-        SphereMesh sphere_;
-        
-        GeometryPassProgram geometry_pass_program_;
-        DirectionalLightPassProgram directional_light_pass_program_;
-        PointLightPassProgram point_light_pass_program_;
+        GLuint model_vertex_buffer_;
+        GLuint directional_vertex_buffer_;
         
         PointLight point_lights_[3];
         
         std::vector<unsigned int> model_handles_;
+        
+        Mesh* sphere_;
+        Mesh* quad_;
+        
+        GeometryPassProgram geometry_pass_program_;
+        DirectionalLightPassProgram directional_light_pass_program_;
+        PointLightPassProgram point_light_pass_program_;
+        MeshLoader mesh_loader_;
+        
         
         const ModelManager& model_manager_;
         const TextureManager& texture_manager_;
@@ -59,6 +67,8 @@ namespace bounce
                        const ModelManager& model_manager,
                        const TextureManager& texture_manager,
                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer);
+
+        ~OpenGLRenderer();
         
         virtual void Startup();
         virtual void Shutdown();

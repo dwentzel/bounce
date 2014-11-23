@@ -66,14 +66,22 @@ void bounce::SphereMesh::ImportFile(const std::string& filename)
         }
     }
     
+    glGenVertexArrays(1, &vao_);
+    glBindVertexArray(vao_);
+    
     glGenBuffers(1, &vertex_buffer_);
     glGenBuffers(1, &index_buffer_);
     
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
     glBufferData(GL_ARRAY_BUFFER, vertex_count_ * sizeof(float), &vertices_[0], GL_STATIC_DRAW);
+ 
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count_ * sizeof(unsigned int), &indices_[0], GL_STATIC_DRAW);
+    
+    glBindVertexArray(0);
 }
 
 void bounce::SphereMesh::Render()
@@ -84,12 +92,15 @@ void bounce::SphereMesh::Render()
 //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
 //    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count_ * sizeof(unsigned int), &indices_[0], GL_STATIC_DRAW);
     
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+//    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+//    glEnableVertexAttribArray(0);
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+//    
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
+    glBindVertexArray(vao_);
     glDrawElements(GL_TRIANGLES, index_count_, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
     CHECK_GL_ERROR();
-    glDisableVertexAttribArray(0);
+//    glDisableVertexAttribArray(0);
 }

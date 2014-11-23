@@ -13,52 +13,18 @@ bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
                                        const TextureManager& texture_manager,
                                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
 : geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
+  mesh_loader_(resource_loader),
   model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
 }
 
 
-
-//void bounce::OpenGLRenderer::SetupNewFrame()
-//{
-//
-//
-//    //    float light_position0[3] = { 0.0, 2.0, 0.0 };
-//    //    float light_color0[3] = { 0.0, 1.0, 0.0 };
-//    //
-//    //    DirectionalLight light0;
-//    //    light0.position = &light_position0[0];
-//    //    light0.color = &light_color0[0];
-//    //    light0.ambient_intensity = 0.0f;
-//    //    light0.diffuse_intensity = 20.0f;
-//    //
-//    //    current_program_->SetLight(0, light0);
-//    //
-//    //    float light_position1[3] = { 2.0, 0.0, 0.0 };
-//    //    float light_color1[3] = { 1.0, 0.0, 0.0 };
-//    //
-//    //    DirectionalLight light1;
-//    //    light1.position = &light_position1[0];
-//    //    light1.color = &light_color1[0];
-//    //    light1.ambient_intensity = 0.0f;
-//    //    light1.diffuse_intensity = 20.0f;
-//    //
-//    //    current_program_->SetLight(1, light1);
-//    //
-//    //    float light_position2[3] = { 0.0, 0.0, 2.0 };
-//    //    float light_color2[3] = { 0.0, 0.0, 1.0 };
-//    //
-//    //    DirectionalLight light2;
-//    //    light2.position = &light_position2[0];
-//    //    light2.color = &light_color2[0];
-//    //    light2.ambient_intensity = 0.0f;
-//    //    light2.diffuse_intensity = 20.0f;
-//    //
-//    //    current_program_->SetLight(2, light2);
-//    //
-//    //    current_program_->SetLightCount(3);
-//}
+bounce::OpenGLRenderer::~OpenGLRenderer()
+{
+    delete sphere_;
+    delete quad_;
+}
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
@@ -146,30 +112,52 @@ void bounce::OpenGLRenderer::Startup()
     
     g_buffer_.Init(WINDOW_WIDTH, WINDOW_HEIGHT);
     
-    GLuint vertexArrayId;
-    glGenVertexArrays(1, &vertexArrayId);
-    glBindVertexArray(vertexArrayId);
+    glGenVertexArrays(1, &model_vertex_array_);
+    glBindVertexArray(model_vertex_array_);
     
-    //glGenBuffers(3, buffers_);
-    glGenBuffers(2, buffers_);
+    glGenBuffers(1, &model_vertex_buffer_);
     
-    glBindBuffer(GL_ARRAY_BUFFER, buffers_[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, model_vertex_buffer_);
     glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
     
-    glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
+    // Vertex positions
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
+    // Texture coordinates
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    // Normal vectors
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
     
-    GLfloat quad[] = {
-        1.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        1.0f, 1.0f, 0.0f
-    };
+    glBindVertexArray(0);
     
-    glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(GLfloat), quad, GL_STATIC_DRAW);
+//    glGenVertexArrays(1, &directional_vertex_array_);
+//    glBindVertexArray(directional_vertex_array_);
+//    
+//    glGenBuffers(1, &directional_vertex_buffer_);
+//    glBindBuffer(GL_ARRAY_BUFFER, directional_vertex_buffer_);
+//    
+//    GLfloat quad[] = {
+//        1.0f, 1.0f, 0.0f,
+//        -1.0f, 1.0f, 0.0f,
+//        -1.0f, -1.0f, 0.0f,
+//        -1.0f, -1.0f, 0.0f,
+//        1.0f, -1.0f, 0.0f,
+//        1.0f, 1.0f, 0.0f
+//    };
+//    
+//    glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(GLfloat), quad, GL_STATIC_DRAW);
+//    
+//    glEnableVertexAttribArray(0);
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+//    
+//    glBindVertexArray(0);
     
-    sphere_.ImportFile("/Users/daniel/Repos/bounce/resources/models/sphere.dae");
+    sphere_ = mesh_loader_.Load("sphere.dae");
+    quad_ = mesh_loader_.Load("quad.dae");
+    
+    //sphere_.ImportFile("/Users/daniel/Repos/bounce/resources/models/sphere.dae");
     
     
     CHECK_GL_ERROR();
@@ -177,7 +165,8 @@ void bounce::OpenGLRenderer::Startup()
 
 void bounce::OpenGLRenderer::Shutdown() {
     CHECK_GL_ERROR();
-    glDeleteBuffers(1, buffers_);
+    glDeleteBuffers(1, &model_vertex_buffer_);
+    glDeleteBuffers(1, &directional_vertex_buffer_);
     CHECK_GL_ERROR();
 }
 
@@ -224,26 +213,16 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     
     glDisable(GL_BLEND);
     
-    glBindBuffer(GL_ARRAY_BUFFER, buffers_[0]);
-    
-    // Vertex positions
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
-    // Texture coordinates
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    // Normal vectors
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glBindVertexArray(model_vertex_array_);
     
     CHECK_GL_ERROR();
 }
 
 void bounce::OpenGLRenderer::EndGeometryPass()
 {
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
+//    glDisableVertexAttribArray(0);
+//    glDisableVertexAttribArray(1);
+//    glDisableVertexAttribArray(2);
     
     glDepthMask(GL_FALSE);
     glDisable(GL_DEPTH_TEST);
@@ -271,13 +250,17 @@ void bounce::OpenGLRenderer::RunDirectionalLightPass()
 
 //    sphere_.Render();
     
-    glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    glDrawArrays(GL_TRIANGLES, 0, 18);
-    
-    glDisableVertexAttribArray(0);
+//    glBindBuffer(GL_ARRAY_BUFFER, buffers_[1]);
+//    glEnableVertexAttribArray(0);
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+//    glBindVertexArray(directional_vertex_array_);
+//    
+//    glDrawArrays(GL_TRIANGLES, 0, 18);
+//    
+////    glDisableVertexAttribArray(0);
+//    glBindVertexArray(0);
+    quad_->Render();
 }
 
 void bounce::OpenGLRenderer::RunPointLightsPass()
@@ -299,7 +282,7 @@ void bounce::OpenGLRenderer::RunPointLightsPass()
 //   	    float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
 //   	    p.Scale(BSphereScale, BSphereScale, BSphereScale);
 //   	    m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
-   	    sphere_.Render();
+   	    sphere_->Render();
    	} 
 }
 

@@ -16,7 +16,9 @@ if (APPLE)
 
 
     set(MODELS
+        ${models_PATH}/quad.dae
         ${models_PATH}/simple_craft.dae
+        ${models_PATH}/sphere.dae
 #        ${models_PATH}/simple_craft.fbx
 #        ${models_PATH}/simple_craft.blend
     )

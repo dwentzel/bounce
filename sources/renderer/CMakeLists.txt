@@ -9,6 +9,8 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/lights.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/material.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/material_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/mesh.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/mesh_loader.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/opengl_renderer.h
@@ -30,6 +32,8 @@ set(SOURCES
     src/light_pass_program.cc
     src/material.cc
     src/material_manager.cc
+    src/mesh.cc
+    src/mesh_loader.cc
     src/model.cc
     src/model_manager.cc
     src/opengl_renderer.cc

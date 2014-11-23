@@ -11,6 +11,7 @@ namespace bounce {
 
     class SphereMesh {
     private:
+        GLuint vao_;
         GLuint vertex_buffer_;
         GLuint index_buffer_;
         
