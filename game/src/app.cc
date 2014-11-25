@@ -33,6 +33,8 @@
 
 //#include "lock_free_queue.h"
 
+#include "framework/object_cache.h"
+#include "bounce/body_component.h"
 
 namespace bounce {
     
@@ -43,7 +45,8 @@ namespace bounce {
         resource_loader_(application_context_.root_path()),
         texture_manager_(application_context_.root_path() + "/textures"),
         renderer_(resource_loader_, light_manager_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
-        render_system_(application_context_, world_manager_, renderer_)
+        movement_system_(object_manager_.body_components()),
+        render_system_(application_context_, object_manager_.render_components(), renderer_)
     {
         
     }
@@ -57,68 +60,63 @@ namespace bounce {
         srand(time(0));
 
         Importer importer(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_);
-
-        
         unsigned int model_handle = importer.ImportFile("simple_craft.dae");
-
-        render_system_.startup();        
         
-        GameEntity* light0 = new GameEntity();
-
-        PointLightComponent* light_component0 =
-            new PointLightComponent(light_manager_, 0.0f, 3.7f, 0.0f, 0.0f, 0.3f, glm::vec3(0.0f, 1.0f, 0.0f));
-        light0->AttachComponent(light_component0);
-        light_component0->Startup();
+        render_system_.Startup();
         
-        PositionComponent* position_component0 = new PositionComponent(glm::vec3(0.0f, 0.5f, 0.5f));
-        light0->AttachComponent(position_component0);
-        position_component0->Startup();
+//        unsigned int light0_handle = object_manager_.GenerateGameEntity();
+//        GameEntity& light0 = object_manager_.GetGameEntity(light0_handle);
+//        
+//        PointLightComponent* light_component0 =
+//            new PointLightComponent(light_manager_, 0.0f, 3.7f, 0.0f, 0.0f, 0.3f, glm::vec3(0.0f, 1.0f, 0.0f));
+//        light0.AttachComponent(light_component0);
+//        light_component0->Startup();
+//        
+//        PositionComponent* position_component0 = new PositionComponent(glm::vec3(0.0f, 0.5f, 0.5f));
+//        light0.AttachComponent(position_component0);
+//        position_component0->Startup();
+//        
+//        unsigned int light1_handle = object_manager_.GenerateGameEntity();
+//        GameEntity& light1 = object_manager_.GetGameEntity(light1_handle);
+//        
+//        PointLightComponent* light_component1 =
+//          new PointLightComponent(light_manager_, 0.0f, 5.0f, 0.0f, 0.0f, 0.3f, glm::vec3(1.0f, 0.0f, 0.0f));
+//
+//        light1.AttachComponent(light_component1);
+//        light_component1->Startup();
+//        
+//        PositionComponent* position_component1 = new PositionComponent(glm::vec3(0.0f, -0.5f, 0.5f));
+//        light1.AttachComponent(position_component1);
+//        position_component1->Startup();
+//        
+//        unsigned int light2_handle = object_manager_.GenerateGameEntity();
+//        GameEntity& light2 = object_manager_.GetGameEntity(light2_handle);
+//        
+//        PointLightComponent* light_component2 =
+//            new PointLightComponent(light_manager_, 0.0f, 0.7f, 0.0f, 0.0f, 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
+//
+//        light2.AttachComponent(light_component2);
+//        light_component2->Startup();
+//        
+//        PositionComponent* position_component2 = new PositionComponent(glm::vec3(0.5f, 0.0f, 0.5f));
+//        light2.AttachComponent(position_component2);
+//        position_component2->Startup();
         
-        world_manager_.AddEntity(light0);
+        unsigned int ship_handle = object_manager_.GenerateGameEntity();
+        GameEntity& ship = object_manager_.GetGameEntity(ship_handle);
         
-        GameEntity* light1 = new GameEntity();
+        unsigned int render_component_handle = object_manager_.GenerateRenderComponent(model_handle);
+        RenderComponent& render_component = object_manager_.GetRenderComponent(render_component_handle);
         
-        PointLightComponent* light_component1 =
-          new PointLightComponent(light_manager_, 0.0f, 5.0f, 0.0f, 0.0f, 0.3f, glm::vec3(1.0f, 0.0f, 0.0f));
-
-        light1->AttachComponent(light_component1);
-        light_component1->Startup();
+        ship.AttachComponent(render_component);
         
-        PositionComponent* position_component1 = new PositionComponent(glm::vec3(0.0f, -0.5f, 0.5f));
-        light1->AttachComponent(position_component1);
-        position_component1->Startup();
+        render_component.Startup();
         
-        world_manager_.AddEntity(light1);
+//        ControlComponent* control_component = new ControlComponent(keyboard_state_);
+//        ship.AttachComponent(control_component);
         
-        
-        GameEntity* light2 = new GameEntity();
-        
-        PointLightComponent* light_component2 =
-            new PointLightComponent(light_manager_, 0.0f, 0.7f, 0.0f, 0.0f, 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
-
-        light2->AttachComponent(light_component2);
-        light_component2->Startup();
-        
-        PositionComponent* position_component2 = new PositionComponent(glm::vec3(0.5f, 0.0f, 0.5f));
-        light2->AttachComponent(position_component2);
-        position_component2->Startup();
-
-        world_manager_.AddEntity(light2);
-        
-        
-        GameEntity* cube = new GameEntity();
-        RenderComponent* render_component = new RenderComponent(&render_system_, model_handle);
-        cube->AttachComponent(render_component);
-        
-        render_component->Startup();
-        
-        ControlComponent* control_component = new ControlComponent(keyboard_state_);
-        cube->AttachComponent(control_component);
-        
-        MovementComponent* movement_component = new MovementComponent(timer_);
-        cube->AttachComponent(movement_component);
-        
-        world_manager_.AddEntity(cube);
+        //MovementComponent* movement_component = new MovementComponent(timer_);
+        //cube->AttachComponent(movement_component);
 
         return true;
     }
@@ -163,15 +161,8 @@ namespace bounce {
 //            onLoop();
 //            onRender();
             
-            const GameEntityList& entities = world_manager_.entities();
-            
-            for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
-                GameEntity* entity = *i;
-                
-                entity->UpdateComponentOfType(MOVEMENT_COMPONENT);
-            }
-            
-            render_system_.update();
+            movement_system_.Update(delta_time);
+            render_system_.Update(delta_time);
         }
 
         onCleanup();
@@ -192,13 +183,13 @@ namespace bounce {
             KeyboardEvent keyboard_event = static_cast<const KeyboardEvent&>(event);
             keyboard_state_.ProcessEvent(keyboard_event);
 
-            const GameEntityList& entities = world_manager_.entities();
-            
-            for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
-                GameEntity* entity = *i;
-                
-                entity->UpdateComponentOfType(CONTROL_COMPONENT);
-            }
+//            const GameEntityList& entities = world_manager_.entities();
+//            
+//            for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
+//                GameEntity* entity = *i;
+//                
+//                entity->UpdateComponentOfType(CONTROL_COMPONENT);
+//            }
         }
     }
 

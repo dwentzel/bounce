@@ -2,6 +2,7 @@ setup_module(bounce)
 
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/body_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_main.h
     include/console.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
@@ -13,7 +14,9 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/movement_component.h
+#    ${MODULE_PUBLIC_INCLUDE_DIR}/movement_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/movement_system.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/object_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/position_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_component.h
@@ -24,6 +27,7 @@ set(HEADERS
 
 set(SOURCES
     src/application_context.cc
+    src/body_component.cc
     src/console.cc
     src/control_component.cc
     src/event.cc
@@ -32,7 +36,9 @@ set(SOURCES
     src/game_system.cc
     src/keyboard_state.cc
     src/message.cc
-    src/movement_component.cc
+#    src/movement_component.cc
+    src/movement_system.cc
+    src/object_manager.cc
     src/point_light_component.cc
     src/position_component.cc
     src/render_component.cc

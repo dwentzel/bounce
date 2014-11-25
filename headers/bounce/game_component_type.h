@@ -4,11 +4,12 @@
 namespace bounce {
     enum GameComponentType {
         RENDER_COMPONENT,
+        BODY_COMPONENT,
         CONTROL_COMPONENT,
         MOVEMENT_COMPONENT,
-        TRANSFORM_COMPONENT,
         POINT_LIGHT_COMPONENT,
-        POSITION_COMPONENT
+        POSITION_COMPONENT,
+        COMPONENT_COUNT
     };
 }
 

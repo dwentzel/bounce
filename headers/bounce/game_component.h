@@ -14,7 +14,8 @@ namespace bounce {
     
     protected:
         GameComponent(GameComponentType component_type);
-    
+//        GameComponent(GameComponent&& component);
+        
         GameEntity* owner();
         
     public:
@@ -32,6 +33,11 @@ namespace bounce {
         
         void AttachToEntity(GameEntity* entity);
     };
+    
+//    inline GameComponent::GameComponent(GameComponent&& component)
+//    {
+//        
+//    }
     
     inline GameComponent::GameComponent(GameComponentType component_type) : component_type_(component_type) {}
     

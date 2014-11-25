@@ -3,7 +3,11 @@
 
 #include <vector>
 
+#include "framework/object_cache.h"
+
 #include "renderer/opengl_renderer.h"
+
+#include "render_component.h"
 
 #include "game_system.h"
 #include "application_context.h"
@@ -14,7 +18,8 @@ namespace bounce {
     class RenderSystem : public GameSystem {
     private:
         const ApplicationContext& application_context_;
-        const WorldManager& world_manager_;
+        
+        const ObjectCache<RenderComponent>& render_component_cache_;
         
         OpenGLRenderer& renderer_;
         
@@ -25,16 +30,16 @@ namespace bounce {
 
     public:
         RenderSystem(const ApplicationContext& application_context,
-                     const WorldManager& world_manager,
+                     const ObjectCache<RenderComponent>& render_component_cache,
                      OpenGLRenderer& renderer)
-        : application_context_(application_context), world_manager_(world_manager), renderer_(renderer)
+        : application_context_(application_context), render_component_cache_(render_component_cache), renderer_(renderer)
         {
             
         }
         
-        virtual void startup();
-        virtual void shutdown();
-        virtual void update();
+        virtual void Startup();
+        virtual void Shutdown();
+        virtual void Update(float delta_time);
 
         void AddModel(unsigned int model_handle);
         void RemoveModel(unsigned int model_handle);

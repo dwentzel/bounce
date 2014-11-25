@@ -3,26 +3,33 @@
 
 #include "game_component.h"
 #include "renderer/model.h"
-#include "render_system.h"
+//#include "render_system.h"
 
 namespace bounce {
-    
+  
     class RenderComponent : public GameComponent
     {
     private:
-        RenderSystem* render_system_;
         const unsigned int model_handle_;
         
+        glm::mat4 model_matrix_;
+        
     public:
-        RenderComponent(RenderSystem* render_system, unsigned int model_handle)
-        : GameComponent(RENDER_COMPONENT), render_system_(render_system), model_handle_(model_handle) {}
+        static RenderComponent Create(unsigned int model_handle);
+        
+        RenderComponent(unsigned int model_handle);
 
+        unsigned int model_handle() const;
+        
+        const glm::mat4& model_matrix() const;
         
         virtual void Startup();
         
         virtual void Shutdown();
         
         virtual void Update();
+        
+        virtual void HandleMessage(const Message& message);
     };
 }
 

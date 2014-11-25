@@ -55,10 +55,10 @@ void bounce_mac::OsxApplicationContext::CreateWindow()
     NSOpenGLPixelFormatAttribute attr[] = {
         NSOpenGLPFAOpenGLProfile,
         NSOpenGLProfileVersion3_2Core,
-        NSOpenGLPFAColorSize, 32,
-        NSOpenGLPFAAlphaSize, 8,
         NSOpenGLPFAAccelerated,
         NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFAColorSize, 32,
+        NSOpenGLPFAAlphaSize, 8,
         NSOpenGLPFADepthSize, 24,
         0
     };
@@ -67,8 +67,8 @@ void bounce_mac::OsxApplicationContext::CreateWindow()
     
     openGLContext = [[NSOpenGLContext alloc] initWithFormat: pixelFormat shareContext: nil];
     
-    GLint one = 1;
-    [openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
+    GLint vsync = 0;
+    [openGLContext setValues:&vsync forParameter:NSOpenGLCPSwapInterval];
     
     
     id window = [[[BounceWindow alloc]

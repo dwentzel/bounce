@@ -3,7 +3,6 @@
 
 #include "game_component.h"
 #include "keyboard_state.h"
-#include "framework/timer.h"
 
 namespace bounce {
     

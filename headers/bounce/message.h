@@ -9,7 +9,8 @@
 namespace bounce {
     
     enum MessageType {
-        POSITION_CHANGED_MESSAGE
+        POSITION_CHANGED_MESSAGE,
+        ACCELERATION_CHANGED_MESSAGE
     };
     
     
@@ -26,6 +27,35 @@ namespace bounce {
     
     inline MessageType Message::message_type() const {
         return message_type_;
+    }
+    
+    class AccelerationChangedMessage : public Message {
+    private:
+        float yaw_;
+        float pitch_;
+        float roll_;
+        
+    public:
+        AccelerationChangedMessage(float yaw, float pitch, float roll);
+        
+        float yaw() const;
+        float pitch() const;
+        float roll() const;
+    };
+        
+    inline float AccelerationChangedMessage::yaw() const
+    {
+        return yaw_;
+    }
+    
+    inline float AccelerationChangedMessage::pitch() const
+    {
+        return pitch_;
+    }
+    
+    inline float AccelerationChangedMessage::roll() const
+    {
+        return roll_;
     }
     
     class PositionChangedMessage : public Message {

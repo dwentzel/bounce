@@ -1,25 +1,42 @@
 #include "render_component.h"
+#include "render_system.h"
 
-#include <vector>
+bounce::RenderComponent bounce::RenderComponent::Create(unsigned int model_handle)
+{
+    return RenderComponent(model_handle);
+}
 
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/quaternion.hpp>
+bounce::RenderComponent::RenderComponent(unsigned int model_handle)
+: GameComponent(RENDER_COMPONENT), model_handle_(model_handle)
+{
+}
+
+unsigned int bounce::RenderComponent::model_handle() const
+{
+    return model_handle_;
+}
+
+const glm::mat4& bounce::RenderComponent::model_matrix() const
+{
+    return model_matrix_;
+}
+
+void bounce::RenderComponent::HandleMessage(const bounce::Message& message)
+{
+    
+}
 
 void bounce::RenderComponent::Startup()
 {
-    render_system_->AddModel(model_handle_);
+    //render_system_.AddModel(model_handle_);
 }
 
 void bounce::RenderComponent::Shutdown()
 {
-    render_system_->RemoveModel(model_handle_);
+    //render_system_.RemoveModel(model_handle_);
 }
 
 void bounce::RenderComponent::Update()
 {
-    render_system_->RenderModel(model_handle_);
+    //render_system_.RenderModel(model_handle_);
 }

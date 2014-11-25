@@ -6,6 +6,12 @@ bounce::Message::Message(MessageType message_type)
     
 }
 
+bounce::AccelerationChangedMessage::AccelerationChangedMessage(float yaw, float pitch, float roll)
+: Message(ACCELERATION_CHANGED_MESSAGE), yaw_(yaw), pitch_(pitch), roll_(roll)
+{
+    
+}
+
 bounce::PositionChangedMessage::PositionChangedMessage(const glm::vec3& position)
 : Message(POSITION_CHANGED_MESSAGE), position_(position)
 {

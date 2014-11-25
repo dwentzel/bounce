@@ -10,12 +10,12 @@
 #include "render_system.h"
 #include "game_entity.h"
 
-void bounce::RenderSystem::startup()
+void bounce::RenderSystem::Startup()
 {
     renderer_.Startup();
 }
 
-void bounce::RenderSystem::shutdown() {
+void bounce::RenderSystem::Shutdown() {
     renderer_.Shutdown();
 }
 
@@ -28,7 +28,7 @@ namespace {
 }
 
 
-void bounce::RenderSystem::update() {
+void bounce::RenderSystem::Update(float delta_time) {
     
     glm::vec3 direction(cos(verticalAngle) * sin(horizontalAngle),
                         sin(verticalAngle), cos(verticalAngle) * cos(verticalAngle));
@@ -51,21 +51,20 @@ void bounce::RenderSystem::update() {
     renderer_.SetWorldMatrix(world_matrix);
     renderer_.SetWVPMatrix(wvp_matrix);
     
-    const GameEntityList& entities = world_manager_.entities();
     
-    for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
-        GameEntity* entity = *i;
+    for (ObjectCache<RenderComponent>::const_iterator i = render_component_cache_.begin(); i != render_component_cache_.end(); ++i) {
+        RenderComponent render_component = *i;
         
-        glm::mat4 model_matrix = glm::toMat4(entity->orientation());
-        //        glm::mat4 mwvp_matrix = projection_matrix * view_matrix * model_matrix;
+        glm::mat4 model_matrix = render_component.model_matrix();
         glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
         
         
         renderer_.SetMWVPMatrix(mwvp_matrix);
         renderer_.SetModelMatrix(model_matrix);
         
+        renderer_.RenderModel(render_component.model_handle());
 //        renderer_.RenderModel(entity->model_handle)
-        entity->UpdateComponentOfType(RENDER_COMPONENT);
+//        entity->UpdateComponentOfType(RENDER_COMPONENT);
     }
     
     renderer_.EndFrame();

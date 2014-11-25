@@ -39,8 +39,11 @@ void bounce::ControlComponent::Update() {
     
     
     GameEntity* owner = this->owner();
+    AccelerationChangedMessage message(yaw_acceleration, pitch_acceleration, roll_acceleration);
     
-    owner->yaw_acceleration_direction(yaw_acceleration);
-    owner->pitch_acceleration_direction(pitch_acceleration);
-    owner->roll_acceleration_direction(roll_acceleration);
+    owner->HandleMessage(message);
+    
+//    owner->yaw_acceleration_direction(yaw_acceleration);
+//    owner->pitch_acceleration_direction(pitch_acceleration);
+//    owner->roll_acceleration_direction(roll_acceleration);
 }
