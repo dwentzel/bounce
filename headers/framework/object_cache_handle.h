@@ -3,13 +3,7 @@
 
 namespace bounce {
 
-    template <typename TObject>
-    class ObjectCacheHandle {
-    private:
 
-    public:
-
-    };
 
 }
 

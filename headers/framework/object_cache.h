@@ -4,15 +4,15 @@
 #include <vector>
 
 namespace bounce {
-        
-    template<typename TObject>
+    
+    template<typename T>
     class ObjectCache {
     private:
-        std::vector<TObject> cache_;
+        std::vector<T> cache_;
         
     public:
-        typedef typename std::vector<TObject>::iterator iterator;
-        typedef typename std::vector<TObject>::const_iterator const_iterator;
+        typedef typename std::vector<T>::iterator iterator;
+        typedef typename std::vector<T>::const_iterator const_iterator;
         
         
         ObjectCache();
@@ -25,52 +25,81 @@ namespace bounce {
         
         template<typename... FactoryArgs>
         unsigned int GenerateObject(FactoryArgs&&...);
-        TObject& GetObject(unsigned int handle);
+        T& GetObject(unsigned int handle);
         
     };
 
-    template<typename TObject>
-    ObjectCache<TObject>::ObjectCache()
+    
+    
+//    template<typename T, typename Cache>
+//    class ObjectCacheHandle {
+//    private:
+//        unsigned int index_;
+//        ObjectCache<Cache, T>& object_cache_;
+//        
+//    public:
+//        ObjectCacheHandle(ObjectCache<Cache, T>& object_cache, unsigned int index);
+//        
+//        T& Resolve();
+//    };
+//    
+//    template<typename T, typename Cache>
+//    ObjectCacheHandle<T, Cache>::ObjectCacheHandle(ObjectCache<Cache, T>& object_cache, unsigned int index)
+//    : index_(index), object_cache_(object_cache)
+//    {
+//        
+//    }
+//    
+//    template<typename T, typename Cache>
+//    T& ObjectCacheHandle<T, Cache>::Resolve()
+//    {
+//        return object_cache_.GetObject(index_);
+//    }
+    
+    
+    template<typename T>
+    ObjectCache<T>::ObjectCache()
     {
         
     }
     
-    template<typename TObject>
-    typename ObjectCache<TObject>::iterator ObjectCache<TObject>::begin()
+    template<typename T>
+    typename ObjectCache<T>::iterator ObjectCache<T>::begin()
     {
         return cache_.begin();
     }
     
-    template<typename TObject>
-    typename ObjectCache<TObject>::const_iterator ObjectCache<TObject>::begin() const
+    template<typename T>
+    typename ObjectCache<T>::const_iterator ObjectCache<T>::begin() const
     {
         return cache_.begin();
     }
     
-    template<typename TObject>
-    typename ObjectCache<TObject>::iterator ObjectCache<TObject>::end()
+    template<typename T>
+    typename ObjectCache<T>::iterator ObjectCache<T>::end()
     {
         return cache_.end();
     }
     
-    template<typename TObject>
-    typename ObjectCache<TObject>::const_iterator ObjectCache<TObject>::end() const
+    template<typename T>
+    typename ObjectCache<T>::const_iterator ObjectCache<T>::end() const
     {
         return cache_.end();
     }
     
-    template<typename TObject> template<typename... FactoryArgs>
-    unsigned int ObjectCache<TObject>::GenerateObject(FactoryArgs&&... args)
+    template<typename T>
+    template<typename... FactoryArgs>
+    unsigned int ObjectCache<T>::GenerateObject(FactoryArgs&&... args)
     {
-        unsigned int handle = cache_.size();
+        unsigned int index = cache_.size();
         
-        cache_.push_back(TObject::Create(args...));
+        cache_.push_back(T::Create(args...));
         
-        return handle;
+        return index;
     }
     
-    template<typename TObject>
-    TObject& ObjectCache<TObject>::GetObject(unsigned int handle)
+    template<typename T>
+    T& ObjectCache<T>::GetObject(unsigned int handle)
     {
         return cache_[handle];
     }

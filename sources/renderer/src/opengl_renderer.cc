@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "shader_manager.h"
 #include "g_buffer.h"
 
 #include "sphere_mesh.cc"

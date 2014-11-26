@@ -14,7 +14,6 @@ namespace bounce {
     
     protected:
         GameComponent(GameComponentType component_type);
-//        GameComponent(GameComponent&& component);
         
         GameEntity* owner();
         

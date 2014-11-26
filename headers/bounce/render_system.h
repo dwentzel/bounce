@@ -19,7 +19,7 @@ namespace bounce {
     private:
         const ApplicationContext& application_context_;
         
-        const ObjectCache<RenderComponent>& render_component_cache_;
+        const RenderComponentCache& render_component_cache_;
         
         OpenGLRenderer& renderer_;
         

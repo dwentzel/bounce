@@ -26,12 +26,8 @@
 
 #include "bounce/render_component.h"
 #include "bounce/control_component.h"
-#include "bounce/movement_component.h"
 #include "bounce/point_light_component.h"
 #include "bounce/position_component.h"
-
-
-//#include "lock_free_queue.h"
 
 #include "framework/object_cache.h"
 #include "bounce/body_component.h"
@@ -64,14 +60,24 @@ namespace bounce {
         
         render_system_.Startup();
         
-//        unsigned int light0_handle = object_manager_.GenerateGameEntity();
-//        GameEntity& light0 = object_manager_.GetGameEntity(light0_handle);
-//        
-//        PointLightComponent* light_component0 =
-//            new PointLightComponent(light_manager_, 0.0f, 3.7f, 0.0f, 0.0f, 0.3f, glm::vec3(0.0f, 1.0f, 0.0f));
-//        light0.AttachComponent(light_component0);
-//        light_component0->Startup();
-//        
+        GameEntityHandle light0_handle = object_manager_.GenerateGameEntity();
+        GameEntity& light0 = light0_handle.Resolve();
+        
+        GameComponentHandle light0_point_light_component_handle = object_manager_.GeneratePointLightComponent();
+        PointLightComponent& point_light_component0 = light0_point_light_component_handle.ResolveAs<PointLightComponent>();
+        point_light_component0.diffuse_intensity(4.0f);
+        point_light_component0.exp_attenuation(0.3f);
+        point_light_component0.color(glm::vec3(0.0f, 1.0f, 0.0f));
+        
+        light0.AttachComponent(point_light_component0);
+        point_light_component0.Startup();
+        
+        GameComponentHandle light0_body_component_handle = object_manager_.GenerateBodyComponent();
+        BodyComponent& light0_body_component = light0_body_component_handle.ResolveAs<BodyComponent>();
+        light0_body_component.position(glm::vec3(0.0f, 0.5f, 0.5f));
+        light0.AttachComponent(light0_body_component);
+        light0_body_component.Startup();
+//
 //        PositionComponent* position_component0 = new PositionComponent(glm::vec3(0.0f, 0.5f, 0.5f));
 //        light0.AttachComponent(position_component0);
 //        position_component0->Startup();
@@ -102,11 +108,11 @@ namespace bounce {
 //        light2.AttachComponent(position_component2);
 //        position_component2->Startup();
         
-        unsigned int ship_handle = object_manager_.GenerateGameEntity();
-        GameEntity& ship = object_manager_.GetGameEntity(ship_handle);
+        GameEntityHandle ship_handle = object_manager_.GenerateGameEntity();
+        GameEntity& ship = ship_handle.Resolve();
         
-        unsigned int render_component_handle = object_manager_.GenerateRenderComponent(model_handle);
-        RenderComponent& render_component = object_manager_.GetRenderComponent(render_component_handle);
+        GameComponentHandle render_component_handle = object_manager_.GenerateRenderComponent(model_handle);
+        RenderComponent& render_component = render_component_handle.ResolveAs<RenderComponent>();
         
         ship.AttachComponent(render_component);
         

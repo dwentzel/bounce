@@ -1,9 +1,9 @@
 #ifndef BOUNCE_RENDER_COMPONENT_H_
 #define BOUNCE_RENDER_COMPONENT_H_
 
+#include "framework/object_cache.h"
 #include "game_component.h"
 #include "renderer/model.h"
-//#include "render_system.h"
 
 namespace bounce {
   
@@ -31,6 +31,9 @@ namespace bounce {
         
         virtual void HandleMessage(const Message& message);
     };
+    
+    typedef ObjectCache<RenderComponent> RenderComponentCache;
+//    typedef ObjectCacheHandle<RenderComponent> RenderComponentHandle;
 }
 
 #endif

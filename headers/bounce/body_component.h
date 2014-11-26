@@ -1,6 +1,10 @@
 #ifndef BOUNCE_BOUNCE_BODY_COMPONENT_
 #define BOUNCE_BOUNCE_BODY_COMPONENT_
 
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+
 #include "framework/object_cache.h"
 #include "game_component.h"
 
@@ -27,10 +31,10 @@ namespace bounce {
     public:
         static BodyComponent Create();
         
-        BodyComponent(BodyComponent&& component) : GameComponent(std::move(component))
-        {
-            
-        }
+//        BodyComponent(BodyComponent&& component) : GameComponent(std::move(component))
+//        {
+//            
+//        }
         
         void Startup();
         void Shutdown();
@@ -55,6 +59,9 @@ namespace bounce {
         
         glm::quat orientation();
         void orientation(const glm::quat& o);
+        
+        glm::vec3 position() const;
+        void position(const glm::vec3& position);
     };
     
     inline float BodyComponent::rotation_acceleration() const {
@@ -120,9 +127,19 @@ namespace bounce {
     inline void BodyComponent::orientation(const glm::quat& o) {
         orientation_ = o;
     }
+    
+    inline glm::vec3 BodyComponent::position() const
+    {
+        return position_;
+    }
+    
+    inline void BodyComponent::position(const glm::vec3& position)
+    {
+        position_ = position;
+    }
 
     typedef ObjectCache<BodyComponent> BodyComponentCache;
-    
+//    typedef ObjectCacheHandle<BodyComponent> BodyComponentHandle;
     
 //    class BodyComponentFactory {
 //    private:

@@ -63,7 +63,7 @@ void bounce_mac::OsxApplicationContext::CreateWindow()
         0
     };
     
-    NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attr];
+    NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attr] autorelease];
     
     openGLContext = [[NSOpenGLContext alloc] initWithFormat: pixelFormat shareContext: nil];
     

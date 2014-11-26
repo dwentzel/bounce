@@ -14,7 +14,6 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
-#    ${MODULE_PUBLIC_INCLUDE_DIR}/movement_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/movement_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_component.h
@@ -36,7 +35,6 @@ set(SOURCES
     src/game_system.cc
     src/keyboard_state.cc
     src/message.cc
-#    src/movement_component.cc
     src/movement_system.cc
     src/object_manager.cc
     src/point_light_component.cc

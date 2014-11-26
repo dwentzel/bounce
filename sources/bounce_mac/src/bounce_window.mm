@@ -88,7 +88,7 @@ bounce::Key UnicharToKey(unichar ch)
     //        NSLog(@"%@", strWithout);
     
     bounce::Keysym keysym;
-    
+    keysym.mod = bounce::NO_MODIFIER;
     keysym.sym = UnicharToKey(ch);
     
     if (event.type == NSKeyDown)

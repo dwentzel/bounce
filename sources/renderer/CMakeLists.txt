@@ -18,7 +18,6 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_pass_program.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/quad_mesh.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/shader.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/shader_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/shader_program.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/sphere_mesh.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/texture.h
@@ -42,7 +41,6 @@ set(SOURCES
     src/point_light_pass_program.cc
     src/quad_mesh.cc
     src/shader.cc
-    src/shader_manager.cc
     src/shader_program.cc
     src/sphere_mesh.cc
     src/texture.cc
