@@ -38,7 +38,9 @@ namespace bounce {
 //        
 //    }
     
-    inline GameComponent::GameComponent(GameComponentType component_type) : component_type_(component_type) {}
+    inline GameComponent::GameComponent(GameComponentType component_type) : component_type_(component_type), owner_(nullptr)
+    {
+    }
     
     inline GameComponent::~GameComponent() {}
     

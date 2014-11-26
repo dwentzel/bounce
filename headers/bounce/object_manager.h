@@ -78,13 +78,15 @@ namespace bounce {
         
         T& Resolve()
         {
-            object_manager_.ResolveHandle<T>(*this);
+            T& result = object_manager_.ResolveHandle<T>(*this);
+            return result;
         }
         
         template <typename S>
         S& ResolveAs()
         {
-            object_manager_.ResolveHandleAs<S, T>(*this);
+            S& result = object_manager_.ResolveHandleAs<S, T>(*this);
+            return result;
         }
     };
     
@@ -124,20 +126,18 @@ namespace bounce {
     template <typename T, typename Handle>
     T& ObjectManager::ResolveHandleAs(ObjectManagerHandle<Handle>& handle)
     {
+        //1 = 0;
+        // throw error
+    }
+    
+    template <>
+    GameEntity& ObjectManager::ResolveHandleAs<GameEntity>(ObjectManagerHandle<GameEntity>& handle)
+    {
         unsigned int type = handle.type();
         unsigned int index = handle.index();
         
         if (type == 0) {
-            // throw error
-        }
-        if (type == 1) {
-            return body_components_.GetObject(index);
-        }
-        if (type == 2) {
-            return render_components_.GetObject(index);
-        }
-        if (type == 3) {
-            return point_light_components_.GetObject(index);
+            return game_entities_.GetObject(index);
         }
         
         // throw error

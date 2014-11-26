@@ -61,10 +61,10 @@ namespace bounce {
         render_system_.Startup();
         
         GameEntityHandle light0_handle = object_manager_.GenerateGameEntity();
-        GameEntity& light0 = light0_handle.Resolve();
+        GameEntity& light0 = light0_handle.ResolveAs<GameEntity>();
         
         GameComponentHandle light0_point_light_component_handle = object_manager_.GeneratePointLightComponent();
-        PointLightComponent& point_light_component0 = light0_point_light_component_handle.ResolveAs<PointLightComponent>();
+        PointLightComponent& point_light_component0 = (PointLightComponent&)light0_point_light_component_handle.Resolve();
         point_light_component0.diffuse_intensity(4.0f);
         point_light_component0.exp_attenuation(0.3f);
         point_light_component0.color(glm::vec3(0.0f, 1.0f, 0.0f));
