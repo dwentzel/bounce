@@ -30,12 +30,7 @@ namespace bounce {
         
     public:
         static BodyComponent Create();
-        
-//        BodyComponent(BodyComponent&& component) : GameComponent(std::move(component))
-//        {
-//            
-//        }
-        
+    
         void Startup();
         void Shutdown();
         void Update();
@@ -64,67 +59,83 @@ namespace bounce {
         void position(const glm::vec3& position);
     };
     
-    inline float BodyComponent::rotation_acceleration() const {
+    inline float BodyComponent::rotation_acceleration() const
+    {
         return rotation_acceleration_;
     }
     
-    inline float BodyComponent::max_speed() const {
+    inline float BodyComponent::max_speed() const
+    {
         return max_speed_;
     }
     
-    inline int BodyComponent::yaw_acceleration_direction() const {
+    inline int BodyComponent::yaw_acceleration_direction() const
+    {
         return yaw_acceleration_direction_;
     }
     
-    inline void BodyComponent::yaw_acceleration_direction(int acceleration_direction) {
+    inline void BodyComponent::yaw_acceleration_direction(int acceleration_direction)
+    {
         yaw_acceleration_direction_ = acceleration_direction;
     }
     
-    inline int BodyComponent::pitch_acceleration_direction() const {
+    inline int BodyComponent::pitch_acceleration_direction() const
+    {
         return pitch_acceleration_direction_;
     }
     
-    inline void BodyComponent::pitch_acceleration_direction(int acceleration_direction) {
+    inline void BodyComponent::pitch_acceleration_direction(int acceleration_direction)
+    {
         pitch_acceleration_direction_ = acceleration_direction;
     }
     
-    inline int BodyComponent::roll_acceleration_direction() const {
+    inline int BodyComponent::roll_acceleration_direction() const
+    {
         return roll_acceleration_direction_;
     }
     
-    inline void BodyComponent::roll_acceleration_direction(int acceleration_direction) {
+    inline void BodyComponent::roll_acceleration_direction(int acceleration_direction)
+    {
         roll_acceleration_direction_ = acceleration_direction;
     }
     
-    inline float BodyComponent::yaw_speed() const {
+    inline float BodyComponent::yaw_speed() const
+    {
         return yaw_speed_;
     }
     
-    inline void BodyComponent::yaw_speed(float speed) {
+    inline void BodyComponent::yaw_speed(float speed)
+    {
         yaw_speed_ = speed;
     }
     
-    inline float BodyComponent::pitch_speed() const {
+    inline float BodyComponent::pitch_speed() const
+    {
         return pitch_speed_;
     }
     
-    inline void BodyComponent::pitch_speed(float speed) {
+    inline void BodyComponent::pitch_speed(float speed)
+    {
         pitch_speed_ = speed;
     }
     
-    inline float BodyComponent::roll_speed() const {
+    inline float BodyComponent::roll_speed() const
+    {
         return roll_speed_;
     }
     
-    inline void BodyComponent::roll_speed(float speed) {
+    inline void BodyComponent::roll_speed(float speed)
+    {
         roll_speed_ = speed;
     }
     
-    inline glm::quat BodyComponent::orientation() {
+    inline glm::quat BodyComponent::orientation()
+    {
         return orientation_;
     }
     
-    inline void BodyComponent::orientation(const glm::quat& o) {
+    inline void BodyComponent::orientation(const glm::quat& o)
+    {
         orientation_ = o;
     }
     
@@ -139,25 +150,7 @@ namespace bounce {
     }
 
     typedef ObjectCache<BodyComponent> BodyComponentCache;
-//    typedef ObjectCacheHandle<BodyComponent> BodyComponentHandle;
-    
-//    class BodyComponentFactory {
-//    private:
-//        
-//    public:
-//        static BodyComponentFactory CreateFactory();
-//        
-//        BodyComponent Create();
-//    };
-//    
-//    inline BodyComponentFactory BodyComponentFactory::CreateFactory()
-//    {
-//        return BodyComponentFactory();
-//    }
-//    
-//    inline BodyComponent BodyComponentFactory::Create() {
-//        return BodyComponent();
-//    }
+
 
 }
 

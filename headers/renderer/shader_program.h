@@ -19,7 +19,6 @@ namespace bounce {
         
     protected:
         void CompileShader(const int& shader_id, const std::string& shader_code);
-        std::string LoadShaderCode(const std::string& shader_code_file_path);
         
         void LoadShader(const std::string& shader_code_file_path, GLuint shader_id);
         void LoadVertexShader(const std::string& shader_code_file_path);

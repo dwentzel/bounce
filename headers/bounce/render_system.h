@@ -7,19 +7,23 @@
 
 #include "renderer/opengl_renderer.h"
 
-#include "render_component.h"
-
 #include "game_system.h"
 #include "application_context.h"
-#include "world_manager.h"
+
+#include "render_component.h"
+#include "point_light_component.h"
 
 namespace bounce {
+    
+    typedef ObjectCache<RenderComponent> RenderComponentCache;
+    typedef ObjectCache<PointLightComponent> PointLightComponentCache;
     
     class RenderSystem : public GameSystem {
     private:
         const ApplicationContext& application_context_;
         
         const RenderComponentCache& render_component_cache_;
+        const PointLightComponentCache& point_light_component_cache_;
         
         OpenGLRenderer& renderer_;
         
@@ -30,12 +34,9 @@ namespace bounce {
 
     public:
         RenderSystem(const ApplicationContext& application_context,
-                     const ObjectCache<RenderComponent>& render_component_cache,
-                     OpenGLRenderer& renderer)
-        : application_context_(application_context), render_component_cache_(render_component_cache), renderer_(renderer)
-        {
-            
-        }
+                     const RenderComponentCache& render_component_cache,
+                     const PointLightComponentCache& point_light_component_cache,
+                     OpenGLRenderer& renderer);
         
         virtual void Startup();
         virtual void Shutdown();

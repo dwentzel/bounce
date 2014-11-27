@@ -7,15 +7,20 @@
 
 namespace bounce {
     
+    template <typename T>
+    class ObjectManagerHandle;
+    class GameEntity;
+    typedef ObjectManagerHandle<GameEntity> GameEntityHandle;
+    
     class GameComponent {
     private:
         GameComponentType component_type_;
-        GameEntity* owner_;
+        GameEntityHandle* owner_;
     
     protected:
         GameComponent(GameComponentType component_type);
         
-        GameEntity* owner();
+        GameEntityHandle& owner();
         
     public:
         virtual ~GameComponent() = 0;
@@ -30,13 +35,8 @@ namespace bounce {
         
         bool IsOfType(GameComponentType component_type);
         
-        void AttachToEntity(GameEntity* entity);
+        void AttachToEntity(GameEntityHandle* entity);
     };
-    
-//    inline GameComponent::GameComponent(GameComponent&& component)
-//    {
-//        
-//    }
     
     inline GameComponent::GameComponent(GameComponentType component_type) : component_type_(component_type), owner_(nullptr)
     {
@@ -44,8 +44,8 @@ namespace bounce {
     
     inline GameComponent::~GameComponent() {}
     
-    inline GameEntity* GameComponent::owner() {
-        return owner_;
+    inline GameEntityHandle& GameComponent::owner() {
+        return *owner_;
     }
     
     inline void GameComponent::HandleMessage(const Message& message) {}
@@ -54,7 +54,7 @@ namespace bounce {
         return component_type_ == component_type;
     }
     
-    inline void GameComponent::AttachToEntity(GameEntity* entity) {
+    inline void GameComponent::AttachToEntity(GameEntityHandle* entity) {
         owner_ = entity;
     }
 }

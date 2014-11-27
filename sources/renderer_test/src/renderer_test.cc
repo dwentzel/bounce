@@ -129,7 +129,7 @@ int main(int argc, char** argv)
     
     std::string root_path = "/Users/daniel/XCode/Bounce/build/Debug";
     
-    bounce::GeometryPassProgram geometry_program;
+//    bounce::GeometryPassProgram geometry_program;
     
     // Ensure we can capture the escape key being pressed below
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);

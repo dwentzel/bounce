@@ -17,7 +17,6 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/movement_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_component.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/position_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_system.h
 #    include/single_color_texture_generator.h
@@ -38,7 +37,6 @@ set(SOURCES
     src/movement_system.cc
     src/object_manager.cc
     src/point_light_component.cc
-    src/position_component.cc
     src/render_component.cc
     src/render_system.cc
 #    src/single_color_texture_generator.cc

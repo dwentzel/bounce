@@ -1,40 +1,21 @@
-/*
- * App.cpp
- *
- *  Created on: 12 maj 2013
- *      Author: daniel
- */
-
-#include <cstdlib>
-#include <ctime>
-
-#include <vector>
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
+#include "app.h"
 
 #include "logging/log.h"
 
-#include "app.h"
+#include "framework/object_cache.h"
 
 #include "importer/importer.h"
-#include "renderer/model.h"
 
 #include "bounce/game_entity.h"
 
+#include "bounce/body_component.h"
 #include "bounce/render_component.h"
-#include "bounce/control_component.h"
 #include "bounce/point_light_component.h"
+
+#include "bounce/control_component.h"
 #include "bounce/position_component.h"
 
-#include "framework/object_cache.h"
-#include "bounce/body_component.h"
-
 namespace bounce {
-    
-
     
     App::App(ApplicationContext& application_context) :
         running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
@@ -42,7 +23,7 @@ namespace bounce {
         texture_manager_(application_context_.root_path() + "/textures"),
         renderer_(resource_loader_, light_manager_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
         movement_system_(object_manager_.body_components()),
-        render_system_(application_context_, object_manager_.render_components(), renderer_)
+        render_system_(application_context_, object_manager_.render_components(), object_manager_.point_light_components(), renderer_)
     {
         
     }
@@ -64,57 +45,66 @@ namespace bounce {
         GameEntity& light0 = light0_handle.ResolveAs<GameEntity>();
         
         GameComponentHandle light0_point_light_component_handle = object_manager_.GeneratePointLightComponent();
-        PointLightComponent& point_light_component0 = (PointLightComponent&)light0_point_light_component_handle.Resolve();
-        point_light_component0.diffuse_intensity(4.0f);
-        point_light_component0.exp_attenuation(0.3f);
-        point_light_component0.color(glm::vec3(0.0f, 1.0f, 0.0f));
+        PointLightComponent& light0_point_light_component = light0_point_light_component_handle.ResolveAs<PointLightComponent>();
+        light0_point_light_component.diffuse_intensity(4.0f);
+        light0_point_light_component.exp_attenuation(0.3f);
+        light0_point_light_component.color(glm::vec3(0.0f, 1.0f, 0.0f));
         
-        light0.AttachComponent(point_light_component0);
-        point_light_component0.Startup();
+        light0.AttachComponent(light0_point_light_component_handle);
+        light0_point_light_component.Startup();
         
         GameComponentHandle light0_body_component_handle = object_manager_.GenerateBodyComponent();
         BodyComponent& light0_body_component = light0_body_component_handle.ResolveAs<BodyComponent>();
         light0_body_component.position(glm::vec3(0.0f, 0.5f, 0.5f));
-        light0.AttachComponent(light0_body_component);
+        light0.AttachComponent(light0_body_component_handle);
         light0_body_component.Startup();
-//
-//        PositionComponent* position_component0 = new PositionComponent(glm::vec3(0.0f, 0.5f, 0.5f));
-//        light0.AttachComponent(position_component0);
-//        position_component0->Startup();
-//        
-//        unsigned int light1_handle = object_manager_.GenerateGameEntity();
-//        GameEntity& light1 = object_manager_.GetGameEntity(light1_handle);
-//        
-//        PointLightComponent* light_component1 =
-//          new PointLightComponent(light_manager_, 0.0f, 5.0f, 0.0f, 0.0f, 0.3f, glm::vec3(1.0f, 0.0f, 0.0f));
-//
-//        light1.AttachComponent(light_component1);
-//        light_component1->Startup();
-//        
-//        PositionComponent* position_component1 = new PositionComponent(glm::vec3(0.0f, -0.5f, 0.5f));
-//        light1.AttachComponent(position_component1);
-//        position_component1->Startup();
-//        
-//        unsigned int light2_handle = object_manager_.GenerateGameEntity();
-//        GameEntity& light2 = object_manager_.GetGameEntity(light2_handle);
-//        
-//        PointLightComponent* light_component2 =
-//            new PointLightComponent(light_manager_, 0.0f, 0.7f, 0.0f, 0.0f, 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
-//
-//        light2.AttachComponent(light_component2);
-//        light_component2->Startup();
-//        
-//        PositionComponent* position_component2 = new PositionComponent(glm::vec3(0.5f, 0.0f, 0.5f));
-//        light2.AttachComponent(position_component2);
-//        position_component2->Startup();
+        
+        
+        GameEntityHandle light1_handle = object_manager_.GenerateGameEntity();
+        GameEntity& light1 = light1_handle.ResolveAs<GameEntity>();
+        
+        GameComponentHandle light1_point_light_component_handle = object_manager_.GeneratePointLightComponent();
+        PointLightComponent& light1_point_light_component = light1_point_light_component_handle.ResolveAs<PointLightComponent>();
+        light1_point_light_component.diffuse_intensity(4.0f);
+        light1_point_light_component.exp_attenuation(0.3f);
+        light1_point_light_component.color(glm::vec3(1.0f, 0.0f, 0.0f));
+        
+        light1.AttachComponent(light1_point_light_component_handle);
+        light1_point_light_component.Startup();
+        
+        GameComponentHandle light1_body_component_handle = object_manager_.GenerateBodyComponent();
+        BodyComponent& light1_body_component = light1_body_component_handle.ResolveAs<BodyComponent>();
+        light1_body_component.position(glm::vec3(0.0f, -0.5f, 0.5f));
+        light1.AttachComponent(light1_body_component_handle);
+        light1_body_component.Startup();
+        
+        
+        GameEntityHandle light2_handle = object_manager_.GenerateGameEntity();
+        GameEntity& light2 = light2_handle.ResolveAs<GameEntity>();
+        
+        GameComponentHandle light2_point_light_component_handle = object_manager_.GeneratePointLightComponent();
+        PointLightComponent& light2_point_light_component = light2_point_light_component_handle.ResolveAs<PointLightComponent>();
+        light2_point_light_component.diffuse_intensity(4.0f);
+        light2_point_light_component.exp_attenuation(0.3f);
+        light2_point_light_component.color(glm::vec3(0.0f, 0.0f, 1.0f));
+        
+        light2.AttachComponent(light2_point_light_component_handle);
+        light2_point_light_component.Startup();
+        
+        GameComponentHandle light2_body_component_handle = object_manager_.GenerateBodyComponent();
+        BodyComponent& light2_body_component = light2_body_component_handle.ResolveAs<BodyComponent>();
+        light2_body_component.position(glm::vec3(0.5f, 0.0f, 0.5f));
+        light2.AttachComponent(light2_body_component_handle);
+        light2_body_component.Startup();
+
         
         GameEntityHandle ship_handle = object_manager_.GenerateGameEntity();
-        GameEntity& ship = ship_handle.Resolve();
+        GameEntity& ship = ship_handle.ResolveAs<GameEntity>();
         
         GameComponentHandle render_component_handle = object_manager_.GenerateRenderComponent(model_handle);
         RenderComponent& render_component = render_component_handle.ResolveAs<RenderComponent>();
         
-        ship.AttachComponent(render_component);
+        ship.AttachComponent(render_component_handle);
         
         render_component.Startup();
         

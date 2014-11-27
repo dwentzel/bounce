@@ -5,8 +5,6 @@
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
 
 #include "framework/renderer.h"
 #include "bounce_gl.h"
@@ -50,11 +48,7 @@ namespace bounce
         const MaterialManager& material_manager_;
         const VertexBuffer& vertex_buffer_;
         
-        void BeginGeometryPass();
-        void EndGeometryPass();
-        void BeginLightPasses();
-        void RunDirectionalLightPass();
-        void RunPointLightsPass();
+        
         void RunLightPass();
         
         glm::mat4 wvp_matrix_;
@@ -81,8 +75,16 @@ namespace bounce
         virtual void ClearModels();
         virtual void AddModel(unsigned int model_handle);
         
-        void BeginFrame();
-        void EndFrame();
+        
+        void BeginGeometryPass();
+        void EndGeometryPass();
+        void BeginLightPasses();
+        void BeginPointLightsPass();
+        void EndPointLighsPass();
+
+        void RenderPointLight(const PointLight& point_light);
+        
+        void RunDirectionalLightPass();
         
         void RenderModel(unsigned int model_handle);
         

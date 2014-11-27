@@ -6,10 +6,11 @@ bounce::PointLightComponent bounce::PointLightComponent::Create()
 }
 
 bounce::PointLightComponent::PointLightComponent()
-: GameComponent(POINT_LIGHT_COMPONENT),
-  ambient_intensity_(0.0f), diffuse_intensity_(0.0f),
-  constant_attenuation_(0.0f), linear_attenuation_(0.0f), exp_attenuation_(0.0f),
-  color_(glm::vec3(0.0f, 0.0f, 0.0f))
+: GameComponent(POINT_LIGHT_COMPONENT), model_matrix_(glm::mat4(1.0f))
+//,
+//  ambient_intensity_(0.0f), diffuse_intensity_(0.0f),
+//  constant_attenuation_(0.0f), linear_attenuation_(0.0f), exp_attenuation_(0.0f),
+//  color_(glm::vec3(0.0f, 0.0f, 0.0f))
 {
     
 }

@@ -1,22 +1,15 @@
 #ifndef BOUNCE_BOUNCE_POINT_LIGHT_COMPONENT_
 #define BOUNCE_BOUNCE_POINT_LIGHT_COMPONENT_
 
-#include "framework/object_cache.h"
-#include "renderer/light_manager.h"
+#include "renderer/lights.h"
 #include "game_component.h"
 
 namespace bounce {
 
     class PointLightComponent : public GameComponent {
-    private:        
-        float ambient_intensity_;
-        float diffuse_intensity_;
-        
-        float constant_attenuation_;
-        float linear_attenuation_;
-        float exp_attenuation_;
-
-        glm::vec3 color_;
+    private:
+        PointLight light_;
+        glm::mat4 model_matrix_;
         
     public:
         static PointLightComponent Create();
@@ -47,71 +40,80 @@ namespace bounce {
         float exp_attenuation() const;
         void exp_attenuation(float exp_attenuation);
         
+        const PointLight& light() const;
+        
+        const glm::mat4& model_matrix() const;
     };
 
     inline const glm::vec3& PointLightComponent::color() const
     {
-        return color_;
+        return light_.color;
     }
     
     inline void PointLightComponent::color(const glm::vec3& color)
     {
-        color_ = color;
+        light_.color = color;
     }
     
     inline float PointLightComponent::ambient_intensity() const
     {
-        return ambient_intensity_;
+        return light_.ambient_intensity;
     }
     
     inline void PointLightComponent::ambient_intensity(float ambient_intensity)
     {
-        ambient_intensity_ = ambient_intensity;
+        light_.ambient_intensity = ambient_intensity;
     }
     
     inline float PointLightComponent::diffuse_intensity() const
     {
-        return diffuse_intensity_;
+        return light_.diffuse_intensity;
     }
     
     inline void PointLightComponent::diffuse_intensity(float diffuse_intensity)
     {
-        diffuse_intensity_ = diffuse_intensity;
+        light_.diffuse_intensity = diffuse_intensity;
     }
     
     inline float PointLightComponent::constant_attenuation() const
     {
-        return constant_attenuation_;
+        return light_.attenuation.constant;
     }
     
     inline void PointLightComponent::constant_attenuation(float constant_attenuation)
     {
-        constant_attenuation_ = constant_attenuation;
+        light_.attenuation.constant = constant_attenuation;
     }
     
     inline float PointLightComponent::linear_attenuation() const
     {
-        return linear_attenuation_;
+        return light_.attenuation.linear;
     }
     
     inline void PointLightComponent::linear_attenuation(float linear_attenuation)
     {
-        linear_attenuation_ = linear_attenuation;
+        light_.attenuation.linear = linear_attenuation;
     }
     
     inline float PointLightComponent::exp_attenuation() const
     {
-        return exp_attenuation_;
+        return light_.attenuation.exp;
     }
     
     inline void PointLightComponent::exp_attenuation(float exp_attenuation)
     {
-        exp_attenuation_ = exp_attenuation;
+        light_.attenuation.exp = exp_attenuation;
     }
     
-    typedef ObjectCache<PointLightComponent> PointLightComponentCache;
-//    typedef ObjectCacheHandle<PointLightComponent> PointLightComponentHandle;
+    inline const PointLight& PointLightComponent::light() const
+    {
+        return light_;
+    }
     
+    inline const glm::mat4& PointLightComponent::model_matrix() const
+    {
+        return model_matrix_;
+    }
 }
 
 #endif // BOUNCE_BOUNCE_POINT_LIGHT_COMPONENT_

@@ -9,9 +9,17 @@
 
 namespace bounce {
     
+    class ObjectManagerHandleException : public std::exception {
+        
+    };
+    
     template <typename T>
     class ObjectManagerHandle;
-
+    
+    typedef ObjectCache<BodyComponent> BodyComponentCache;
+    typedef ObjectCache<RenderComponent> RenderComponentCache;
+    typedef ObjectCache<PointLightComponent> PointLightComponentCache;
+    
     typedef ObjectManagerHandle<GameEntity> GameEntityHandle;
     typedef ObjectManagerHandle<GameComponent> GameComponentHandle;
     
@@ -23,6 +31,13 @@ namespace bounce {
         PointLightComponentCache point_light_components_;
         
     public:
+        
+        enum ObjectType {
+            GAME_ENTITY_TYPE,
+            BODY_COMPONENT_TYPE,
+            RENDER_COMPONENT_TYPE,
+            POINT_LIGHT_COMPONENT_TYPE
+        };
 
         const ObjectCache<GameEntity>& game_entities() const;
 
@@ -55,13 +70,13 @@ namespace bounce {
     class ObjectManagerHandle {
     private:
         unsigned int index_;
-        unsigned int type_;
+        ObjectManager::ObjectType type_;
         
         ObjectManager& object_manager_;
-    public:
         
-        ObjectManagerHandle(ObjectManager& object_manager, unsigned int type, unsigned int index)
-        : object_manager_(object_manager), type_(type), index_(index)
+    public:
+        ObjectManagerHandle(ObjectManager& object_manager, ObjectManager::ObjectType type, unsigned int index)
+        :  index_(index), type_(type), object_manager_(object_manager)
         {
             
         }
@@ -71,185 +86,71 @@ namespace bounce {
             return index_;
         }
         
-        unsigned int type() const
+        ObjectManager::ObjectType type() const
         {
             return type_;
         }
         
         T& Resolve()
         {
-            T& result = object_manager_.ResolveHandle<T>(*this);
-            return result;
+            return object_manager_.ResolveHandle<T>(*this);
         }
         
         template <typename S>
         S& ResolveAs()
         {
-            S& result = object_manager_.ResolveHandleAs<S, T>(*this);
-            return result;
+            return object_manager_.ResolveHandleAs<S, T>(*this);
         }
     };
     
-    template <typename T>
-    T& ObjectManager::ResolveHandle(ObjectManagerHandle<T>& handle)
+    template <>
+    inline GameEntity& ObjectManager::ResolveHandle<GameEntity>(ObjectManagerHandle<GameEntity>& handle)
     {
-        unsigned int type = handle.type();
-        unsigned int index = handle.index();
-        
-        if (type == 0) {
-            // throw error
-        }
-        if (type == 1) {
-            return body_components_.GetObject(index);
-        }
-        if (type == 2) {
-            return render_components_.GetObject(index);
-        }
-        if (type == 3) {
-            return point_light_components_.GetObject(index);
+        if (handle.type() == ObjectManager::GAME_ENTITY_TYPE) {
+            return game_entities_.GetObject(handle.index());
         }
         
-        // throw error
+        throw ObjectManagerHandleException();
     }
     
     template <>
-    GameEntity& ObjectManager::ResolveHandle<GameEntity>(ObjectManagerHandle<GameEntity>& handle)
+    inline GameEntity& ObjectManager::ResolveHandleAs<GameEntity>(ObjectManagerHandle<GameEntity>& handle)
     {
-        unsigned int type = handle.type();
-        unsigned int index = handle.index();
-        
-        if (type == 0) {
-            return game_entities_.GetObject(index);
+        if (handle.type() == ObjectManager::GAME_ENTITY_TYPE) {
+            return game_entities_.GetObject(handle.index());
         }
-    }
-    
-    template <typename T, typename Handle>
-    T& ObjectManager::ResolveHandleAs(ObjectManagerHandle<Handle>& handle)
-    {
-        //1 = 0;
-        // throw error
+        
+        throw ObjectManagerHandleException();
     }
     
     template <>
-    GameEntity& ObjectManager::ResolveHandleAs<GameEntity>(ObjectManagerHandle<GameEntity>& handle)
+    inline BodyComponent& ObjectManager::ResolveHandleAs<BodyComponent>(ObjectManagerHandle<GameComponent>& handle)
     {
-        unsigned int type = handle.type();
-        unsigned int index = handle.index();
-        
-        if (type == 0) {
-            return game_entities_.GetObject(index);
+        if (handle.type() == ObjectManager::BODY_COMPONENT_TYPE) {
+            return body_components_.GetObject(handle.index());
         }
         
-        // throw error
+        throw ObjectManagerHandleException();
     }
     
     template <>
-    BodyComponent& ObjectManager::ResolveHandleAs<BodyComponent>(ObjectManagerHandle<GameComponent>& handle)
+    inline RenderComponent& ObjectManager::ResolveHandleAs<RenderComponent>(ObjectManagerHandle<GameComponent>& handle)
     {
-        unsigned int type = handle.type();
-        unsigned int index = handle.index();
-
-        if (type == 1) {
-            return body_components_.GetObject(index);
+        if (handle.type() == ObjectManager::RENDER_COMPONENT_TYPE) {
+            return render_components_.GetObject(handle.index());
         }
         
-        // throw error
+        throw ObjectManagerHandleException();
     }
     
     template <>
-    RenderComponent& ObjectManager::ResolveHandleAs<RenderComponent>(ObjectManagerHandle<GameComponent>& handle)
+    inline PointLightComponent& ObjectManager::ResolveHandleAs<PointLightComponent>(ObjectManagerHandle<GameComponent>& handle)
     {
-        unsigned int type = handle.type();
-        unsigned int index = handle.index();
-        
-        if (type == 2) {
-            return render_components_.GetObject(index);
+        if (handle.type() == ObjectManager::POINT_LIGHT_COMPONENT_TYPE) {
+            return point_light_components_.GetObject(handle.index());
         }
         
-        // throw error
-    }
-    
-    template <>
-    PointLightComponent& ObjectManager::ResolveHandleAs<PointLightComponent>(ObjectManagerHandle<GameComponent>& handle)
-    {
-        unsigned int type = handle.type();
-        unsigned int index = handle.index();
-        
-        if (type == 3) {
-            return point_light_components_.GetObject(index);
-        }
-        
-        // throw error
-    }
-
-    inline const ObjectCache<GameEntity>& ObjectManager::game_entities() const
-    {
-        return game_entities_;
-    }
-
-    inline BodyComponentCache& ObjectManager::body_components()
-    {
-        return body_components_;
-    }
-    
-    inline const BodyComponentCache& ObjectManager::body_components() const
-    {
-        return body_components_;
-    }
-    
-    inline const RenderComponentCache& ObjectManager::render_components() const
-    {
-        return render_components_;
-    }
-
-    inline const PointLightComponentCache& ObjectManager::point_light_components() const
-    {
-        return point_light_components_;
-    }
-
-
-    inline GameEntityHandle ObjectManager::GenerateGameEntity()
-    {
-        unsigned int index = game_entities_.GenerateObject();
-        return GameEntityHandle(*this, 0, index);
-    }
-    
-    inline GameComponentHandle ObjectManager::GenerateBodyComponent()
-    {
-        unsigned int index = body_components_.GenerateObject();
-        return GameComponentHandle(*this, 1, index);
-    }
-    
-    inline GameComponentHandle ObjectManager::GenerateRenderComponent(unsigned int model_handle)
-    {
-        unsigned int index = render_components_.GenerateObject(model_handle);
-        return GameComponentHandle(*this, 2, index);
-    }
-    
-    inline GameComponentHandle ObjectManager::GeneratePointLightComponent()
-    {
-        unsigned int index = point_light_components_.GenerateObject();
-        return GameComponentHandle(*this, 3, index);
-    }
-    
-    inline GameEntity& ObjectManager::GetGameEntity(unsigned int handle)
-    {
-        return game_entities_.GetObject(handle);
-    }
-
-    inline BodyComponent& ObjectManager::GetBodyComponent(unsigned int handle)
-    {
-        return body_components_.GetObject(handle);
-    }
-    
-    inline RenderComponent& ObjectManager::GetRenderComponent(unsigned int handle)
-    {
-        return render_components_.GetObject(handle);
-    }
-    
-    inline PointLightComponent& ObjectManager::GetPointLightComponent(unsigned int handle)
-    {
-        return point_light_components_.GetObject(handle);
+        throw ObjectManagerHandleException();
     }
 }
 

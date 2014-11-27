@@ -1,4 +1,5 @@
 #include "control_component.h"
+#include "object_manager.h"
 
 void bounce::ControlComponent::Startup() {
     
@@ -38,10 +39,10 @@ void bounce::ControlComponent::Update() {
     }
     
     
-    GameEntity* owner = this->owner();
+    GameEntity& owner = this->owner().Resolve();
     AccelerationChangedMessage message(yaw_acceleration, pitch_acceleration, roll_acceleration);
     
-    owner->HandleMessage(message);
+    owner.HandleMessage(message);
     
 //    owner->yaw_acceleration_direction(yaw_acceleration);
 //    owner->pitch_acceleration_direction(pitch_acceleration);

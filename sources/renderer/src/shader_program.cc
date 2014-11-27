@@ -1,7 +1,5 @@
 #include "shader_program.h"
 
-#include <fstream>
-
 namespace {
     
     void LogShaderInfoLog(bounce::LogLevel log_level, GLuint shader_id)
@@ -84,24 +82,24 @@ void bounce::ShaderProgram::CompileShader(const int& shader_id, const std::strin
     CHECK_GL_ERROR();
 }
 
-std::string bounce::ShaderProgram::LoadShaderCode(const std::string& shaderFilePath)
-{
-    std::string shaderCode;
-    std::ifstream shaderStream(shaderFilePath, std::ios::in);
-    
-    if (shaderStream.is_open()) {
-        std::string line = "";
-        while (getline(shaderStream, line)) {
-            shaderCode += line + "\n";
-        }
-        shaderStream.close();
-    }
-    else {
-        LOG_ERROR << "Could not find file " << shaderFilePath << std::endl;
-    }
-    
-    return shaderCode;
-}
+//std::string bounce::ShaderProgram::LoadShaderCode(const std::string& shaderFilePath)
+//{
+//    std::string shaderCode;
+//    std::ifstream shaderStream(shaderFilePath, std::ios::in);
+//    
+//    if (shaderStream.is_open()) {
+//        std::string line = "";
+//        while (getline(shaderStream, line)) {
+//            shaderCode += line + "\n";
+//        }
+//        shaderStream.close();
+//    }
+//    else {
+//        LOG_ERROR << "Could not find file " << shaderFilePath << std::endl;
+//    }
+//    
+//    return shaderCode;
+//}
 
 void bounce::ShaderProgram::LoadVertexShader(const std::string& shader_code_file_path)
 {

@@ -135,20 +135,20 @@ void bounce::OpenGLRenderer::AddModel(unsigned int model_handle)
 }
 
 
-void bounce::OpenGLRenderer::BeginFrame()
-{
-    BeginGeometryPass();
-}
-
-void bounce::OpenGLRenderer::EndFrame()
-{
-    EndGeometryPass();
-    BeginLightPasses();
-    RunPointLightsPass();
-    RunDirectionalLightPass();
-
-    //RunLightPass();
-}
+//void bounce::OpenGLRenderer::BeginFrame()
+//{
+//    BeginGeometryPass();
+//}
+//
+//void bounce::OpenGLRenderer::EndFrame()
+//{
+//    EndGeometryPass();
+//    BeginLightPasses();
+//    RunPointLightsPass();
+//    RunDirectionalLightPass();
+//
+//    //RunLightPass();
+//}
 
 void bounce::OpenGLRenderer::BeginGeometryPass()
 {
@@ -188,6 +188,19 @@ void bounce::OpenGLRenderer::BeginLightPasses()
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void bounce::OpenGLRenderer::BeginPointLightsPass()
+{
+    point_light_pass_program_.UseProgram();
+    point_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
+    
+    point_light_pass_program_.SetWVP(wvp_matrix_);
+}
+
+void bounce::OpenGLRenderer::EndPointLighsPass()
+{
+    
+}
+
 void bounce::OpenGLRenderer::RunDirectionalLightPass()
 {
     directional_light_pass_program_.UseProgram();
@@ -199,40 +212,47 @@ void bounce::OpenGLRenderer::RunDirectionalLightPass()
     quad_->Render();
 }
 
-void bounce::OpenGLRenderer::RunPointLightsPass()
+void bounce::OpenGLRenderer::RenderPointLight(const PointLight& point_light)
 {
-    point_light_pass_program_.UseProgram();
-    point_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
-    
-//    Pipeline p;
-//    p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
-//    p.SetPerspectiveProj(m_persProjInfo);
-
-    point_light_pass_program_.SetWVP(wvp_matrix_);
-    
-//    for (const PointLight light : light_manager_.point_lights())
-    
-    std::vector<PointLight> lights = light_manager_.point_lights();
-    
-    for (std::vector<PointLight>::const_iterator light = lights.begin();
-         light != lights.end();
-         ++light)
-    {
-        point_light_pass_program_.SetPointLight((*light));
-        sphere_->Render();
-    }
-    
-//   	for (unsigned int i = 1 ; i < 3; i++) {
-//        point_light_pass_program_.SetPointLight(point_lights_[i]);
-//        
-////        point_light_pass_program_.SetWVP(glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f)));
-////   	    p.WorldPos(m_pointLight[i].Position);
-////   	    float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
-////   	    p.Scale(BSphereScale, BSphereScale, BSphereScale);
-////   	    m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
-//   	    sphere_->Render();
-//   	} 
+    point_light_pass_program_.SetPointLight(point_light);
+    sphere_->Render();
+    CHECK_GL_ERROR();
 }
+
+//void bounce::OpenGLRenderer::RunPointLightsPass()
+//{
+//    point_light_pass_program_.UseProgram();
+//    point_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
+//    
+//    //    Pipeline p;
+//    //    p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
+//    //    p.SetPerspectiveProj(m_persProjInfo);
+//    
+//    point_light_pass_program_.SetWVP(wvp_matrix_);
+//    
+//    //    for (const PointLight light : light_manager_.point_lights())
+//    
+//    //    std::vector<PointLight> lights = light_manager_.point_lights();
+//    
+//    for (std::vector<PointLight>::const_iterator light = lights.begin();
+//         light != lights.end();
+//         ++light)
+//    {
+//        point_light_pass_program_.SetPointLight((*light));
+//        sphere_->Render();
+//    }
+//    
+//    //   	for (unsigned int i = 1 ; i < 3; i++) {
+//    //        point_light_pass_program_.SetPointLight(point_lights_[i]);
+//    //
+//    ////        point_light_pass_program_.SetWVP(glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f)));
+//    ////   	    p.WorldPos(m_pointLight[i].Position);
+//    ////   	    float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
+//    ////   	    p.Scale(BSphereScale, BSphereScale, BSphereScale);
+//    ////   	    m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
+//    //   	    sphere_->Render();
+//    //   	} 
+//}
 
 void bounce::OpenGLRenderer::RunLightPass()
 {

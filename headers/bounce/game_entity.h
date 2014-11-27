@@ -3,32 +3,29 @@
 
 #include <vector>
 
-#include "framework/object_cache.h"
 #include "game_component_type.h"
 #include "message.h"
 
-
 namespace bounce {
     
+    template <typename T>
+    class ObjectManagerHandle;
     class GameComponent;
+    typedef ObjectManagerHandle<GameComponent> GameComponentHandle;
     
     class GameEntity {
     private:
+        std::vector<GameComponentHandle> game_components_;
         
     public:
         static GameEntity Create();
         
         GameEntity();
         
-        void AttachComponent(GameComponent& component);
-        void DetachComponent(GameComponent& component);
-        void UpdateComponent();
-        void UpdateComponentOfType(GameComponentType component_type);
+        void AttachComponent(GameComponentHandle component);
+        void DetachComponent(GameComponentHandle component);
         void HandleMessage(const Message& message);
     };
-    
-    typedef ObjectCache<GameEntity> GameEntityCache;
-//    typedef ObjectCacheHandle<GameEntity> GameEntityHandle;
     
 }
 

@@ -1,5 +1,7 @@
 #include <algorithm>
 #include "game_entity.h"
+
+#include "object_manager.h"
 #include "game_component.h"
 
 bounce::GameEntity bounce::GameEntity::Create()
@@ -12,15 +14,14 @@ bounce::GameEntity::GameEntity()
 
 }
 
-void bounce::GameEntity::AttachComponent(bounce::GameComponent& component)
+void bounce::GameEntity::AttachComponent(bounce::GameComponentHandle handle)
 {
-//    components_.push_back(component);
-//    component.AttachToEntity(this);
+//    game_components_.push_back(handle);
 }
 
-void bounce::GameEntity::DetachComponent(bounce::GameComponent& component)
+void bounce::GameEntity::DetachComponent(bounce::GameComponentHandle handle)
 {
-//    components_.erase(std::remove(components_.begin(), components_.end(), component), components_.end());
+//    game_components_.erase(std::remove(game_components_.begin(), game_components_.end(), handle), game_components_.end());
 }
 
 void bounce::GameEntity::HandleMessage(const bounce::Message &message)
@@ -45,13 +46,13 @@ namespace {
     };
 }
 
-void bounce::GameEntity::UpdateComponentOfType(bounce::GameComponentType component_type) {
-    GameComponentTypePredicate predicate(component_type);
-    
-//    GameComponentList::iterator result =
-//    //std::find_if(components_.begin(), components_.end(), std::bind(gameComponentTypesAreEqual, component_type, std::placeholders::_1));
-//    std::find_if(components_.begin(), components_.end(), predicate);
-//    if (result != components_.end()) {
-//        (*result)->Update();
-//    }
-}
+//void bounce::GameEntity::UpdateComponentOfType(bounce::GameComponentType component_type) {
+//    GameComponentTypePredicate predicate(component_type);
+//    
+////    GameComponentList::iterator result =
+////    //std::find_if(components_.begin(), components_.end(), std::bind(gameComponentTypesAreEqual, component_type, std::placeholders::_1));
+////    std::find_if(components_.begin(), components_.end(), predicate);
+////    if (result != components_.end()) {
+////        (*result)->Update();
+////    }
+//}

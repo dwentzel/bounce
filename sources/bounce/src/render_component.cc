@@ -7,7 +7,7 @@ bounce::RenderComponent bounce::RenderComponent::Create(unsigned int model_handl
 }
 
 bounce::RenderComponent::RenderComponent(unsigned int model_handle)
-: GameComponent(RENDER_COMPONENT), model_handle_(model_handle)
+: GameComponent(RENDER_COMPONENT), model_handle_(model_handle), model_matrix_(glm::mat4(1.f))
 {
 }
 

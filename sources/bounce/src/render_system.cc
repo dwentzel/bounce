@@ -10,6 +10,17 @@
 #include "render_system.h"
 #include "game_entity.h"
 
+bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context,
+             const RenderComponentCache& render_component_cache,
+             const PointLightComponentCache& point_light_component_cache,
+             OpenGLRenderer& renderer)
+: application_context_(application_context),
+  render_component_cache_(render_component_cache), point_light_component_cache_(point_light_component_cache),
+  renderer_(renderer)
+{
+    
+}
+
 void bounce::RenderSystem::Startup()
 {
     renderer_.Startup();
@@ -45,15 +56,15 @@ void bounce::RenderSystem::Update(float delta_time) {
     glm::mat4 wvp_matrix = projection_matrix * view_matrix * world_matrix;
 
 
-    renderer_.BeginFrame();
+    renderer_.BeginGeometryPass();
     
     renderer_.SetViewMatrix(view_matrix);
     renderer_.SetWorldMatrix(world_matrix);
     renderer_.SetWVPMatrix(wvp_matrix);
     
     
-    for (ObjectCache<RenderComponent>::const_iterator i = render_component_cache_.begin(); i != render_component_cache_.end(); ++i) {
-        RenderComponent render_component = *i;
+    for (RenderComponentCache::const_iterator i = render_component_cache_.begin(); i != render_component_cache_.end(); ++i) {
+        const RenderComponent& render_component = *i;
         
         glm::mat4 model_matrix = render_component.model_matrix();
         glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
@@ -63,11 +74,32 @@ void bounce::RenderSystem::Update(float delta_time) {
         renderer_.SetModelMatrix(model_matrix);
         
         renderer_.RenderModel(render_component.model_handle());
-//        renderer_.RenderModel(entity->model_handle)
-//        entity->UpdateComponentOfType(RENDER_COMPONENT);
     }
     
-    renderer_.EndFrame();
+    renderer_.EndGeometryPass();
+    
+    renderer_.BeginLightPasses();
+    
+    renderer_.BeginPointLightsPass();
+    
+    for (PointLightComponentCache::const_iterator i = point_light_component_cache_.begin(); i != point_light_component_cache_.end(); ++i) {
+        const PointLightComponent& point_light_component_ = *i;
+        
+//        glm::mat4 model_matrix = point_light_component_.model_matrix();
+//        glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
+        
+        
+//        renderer_.SetMWVPMatrix(mwvp_matrix);
+//        renderer_.SetModelMatrix(model_matrix);
+        
+        renderer_.RenderPointLight(point_light_component_.light());
+    }
+    
+    
+    renderer_.EndPointLighsPass();
+    
+    renderer_.RunDirectionalLightPass();
+    
     
     application_context_.Flush();
 }

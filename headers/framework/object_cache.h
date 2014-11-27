@@ -30,33 +30,6 @@ namespace bounce {
     };
 
     
-    
-//    template<typename T, typename Cache>
-//    class ObjectCacheHandle {
-//    private:
-//        unsigned int index_;
-//        ObjectCache<Cache, T>& object_cache_;
-//        
-//    public:
-//        ObjectCacheHandle(ObjectCache<Cache, T>& object_cache, unsigned int index);
-//        
-//        T& Resolve();
-//    };
-//    
-//    template<typename T, typename Cache>
-//    ObjectCacheHandle<T, Cache>::ObjectCacheHandle(ObjectCache<Cache, T>& object_cache, unsigned int index)
-//    : index_(index), object_cache_(object_cache)
-//    {
-//        
-//    }
-//    
-//    template<typename T, typename Cache>
-//    T& ObjectCacheHandle<T, Cache>::Resolve()
-//    {
-//        return object_cache_.GetObject(index_);
-//    }
-    
-    
     template<typename T>
     ObjectCache<T>::ObjectCache()
     {
