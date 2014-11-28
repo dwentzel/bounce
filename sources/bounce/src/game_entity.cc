@@ -16,7 +16,7 @@ bounce::GameEntity::GameEntity()
 
 void bounce::GameEntity::AttachComponent(bounce::GameComponentHandle handle)
 {
-//    game_components_.push_back(handle);
+    game_components_.push_back(handle);
 }
 
 void bounce::GameEntity::DetachComponent(bounce::GameComponentHandle handle)
@@ -26,9 +26,9 @@ void bounce::GameEntity::DetachComponent(bounce::GameComponentHandle handle)
 
 void bounce::GameEntity::HandleMessage(const bounce::Message &message)
 {
-//    for (GameComponentList::iterator i = components_.begin(); i != components_.end(); ++i) {
-//        (*i)->HandleMessage(message);
-//    }
+    for (std::vector<GameComponentHandle>::iterator i = game_components_.begin(); i != game_components_.end(); ++i) {
+        ResolveHandle(*i).HandleMessage(message);
+    }
 }
 
 namespace {

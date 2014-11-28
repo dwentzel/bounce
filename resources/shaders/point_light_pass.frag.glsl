@@ -37,6 +37,7 @@ struct SpotLight
 uniform sampler2D gPositionMap;
 uniform sampler2D gColorMap;
 uniform sampler2D gNormalMap;
+
 uniform DirectionalLight gDirectionalLight;
 uniform PointLight gPointLight;
 uniform SpotLight gSpotLight;

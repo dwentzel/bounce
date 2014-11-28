@@ -11,15 +11,16 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_type.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_system.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/input_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/movement_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/object_manager_handle.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_system.h
-#    include/single_color_texture_generator.h
     include/transform_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/world_manager.h)
 
@@ -32,14 +33,15 @@ set(SOURCES
     src/game_component.cc
     src/game_entity.cc
     src/game_system.cc
+    src/input_system.cc
     src/keyboard_state.cc
     src/message.cc
     src/movement_system.cc
     src/object_manager.cc
+    src/object_manager_handle.cc
     src/point_light_component.cc
     src/render_component.cc
     src/render_system.cc
-#    src/single_color_texture_generator.cc
     src/transform_component.cc
     src/world_manager.cc)
 

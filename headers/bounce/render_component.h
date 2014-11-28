@@ -10,13 +10,12 @@ namespace bounce {
     {
     private:
         const unsigned int model_handle_;
-        
         glm::mat4 model_matrix_;
+
+        RenderComponent(GameEntityHandle owner, unsigned int model_handle);
         
     public:
-        static RenderComponent Create(unsigned int model_handle);
-        
-        RenderComponent(unsigned int model_handle);
+        static RenderComponent Create(GameEntityHandle owner, unsigned int model_handle);
 
         unsigned int model_handle() const;
         

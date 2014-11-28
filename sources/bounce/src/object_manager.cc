@@ -1,5 +1,7 @@
 #include "object_manager.h"
 
+bounce::ObjectManager bounce::ObjectManager::instance_;
+
 const bounce::ObjectCache<bounce::GameEntity>& bounce::ObjectManager::game_entities() const
 {
     return game_entities_;
@@ -13,6 +15,16 @@ bounce::BodyComponentCache& bounce::ObjectManager::body_components()
 const bounce::BodyComponentCache& bounce::ObjectManager::body_components() const
 {
     return body_components_;
+}
+
+bounce::ControlComponentCache& bounce::ObjectManager::control_components()
+{
+    return control_components_;
+}
+
+const bounce::ControlComponentCache& bounce::ObjectManager::control_components() const
+{
+    return control_components_;
 }
 
 const bounce::RenderComponentCache& bounce::ObjectManager::render_components() const
@@ -29,43 +41,49 @@ const bounce::PointLightComponentCache& bounce::ObjectManager::point_light_compo
 bounce::GameEntityHandle bounce::ObjectManager::GenerateGameEntity()
 {
     unsigned int index = game_entities_.GenerateObject();
-    return GameEntityHandle(*this, GAME_ENTITY_TYPE, index);
+    return GameEntityHandle(GAME_ENTITY_TYPE, index);
 }
 
-bounce::GameComponentHandle bounce::ObjectManager::GenerateBodyComponent()
+bounce::GameComponentHandle bounce::ObjectManager::GenerateBodyComponent(GameEntityHandle owner)
 {
-    unsigned int index = body_components_.GenerateObject();
-    return GameComponentHandle(*this, BODY_COMPONENT_TYPE, index);
+    unsigned int index = body_components_.GenerateObject(owner);
+    return GameComponentHandle(BODY_COMPONENT_TYPE, index);
 }
 
-bounce::GameComponentHandle bounce::ObjectManager::GenerateRenderComponent(unsigned int model_handle)
+bounce::GameComponentHandle bounce::ObjectManager::GenerateControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state)
 {
-    unsigned int index = render_components_.GenerateObject(model_handle);
-    return GameComponentHandle(*this, RENDER_COMPONENT_TYPE, index);
+    unsigned int index = control_components_.GenerateObject(owner, keyboard_state);
+    return GameComponentHandle(CONTROL_COMPONENT_TYPE, index);
 }
 
-bounce::GameComponentHandle bounce::ObjectManager::GeneratePointLightComponent()
+bounce::GameComponentHandle bounce::ObjectManager::GenerateRenderComponent(GameEntityHandle owner, unsigned int model_handle)
 {
-    unsigned int index = point_light_components_.GenerateObject();
-    return GameComponentHandle(*this, POINT_LIGHT_COMPONENT_TYPE, index);
+    unsigned int index = render_components_.GenerateObject(owner, model_handle);
+    return GameComponentHandle(RENDER_COMPONENT_TYPE, index);
 }
 
-bounce::GameEntity& bounce::ObjectManager::GetGameEntity(unsigned int handle)
+bounce::GameComponentHandle bounce::ObjectManager::GeneratePointLightComponent(GameEntityHandle owner)
 {
-    return game_entities_.GetObject(handle);
+    unsigned int index = point_light_components_.GenerateObject(owner);
+    return GameComponentHandle(POINT_LIGHT_COMPONENT_TYPE, index);
 }
 
-bounce::BodyComponent& bounce::ObjectManager::GetBodyComponent(unsigned int handle)
-{
-    return body_components_.GetObject(handle);
-}
-
-bounce::RenderComponent& bounce::ObjectManager::GetRenderComponent(unsigned int handle)
-{
-    return render_components_.GetObject(handle);
-}
-
-bounce::PointLightComponent& bounce::ObjectManager::GetPointLightComponent(unsigned int handle)
-{
-    return point_light_components_.GetObject(handle);
-}
+//bounce::GameEntity& bounce::ObjectManager::GetGameEntity(unsigned int handle)
+//{
+//    return game_entities_.GetObject(handle);
+//}
+//
+//bounce::BodyComponent& bounce::ObjectManager::GetBodyComponent(unsigned int handle)
+//{
+//    return body_components_.GetObject(handle);
+//}
+//
+//bounce::RenderComponent& bounce::ObjectManager::GetRenderComponent(unsigned int handle)
+//{
+//    return render_components_.GetObject(handle);
+//}
+//
+//bounce::PointLightComponent& bounce::ObjectManager::GetPointLightComponent(unsigned int handle)
+//{
+//    return point_light_components_.GetObject(handle);
+//}

@@ -10,15 +10,13 @@ namespace bounce {
     private:
         const KeyboardState& keyboard_state_;
         
-//        const Timer& timer_;
-        
-        ControlComponent(const ControlComponent&) = delete;
-        ControlComponent& operator=(const ControlComponent&) = delete;
+//        ControlComponent(const ControlComponent&) = delete;
+//        ControlComponent& operator=(const ControlComponent&) = delete;
 
+        ControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
+        
     public:
-//        ControlComponent(const KeyboardState& keyboard_state, const Timer& timer);
-  
-        ControlComponent(const KeyboardState& keyboard_state);
+        static ControlComponent Create(GameEntityHandle owner, const KeyboardState& keyboard_state);
         
         virtual void Startup();
         
@@ -27,17 +25,7 @@ namespace bounce {
         virtual void Update();
     };
 
-//    inline ControlComponent::ControlComponent(const KeyboardState& keyboard_state, const Timer& timer) : GameComponent(CONTROL_COMPONENT),
-//    keyboard_state_(keyboard_state), timer_(timer) {
-//        
-//    }
-
     
-    inline ControlComponent::ControlComponent(const KeyboardState& keyboard_state) : GameComponent(CONTROL_COMPONENT),
-        keyboard_state_(keyboard_state) {
-        
     }
-    
-}
 
 #endif // BOUNCE_CONTROL_COMPONENT_H_

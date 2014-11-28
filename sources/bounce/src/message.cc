@@ -6,7 +6,7 @@ bounce::Message::Message(MessageType message_type)
     
 }
 
-bounce::AccelerationChangedMessage::AccelerationChangedMessage(float yaw, float pitch, float roll)
+bounce::AccelerationChangedMessage::AccelerationChangedMessage(int yaw, int pitch, int roll)
 : Message(ACCELERATION_CHANGED_MESSAGE), yaw_(yaw), pitch_(pitch), roll_(roll)
 {
     

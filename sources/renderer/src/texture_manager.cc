@@ -20,6 +20,11 @@ const bounce::Texture& bounce::TextureManager::GetTexture(unsigned int texture_h
     return textures_[texture_handle];
 }
 
+void bounce::TextureManager::UseTexture(unsigned int texture_handle)
+{
+    textures_[texture_handle].UseTexture();
+}
+
 int bounce::TextureManager::IndexOf(const std::string& texture) const
 {
     

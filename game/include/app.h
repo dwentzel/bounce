@@ -17,6 +17,7 @@
 #include "bounce/application_context.h"
 #include "bounce/event.h"
 #include "bounce/keyboard_state.h"
+#include "bounce/input_system.h"
 #include "bounce/movement_system.h"
 #include "bounce/render_system.h"
 
@@ -48,9 +49,9 @@ namespace bounce {
         
         Timer timer_;
         
-        ObjectManager object_manager_;
+        ObjectManager& object_manager_;
         
-        //WorldManager world_manager_;
+        InputSystem input_system_;
         MovementSystem movement_system_;
         RenderSystem render_system_;
         

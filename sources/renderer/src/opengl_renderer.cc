@@ -10,7 +10,7 @@
 bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
                                        const LightManager& light_manager,
                                        const ModelManager& model_manager,
-                                       const TextureManager& texture_manager,
+                                       TextureManager& texture_manager,
                                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
 : geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
   mesh_loader_(resource_loader), light_manager_(light_manager),
@@ -304,28 +304,29 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         
         int texture_handle = material.texture_handle();
         
-        GLuint texture_id;
-        glGenTextures(1, &texture_id);
+//        GLuint texture_id;
+//        glGenTextures(1, &texture_id);
         
         if (texture_handle > -1) {
-            const Texture& texture = texture_manager_.GetTexture(texture_handle);
-            
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture_id);
-            
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height(),
-                         0, GL_BGR, GL_UNSIGNED_BYTE, texture.data());
-            
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//            const Texture& texture = texture_manager_.GetTexture(texture_handle);
+
+            texture_manager_.UseTexture(texture_handle);
+//            glActiveTexture(GL_TEXTURE0);
+//            glBindTexture(GL_TEXTURE_2D, texture_id);
+//            
+//            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height(),
+//                         0, GL_BGR, GL_UNSIGNED_BYTE, texture.data());
+//            
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         }
         
 //        current_program_->SetMaterial(material);
         
         glDrawArrays(GL_TRIANGLES, start_index, size);
         
-        glDeleteTextures(1, &texture_id);
-        CHECK_GL_ERROR();
+//        glDeleteTextures(1, &texture_id);
+//        CHECK_GL_ERROR();
     }
     
 }

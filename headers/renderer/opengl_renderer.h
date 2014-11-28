@@ -44,7 +44,7 @@ namespace bounce
         
         const LightManager& light_manager_;
         const ModelManager& model_manager_;
-        const TextureManager& texture_manager_;
+        TextureManager& texture_manager_;
         const MaterialManager& material_manager_;
         const VertexBuffer& vertex_buffer_;
         
@@ -57,7 +57,7 @@ namespace bounce
         OpenGLRenderer(const ResourceLoader& resource_loader,
                        const LightManager& light_manager,
                        const ModelManager& model_manager,
-                       const TextureManager& texture_manager,
+                       TextureManager& texture_manager,
                        const MaterialManager& material_manager,
                        const VertexBuffer& vertex_buffer);
 

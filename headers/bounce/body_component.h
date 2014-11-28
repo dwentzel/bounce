@@ -26,17 +26,22 @@ namespace bounce {
         glm::quat orientation_;
         glm::vec3 position_;
 
-        BodyComponent();
+        BodyComponent(GameEntityHandle owner);
         
     public:
-        static BodyComponent Create();
+        static BodyComponent Create(GameEntityHandle owner);
     
         void Startup();
         void Shutdown();
         void Update();
         
+        virtual void HandleMessage(const Message& message);
+        
         float rotation_acceleration() const;
+        void rotation_acceleration(float rotation_acceleration);
+        
         float max_speed() const;
+        void max_speed(float max_speed);
         
         int yaw_acceleration_direction() const;
         void yaw_acceleration_direction(int acceleration_direction);
@@ -64,9 +69,19 @@ namespace bounce {
         return rotation_acceleration_;
     }
     
+    inline void BodyComponent::rotation_acceleration(float rotation_acceleration)
+    {
+        rotation_acceleration_ = rotation_acceleration;
+    }
+    
     inline float BodyComponent::max_speed() const
     {
         return max_speed_;
+    }
+    
+    inline void BodyComponent::max_speed(float max_speed)
+    {
+        max_speed_ = max_speed;
     }
     
     inline int BodyComponent::yaw_acceleration_direction() const
@@ -137,6 +152,9 @@ namespace bounce {
     inline void BodyComponent::orientation(const glm::quat& o)
     {
         orientation_ = o;
+        
+        OrientationChangedMessage message(orientation_);
+        owner().HandleMessage(message);
     }
     
     inline glm::vec3 BodyComponent::position() const

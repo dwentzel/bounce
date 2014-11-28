@@ -3,13 +3,14 @@
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 namespace bounce {
     
     enum MessageType {
         POSITION_CHANGED_MESSAGE,
+        ORIENTATION_CHANGED_MESSAGE,
+        MODEL_MATRIX_CHANGED_MESSAGE,
         ACCELERATION_CHANGED_MESSAGE
     };
     
@@ -31,29 +32,29 @@ namespace bounce {
     
     class AccelerationChangedMessage : public Message {
     private:
-        float yaw_;
-        float pitch_;
-        float roll_;
+        int yaw_;
+        int pitch_;
+        int roll_;
         
     public:
-        AccelerationChangedMessage(float yaw, float pitch, float roll);
+        AccelerationChangedMessage(int yaw, int pitch, int roll);
         
-        float yaw() const;
-        float pitch() const;
-        float roll() const;
+        int yaw() const;
+        int pitch() const;
+        int roll() const;
     };
         
-    inline float AccelerationChangedMessage::yaw() const
+    inline int AccelerationChangedMessage::yaw() const
     {
         return yaw_;
     }
     
-    inline float AccelerationChangedMessage::pitch() const
+    inline int AccelerationChangedMessage::pitch() const
     {
         return pitch_;
     }
     
-    inline float AccelerationChangedMessage::roll() const
+    inline int AccelerationChangedMessage::roll() const
     {
         return roll_;
     }
@@ -67,6 +68,27 @@ namespace bounce {
         
         const glm::vec3& position() const;
     };
+    
+    class OrientationChangedMessage : public Message {
+    private:
+        const glm::quat& orientation_;
+        
+    public:
+        OrientationChangedMessage(const glm::quat& orientation);
+        
+        const glm::quat& orientation() const;
+    };
+    
+    inline OrientationChangedMessage::OrientationChangedMessage(const glm::quat& orientation)
+    : Message(ORIENTATION_CHANGED_MESSAGE), orientation_(orientation)
+    {
+        
+    }
+    
+    inline const glm::quat& OrientationChangedMessage::orientation() const
+    {
+        return orientation_;
+    }
     
 }
 

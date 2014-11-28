@@ -1,4 +1,6 @@
 #include "movement_system.h"
+#include "logging/log.h"
+
 
 bounce::MovementSystem::MovementSystem(BodyComponentCache& body_components)
 : body_components_(body_components)
@@ -24,6 +26,10 @@ void bounce::MovementSystem::Update(float delta_time)
         BodyComponent& component = *handle;
         
         float delta_speed = component.rotation_acceleration() * delta_time;
+        
+//        LOG_DEBUG << "yaw acc: " << component.yaw_acceleration_direction()
+//                  << " pitch acc: " << component.pitch_acceleration_direction()
+//                  << " roll acc: " << component.roll_acceleration_direction();
         
         component.yaw_speed(UpdateSpeed(delta_speed, component.yaw_acceleration_direction(), component.yaw_speed(), component.max_speed()));
         component.pitch_speed(UpdateSpeed(delta_speed, component.pitch_acceleration_direction(), component.pitch_speed(), component.max_speed()));
