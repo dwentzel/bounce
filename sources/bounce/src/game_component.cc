@@ -11,7 +11,7 @@ bounce::GameComponent::~GameComponent()
     
 }
 
-void bounce::GameComponent::SendMessage(const bounce::Message& message)
+void bounce::GameComponent::SendMessage(const bounce::Message& message) const
 {
     owner_.Resolve().HandleMessage(message);
 }

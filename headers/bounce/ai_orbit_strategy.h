@@ -17,9 +17,9 @@ namespace bounce {
         glm::vec3 position_;
 
     public:
-        AiOrbitStrategy(ObjectManagerHandle<AiComponent> owner, float radius, int direction, const glm::vec3& center);
+        AiOrbitStrategy(float radius, int direction, const glm::vec3& center);
         
-        virtual void Update();
+        virtual void Update(const AiComponent& owner);
         
         virtual void HandleMessage(const Message& message);
         

@@ -29,7 +29,7 @@ namespace bounce {
         
         virtual void HandleMessage(const Message& message);
         
-        void SendMessage(const Message& message);
+        void SendMessage(const Message& message) const;
         
         bool IsOfType(GameComponentType component_type);
     };

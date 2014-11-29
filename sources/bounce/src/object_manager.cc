@@ -66,9 +66,9 @@ bounce::GameComponentHandle bounce::ObjectManager::GenerateControlComponent(Game
     return GameComponentHandle(CONTROL_COMPONENT_TYPE, index);
 }
 
-bounce::GameComponentHandle bounce::ObjectManager::GenerateAiComponent(GameEntityHandle owner)
+bounce::GameComponentHandle bounce::ObjectManager::GenerateAiComponent(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy)
 {
-    unsigned int index = ai_components_.GenerateObject(owner);
+    unsigned int index = ai_components_.GenerateObject(owner, std::move(ai_strategy));
     return GameComponentHandle(AI_COMPONENT_TYPE, index);
 }
 

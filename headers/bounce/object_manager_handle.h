@@ -38,13 +38,13 @@ namespace bounce {
             return type_;
         }
         
-        T& Resolve()
+        T& Resolve() const
         {
             return ResolveHandle<T>(*this);
         }
         
         template <typename U>
-        U& ResolveAs()
+        U& ResolveAs() const
         {
             return ResolveHandleAs<U, T>(*this);
         }

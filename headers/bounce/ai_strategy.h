@@ -10,17 +10,16 @@ namespace bounce {
     
     class AiStrategy {
     private:
-        ObjectManagerHandle<AiComponent> owner_;
         
     protected:
-        AiStrategy(ObjectManagerHandle<AiComponent> owner);
+        //AiStrategy(ObjectManagerHandle<AiComponent> owner);
 
-        void SendMessage(const Message& message);
+        void SendMessage(const AiComponent& owner, const Message& message);
         
     public:
         virtual ~AiStrategy() = 0;
         
-        virtual void Update() = 0;
+        virtual void Update(const AiComponent& owner) = 0;
         
         virtual void HandleMessage(const Message& message) = 0;
     };

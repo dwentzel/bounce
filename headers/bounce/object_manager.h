@@ -68,7 +68,7 @@ namespace bounce {
         GameEntityHandle GenerateGameEntity();
         GameComponentHandle GenerateBodyComponent(GameEntityHandle owner);
         GameComponentHandle GenerateControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
-        GameComponentHandle GenerateAiComponent(GameEntityHandle owner);
+        GameComponentHandle GenerateAiComponent(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy);
         GameComponentHandle GenerateRenderComponent(GameEntityHandle owner, unsigned int model_handle);
         GameComponentHandle GeneratePointLightComponent(GameEntityHandle owner);
         

@@ -2,19 +2,17 @@
 #include "object_manager.h"
 #include "ai_component.h"
 
-
-bounce::AiStrategy::AiStrategy(ObjectManagerHandle<AiComponent> owner)
-: owner_(owner)
-{
-    
-}
+//bounce::AiStrategy::AiStrategy()
+//{
+//    
+//}
 
 bounce::AiStrategy::~AiStrategy()
 {
     
 }
 
-void bounce::AiStrategy::SendMessage(const bounce::Message& message)
+void bounce::AiStrategy::SendMessage(const AiComponent& owner, const bounce::Message& message)
 {
-    owner_.Resolve().SendMessage(message);
+    owner.SendMessage(message);
 }
