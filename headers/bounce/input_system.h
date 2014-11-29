@@ -10,9 +10,10 @@ namespace bounce {
     private:
         const KeyboardState& keyboard_state_;
         ControlComponentCache& control_components_;
+        AiComponentCache& ai_components_;
         
     public:
-        InputSystem(const KeyboardState& keyboard_state, ControlComponentCache& control_components);
+        InputSystem(const KeyboardState& keyboard_state, ControlComponentCache& control_components, AiComponentCache& ai_components);
         
         void Startup();
         void Shutdown();

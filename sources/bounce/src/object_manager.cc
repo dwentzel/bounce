@@ -27,6 +27,16 @@ const bounce::ControlComponentCache& bounce::ObjectManager::control_components()
     return control_components_;
 }
 
+bounce::AiComponentCache& bounce::ObjectManager::ai_components()
+{
+    return ai_components_;
+}
+
+const bounce::AiComponentCache& bounce::ObjectManager::ai_components() const
+{
+    return ai_components_;
+}
+
 const bounce::RenderComponentCache& bounce::ObjectManager::render_components() const
 {
     return render_components_;
@@ -54,6 +64,12 @@ bounce::GameComponentHandle bounce::ObjectManager::GenerateControlComponent(Game
 {
     unsigned int index = control_components_.GenerateObject(owner, keyboard_state);
     return GameComponentHandle(CONTROL_COMPONENT_TYPE, index);
+}
+
+bounce::GameComponentHandle bounce::ObjectManager::GenerateAiComponent(GameEntityHandle owner)
+{
+    unsigned int index = ai_components_.GenerateObject(owner);
+    return GameComponentHandle(AI_COMPONENT_TYPE, index);
 }
 
 bounce::GameComponentHandle bounce::ObjectManager::GenerateRenderComponent(GameEntityHandle owner, unsigned int model_handle)

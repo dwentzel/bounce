@@ -5,7 +5,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "framework/object_cache.h"
 #include "game_component.h"
 
 namespace bounce {
@@ -24,6 +23,9 @@ namespace bounce {
         float roll_speed_;
         
         glm::quat orientation_;
+        
+        glm::vec3 acceleration_;
+        glm::vec3 velocity_;
         glm::vec3 position_;
 
         BodyComponent(GameEntityHandle owner);
@@ -38,30 +40,36 @@ namespace bounce {
         virtual void HandleMessage(const Message& message);
         
         float rotation_acceleration() const;
-        void rotation_acceleration(float rotation_acceleration);
+        void rotation_acceleration(float value);
         
         float max_speed() const;
-        void max_speed(float max_speed);
+        void max_speed(float value);
         
         int yaw_acceleration_direction() const;
-        void yaw_acceleration_direction(int acceleration_direction);
+        void yaw_acceleration_direction(int value);
         int pitch_acceleration_direction() const;
-        void pitch_acceleration_direction(int acceleration_direction);
+        void pitch_acceleration_direction(int value);
         int roll_acceleration_direction() const;
-        void roll_acceleration_direction(int acceleration_direction);
+        void roll_acceleration_direction(int value);
         
         float yaw_speed() const;
-        void yaw_speed(float speed);
+        void yaw_speed(float value);
         float pitch_speed() const;
-        void pitch_speed(float speed);
+        void pitch_speed(float value);
         float roll_speed() const;
-        void roll_speed(float speed);
+        void roll_speed(float value);
         
-        glm::quat orientation();
-        void orientation(const glm::quat& o);
+        const glm::quat& orientation();
+        void orientation(const glm::quat& value);
         
-        glm::vec3 position() const;
-        void position(const glm::vec3& position);
+        const glm::vec3& acceleration() const;
+        void acceleration(const glm::vec3& value);
+        
+        const glm::vec3& velocity() const;
+        void velocity(const glm::vec3& value);
+        
+        const glm::vec3& position() const;
+        void position(const glm::vec3& value);
     };
     
     inline float BodyComponent::rotation_acceleration() const
@@ -69,9 +77,9 @@ namespace bounce {
         return rotation_acceleration_;
     }
     
-    inline void BodyComponent::rotation_acceleration(float rotation_acceleration)
+    inline void BodyComponent::rotation_acceleration(float value)
     {
-        rotation_acceleration_ = rotation_acceleration;
+        rotation_acceleration_ = value;
     }
     
     inline float BodyComponent::max_speed() const
@@ -79,9 +87,9 @@ namespace bounce {
         return max_speed_;
     }
     
-    inline void BodyComponent::max_speed(float max_speed)
+    inline void BodyComponent::max_speed(float value)
     {
-        max_speed_ = max_speed;
+        max_speed_ = value;
     }
     
     inline int BodyComponent::yaw_acceleration_direction() const
@@ -89,9 +97,9 @@ namespace bounce {
         return yaw_acceleration_direction_;
     }
     
-    inline void BodyComponent::yaw_acceleration_direction(int acceleration_direction)
+    inline void BodyComponent::yaw_acceleration_direction(int value)
     {
-        yaw_acceleration_direction_ = acceleration_direction;
+        yaw_acceleration_direction_ = value;
     }
     
     inline int BodyComponent::pitch_acceleration_direction() const
@@ -99,9 +107,9 @@ namespace bounce {
         return pitch_acceleration_direction_;
     }
     
-    inline void BodyComponent::pitch_acceleration_direction(int acceleration_direction)
+    inline void BodyComponent::pitch_acceleration_direction(int value)
     {
-        pitch_acceleration_direction_ = acceleration_direction;
+        pitch_acceleration_direction_ = value;
     }
     
     inline int BodyComponent::roll_acceleration_direction() const
@@ -109,9 +117,9 @@ namespace bounce {
         return roll_acceleration_direction_;
     }
     
-    inline void BodyComponent::roll_acceleration_direction(int acceleration_direction)
+    inline void BodyComponent::roll_acceleration_direction(int value)
     {
-        roll_acceleration_direction_ = acceleration_direction;
+        roll_acceleration_direction_ = value;
     }
     
     inline float BodyComponent::yaw_speed() const
@@ -119,9 +127,9 @@ namespace bounce {
         return yaw_speed_;
     }
     
-    inline void BodyComponent::yaw_speed(float speed)
+    inline void BodyComponent::yaw_speed(float value)
     {
-        yaw_speed_ = speed;
+        yaw_speed_ = value;
     }
     
     inline float BodyComponent::pitch_speed() const
@@ -129,9 +137,9 @@ namespace bounce {
         return pitch_speed_;
     }
     
-    inline void BodyComponent::pitch_speed(float speed)
+    inline void BodyComponent::pitch_speed(float value)
     {
-        pitch_speed_ = speed;
+        pitch_speed_ = value;
     }
     
     inline float BodyComponent::roll_speed() const
@@ -139,25 +147,46 @@ namespace bounce {
         return roll_speed_;
     }
     
-    inline void BodyComponent::roll_speed(float speed)
+    inline void BodyComponent::roll_speed(float value)
     {
-        roll_speed_ = speed;
+        roll_speed_ = value;
     }
     
-    inline glm::quat BodyComponent::orientation()
+    inline const glm::quat& BodyComponent::orientation()
     {
         return orientation_;
     }
     
-    inline void BodyComponent::orientation(const glm::quat& o)
+    inline void BodyComponent::orientation(const glm::quat& value)
     {
-        orientation_ = o;
+        orientation_ = value;
         
         OrientationChangedMessage message(orientation_);
-        owner().HandleMessage(message);
+        SendMessage(message);
+    }
+
+    inline const glm::vec3& BodyComponent::acceleration() const
+    {
+        return acceleration_;
     }
     
-    inline glm::vec3 BodyComponent::position() const
+    inline void BodyComponent::acceleration(const glm::vec3& value)
+    {
+        acceleration_ = value;
+    }
+
+    
+    inline const glm::vec3& BodyComponent::velocity() const
+    {
+        return velocity_;
+    }
+    
+    inline void BodyComponent::velocity(const glm::vec3& value)
+    {
+        velocity_ = value;
+    }
+    
+    inline const glm::vec3& BodyComponent::position() const
     {
         return position_;
     }
@@ -165,10 +194,10 @@ namespace bounce {
     inline void BodyComponent::position(const glm::vec3& position)
     {
         position_ = position;
+        
+        PositionChangedMessage message = PositionChangedMessage(position_);
+        SendMessage(message);
     }
-
-    typedef ObjectCache<BodyComponent> BodyComponentCache;
-
 
 }
 

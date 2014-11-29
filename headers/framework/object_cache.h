@@ -2,6 +2,7 @@
 #define BOUNCE_FRAMEWORK_OBJECT_CACHE_
 
 #include <vector>
+#include <memory>
 
 namespace bounce {
     
@@ -66,7 +67,7 @@ namespace bounce {
     {
         unsigned int index = cache_.size();
         
-        cache_.push_back(T::Create(args...));
+        cache_.push_back(T::Create(std::forward<FactoryArgs>(args)...));
         
         return index;
     }

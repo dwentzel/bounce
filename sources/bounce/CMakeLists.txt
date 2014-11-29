@@ -1,6 +1,9 @@
 setup_module(bounce)
 
 set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/ai_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/ai_strategy.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/ai_orbit_strategy.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/body_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_main.h
@@ -25,6 +28,9 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/world_manager.h)
 
 set(SOURCES
+    src/ai_component.cc
+    src/ai_strategy.cc
+    src/ai_orbit_strategy.cc
     src/application_context.cc
     src/body_component.cc
     src/console.cc

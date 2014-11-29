@@ -8,11 +8,15 @@
 
 namespace bounce {
 
+    typedef ObjectCache<BodyComponent> BodyComponentCache;
+    
     class MovementSystem : public GameSystem {
     private:
         BodyComponentCache& body_components_;
     
         float UpdateSpeed(float delta_speed, float acceleration_direction, float speed, float max_speed) const;
+        void UpdateRotation(BodyComponent& component, float delta_time);
+        void UpdatePosition(BodyComponent& component, float delta_time);
         
     public:
         MovementSystem(BodyComponentCache& body_components);

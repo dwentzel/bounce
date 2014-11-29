@@ -11,6 +11,9 @@ namespace bounce {
     
     template <typename T, typename Handle>
     T& ResolveHandleAs(const ObjectManagerHandle<Handle>&);
+    
+    template <typename T, typename Handle>
+    ObjectManagerHandle<T> ConvertHandle(const ObjectManagerHandle<Handle>&);
 
     template <typename T>
     class ObjectManagerHandle {
@@ -20,7 +23,7 @@ namespace bounce {
         
     public:
         ObjectManagerHandle(unsigned int type, unsigned int index)
-        :  index_(index), type_(type)
+        : index_(index), type_(type)
         {
             
         }
@@ -40,10 +43,16 @@ namespace bounce {
             return ResolveHandle<T>(*this);
         }
         
-        template <typename S>
-        S& ResolveAs()
+        template <typename U>
+        U& ResolveAs()
         {
-            return ResolveHandleAs<S, T>(*this);
+            return ResolveHandleAs<U, T>(*this);
+        }
+        
+        template <typename U>
+        ObjectManagerHandle<U> As()
+        {
+            return ConvertHandle<U, T>(*this);
         }
     };
 

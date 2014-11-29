@@ -49,8 +49,8 @@ void bounce::ControlComponent::Update() {
     }
     
 //    if (yaw_acceleration != 0 || pitch_acceleration != 0 || roll_acceleration != 0) {
-        AccelerationChangedMessage message(yaw_acceleration, pitch_acceleration, roll_acceleration);
-        
-        owner().HandleMessage(message);
+    AccelerationChangedMessage message(yaw_acceleration, pitch_acceleration, roll_acceleration, glm::vec3(0.0f));
+    
+        SendMessage(message);
 //    }
 }

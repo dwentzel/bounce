@@ -6,6 +6,7 @@ namespace bounce {
         RENDER_COMPONENT,
         BODY_COMPONENT,
         CONTROL_COMPONENT,
+        AI_COMPONENT,
         MOVEMENT_COMPONENT,
         POINT_LIGHT_COMPONENT,
         POSITION_COMPONENT,

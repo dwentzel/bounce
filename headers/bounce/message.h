@@ -36,12 +36,16 @@ namespace bounce {
         int pitch_;
         int roll_;
         
+        glm::vec3 direction_;
+        
     public:
-        AccelerationChangedMessage(int yaw, int pitch, int roll);
+        AccelerationChangedMessage(int yaw, int pitch, int roll, const glm::vec3& direction);
         
         int yaw() const;
         int pitch() const;
         int roll() const;
+        
+        const glm::vec3& direction() const;
     };
         
     inline int AccelerationChangedMessage::yaw() const
@@ -57,6 +61,11 @@ namespace bounce {
     inline int AccelerationChangedMessage::roll() const
     {
         return roll_;
+    }
+    
+    inline const glm::vec3& AccelerationChangedMessage::direction() const
+    {
+        return direction_;
     }
     
     class PositionChangedMessage : public Message {
