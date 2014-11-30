@@ -1,25 +1,49 @@
 #include "render_component.h"
+#include "render_system.h"
 
-#include <vector>
+bounce::RenderComponent bounce::RenderComponent::Create(GameEntityHandle owner, unsigned int model_handle)
+{
+    return RenderComponent(owner, model_handle);
+}
 
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/quaternion.hpp>
+bounce::RenderComponent::RenderComponent(GameEntityHandle owner, unsigned int model_handle)
+: GameComponent(RENDER_COMPONENT, owner), model_handle_(model_handle), model_matrix_(glm::mat4(1.0f))
+{
+}
 
+unsigned int bounce::RenderComponent::model_handle() const
+{
+    return model_handle_;
+}
+
+const glm::mat4& bounce::RenderComponent::model_matrix() const
+{
+    return model_matrix_;
+}
+
+void bounce::RenderComponent::HandleMessage(const Message& message)
+{
+//    if (message.message_type() == POSITION_CHANGED_MESSAGE) {
+//        const PositionChangedMessage& msg = static_cast<const PositionChangedMessage&>(message);
+//        light_.position = msg.position();
+//    }
+    
+    if (message.message_type() == ORIENTATION_CHANGED_MESSAGE) {
+        const OrientationChangedMessage& orientation_changed_message = static_cast<const OrientationChangedMessage&>(message);
+        model_matrix_ = glm::mat4_cast(orientation_changed_message.orientation());
+    }
+}
 void bounce::RenderComponent::Startup()
 {
-    render_system_->AddModel(model_handle_);
+    //render_system_.AddModel(model_handle_);
 }
 
 void bounce::RenderComponent::Shutdown()
 {
-    render_system_->RemoveModel(model_handle_);
+    //render_system_.RemoveModel(model_handle_);
 }
 
 void bounce::RenderComponent::Update()
 {
-//    render_system_->RenderModel(model_handle_);
+    //render_system_.RenderModel(model_handle_);
 }

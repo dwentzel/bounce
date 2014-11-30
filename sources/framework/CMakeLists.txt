@@ -1,14 +1,20 @@
 setup_module(framework)
 
 set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/object_cache.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/object_cache_handle.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/renderer.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/resource_loader.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/timer.h
 )
 
 set(SOURCES
+    src/exceptions.cc
     src/framework.cc
+    src/object_cache.cc
+    src/object_cache_handle.cc
     src/renderer.cc
     src/resource_loader.cc
 )

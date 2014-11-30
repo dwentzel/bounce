@@ -20,9 +20,13 @@ const bounce::Texture& bounce::TextureManager::GetTexture(unsigned int texture_h
     return textures_[texture_handle];
 }
 
+void bounce::TextureManager::UseTexture(unsigned int texture_handle)
+{
+    textures_[texture_handle].UseTexture();
+}
+
 int bounce::TextureManager::IndexOf(const std::string& texture) const
 {
-    
     return -1;
 }
 
@@ -44,12 +48,6 @@ namespace {
         uint8_t red;
     };
     
-    class BitMap
-    {
-    public:
-        
-    };
-
 }
 
 void bounce::TextureManager::LoadTexture(const std::string& texture)
@@ -79,14 +77,8 @@ void bounce::TextureManager::LoadTexture(const std::string& texture)
         file.seekg(header.offset);
         file.read((char*)pixel_data, header.size);
         
-//        uint8_t swap_byte;
-//        for (unsigned long i = 0; i < header.size; i += 3) {
-//            swap_byte = pixel_data[i];
-//            pixel_data[i] = pixel_data[i + 2];
-//            pixel_data[i + 2] = swap_byte;
-//        }
-        
         textures_.emplace_back(header.size, width, height, pixel_data);
+        file.close();
     }
     else {
         LOG_WARNING << L"Could not find file " << texture_path << std::endl;

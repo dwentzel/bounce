@@ -1,26 +1,33 @@
 #include <algorithm>
 #include "game_entity.h"
+
+#include "object_manager.h"
 #include "game_component.h"
 
-bounce::GameEntity::GameEntity() : yaw_acceleration_direction_(0), pitch_acceleration_direction_(0), roll_acceleration_direction_(0),
-rotation_acceleration_(0.0002f), max_speed_(0.1f),
-yaw_speed_(0.0f), pitch_speed_(0.0f), roll_speed_(0.0f) {
-    
-    orientation_ = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+bounce::GameEntity bounce::GameEntity::Create()
+{
+    return GameEntity();
 }
 
-void bounce::GameEntity::AttachComponent(bounce::GameComponent* component) {
-    components_.push_back(component);
-    component->AttachToEntity(this);
+bounce::GameEntity::GameEntity()
+{
+
 }
 
-void bounce::GameEntity::DetachComponent(bounce::GameComponent* component) {
-    components_.erase(std::remove(components_.begin(), components_.end(), component), components_.end());
+void bounce::GameEntity::AttachComponent(bounce::GameComponentHandle handle)
+{
+    game_components_.push_back(handle);
 }
 
-void bounce::GameEntity::HandleMessage(const bounce::Message &message) {
-    for (GameComponentList::iterator i = components_.begin(); i != components_.end(); ++i) {
-        (*i)->HandleMessage(message);
+void bounce::GameEntity::DetachComponent(bounce::GameComponentHandle handle)
+{
+//    game_components_.erase(std::remove(game_components_.begin(), game_components_.end(), handle), game_components_.end());
+}
+
+void bounce::GameEntity::HandleMessage(const bounce::Message &message)
+{
+    for (std::vector<GameComponentHandle>::iterator i = game_components_.begin(); i != game_components_.end(); ++i) {
+        ResolveHandle(*i).HandleMessage(message);
     }
 }
 
@@ -37,20 +44,15 @@ namespace {
             return component->IsOfType(type_);
         }
     };
-    
-    //bool gameComponentTypesAreEqual(const bounce::GameComponentType* type1, const bounce::GameComponentType* type2) {
-    //    return type1 == type2;
-    //}
-    
 }
 
-void bounce::GameEntity::UpdateComponentOfType(bounce::GameComponentType component_type) {
-    GameComponentTypePredicate predicate(component_type);
-    
-    GameComponentList::iterator result =
-    //std::find_if(components_.begin(), components_.end(), std::bind(gameComponentTypesAreEqual, component_type, std::placeholders::_1));
-    std::find_if(components_.begin(), components_.end(), predicate);
-    if (result != components_.end()) {
-        (*result)->Update();
-    }
-}
+//void bounce::GameEntity::UpdateComponentOfType(bounce::GameComponentType component_type) {
+//    GameComponentTypePredicate predicate(component_type);
+//    
+////    GameComponentList::iterator result =
+////    //std::find_if(components_.begin(), components_.end(), std::bind(gameComponentTypesAreEqual, component_type, std::placeholders::_1));
+////    std::find_if(components_.begin(), components_.end(), predicate);
+////    if (result != components_.end()) {
+////        (*result)->Update();
+////    }
+//}

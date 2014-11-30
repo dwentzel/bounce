@@ -2,9 +2,10 @@
 #define BOUNCE_RENDERER_POINT_LIGHT_PASS_PROGRAM_
 
 #include "light_pass_program.h"
+#include "lights.h"
 
 namespace bounce {
-
+    
     class PointLightPassProgram : public LightPassProgram {
     private:
         struct {
@@ -20,11 +21,14 @@ namespace bounce {
         } point_light_location_;
         
     public:
-        void Init();
+        PointLightPassProgram(const ResourceLoader& resource_loader);
         
-        void SetPointLight(const PointLight& lights);
+        bool Init();
+        
+        void SetPointLight(const PointLight& light);
+        
     };
-
+    
 }
 
 #endif // BOUNCE_RENDERER_POINT_LIGHT_PASS_PROGRAM_

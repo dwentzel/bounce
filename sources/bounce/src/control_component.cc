@@ -1,5 +1,16 @@
 #include "control_component.h"
 
+bounce::ControlComponent bounce::ControlComponent::Create(GameEntityHandle owner, const bounce::KeyboardState& keyboard_state)
+{
+    return ControlComponent(owner, keyboard_state);
+}
+
+bounce::ControlComponent::ControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state)
+: GameComponent(CONTROL_COMPONENT, owner), keyboard_state_(keyboard_state)
+{
+    
+}
+
 void bounce::ControlComponent::Startup() {
     
 }
@@ -37,10 +48,9 @@ void bounce::ControlComponent::Update() {
         --roll_acceleration;
     }
     
+//    if (yaw_acceleration != 0 || pitch_acceleration != 0 || roll_acceleration != 0) {
+    AccelerationChangedMessage message(yaw_acceleration, pitch_acceleration, roll_acceleration, glm::vec3(0.0f));
     
-    GameEntity* owner = this->owner();
-    
-    owner->yaw_acceleration_direction(yaw_acceleration);
-    owner->pitch_acceleration_direction(pitch_acceleration);
-    owner->roll_acceleration_direction(roll_acceleration);
+        SendMessage(message);
+//    }
 }

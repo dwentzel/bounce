@@ -7,7 +7,6 @@ namespace bounce {
 
     class GBuffer {
     public:
-        
         enum GBufferTextureType {
             GBUFFER_TEXTURE_TYPE_POSITION = 0,
             GBUFFER_TEXTURE_TYPE_DIFFUSE = 1,
@@ -25,14 +24,11 @@ namespace bounce {
         GBuffer();
         ~GBuffer();
         
-        bool Init(unsigned int window_width, unsigned int window_height);
+        void Init(unsigned int window_width, unsigned int window_height);
         
         void BindForWriting();
         
         void BindForReading();
-        
-        void SetReadBuffer(GBufferTextureType TextureType);
-
     };
 
 }

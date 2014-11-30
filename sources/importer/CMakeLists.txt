@@ -35,5 +35,6 @@ else (ASSIMP_FOUND)
     message("Could not find assimp")
 endif (ASSIMP_FOUND)
 
+include_directories(${GLEW_INCLUDE_DIR})
 
 target_link_libraries(${MODULE_NAME} logging renderer)

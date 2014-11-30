@@ -3,5 +3,5 @@
 
 void bounce::StdoutLogOutput::Output(const std::wstring& message)
 {
-    std::wcout << message;
+    std::wcout << message << "\n";
 }

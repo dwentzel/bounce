@@ -5,9 +5,9 @@ namespace bounce {
     
     class GameSystem {
     public:
-        virtual void startup() = 0;
-        virtual void shutdown() = 0;
-        virtual void update() = 0;
+        virtual void Startup() = 0;
+        virtual void Shutdown() = 0;
+        virtual void Update(float delta_time) = 0;
     };
     
 }

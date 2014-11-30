@@ -2,6 +2,7 @@
 #define BOUNCE_RENDERER_DIRECTIONAL_LIGHT_PASS_PROGRAM_
 
 #include "light_pass_program.h"
+#include "lights.h"
 
 namespace bounce {
 
@@ -15,9 +16,12 @@ namespace bounce {
         } directional_light_location_;
         
     public:
-        void Init();
+        DirectionalLightPassProgram(const ResourceLoader& resource_loader);
+        
+        bool Init();
         
         void SetDirectionalLight(const DirectionalLight& light);
+        
     };
 
 }

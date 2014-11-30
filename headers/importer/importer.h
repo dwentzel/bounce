@@ -2,7 +2,8 @@
 #define BOUNCE_IMPORTER_H_
 
 #include <string>
-#include <vector>
+
+#include "framework/resource_loader.h"
 #include "renderer/model_manager.h"
 #include "renderer/texture_manager.h"
 #include "renderer/material_manager.h"
@@ -13,6 +14,7 @@ namespace bounce {
 
     class Importer {
     private:
+        const ResourceLoader& resource_loader_;
         ModelManager& model_manager_;
         TextureManager& texture_manager_;
         MaterialManager& material_manager_;
@@ -22,10 +24,12 @@ namespace bounce {
         Importer& operator=(const Importer&) = delete;
 
     public:
-        Importer(ModelManager& model_manager_,
-                 TextureManager& texture_manager_,
+        Importer(const ResourceLoader& resource_loader,
+                 ModelManager& model_manager,
+                 TextureManager& texture_manager,
                  MaterialManager& material_manager,
                  VertexBuffer& vertex_buffer);
+        
         int ImportFile(const std::string& filename);
     };    
 }

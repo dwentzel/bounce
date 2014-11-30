@@ -4,18 +4,19 @@
 #include "message.h"
 #include "game_component_type.h"
 #include "game_entity.h"
+#include "object_manager_handle.h"
 
 namespace bounce {
+    
+    typedef ObjectManagerHandle<GameEntity> GameEntityHandle;
     
     class GameComponent {
     private:
         GameComponentType component_type_;
-        GameEntity* owner_;
+        GameEntityHandle owner_;
     
     protected:
-        GameComponent(GameComponentType component_type);
-    
-        GameEntity* owner();
+        GameComponent(GameComponentType component_type, GameEntityHandle owner);
         
     public:
         virtual ~GameComponent() = 0;
@@ -28,27 +29,19 @@ namespace bounce {
         
         virtual void HandleMessage(const Message& message);
         
-        bool IsOfType(GameComponentType component_type);
+        void SendMessage(const Message& message) const;
         
-        void AttachToEntity(GameEntity* entity);
+        bool IsOfType(GameComponentType component_type);
     };
     
-    inline GameComponent::GameComponent(GameComponentType component_type) : component_type_(component_type) {}
-    
-    inline GameComponent::~GameComponent() {}
-    
-    inline GameEntity* GameComponent::owner() {
-        return owner_;
+    inline void GameComponent::HandleMessage(const Message& message)
+    {
+        
     }
     
-    inline void GameComponent::HandleMessage(const Message& message) {}
-    
-    inline bool GameComponent::IsOfType(GameComponentType component_type) {
+    inline bool GameComponent::IsOfType(GameComponentType component_type)
+    {
         return component_type_ == component_type;
-    }
-    
-    inline void GameComponent::AttachToEntity(GameEntity* entity) {
-        owner_ = entity;
     }
 }
 

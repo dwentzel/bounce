@@ -3,20 +3,30 @@
 
 #include <vector>
 
-#include "framework/renderer.h"
+#include "framework/object_cache.h"
+
+#include "renderer/opengl_renderer.h"
 
 #include "game_system.h"
 #include "application_context.h"
-#include "world_manager.h"
+
+#include "render_component.h"
+#include "point_light_component.h"
 
 namespace bounce {
+    
+    typedef ObjectCache<RenderComponent> RenderComponentCache;
+    typedef ObjectCache<PointLightComponent> PointLightComponentCache;
     
     class RenderSystem : public GameSystem {
     private:
         const ApplicationContext& application_context_;
-        const WorldManager& world_manager_;
+        const WindowContext& window_context_;
         
-        Renderer& renderer_;
+        const RenderComponentCache& render_component_cache_;
+        const PointLightComponentCache& point_light_component_cache_;
+        
+        OpenGLRenderer& renderer_;
         
         std::vector<unsigned int> model_handles_;
         
@@ -24,22 +34,19 @@ namespace bounce {
         RenderSystem& operator=(const RenderSystem&) = delete;
 
     public:
-        RenderSystem(
-                     const ApplicationContext& application_context,
-                     const WorldManager& world_manager,
-                     Renderer& renderer)
-        : application_context_(application_context), world_manager_(world_manager), renderer_(renderer)
-        {
-            
-        }
+        RenderSystem(const ApplicationContext& application_context,
+                     const WindowContext& window_context,
+                     const RenderComponentCache& render_component_cache,
+                     const PointLightComponentCache& point_light_component_cache,
+                     OpenGLRenderer& renderer);
         
-        virtual void startup();
-        virtual void shutdown();
-        virtual void update();
+        virtual void Startup();
+        virtual void Shutdown();
+        virtual void Update(float delta_time);
 
         void AddModel(unsigned int model_handle);
         void RemoveModel(unsigned int model_handle);
-//        void RenderModel(unsigned int model_handle);
+        void RenderModel(unsigned int model_handle);
     };
     
 }

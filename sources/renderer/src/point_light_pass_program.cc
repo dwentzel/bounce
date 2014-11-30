@@ -1,8 +1,14 @@
 #include "point_light_pass_program.h"
 
-void bounce::PointLightPassProgram::Init()
+bounce::PointLightPassProgram::PointLightPassProgram(const ResourceLoader& resource_loader)
+: LightPassProgram(resource_loader)
 {
-    ShaderProgram::Init();
+    
+}
+
+bool bounce::PointLightPassProgram::Init()
+{
+    CreateProgram();
     
     LoadVertexShader("light_pass.vert.glsl");
     LoadFragmentShader("point_light_pass.frag.glsl");
@@ -16,18 +22,17 @@ void bounce::PointLightPassProgram::Init()
     point_light_location_.attenuation.linear = GetUniformLocation("gPointLight.Atten.Linear");
     point_light_location_.attenuation.exp = GetUniformLocation("gPointLight.Atten.Exp");
     
-//    if (point_light_location_.color == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.ambient_intensity == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.position == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.diffuse_intensity == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.attenuation.constant == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.attenuation.linear == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.attenuation.exp == INVALID_UNIFORM_LOCATION) {
+//    if (point_light_location_.Color == INVALID_UNIFORM_LOCATION ||
+//        point_light_location_.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
+//        point_light_location_.Position == INVALID_UNIFORM_LOCATION ||
+//        point_light_location_.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
+//        point_light_location_.Atten.Constant == INVALID_UNIFORM_LOCATION ||
+//        point_light_location_.Atten.Linear == INVALID_UNIFORM_LOCATION ||
+//        point_light_location_.Atten.Exp == INVALID_UNIFORM_LOCATION) {
 //        return false;
 //    }
     
-//    return DSLightPassTech::Init();
-    LightPassProgram::Init();
+    return LightPassProgram::Init();
 }
 
 

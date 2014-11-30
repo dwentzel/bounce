@@ -16,7 +16,9 @@ if (APPLE)
 
 
     set(MODELS
+        ${models_PATH}/quad.dae
         ${models_PATH}/simple_craft.dae
+        ${models_PATH}/sphere.dae
 #        ${models_PATH}/simple_craft.fbx
 #        ${models_PATH}/simple_craft.blend
     )
@@ -31,7 +33,7 @@ if (APPLE)
         ${shaders_PATH}/geometry_pass.frag.glsl
         ${shaders_PATH}/geometry_pass.vert.glsl
         ${shaders_PATH}/light_pass.vert.glsl
-        ${shaders_PATH}/dir_light_pass.frag.glsl
+        ${shaders_PATH}/directional_light_pass.frag.glsl
         ${shaders_PATH}/point_light_pass.frag.glsl
     )
 
