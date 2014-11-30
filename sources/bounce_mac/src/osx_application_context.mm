@@ -50,7 +50,7 @@ void bounce_mac::OsxApplicationContext::Update() const
     [pool release];
 }
 
-void bounce_mac::OsxApplicationContext::CreateWindow()
+void bounce_mac::OsxApplicationContext::CreateWindow(const bounce::WindowContext& window_context)
 {
     NSOpenGLPixelFormatAttribute attr[] = {
         NSOpenGLPFAOpenGLProfile,
@@ -72,7 +72,7 @@ void bounce_mac::OsxApplicationContext::CreateWindow()
     
     
     id window = [[[BounceWindow alloc]
-                  initWithContentRect:NSMakeRect(0, 0, 640, 480)
+                  initWithContentRect:NSMakeRect(0, 0, window_context.width(), window_context.height())
                   styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO]
                  autorelease];
     [window cascadeTopLeftFromPoint:NSMakePoint(20,20)];

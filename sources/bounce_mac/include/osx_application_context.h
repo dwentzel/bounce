@@ -19,7 +19,7 @@ namespace bounce_mac {
         virtual void Flush() const;
         virtual void Update() const;
         
-        virtual void CreateWindow();
+        virtual void CreateWindow(const bounce::WindowContext& window_context);
         
         virtual const std::string& root_path() const;
     };

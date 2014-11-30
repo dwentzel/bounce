@@ -11,10 +11,11 @@
 #include "game_entity.h"
 
 bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context,
+                                   const WindowContext& window_context,
              const RenderComponentCache& render_component_cache,
              const PointLightComponentCache& point_light_component_cache,
              OpenGLRenderer& renderer)
-: application_context_(application_context),
+: application_context_(application_context), window_context_(window_context),
   render_component_cache_(render_component_cache), point_light_component_cache_(point_light_component_cache),
   renderer_(renderer)
 {
@@ -24,7 +25,7 @@ bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context
 void bounce::RenderSystem::Startup()
 {
     renderer_.Startup();
-    renderer_.Resize(640, 480);
+    renderer_.Resize(window_context_.width(), window_context_.height());
 }
 
 void bounce::RenderSystem::Shutdown() {

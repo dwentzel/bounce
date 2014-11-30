@@ -21,6 +21,7 @@ namespace bounce {
     class RenderSystem : public GameSystem {
     private:
         const ApplicationContext& application_context_;
+        const WindowContext& window_context_;
         
         const RenderComponentCache& render_component_cache_;
         const PointLightComponentCache& point_light_component_cache_;
@@ -34,6 +35,7 @@ namespace bounce {
 
     public:
         RenderSystem(const ApplicationContext& application_context,
+                     const WindowContext& window_context,
                      const RenderComponentCache& render_component_cache,
                      const PointLightComponentCache& point_light_component_cache,
                      OpenGLRenderer& renderer);

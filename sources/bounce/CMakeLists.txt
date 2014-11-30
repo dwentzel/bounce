@@ -24,8 +24,8 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_system.h
-    include/transform_component.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/world_manager.h)
+    ${MODULE_PUBLIC_INCLUDE_DIR}/window_context.h
+)
 
 set(SOURCES
     src/ai_component.cc
@@ -48,8 +48,8 @@ set(SOURCES
     src/point_light_component.cc
     src/render_component.cc
     src/render_system.cc
-    src/transform_component.cc
-    src/world_manager.cc)
+    src/window_context.cc
+)
 
 add_library(
     ${MODULE_NAME}

@@ -20,15 +20,16 @@
 
 namespace bounce {
     
-    App::App(ApplicationContext& application_context) :
-    running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
+    App::App(ApplicationContext& application_context, WindowContext& window_context)
+    : running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
+    window_context_(window_context),
     resource_loader_(application_context_.root_path()),
     texture_manager_(application_context_.root_path() + "/textures"),
     renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
     object_manager_(ObjectManager::instance_),
     input_system_(keyboard_state_, object_manager_.control_components(), object_manager_.ai_components()),
     movement_system_(object_manager_.body_components()),
-    render_system_(application_context_, object_manager_.render_components(), object_manager_.point_light_components(), renderer_)
+    render_system_(application_context_, window_context_, object_manager_.render_components(), object_manager_.point_light_components(), renderer_)
     {
         
     }

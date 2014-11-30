@@ -2,8 +2,8 @@
 #define BOUNCE_APPLICATION_CONTEXT_H_
 
 #include <string>
-#include <memory>
 #include "event.h"
+#include "window_context.h"
 
 namespace bounce {
     
@@ -25,7 +25,7 @@ namespace bounce {
         
         virtual void Update() const = 0;// { poll_(); }
         
-        virtual void CreateWindow() = 0;
+        virtual void CreateWindow(const WindowContext& window_context) = 0;
         
         virtual const std::string& root_path() const = 0;
     };

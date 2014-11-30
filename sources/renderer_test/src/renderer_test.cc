@@ -75,25 +75,25 @@ void RunLightPass()
     GLsizei HalfWidth = (GLsizei)(WINDOW_WIDTH / 2.0f);
     GLsizei HalfHeight = (GLsizei)(WINDOW_HEIGHT / 2.0f);
     
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      0, 0, HalfWidth, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    CHECK_GL_ERROR();
-    
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      0, HalfHeight, HalfWidth, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    CHECK_GL_ERROR();
-    
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      HalfWidth, HalfHeight, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    CHECK_GL_ERROR();
-    
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    CHECK_GL_ERROR();
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
+//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//                      0, 0, HalfWidth, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    CHECK_GL_ERROR();
+//    
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
+//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//                      0, HalfHeight, HalfWidth, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    CHECK_GL_ERROR();
+//    
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
+//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//                      HalfWidth, HalfHeight, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    CHECK_GL_ERROR();
+//    
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
+//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//                      HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    CHECK_GL_ERROR();
 
 }
 

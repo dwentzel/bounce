@@ -30,6 +30,8 @@ namespace bounce {
         ApplicationContext& application_context_;
         EventManager& event_manager_;
         
+        WindowContext& window_context_;
+        
         ResourceLoader resource_loader_;
         
         VertexBuffer vertex_buffer_;
@@ -53,7 +55,7 @@ namespace bounce {
         App& operator=(const App&) = delete;
         
     public:
-        App(ApplicationContext& application_context);
+        App(ApplicationContext& application_context, WindowContext& window_context);
         
         ~App();
         
