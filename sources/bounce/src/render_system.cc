@@ -24,6 +24,7 @@ bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context
 void bounce::RenderSystem::Startup()
 {
     renderer_.Startup();
+    renderer_.Resize(640, 480);
 }
 
 void bounce::RenderSystem::Shutdown() {
@@ -106,8 +107,8 @@ void bounce::RenderSystem::Update(float delta_time) {
 
 void bounce::RenderSystem::AddModel(unsigned int model_handle)
 {
-    model_handles_.push_back(model_handle);
-    renderer_.AddModel(model_handle);
+//    model_handles_.push_back(model_handle);
+//    renderer_.AddModel(model_handle);
 }
 
 void bounce::RenderSystem::RemoveModel(unsigned int model_handle)

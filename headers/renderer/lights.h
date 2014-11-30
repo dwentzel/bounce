@@ -13,10 +13,9 @@ namespace bounce {
         float diffuse_intensity;
         
         BaseLight()
+        : color(0.0f), ambient_intensity(0.0f), diffuse_intensity(0.0f)
         {
-            color = glm::vec3(0.0f, 0.0f, 0.0f);
-            ambient_intensity = 0.0f;
-            diffuse_intensity = 0.0f;
+
         }
     };
     
@@ -25,8 +24,9 @@ namespace bounce {
         glm::vec3 direction;
         
         DirectionalLight()
+        : direction(0.0f)
         {
-            direction = glm::vec3(0.0f, 0.0f, 0.0f);
+
         }
     };
     
@@ -42,8 +42,8 @@ namespace bounce {
         } attenuation;
         
         PointLight()
+        : position(0.0f)
         {
-            position = glm::vec3(0.0f, 0.0f, 0.0f);
             attenuation.constant = 0.0f;
             attenuation.linear = 0.0f;
             attenuation.exp = 0.0f;
@@ -56,9 +56,9 @@ namespace bounce {
         float cutoff;
         
         SpotLight()
+        : direction(0.0f), cutoff(0.0f)
         {
-            direction = glm::vec3(0.0f, 0.0f, 0.0f);
-            cutoff = 0.0f;
+
         }
     };
     

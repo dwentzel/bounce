@@ -8,7 +8,6 @@
 
 #include "framework/renderer.h"
 #include "bounce_gl.h"
-#include "light_manager.h"
 #include "model_manager.h"
 #include "texture_manager.h"
 #include "material_manager.h"
@@ -25,14 +24,11 @@ namespace bounce
     
     class OpenGLRenderer {
     private:
-        GBuffer g_buffer_;
+        std::unique_ptr<GBuffer> g_buffer_;
+//        GBuffer g_buffer_;
         
         GLuint model_vertex_array_;
-        
         GLuint model_vertex_buffer_;
-        GLuint directional_vertex_buffer_;
-        
-        std::vector<unsigned int> model_handles_;
         
         Mesh* sphere_;
         Mesh* quad_;
@@ -42,7 +38,6 @@ namespace bounce
         PointLightPassProgram point_light_pass_program_;
         MeshLoader mesh_loader_;
         
-        const LightManager& light_manager_;
         const ModelManager& model_manager_;
         TextureManager& texture_manager_;
         const MaterialManager& material_manager_;
@@ -55,7 +50,6 @@ namespace bounce
         
     public:
         OpenGLRenderer(const ResourceLoader& resource_loader,
-                       const LightManager& light_manager,
                        const ModelManager& model_manager,
                        TextureManager& texture_manager,
                        const MaterialManager& material_manager,
@@ -72,22 +66,17 @@ namespace bounce
         virtual void SetWVPMatrix(const glm::mat4& wvp_matrix);
         virtual void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
         
-        virtual void ClearModels();
-        virtual void AddModel(unsigned int model_handle);
-        
+        void Resize(unsigned int width, unsigned int height);
         
         void BeginGeometryPass();
         void EndGeometryPass();
         void BeginLightPasses();
         void BeginPointLightsPass();
         void EndPointLighsPass();
-
-        void RenderPointLight(const PointLight& point_light);
-        
         void RunDirectionalLightPass();
         
         void RenderModel(unsigned int model_handle);
-        
+        void RenderPointLight(const PointLight& point_light);
     };
     
     inline void OpenGLRenderer::SetModelMatrix(const glm::mat4& model_matrix)

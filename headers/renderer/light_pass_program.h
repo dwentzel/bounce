@@ -35,8 +35,6 @@ namespace bounce {
         void SetMatSpecularPower(float power);
         void SetScreenSize(unsigned int width, unsigned int height);
         
-
-
     };
 
 }

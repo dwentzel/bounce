@@ -31,7 +31,7 @@ namespace bounce {
         
         void BindForReading();
         
-        void SetReadBuffer(GBufferTextureType TextureType);
+//        void SetReadBuffer(GBufferTextureType TextureType);
 
     };
 

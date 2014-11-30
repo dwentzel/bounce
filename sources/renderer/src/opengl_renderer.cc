@@ -2,18 +2,13 @@
 
 #include <vector>
 
-#include "g_buffer.h"
-
-#include "sphere_mesh.cc"
-
 
 bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
-                                       const LightManager& light_manager,
                                        const ModelManager& model_manager,
                                        TextureManager& texture_manager,
                                        const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
 : geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
-  mesh_loader_(resource_loader), light_manager_(light_manager),
+  mesh_loader_(resource_loader),
   model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
@@ -26,9 +21,6 @@ bounce::OpenGLRenderer::~OpenGLRenderer()
     delete quad_;
 }
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
-
 void bounce::OpenGLRenderer::Startup()
 {
     CHECK_GL_ERROR();
@@ -37,9 +29,9 @@ void bounce::OpenGLRenderer::Startup()
     
     GLenum glew_error = glewInit();
     if (glew_error != GLEW_OK) {
-        std::cout << glewGetErrorString(glew_error) << std::endl;
-        LOG_ERROR << L"Failed to initialize GLEW" << std::endl;
-        
+        LOG_ERROR << L"Failed to initialize GLEW: "
+                  << glewGetErrorString(glew_error);
+
         exit(-1);
     }
     CHECK_GL_ERROR();
@@ -66,12 +58,6 @@ void bounce::OpenGLRenderer::Startup()
     directional_light_pass_program_.SetPositionTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
     directional_light_pass_program_.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
     directional_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
-    directional_light_pass_program_.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    
-//    m_dirLight.AmbientIntensity = 0.1f;
-//    m_dirLight.Color = COLOR_CYAN;
-//    m_dirLight.DiffuseIntensity = 0.5f;
-//    m_dirLight.Direction = Vector3f(1.0f, 0.0f, 0.0f);
     
     DirectionalLight directional_light;
     directional_light.ambient_intensity = 0.1f;
@@ -87,9 +73,6 @@ void bounce::OpenGLRenderer::Startup()
     point_light_pass_program_.SetPositionTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
     point_light_pass_program_.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
     point_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
-    point_light_pass_program_.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        
-    g_buffer_.Init(WINDOW_WIDTH, WINDOW_HEIGHT);
     
     glGenVertexArrays(1, &model_vertex_array_);
     glBindVertexArray(model_vertex_array_);
@@ -117,38 +100,32 @@ void bounce::OpenGLRenderer::Startup()
     CHECK_GL_ERROR();
 }
 
+void bounce::OpenGLRenderer::Resize(unsigned int width, unsigned int height)
+{
+    g_buffer_ = std::unique_ptr<GBuffer>(new GBuffer());
+    g_buffer_->Init(width, height);
+
+    GLint current_program_id;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current_program_id);
+    
+    directional_light_pass_program_.UseProgram();
+    directional_light_pass_program_.SetScreenSize(width, height);
+
+    point_light_pass_program_.UseProgram();
+    point_light_pass_program_.SetScreenSize(width, height);
+    
+    glUseProgram(current_program_id);
+}
+
 void bounce::OpenGLRenderer::Shutdown() {
+    delete sphere_;
+    delete quad_;
+    
     CHECK_GL_ERROR();
     glDeleteBuffers(1, &model_vertex_buffer_);
-    glDeleteBuffers(1, &directional_vertex_buffer_);
+    glDeleteVertexArrays(1, &model_vertex_array_);
     CHECK_GL_ERROR();
 }
-
-void bounce::OpenGLRenderer::ClearModels()
-{
-    model_handles_.erase(model_handles_.begin(), model_handles_.end());
-}
-
-void bounce::OpenGLRenderer::AddModel(unsigned int model_handle)
-{
-    model_handles_.push_back(model_handle);
-}
-
-
-//void bounce::OpenGLRenderer::BeginFrame()
-//{
-//    BeginGeometryPass();
-//}
-//
-//void bounce::OpenGLRenderer::EndFrame()
-//{
-//    EndGeometryPass();
-//    BeginLightPasses();
-//    RunPointLightsPass();
-//    RunDirectionalLightPass();
-//
-//    //RunLightPass();
-//}
 
 void bounce::OpenGLRenderer::BeginGeometryPass()
 {
@@ -157,7 +134,7 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     geometry_pass_program_.UseProgram();
     CHECK_GL_ERROR();
     
-    g_buffer_.BindForWriting();
+    g_buffer_->BindForWriting();
     
     glDepthMask(GL_TRUE);
     
@@ -184,7 +161,7 @@ void bounce::OpenGLRenderer::BeginLightPasses()
    	glBlendEquation(GL_FUNC_ADD);
    	glBlendFunc(GL_ONE, GL_ONE);
     
-    g_buffer_.BindForReading();
+    g_buffer_->BindForReading();
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -216,7 +193,6 @@ void bounce::OpenGLRenderer::RenderPointLight(const PointLight& point_light)
 {
     point_light_pass_program_.SetPointLight(point_light);
     sphere_->Render();
-    CHECK_GL_ERROR();
 }
 
 //void bounce::OpenGLRenderer::RunPointLightsPass()
@@ -254,41 +230,38 @@ void bounce::OpenGLRenderer::RenderPointLight(const PointLight& point_light)
 //    //   	} 
 //}
 
-void bounce::OpenGLRenderer::RunLightPass()
-{
-    CHECK_GL_ERROR();
-    
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    g_buffer_.BindForReading();
-    
-    GLsizei HalfWidth = (GLsizei)(WINDOW_WIDTH / 2.0f);
-    GLsizei HalfHeight = (GLsizei)(WINDOW_HEIGHT / 2.0f);
-    
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      0, 0, HalfWidth, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      0, HalfHeight, HalfWidth, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    
-    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
-    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-                      HalfWidth, HalfHeight, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    
-    
-//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
+//void bounce::OpenGLRenderer::RunLightPass()
+//{
+//    CHECK_GL_ERROR();
+//    
+//    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    
+//    g_buffer_.BindForReading();
+//    
+//    GLsizei HalfWidth = (GLsizei)(WINDOW_WIDTH / 2.0f);
+//    GLsizei HalfHeight = (GLsizei)(WINDOW_HEIGHT / 2.0f);
+//    
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
 //    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-//                      HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    CHECK_GL_ERROR();
-}
+//                      0, 0, HalfWidth, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
+//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//                      0, HalfHeight, HalfWidth, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    
+//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
+//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//                      HalfWidth, HalfHeight, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    
+////    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
+////    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+////                      HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//    CHECK_GL_ERROR();
+//}
 
 void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
 {
-    CHECK_GL_ERROR();
-    
     const Model& model = model_manager_.GetModel(model_handle);
     
     const std::vector<int>& start_indices = model.mesh_start_indices();
@@ -304,29 +277,10 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         
         int texture_handle = material.texture_handle();
         
-//        GLuint texture_id;
-//        glGenTextures(1, &texture_id);
-        
         if (texture_handle > -1) {
-//            const Texture& texture = texture_manager_.GetTexture(texture_handle);
-
             texture_manager_.UseTexture(texture_handle);
-//            glActiveTexture(GL_TEXTURE0);
-//            glBindTexture(GL_TEXTURE_2D, texture_id);
-//            
-//            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width(), texture.height(),
-//                         0, GL_BGR, GL_UNSIGNED_BYTE, texture.data());
-//            
-//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         }
         
-//        current_program_->SetMaterial(material);
-        
         glDrawArrays(GL_TRIANGLES, start_index, size);
-        
-//        glDeleteTextures(1, &texture_id);
-//        CHECK_GL_ERROR();
     }
-    
 }

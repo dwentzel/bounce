@@ -1,7 +1,7 @@
 #ifndef BOUNCE_BOUNCE_OBJECT_MANAGER_
 #define BOUNCE_BOUNCE_OBJECT_MANAGER_
 
-#include <memory>
+//#include <memory>
 
 #include "framework/object_cache.h"
 #include "object_manager_handle.h"
@@ -36,7 +36,6 @@ namespace bounce {
         AiComponentCache ai_components_;
         RenderComponentCache render_components_;
         PointLightComponentCache point_light_components_;
-        
         
     public:
         

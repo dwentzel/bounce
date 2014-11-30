@@ -22,7 +22,6 @@ namespace bounce {
         
         void SetDirectionalLight(const DirectionalLight& light);
         
-
     };
 
 }

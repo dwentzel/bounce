@@ -3,12 +3,10 @@
 
 #include <memory>
 
-#include "framework/object_cache.h"
 #include "framework/timer.h"
 #include "framework/resource_loader.h"
 
 #include "renderer/vertex_buffer.h"
-#include "renderer/light_manager.h"
 #include "renderer/model_manager.h"
 #include "renderer/texture_manager.h"
 #include "renderer/material_manager.h"
@@ -19,11 +17,8 @@
 #include "bounce/keyboard_state.h"
 #include "bounce/input_system.h"
 #include "bounce/movement_system.h"
-#include "bounce/render_system.h"
-
 #include "bounce/object_manager.h"
-
-#include "bounce/render_component.h"
+#include "bounce/render_system.h"
 
 
 namespace bounce {
@@ -38,7 +33,6 @@ namespace bounce {
         ResourceLoader resource_loader_;
         
         VertexBuffer vertex_buffer_;
-        LightManager light_manager_;
         ModelManager model_manager_;
         TextureManager texture_manager_;
         MaterialManager material_manager_;
