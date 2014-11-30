@@ -18,27 +18,6 @@ namespace bounce {
         unsigned int next_index() const;
     };
     
-    inline Material& MaterialManager::CreateMaterial()
-    {
-        materials_.push_back(Material());
-        return *materials_.rbegin();
-    }
-    
-    inline unsigned int MaterialManager::size() const
-    {
-        return materials_.size();
-    }
-    
-    inline unsigned int MaterialManager::next_index() const
-    {
-        return materials_.size();
-    }
-    
-    inline const Material& MaterialManager::GetMaterial(unsigned int index) const
-    {
-        return materials_[index];
-    }
-
 }
 
 #endif // BOUNCE_RENDERER_MATERIAL_MANAGER_

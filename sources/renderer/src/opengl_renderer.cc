@@ -1,7 +1,5 @@
 #include "opengl_renderer.h"
-
-#include <vector>
-
+#include "exceptions.h"
 
 bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
                                        const ModelManager& model_manager,
@@ -32,7 +30,7 @@ void bounce::OpenGLRenderer::Startup()
         LOG_ERROR << L"Failed to initialize GLEW: "
                   << glewGetErrorString(glew_error);
 
-        exit(-1);
+        throw RendererException();
     }
     CHECK_GL_ERROR();
     
@@ -139,7 +137,7 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     glDepthMask(GL_TRUE);
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     glEnable(GL_DEPTH_TEST);
     
     glDisable(GL_BLEND);

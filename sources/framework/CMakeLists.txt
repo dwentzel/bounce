@@ -1,7 +1,7 @@
 setup_module(framework)
 
 set(HEADERS
-    ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_exception.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_cache.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_cache_handle.h
@@ -11,7 +11,7 @@ set(HEADERS
 )
 
 set(SOURCES
-    src/bounce_exception.cc
+    src/exceptions.cc
     src/framework.cc
     src/object_cache.cc
     src/object_cache_handle.cc

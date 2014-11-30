@@ -3,6 +3,7 @@ setup_module(renderer)
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_gl.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/directional_light_pass_program.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/g_buffer.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/geometry_pass_program.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/light_pass_program.h
@@ -15,7 +16,6 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/model_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/opengl_renderer.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_pass_program.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/shader.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/shader_program.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/texture.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/texture_manager.h
@@ -25,6 +25,7 @@ set(HEADERS
 set(SOURCES
     src/bounce_gl.cc
     src/directional_light_pass_program.cc
+    src/exceptions.cc
     src/g_buffer.cc
     src/geometry_pass_program.cc
     src/light_pass_program.cc
@@ -36,7 +37,6 @@ set(SOURCES
     src/model_manager.cc
     src/opengl_renderer.cc
     src/point_light_pass_program.cc
-    src/shader.cc
     src/shader_program.cc
     src/texture.cc
     src/texture_manager.cc

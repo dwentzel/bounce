@@ -13,8 +13,6 @@ bounce::GeometryPassProgram::~GeometryPassProgram()
 
 bool bounce::GeometryPassProgram::Init()
 {
-    CHECK_GL_ERROR();
-    
     CreateProgram();
     
     LoadVertexShader("geometry_pass.vert.glsl");
@@ -46,37 +44,27 @@ bool bounce::GeometryPassProgram::Init()
 
 void bounce::GeometryPassProgram::SetModelMatrix(const glm::mat4& model_matrix)
 {
-    CHECK_GL_ERROR();
     glUniformMatrix4fv(model_matrix_location_, 1, GL_FALSE, &model_matrix[0][0]);
-    CHECK_GL_ERROR();
 }
 
 void bounce::GeometryPassProgram::SetWorldMatrix(const glm::mat4& model_matrix)
 {
-    CHECK_GL_ERROR();
     glUniformMatrix4fv(world_matrix_location_, 1, GL_FALSE, &model_matrix[0][0]);
-    CHECK_GL_ERROR();
 }
 
 void bounce::GeometryPassProgram::SetViewMatrix(const glm::mat4& view_matrix)
 {
-    CHECK_GL_ERROR();
     glUniformMatrix4fv(view_matrix_location_, 1, GL_FALSE, &view_matrix[0][0]);
-    CHECK_GL_ERROR();
 }
 
 void bounce::GeometryPassProgram::SetWVPMatrix(const glm::mat4& wvp_matrix)
 {
-    CHECK_GL_ERROR();
     glUniformMatrix4fv(wvp_matrix_location_, 1, GL_FALSE, &wvp_matrix[0][0]);
-    CHECK_GL_ERROR();
 }
 
 void bounce::GeometryPassProgram::SetMWVPMatrix(const glm::mat4& mwvp_matrix)
 {
-    CHECK_GL_ERROR();
     glUniformMatrix4fv(mwvp_matrix_location_, 1, GL_FALSE, &mwvp_matrix[0][0]);
-    CHECK_GL_ERROR();
 }
 
 void bounce::GeometryPassProgram::SetColorTextureUnit(unsigned int texture_unit)

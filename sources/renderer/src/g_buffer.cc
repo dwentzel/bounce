@@ -1,5 +1,7 @@
 #include "g_buffer.h"
 
+#include "exceptions.h"
+
 bounce::GBuffer::GBuffer()
 : fbo_(0), depth_texture_(0)
 {
@@ -13,7 +15,7 @@ bounce::GBuffer::~GBuffer()
     glDeleteFramebuffers(1, &fbo_);
 }
 
-bool bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height)
+void bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height)
 {
     glGenFramebuffers(1, &fbo_);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo_);
@@ -40,14 +42,12 @@ bool bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height
     
     if (status != GL_FRAMEBUFFER_COMPLETE) {
         LOG_ERROR << "Framebuffer error, status: 0x" << std::hex << status << std::endl;
-        
         CHECK_GL_ERROR();
-        return false;
+        
+        throw RendererException();
     }
     
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-    
-    return true;
 }
 
 void bounce::GBuffer::BindForWriting()
@@ -64,9 +64,3 @@ void bounce::GBuffer::BindForReading()
         glBindTexture(GL_TEXTURE_2D, textures_[GBUFFER_TEXTURE_TYPE_POSITION + i]);
     }
 }
-
-//void bounce::GBuffer::SetReadBuffer(GBufferTextureType texture_type)
-//{
-//    glReadBuffer(GL_COLOR_ATTACHMENT0 + texture_type);
-//}
-

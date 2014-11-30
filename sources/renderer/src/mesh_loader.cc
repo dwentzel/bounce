@@ -6,6 +6,8 @@
 
 #include "logging/log.h"
 
+#include "exceptions.h"
+
 bounce::MeshLoader::MeshLoader(const ResourceLoader& resource_loader)
 : resource_loader_(resource_loader)
 {
@@ -26,6 +28,7 @@ bounce::Mesh* bounce::MeshLoader::Load(const std::string& resource_name) const
     
     if (!scene) {
         LOG_ERROR << "Could not read scene from " << resource_name;
+        throw RendererException();
     }
     
     unsigned int vertex_count = 0;

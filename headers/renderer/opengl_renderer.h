@@ -25,7 +25,6 @@ namespace bounce
     class OpenGLRenderer {
     private:
         std::unique_ptr<GBuffer> g_buffer_;
-//        GBuffer g_buffer_;
         
         GLuint model_vertex_array_;
         GLuint model_vertex_buffer_;

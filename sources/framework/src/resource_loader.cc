@@ -19,7 +19,7 @@ std::string bounce::ResourceLoader::LoadFileData(const std::string& file_path) c
     if (file_stream.is_open()) {
         std::string line;
         
-        while (getline(file_stream, line)) {
+        while (std::getline(file_stream, line)) {
             output_stream << line << "\n";
         }
         

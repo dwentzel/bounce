@@ -37,26 +37,6 @@ namespace bounce {
         
         const std::uint8_t* data() const;
     };
-
-    inline unsigned int Texture::size() const
-    {
-        return size_;
-    }
-    
-    inline unsigned int Texture::width() const
-    {
-        return width_;
-    }
-    
-    inline unsigned int Texture::height() const
-    {
-        return height_;
-    }
-    
-    inline const std::uint8_t* Texture::data() const
-    {
-        return data_;
-    }
     
 }
 

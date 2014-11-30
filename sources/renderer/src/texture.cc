@@ -38,3 +38,24 @@ void bounce::Texture::UseTexture()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_id_);
 }
+
+
+unsigned int bounce::Texture::size() const
+{
+    return size_;
+}
+
+unsigned int bounce::Texture::width() const
+{
+    return width_;
+}
+
+unsigned int bounce::Texture::height() const
+{
+    return height_;
+}
+
+const std::uint8_t* bounce::Texture::data() const
+{
+    return data_;
+}
