@@ -25,6 +25,8 @@ namespace bounce {
         void AttachComponent(GameComponentHandle component);
         void DetachComponent(GameComponentHandle component);
         void HandleMessage(const Message& message);
+        
+        GameComponentHandle GetComponentOfType(GameComponentType type);
     };
     
 }

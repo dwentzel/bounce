@@ -6,7 +6,7 @@
 
 namespace bounce {
     
-    template<typename T>
+    template<class T>
     class ObjectCache {
     private:
         std::vector<T> cache_;
@@ -24,45 +24,45 @@ namespace bounce {
         iterator end();
         const_iterator end() const;
         
-        template<typename... FactoryArgs>
+        template<class... FactoryArgs>
         unsigned int GenerateObject(FactoryArgs&&...);
         T& GetObject(unsigned int handle);
         
     };
 
     
-    template<typename T>
+    template<class T>
     ObjectCache<T>::ObjectCache()
     {
         
     }
     
-    template<typename T>
+    template<class T>
     typename ObjectCache<T>::iterator ObjectCache<T>::begin()
     {
         return cache_.begin();
     }
     
-    template<typename T>
+    template<class T>
     typename ObjectCache<T>::const_iterator ObjectCache<T>::begin() const
     {
         return cache_.begin();
     }
     
-    template<typename T>
+    template<class T>
     typename ObjectCache<T>::iterator ObjectCache<T>::end()
     {
         return cache_.end();
     }
     
-    template<typename T>
+    template<class T>
     typename ObjectCache<T>::const_iterator ObjectCache<T>::end() const
     {
         return cache_.end();
     }
     
-    template<typename T>
-    template<typename... FactoryArgs>
+    template<class T>
+    template<class... FactoryArgs>
     unsigned int ObjectCache<T>::GenerateObject(FactoryArgs&&... args)
     {
         unsigned int index = cache_.size();
@@ -72,11 +72,62 @@ namespace bounce {
         return index;
     }
     
-    template<typename T>
+    template<class T>
     T& ObjectCache<T>::GetObject(unsigned int handle)
     {
         return cache_[handle];
     }
+    
+//    template <class T>
+//    class ObjectCacheHandle {
+//    private:
+//        unsigned int index_;
+//        unsigned int type_;
+//    public:
+//        ObjectCacheHandle(unsigned int index, unsigned int type) : index_(index), type_(type)
+//        {
+//            
+//        }
+//        
+//        unsigned int index() const
+//        {
+//            return index_;
+//        }
+//        
+//        size_t type() const
+//        {
+//            return type_;
+//        }
+//    };
+    
+//    template <class Handle, class... Ts>
+//    class CompositeCache {
+//    private:
+//        std::tuple<ObjectCache<Ts>...> caches_;
+//    public:
+//        template <size_t k>
+//        ObjectCacheHandle<Handle> Generate();
+//        
+//        template <unsigned int type>
+//        Handle& Resolve(ObjectCacheHandle<Handle> handle);
+//    };
+//    
+//    template <class Handle, class... Ts>
+//    template <size_t k>
+//    ObjectCacheHandle<Handle> CompositeCache<Handle, Ts...>::Generate()
+//    {
+//        unsigned int index = std::get<k>(caches_).GenerateObject();
+//        ObjectCacheHandle<Handle> handle(index, k);
+//        return handle;
+//    }
+//    
+//    template <class Handle, class... Ts>
+//    template <unsigned int type>
+//    Handle& CompositeCache<Handle, Ts...>::Resolve(ObjectCacheHandle<Handle> handle)
+//    {
+//        return std::get<type>(caches_).GetObject(handle.index());
+//    }
+    
     
 }
 

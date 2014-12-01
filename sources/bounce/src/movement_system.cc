@@ -2,8 +2,8 @@
 #include "logging/log.h"
 
 
-bounce::MovementSystem::MovementSystem(BodyComponentCache& body_components)
-: body_components_(body_components)
+bounce::MovementSystem::MovementSystem(GameEntityCache& game_entities)
+: game_entities_(game_entities)
 {
     
 }
@@ -20,14 +20,26 @@ void bounce::MovementSystem::Shutdown()
 
 void bounce::MovementSystem::Update(float delta_time)
 {
-    for (BodyComponentCache::iterator handle = body_components_.begin();
-         handle != body_components_.end(); ++handle) {
+    for (GameEntity& entity : game_entities_) {
+        GameComponentHandle component_handle = entity.GetComponentOfType(BODY_COMPONENT);
+        if (component_handle.index() == -1) {
+            continue;
+        }
         
-        BodyComponent& component = *handle;
+        BodyComponent& component = component_handle.ResolveAs<BodyComponent>();
         
         UpdateRotation(component, delta_time);
         UpdatePosition(component, delta_time);
     }
+    
+//    for (BodyComponentCache::iterator handle = body_components_.begin();
+//         handle != body_components_.end(); ++handle) {
+//        
+//        BodyComponent& component = *handle;
+//        
+//        UpdateRotation(component, delta_time);
+//        UpdatePosition(component, delta_time);
+//    }
 }
 
 void bounce::MovementSystem::UpdateRotation(BodyComponent& component, float delta_time)

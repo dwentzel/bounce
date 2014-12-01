@@ -33,6 +33,7 @@ set(TEST_HEADERS
 )
 
 set(TEST_SOURCES
+    test/composite_cache_test.cc
     test/lock_free_queue_test.cc
 )
 

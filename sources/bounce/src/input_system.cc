@@ -1,7 +1,7 @@
 #include "input_system.h"
 
-bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state, ControlComponentCache& control_components, AiComponentCache& ai_components)
-: keyboard_state_(keyboard_state), control_components_(control_components), ai_components_(ai_components)
+bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state, GameEntityCache& game_entities)
+: keyboard_state_(keyboard_state), game_entities_(game_entities)
 {
     
 }
@@ -18,11 +18,25 @@ void bounce::InputSystem::Shutdown()
 
 void bounce::InputSystem::Update(float delta_time)
 {
-    for (ControlComponent& component : control_components_) {
-        component.Update();
+    for (GameEntity& entity : game_entities_) {
+        GameComponentHandle control_component_handle = entity.GetComponentOfType(CONTROL_COMPONENT);
+        if (control_component_handle.index() > -1) {
+            ControlComponent& component = control_component_handle.ResolveAs<ControlComponent>();
+            component.Update();
+        }
+
+        GameComponentHandle ai_component_handle = entity.GetComponentOfType(AI_COMPONENT);
+        if (ai_component_handle.index() > -1) {
+            AiComponent& component = ai_component_handle.ResolveAs<AiComponent>();
+            component.Update();
+        }
     }
     
-    for (AiComponent& component : ai_components_) {
-        component.Update();
-    }
+//    for (ControlComponent& component : control_components_) {
+//        component.Update();
+//    }
+//    
+//    for (AiComponent& component : ai_components_) {
+//        component.Update();
+//    }
 }

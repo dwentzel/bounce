@@ -9,11 +9,11 @@ namespace bounce {
     class InputSystem {
     private:
         const KeyboardState& keyboard_state_;
-        ControlComponentCache& control_components_;
-        AiComponentCache& ai_components_;
+
+        GameEntityCache& game_entities_;
         
     public:
-        InputSystem(const KeyboardState& keyboard_state, ControlComponentCache& control_components, AiComponentCache& ai_components);
+        InputSystem(const KeyboardState& keyboard_state, GameEntityCache& game_entities);
         
         void Startup();
         void Shutdown();

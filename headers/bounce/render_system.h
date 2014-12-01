@@ -15,6 +15,7 @@
 
 namespace bounce {
     
+    typedef ObjectCache<GameEntity> GameEntityCache;
     typedef ObjectCache<RenderComponent> RenderComponentCache;
     typedef ObjectCache<PointLightComponent> PointLightComponentCache;
     
@@ -23,8 +24,10 @@ namespace bounce {
         const ApplicationContext& application_context_;
         const WindowContext& window_context_;
         
-        const RenderComponentCache& render_component_cache_;
-        const PointLightComponentCache& point_light_component_cache_;
+        GameEntityCache& game_entity_cache_;
+        
+//        const RenderComponentCache& render_component_cache_;
+//        const PointLightComponentCache& point_light_component_cache_;
         
         OpenGLRenderer& renderer_;
         
@@ -36,8 +39,7 @@ namespace bounce {
     public:
         RenderSystem(const ApplicationContext& application_context,
                      const WindowContext& window_context,
-                     const RenderComponentCache& render_component_cache,
-                     const PointLightComponentCache& point_light_component_cache,
+                     GameEntityCache& game_entity_cache,
                      OpenGLRenderer& renderer);
         
         virtual void Startup();
