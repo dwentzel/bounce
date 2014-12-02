@@ -72,6 +72,14 @@ void bounce::OpenGLRenderer::Startup()
     point_light_pass_program_.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
     point_light_pass_program_.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
     
+    sphere_ = mesh_loader_.Load("sphere.dae");
+    quad_ = mesh_loader_.Load("quad.dae");
+    
+    CHECK_GL_ERROR();
+}
+
+void bounce::OpenGLRenderer::BufferModelData()
+{
     glGenVertexArrays(1, &model_vertex_array_);
     glBindVertexArray(model_vertex_array_);
     
@@ -91,11 +99,6 @@ void bounce::OpenGLRenderer::Startup()
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
     
     glBindVertexArray(0);
-    
-    sphere_ = mesh_loader_.Load("sphere.dae");
-    quad_ = mesh_loader_.Load("quad.dae");
-    
-    CHECK_GL_ERROR();
 }
 
 void bounce::OpenGLRenderer::Resize(unsigned int width, unsigned int height)

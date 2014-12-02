@@ -34,6 +34,7 @@ void bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height
     glBindTexture(GL_TEXTURE_2D, depth_texture_);
     glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, window_width, window_height);
     glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_texture_, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     
     GLenum draw_buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
     glDrawBuffers(3, draw_buffers);

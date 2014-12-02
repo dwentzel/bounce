@@ -15,6 +15,8 @@
 #define CHECK_GL_ERROR() bounce::CheckOpenGlError(__FILE__,__LINE__,__PRETTY_FUNCTION__)
 #define ASSERT_NO_GL_ERROR() bounce::AssertNoGlError(__FILE__,__LINE__,__PRETTY_FUNCTION__)
 
+//#define CHECK_UNIFORM_LOCATION_AND_LOG_ERROR(uniform_location) bounce::CheckUniformLocationAndLogError(uniform_location, #uniform_location)
+
 namespace bounce {
 
     const float PI = 3.1415926535897932384626433832795f;
@@ -22,6 +24,7 @@ namespace bounce {
     
     void CheckOpenGlError(const std::string& file, int line, const std::string& function);
     void AssertNoGlError(const std::string& file, int line, const std::string& function);
+//    void CheckUniformLocationAndLogError(GLuint location, const std::string& uniform);
 
 }
 

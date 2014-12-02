@@ -18,7 +18,7 @@ namespace bounce {
     public:
         DirectionalLightPassProgram(const ResourceLoader& resource_loader);
         
-        bool Init();
+        void Init();
         
         void SetDirectionalLight(const DirectionalLight& light);
         

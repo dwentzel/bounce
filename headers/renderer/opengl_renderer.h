@@ -74,6 +74,8 @@ namespace bounce
         void EndPointLighsPass();
         void RunDirectionalLightPass();
         
+        void BufferModelData();
+        
         void RenderModel(unsigned int model_handle);
         void RenderPointLight(const PointLight& point_light);
     };

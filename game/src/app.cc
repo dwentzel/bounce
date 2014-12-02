@@ -42,11 +42,14 @@ namespace bounce {
     bool App::onInit()
     {
         srand(time(0));
+
+        render_system_.Startup();        
         
         Importer importer(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_);
         unsigned int model_handle = importer.ImportFile("simple_craft.dae");
+
+        renderer_.BufferModelData();
         
-        render_system_.Startup();
         
         GameEntityHandle light0_handle = entity_manager_.GenerateGameEntity();
         GameEntity& light0 = light0_handle.Resolve();

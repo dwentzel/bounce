@@ -76,9 +76,9 @@ void bounce::TextureManager::LoadTexture(const std::string& texture)
         
         file.seekg(header.offset);
         file.read((char*)pixel_data, header.size);
+        file.close();
         
         textures_.emplace_back(header.size, width, height, pixel_data);
-        file.close();
     }
     else {
         LOG_WARNING << L"Could not find file " << texture_path << std::endl;

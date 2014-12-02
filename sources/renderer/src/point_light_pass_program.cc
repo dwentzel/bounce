@@ -6,7 +6,7 @@ bounce::PointLightPassProgram::PointLightPassProgram(const ResourceLoader& resou
     
 }
 
-bool bounce::PointLightPassProgram::Init()
+void bounce::PointLightPassProgram::Init()
 {
     CreateProgram();
     
@@ -21,18 +21,8 @@ bool bounce::PointLightPassProgram::Init()
     point_light_location_.attenuation.constant = GetUniformLocation("gPointLight.Atten.Constant");
     point_light_location_.attenuation.linear = GetUniformLocation("gPointLight.Atten.Linear");
     point_light_location_.attenuation.exp = GetUniformLocation("gPointLight.Atten.Exp");
-    
-//    if (point_light_location_.Color == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.Position == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.Atten.Constant == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.Atten.Linear == INVALID_UNIFORM_LOCATION ||
-//        point_light_location_.Atten.Exp == INVALID_UNIFORM_LOCATION) {
-//        return false;
-//    }
-    
-    return LightPassProgram::Init();
+        
+    LightPassProgram::Init();
 }
 
 

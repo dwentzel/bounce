@@ -21,7 +21,7 @@ namespace bounce {
 
     protected:
         LightPassProgram(const ResourceLoader& resource_loader);
-        bool Init();
+        void Init();
         
     public:
         void SetWVP(const glm::mat4& wvp_matrix);

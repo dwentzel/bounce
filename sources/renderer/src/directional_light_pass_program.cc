@@ -6,7 +6,7 @@ bounce::DirectionalLightPassProgram::DirectionalLightPassProgram(const ResourceL
     
 }
 
-bool bounce::DirectionalLightPassProgram::Init()
+void bounce::DirectionalLightPassProgram::Init()
 {
     CreateProgram();
     
@@ -19,14 +19,7 @@ bool bounce::DirectionalLightPassProgram::Init()
     directional_light_location_.direction = GetUniformLocation("gDirectionalLight.Direction");
     directional_light_location_.diffuse_intensity = GetUniformLocation("gDirectionalLight.Base.DiffuseIntensity");
     
-    //    if (directional_light_location_.ambient_intensity == INVALID_UNIFORM_LOCATION ||
-    //        directional_light_location_.color == INVALID_UNIFORM_LOCATION ||
-    //        directional_light_location_.diffuse_intensity == INVALID_UNIFORM_LOCATION ||
-    //        directional_light_location_.direction == INVALID_UNIFORM_LOCATION) {
-    //        return false;
-    //    }
-    
-    return LightPassProgram::Init();
+    LightPassProgram::Init();
 }
 
 

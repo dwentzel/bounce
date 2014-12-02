@@ -20,17 +20,16 @@ namespace bounce {
         
     public:
         GeometryPassProgram(const ResourceLoader& resource_loader);
-        ~GeometryPassProgram();
         
-        bool Init();
+        void Init();
         
         void SetModelMatrix(const glm::mat4& model_matrix);
         void SetWorldMatrix(const glm::mat4& world_matrix);
         void SetViewMatrix(const glm::mat4& view_matrix);
         void SetWVPMatrix(const glm::mat4& wvp_matrix);
         void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
-        
         void SetColorTextureUnit(unsigned int texture_unit);
+        
     };
 
 }

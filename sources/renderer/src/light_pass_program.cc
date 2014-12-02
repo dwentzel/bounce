@@ -6,7 +6,7 @@ bounce::LightPassProgram::LightPassProgram(const ResourceLoader& resource_loader
     
 }
 
-bool bounce::LightPassProgram::Init()
+void bounce::LightPassProgram::Init()
 {
     WVP_location_ = GetUniformLocation("WVP");
     position_texture_unit_location_ = GetUniformLocation("gPositionMap");
@@ -17,18 +17,6 @@ bool bounce::LightPassProgram::Init()
     material_specular_power_location_ = GetUniformLocation("gSpecularPower");
     screen_size_location_ = GetUniformLocation("gScreenSize");
     
-//    if (m_WVPLocation == INVALID_UNIFORM_LOCATION ||
-//        m_posTextureUnitLocation == INVALID_UNIFORM_LOCATION ||
-//        m_colorTextureUnitLocation == INVALID_UNIFORM_LOCATION ||
-//        m_normalTextureUnitLocation == INVALID_UNIFORM_LOCATION ||
-//        m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
-//        m_matSpecularIntensityLocation == INVALID_UNIFORM_LOCATION ||
-//        m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
-//        m_screenSizeLocation == INVALID_UNIFORM_LOCATION) {
-//        return false;
-//    }
-    
-    return true;
 }
 
 void bounce::LightPassProgram::SetWVP(const glm::mat4& WVP)

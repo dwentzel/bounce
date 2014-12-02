@@ -6,12 +6,7 @@ bounce::GeometryPassProgram::GeometryPassProgram(const ResourceLoader& resource_
     
 }
 
-bounce::GeometryPassProgram::~GeometryPassProgram()
-{
-    
-}
-
-bool bounce::GeometryPassProgram::Init()
+void bounce::GeometryPassProgram::Init()
 {
     CreateProgram();
     
@@ -26,20 +21,6 @@ bool bounce::GeometryPassProgram::Init()
     model_matrix_location_ = GetUniformLocation("M");
     
     color_texture_unit_location_ = GetUniformLocation("gColorMap");
-    
-    
-    if (mwvp_matrix_location_ == GL_INVALID_INDEX
-        || wvp_matrix_location_ == GL_INVALID_INDEX
-        || view_matrix_location_ == GL_INVALID_INDEX
-        || world_matrix_location_ == GL_INVALID_INDEX
-        || model_matrix_location_ == GL_INVALID_INDEX) {
-        
-        LOG_ERROR << "Invalid uniform location in GeometryPassProgram";
-        return false;
-    }
-    
-    CHECK_GL_ERROR();
-    return true;
 }
 
 void bounce::GeometryPassProgram::SetModelMatrix(const glm::mat4& model_matrix)

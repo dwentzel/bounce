@@ -1,21 +1,18 @@
 #ifndef BOUNCE_RENDERER_SHADER_PROGRAM_
 #define BOUNCE_RENDERER_SHADER_PROGRAM_
 
-#include "bounce_gl.h"
-#include <string>
 
+#include <string>
 #include "framework/resource_loader.h"
-#include "material.h"
+#include "bounce_gl.h"
 
 namespace bounce {
 
     class ShaderProgram {
     private:
-        static std::string base_path_;
-        
-        GLint program_id_;
-        GLint vertex_shader_id_;
-        GLint fragment_shader_id_;
+        GLuint program_id_;
+        GLuint vertex_shader_id_;
+        GLuint fragment_shader_id_;
         
         const ResourceLoader& resource_loader_;
         
@@ -29,24 +26,12 @@ namespace bounce {
 
         void CreateProgram();
         
-        GLint GetUniformLocation(const GLchar* uniform);
+        GLuint GetUniformLocation(const GLchar* uniform);
         
         ShaderProgram(const ResourceLoader& resource_loader);
         
     public:
-        static void base_path(const std::string& path);
-        
-        void Init();
-        
         void UseProgram();
-
-        void LoadUniforms();
-        
-        void SetLightCount(unsigned int light_count);
-        
-        void SetLight(unsigned int index, const struct DirectionalLight& light);
-        
-        void SetMaterial(const Material& material);
         
     };
 
