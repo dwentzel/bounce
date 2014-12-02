@@ -1,5 +1,5 @@
-#ifndef BOUNCE_BOUNCE_MOVEMENT_SYSTEM_
-#define BOUNCE_BOUNCE_MOVEMENT_SYSTEM_
+#ifndef BOUNCE_ENGINE_MOVEMENT_SYSTEM_
+#define BOUNCE_ENGINE_MOVEMENT_SYSTEM_
 
 #include "object_manager.h"
 #include "body_component.h"
@@ -27,4 +27,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_BOUNCE_MOVEMENT_SYSTEM_
+#endif // BOUNCE_ENGINE_MOVEMENT_SYSTEM_

@@ -1,7 +1,5 @@
-#ifndef BOUNCE_BOUNCE_OBJECT_MANAGER_
-#define BOUNCE_BOUNCE_OBJECT_MANAGER_
-
-//#include <memory>
+#ifndef BOUNCE_ENGINE_OBJECT_MANAGER_
+#define BOUNCE_ENGINE_OBJECT_MANAGER_
 
 #include "framework/object_cache.h"
 #include "object_manager_handle.h"
@@ -205,4 +203,4 @@ namespace bounce {
 //    }
 }
 
-#endif // BOUNCE_BOUNCE_OBJECT_MANAGER_
+#endif // BOUNCE_ENGINE_OBJECT_MANAGER_

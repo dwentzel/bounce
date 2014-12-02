@@ -1,5 +1,5 @@
-#ifndef BOUNCE_MESSAGE_H_
-#define BOUNCE_MESSAGE_H_
+#ifndef BOUNCE_ENGINE_MESSAGE_H_
+#define BOUNCE_ENGINE_MESSAGE_H_
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -101,4 +101,4 @@ namespace bounce {
     
 }
 
-#endif // BOUNCE_MESSAGE_H_
+#endif // BOUNCE_ENGINE_MESSAGE_H_

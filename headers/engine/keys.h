@@ -1,5 +1,5 @@
-#ifndef BOUNCE_KEYS_H_
-#define BOUNCE_KEYS_H_
+#ifndef BOUNCE_ENGINE_KEYS_H_
+#define BOUNCE_ENGINE_KEYS_H_
 
 namespace bounce {
     
@@ -60,4 +60,4 @@ namespace bounce {
     
 }
 
-#endif // BOUNCE_KEYS_H_
+#endif // BOUNCE_ENGINE_KEYS_H_

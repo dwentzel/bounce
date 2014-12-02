@@ -1,8 +1,7 @@
-#ifndef BOUNCE_BOUNCE_AI_STRATEGY_
-#define BOUNCE_BOUNCE_AI_STRATEGY_
+#ifndef BOUNCE_ENGINE_AI_STRATEGY_
+#define BOUNCE_ENGINE_AI_STRATEGY_
 
 #include "message.h"
-#include "object_manager_handle.h"
 
 namespace bounce {
 
@@ -12,8 +11,6 @@ namespace bounce {
     private:
         
     protected:
-        //AiStrategy(ObjectManagerHandle<AiComponent> owner);
-
         void SendMessage(const AiComponent& owner, const Message& message);
         
     public:
@@ -26,4 +23,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_BOUNCE_AI_STRATEGY_
+#endif // BOUNCE_ENGINE_AI_STRATEGY_

@@ -7,7 +7,7 @@ bounce::Texture::Texture(unsigned int size, unsigned int width, unsigned int hei
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_id_);
-        
+    
     glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB32F, width_, height_);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width_, height_, GL_BGR, GL_UNSIGNED_BYTE, data_);
     
@@ -66,8 +66,3 @@ unsigned int bounce::Texture::height() const
 {
     return height_;
 }
-
-//const std::uint8_t* bounce::Texture::data() const
-//{
-//    return data_;
-//}

@@ -1,5 +1,5 @@
-#ifndef BOUNCE_CONTROL_COMPONENT_H_
-#define BOUNCE_CONTROL_COMPONENT_H_
+#ifndef BOUNCE_ENGINE_CONTROL_COMPONENT_H_
+#define BOUNCE_ENGINE_CONTROL_COMPONENT_H_
 
 #include "game_component.h"
 #include "keyboard_state.h"
@@ -10,9 +10,6 @@ namespace bounce {
     private:
         const KeyboardState& keyboard_state_;
         
-//        ControlComponent(const ControlComponent&) = delete;
-//        ControlComponent& operator=(const ControlComponent&) = delete;
-
         ControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
         
     public:
@@ -24,8 +21,8 @@ namespace bounce {
         
         virtual void Update();
     };
-
     
-    }
+    
+}
 
-#endif // BOUNCE_CONTROL_COMPONENT_H_
+#endif // BOUNCE_ENGINE_CONTROL_COMPONENT_H_

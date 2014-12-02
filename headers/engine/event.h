@@ -1,5 +1,5 @@
-#ifndef BOUNCE_EVENT_HPP_
-#define BOUNCE_EVENT_HPP_
+#ifndef BOUNCE_ENGINE_EVENT_H_
+#define BOUNCE_ENGINE_EVENT_H_
 
 #include <memory>
 #include "framework/lock_free_queue.h"
@@ -76,4 +76,4 @@ namespace bounce {
     };
 }
 
-#endif
+#endif // BOUNCE_ENGINE_EVENT_H_

@@ -35,7 +35,6 @@ namespace bounce {
         unsigned int width() const;
         unsigned int height() const;
         
-//        const std::uint8_t* data() const;
     };
     
 }

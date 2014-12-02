@@ -1,5 +1,5 @@
-#ifndef BOUNCE_GAME_COMPONENT_TYPE_H_
-#define BOUNCE_GAME_COMPONENT_TYPE_H_
+#ifndef BOUNCE_ENGINE_GAME_COMPONENT_TYPE_H_
+#define BOUNCE_ENGINE_GAME_COMPONENT_TYPE_H_
 
 namespace bounce {
     enum GameComponentType {

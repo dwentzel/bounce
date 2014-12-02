@@ -1,5 +1,5 @@
-#ifndef BOUNCE_BOUNCE_WINDOW_CONTEXT_
-#define BOUNCE_BOUNCE_WINDOW_CONTEXT_
+#ifndef BOUNCE_ENGINE_WINDOW_CONTEXT_
+#define BOUNCE_ENGINE_WINDOW_CONTEXT_
 
 namespace bounce {
 
@@ -18,4 +18,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_BOUNCE_WINDOW_CONTEXT_
+#endif // BOUNCE_ENGINE_WINDOW_CONTEXT_

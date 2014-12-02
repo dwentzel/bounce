@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDER_SYSTEM_H_
-#define BOUNCE_RENDER_SYSTEM_H_
+#ifndef BOUNCE_ENGINE_RENDER_SYSTEM_H_
+#define BOUNCE_ENGINE_RENDER_SYSTEM_H_
 
 #include <vector>
 
@@ -43,4 +43,4 @@ namespace bounce {
     
 }
 
-#endif
+#endif // BOUNCE_ENGINE_RENDER_SYSTEM_H_

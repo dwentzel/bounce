@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDER_COMPONENT_H_
-#define BOUNCE_RENDER_COMPONENT_H_
+#ifndef BOUNCE_ENGINE_RENDER_COMPONENT_H_
+#define BOUNCE_ENGINE_RENDER_COMPONENT_H_
 
 #include "renderer/model.h"
 #include "game_component.h"
@@ -28,10 +28,9 @@ namespace bounce {
         virtual void Update();
         
         virtual void HandleMessage(const Message& message);
+        
     };
     
-//    typedef ObjectCache<RenderComponent> RenderComponentCache;
-//    typedef ObjectCacheHandle<RenderComponent> RenderComponentHandle;
 }
 
-#endif
+#endif // BOUNCE_ENGINE_RENDER_COMPONENT_H_

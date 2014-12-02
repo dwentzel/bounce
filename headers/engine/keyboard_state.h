@@ -1,12 +1,5 @@
-/*
- * KeyboardState.h
- *
- *  Created on: 6 jun 2013
- *      Author: daniel
- */
-
-#ifndef BOUNCE_KEYBOARDSTATE_H_
-#define BOUNCE_KEYBOARDSTATE_H_
+#ifndef BOUNCE_ENGINE_KEYBOARDSTATE_H_
+#define BOUNCE_ENGINE_KEYBOARDSTATE_H_
 
 #include <memory>
 #include <unordered_set>
@@ -28,4 +21,4 @@ public:
 };
 
 }
-#endif // BOUNCE_KEYBOARDSTATE_H_
+#endif // BOUNCE_ENGINE_KEYBOARDSTATE_H_

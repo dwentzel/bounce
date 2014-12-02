@@ -1,5 +1,5 @@
-#ifndef BOUNCE_GAME_SYSTEM_H
-#define BOUNCE_GAME_SYSTEM_H
+#ifndef BOUNCE_ENGINE_GAME_SYSTEM_H_
+#define BOUNCE_ENGINE_GAME_SYSTEM_H_
 
 namespace bounce {
     
@@ -12,4 +12,4 @@ namespace bounce {
     
 }
 
-#endif
+#endif // BOUNCE_ENGINE_GAME_SYSTEM_H_

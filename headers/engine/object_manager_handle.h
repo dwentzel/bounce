@@ -1,5 +1,5 @@
-#ifndef BOUNCE_BOUNCE_OBJECT_MANAGER_HANDLE_
-#define BOUNCE_BOUNCE_OBJECT_MANAGER_HANDLE_
+#ifndef BOUNCE_ENGINE_OBJECT_MANAGER_HANDLE_
+#define BOUNCE_ENGINE_OBJECT_MANAGER_HANDLE_
 
 namespace bounce {
     
@@ -51,11 +51,6 @@ namespace bounce {
             return ResolveHandleAs<U, T>(*this);
         }
         
-//        template <typename U>
-//        ObjectManagerHandle<U> As()
-//        {
-//            return ConvertHandle<U, T>(*this);
-//        }
     };
     
     template <class T>
@@ -63,4 +58,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_BOUNCE_OBJECT_MANAGER_HANDLE_
+#endif // BOUNCE_ENGINE_OBJECT_MANAGER_HANDLE_

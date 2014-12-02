@@ -1,5 +1,5 @@
-#ifndef BOUNCE_GAME_COMPONENT_H
-#define BOUNCE_GAME_COMPONENT_H
+#ifndef BOUNCE_ENGINE_GAME_COMPONENT_H_
+#define BOUNCE_ENGINE_GAME_COMPONENT_H_
 
 #include "message.h"
 #include "game_component_type.h"
@@ -45,4 +45,4 @@ namespace bounce {
     }
 }
 
-#endif
+#endif // BOUNCE_ENGINE_GAME_COMPONENT_H_

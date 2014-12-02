@@ -1,5 +1,5 @@
-#ifndef BOUNCE_BOUNCE_POINT_LIGHT_COMPONENT_
-#define BOUNCE_BOUNCE_POINT_LIGHT_COMPONENT_
+#ifndef BOUNCE_ENGINE_POINT_LIGHT_COMPONENT_
+#define BOUNCE_ENGINE_POINT_LIGHT_COMPONENT_
 
 #include "renderer/lights.h"
 #include "game_component.h"
@@ -116,4 +116,4 @@ namespace bounce {
     }
 }
 
-#endif // BOUNCE_BOUNCE_POINT_LIGHT_COMPONENT_
+#endif // BOUNCE_ENGINE_POINT_LIGHT_COMPONENT_

@@ -1,5 +1,5 @@
-#ifndef BOUNCE_BOUNCE_AI_COMPONENT_
-#define BOUNCE_BOUNCE_AI_COMPONENT_
+#ifndef BOUNCE_ENGINE_AI_COMPONENT_
+#define BOUNCE_ENGINE_AI_COMPONENT_
 
 #include "game_component.h"
 #include "ai_strategy.h"
@@ -24,4 +24,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_BOUNCE_AI_COMPONENT_
+#endif // BOUNCE_ENGINE_AI_COMPONENT_

@@ -1,5 +1,5 @@
-#ifndef BOUNCE_BOUNCE_INPUT_SYSTEM_
-#define BOUNCE_BOUNCE_INPUT_SYSTEM_
+#ifndef BOUNCE_ENGINE_INPUT_SYSTEM_
+#define BOUNCE_ENGINE_INPUT_SYSTEM_
 
 #include "keyboard_state.h"
 #include "object_manager.h"
@@ -22,4 +22,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_BOUNCE_INPUT_SYSTEM_
+#endif // BOUNCE_ENGINE_INPUT_SYSTEM_

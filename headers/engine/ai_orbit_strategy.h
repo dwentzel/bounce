@@ -1,5 +1,5 @@
-#ifndef BOUNCE_BOUNCE_AI_ORBIT_STRATEGY_
-#define BOUNCE_BOUNCE_AI_ORBIT_STRATEGY_
+#ifndef BOUNCE_ENGINE_AI_ORBIT_STRATEGY_
+#define BOUNCE_ENGINE_AI_ORBIT_STRATEGY_
 
 #include "ai_strategy.h"
 
@@ -28,4 +28,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_BOUNCE_AI_ORBIT_STRATEGY_
+#endif // BOUNCE_ENGINE_AI_ORBIT_STRATEGY_

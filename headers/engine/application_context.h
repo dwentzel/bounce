@@ -1,5 +1,5 @@
-#ifndef BOUNCE_APPLICATION_CONTEXT_H_
-#define BOUNCE_APPLICATION_CONTEXT_H_
+#ifndef BOUNCE_ENGINE_APPLICATION_CONTEXT_H_
+#define BOUNCE_ENGINE_APPLICATION_CONTEXT_H_
 
 #include <string>
 #include "event.h"
@@ -32,4 +32,4 @@ namespace bounce {
 }
 
 
-#endif // BOUNCE_APPLICATION_CONTEXT_H_ */
+#endif // BOUNCE_ENGINE_APPLICATION_CONTEXT_H_ */

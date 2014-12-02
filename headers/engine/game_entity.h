@@ -1,5 +1,5 @@
-#ifndef BOUNCE_GAME_ENTITY_H
-#define BOUNCE_GAME_ENTITY_H
+#ifndef BOUNCE_ENGINE_GAME_ENTITY_H_
+#define BOUNCE_ENGINE_GAME_ENTITY_H_
 
 #include <vector>
 
@@ -31,4 +31,4 @@ namespace bounce {
     
 }
 
-#endif
+#endif // BOUNCE_ENGINE_GAME_ENTITY_H_
