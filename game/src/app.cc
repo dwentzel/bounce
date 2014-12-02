@@ -6,17 +6,17 @@
 
 #include "importer/importer.h"
 
-#include "bounce/game_entity.h"
+#include "engine/game_entity.h"
 
-#include "bounce/object_manager.h"
-#include "bounce/body_component.h"
-#include "bounce/render_component.h"
-#include "bounce/point_light_component.h"
+#include "engine/object_manager.h"
+#include "engine/body_component.h"
+#include "engine/render_component.h"
+#include "engine/point_light_component.h"
 
-#include "bounce/control_component.h"
-#include "bounce/position_component.h"
+#include "engine/control_component.h"
+#include "engine/position_component.h"
 
-#include "bounce/ai_orbit_strategy.h"
+#include "engine/ai_orbit_strategy.h"
 
 namespace bounce {
     

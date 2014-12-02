@@ -1,4 +1,4 @@
-setup_module(bounce)
+setup_module(engine)
 
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/ai_component.h

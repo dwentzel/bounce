@@ -1,5 +1,5 @@
 #import "bounce_window.h"
-#import "bounce/event.h"
+#import "engine/event.h"
 
 @implementation BounceWindow
 

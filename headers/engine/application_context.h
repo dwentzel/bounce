@@ -15,15 +15,14 @@ namespace bounce {
         ApplicationContext();
         
     public:
-        
         virtual ~ApplicationContext() = 0;
         
         EventManager* event_manager_ptr() { return &event_manager_; }
         EventManager& event_manager() { return event_manager_; }
         
-        virtual void Flush() const = 0;// { flush_(); }
+        virtual void Flush() const = 0;
         
-        virtual void Update() const = 0;// { poll_(); }
+        virtual void Update() const = 0;
         
         virtual void CreateWindow(const WindowContext& window_context) = 0;
         

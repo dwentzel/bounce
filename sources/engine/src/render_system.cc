@@ -1,5 +1,3 @@
-#include <cstdio>
-
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -133,17 +131,6 @@ void bounce::RenderSystem::Update(float delta_time) {
     
     
     application_context_.Flush();
-}
-
-void bounce::RenderSystem::AddModel(unsigned int model_handle)
-{
-//    model_handles_.push_back(model_handle);
-//    renderer_.AddModel(model_handle);
-}
-
-void bounce::RenderSystem::RemoveModel(unsigned int model_handle)
-{
-    LOG_ERROR << "bounce::RenderSystem::RemoveModel not implemented" << std::endl;
 }
 
 void bounce::RenderSystem::RenderModel(unsigned int model_handle)

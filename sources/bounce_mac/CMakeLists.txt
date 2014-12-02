@@ -30,7 +30,7 @@ add_library(
 
 find_library(COCOA_LIBRARY Cocoa)
 
-target_link_libraries(${MODULE_NAME} ${COCOA_LIBRARY} bounce)
+target_link_libraries(${MODULE_NAME} ${COCOA_LIBRARY} engine)
 
 #set_target_properties(${EXENAME} PROPERTIES
 #    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/Debug

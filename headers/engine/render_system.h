@@ -4,20 +4,15 @@
 #include <vector>
 
 #include "framework/object_cache.h"
-
 #include "renderer/opengl_renderer.h"
 
-#include "game_system.h"
 #include "application_context.h"
-
-#include "render_component.h"
-#include "point_light_component.h"
+#include "game_entity.h"
+#include "game_system.h"
 
 namespace bounce {
     
     typedef ObjectCache<GameEntity> GameEntityCache;
-    typedef ObjectCache<RenderComponent> RenderComponentCache;
-    typedef ObjectCache<PointLightComponent> PointLightComponentCache;
     
     class RenderSystem : public GameSystem {
     private:
@@ -25,9 +20,6 @@ namespace bounce {
         const WindowContext& window_context_;
         
         GameEntityCache& game_entity_cache_;
-        
-//        const RenderComponentCache& render_component_cache_;
-//        const PointLightComponentCache& point_light_component_cache_;
         
         OpenGLRenderer& renderer_;
         
@@ -46,8 +38,6 @@ namespace bounce {
         virtual void Shutdown();
         virtual void Update(float delta_time);
 
-        void AddModel(unsigned int model_handle);
-        void RemoveModel(unsigned int model_handle);
         void RenderModel(unsigned int model_handle);
     };
     

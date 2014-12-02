@@ -1,7 +1,7 @@
 #ifndef BOUNCE_BOUNCE_MAC_OSX_APPLICATION_CONTEXT_
 #define BOUNCE_BOUNCE_MAC_OSX_APPLICATION_CONTEXT_
 
-#import "bounce/application_context.h"
+#import "engine/application_context.h"
 #import <AppKit/NSOpenGL.h>
 #import <string>
 

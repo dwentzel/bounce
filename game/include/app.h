@@ -12,13 +12,13 @@
 #include "renderer/material_manager.h"
 #include "renderer/opengl_renderer.h"
 
-#include "bounce/application_context.h"
-#include "bounce/event.h"
-#include "bounce/keyboard_state.h"
-#include "bounce/input_system.h"
-#include "bounce/movement_system.h"
-#include "bounce/object_manager.h"
-#include "bounce/render_system.h"
+#include "engine/application_context.h"
+#include "engine/event.h"
+#include "engine/keyboard_state.h"
+#include "engine/input_system.h"
+#include "engine/movement_system.h"
+#include "engine/object_manager.h"
+#include "engine/render_system.h"
 
 
 namespace bounce {

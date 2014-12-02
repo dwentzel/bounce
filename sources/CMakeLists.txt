@@ -52,7 +52,7 @@ add_subdirectory(logging)
 add_subdirectory(renderer)
 add_subdirectory(renderer_test)
 add_subdirectory(importer)
-add_subdirectory(bounce)
+add_subdirectory(engine)
 
 if (WIN32)
     add_subdirectory(bounce_win)
