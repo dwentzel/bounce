@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDERER_EXCEPTIONS_
-#define BOUNCE_RENDERER_EXCEPTIONS_
+#ifndef BOUNCE_RENDERER_EXCEPTIONS_H_
+#define BOUNCE_RENDERER_EXCEPTIONS_H_
 
 #include "framework/exceptions.h"
 
@@ -14,4 +14,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_RENDERER_EXCEPTIONS_
+#endif // BOUNCE_RENDERER_EXCEPTIONS_H_

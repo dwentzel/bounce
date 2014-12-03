@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDERER_G_BUFFER_
-#define BOUNCE_RENDERER_G_BUFFER_
+#ifndef BOUNCE_RENDERER_G_BUFFER_H_
+#define BOUNCE_RENDERER_G_BUFFER_H_
 
 #include "bounce_gl.h"
 
@@ -33,4 +33,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_RENDERER_G_BUFFER_
+#endif // BOUNCE_RENDERER_G_BUFFER_H_

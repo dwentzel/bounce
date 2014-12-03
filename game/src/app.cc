@@ -6,6 +6,8 @@
 
 #include "importer/importer.h"
 
+#include "renderer/model_loader.h"
+
 #include "engine/game_entity.h"
 
 #include "engine/object_manager.h"
@@ -21,16 +23,18 @@
 namespace bounce {
     
     App::App(ApplicationContext& application_context, WindowContext& window_context)
-    : running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
-    window_context_(window_context),
-    resource_loader_(application_context_.root_path()),
-    texture_manager_(application_context_.root_path() + "/textures"),
-    renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
-    entity_manager_(EntityManager::instance()),
-    component_manager_(ComponentManager::instance()),
-    input_system_(keyboard_state_, entity_manager_.game_entities()),
-    movement_system_(entity_manager_.game_entities()),
-    render_system_(application_context_, window_context_, entity_manager_.game_entities(), renderer_)
+    : running_(true),
+      application_context_(application_context),
+      event_manager_(application_context.event_manager()),
+      window_context_(window_context),
+      resource_loader_(application_context_.root_path()),
+      texture_manager_(application_context_.root_path() + "/textures"),
+      renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
+      entity_manager_(EntityManager::instance()),
+      component_manager_(ComponentManager::instance()),
+      input_system_(keyboard_state_, entity_manager_.game_entities()),
+      movement_system_(entity_manager_.game_entities()),
+      render_system_(application_context_, window_context_, entity_manager_.game_entities(), renderer_)
     {
         
     }
@@ -45,10 +49,20 @@ namespace bounce {
 
         render_system_.Startup();        
         
-        Importer importer(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_);
-        unsigned int model_handle = importer.ImportFile("simple_craft.dae");
+        Importer importer(resource_loader_);
+//        unsigned int model_handle = 0;// = importer.ImportFile("simple_craft.dae");
+        
+        ImportedModel imported_model = importer.LoadModel("simple_craft.dae");
 
-        renderer_.BufferModelData();
+        ModelLoader loader(texture_manager_, model_manager_);
+        
+        loader.Begin();
+        
+        unsigned int model_handle = loader.LoadModel(imported_model);
+        
+        loader.End();
+        
+        renderer_.BufferModelData(loader);
         
         
         GameEntityHandle light0_handle = entity_manager_.GenerateGameEntity();

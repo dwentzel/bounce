@@ -4,7 +4,8 @@
 bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
                                        const ModelManager& model_manager,
                                        TextureManager& texture_manager,
-                                       const MaterialManager& material_manager, const VertexBuffer& vertex_buffer)
+                                       const MaterialManager& material_manager,
+                                       const VertexBuffer& vertex_buffer)
 : geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
   mesh_loader_(resource_loader),
   model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
@@ -78,7 +79,7 @@ void bounce::OpenGLRenderer::Startup()
     CHECK_GL_ERROR();
 }
 
-void bounce::OpenGLRenderer::BufferModelData()
+void bounce::OpenGLRenderer::BufferModelData(const ModelLoader& model_loader)
 {
     glGenVertexArrays(1, &model_vertex_array_);
     glBindVertexArray(model_vertex_array_);
@@ -86,7 +87,9 @@ void bounce::OpenGLRenderer::BufferModelData()
     glGenBuffers(1, &model_vertex_buffer_);
     
     glBindBuffer(GL_ARRAY_BUFFER, model_vertex_buffer_);
-    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
+//    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
+    const std::vector<float> vertex_data = model_loader.vertex_data();
+    glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(float), &vertex_data[0], GL_STATIC_DRAW);
     
     // Vertex positions
     glEnableVertexAttribArray(0);
@@ -97,6 +100,14 @@ void bounce::OpenGLRenderer::BufferModelData()
     // Normal vectors
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    
+    
+    
+    glGenBuffers(1, &model_element_buffer_);
+    
+    const std::vector<unsigned short>& index_data = model_loader.index_data();
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model_element_buffer_);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_data.size() * sizeof(float), &index_data[0], GL_STATIC_DRAW);
     
     glBindVertexArray(0);
 }
@@ -142,6 +153,8 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     glEnable(GL_DEPTH_TEST);
     
     glDisable(GL_BLEND);
+    
+    CHECK_GL_ERROR();
     
     glBindVertexArray(model_vertex_array_);
         
@@ -194,92 +207,32 @@ void bounce::OpenGLRenderer::RenderPointLight(const PointLight& point_light)
     sphere_->Render();
 }
 
-//void bounce::OpenGLRenderer::RunPointLightsPass()
-//{
-//    point_light_pass_program_.UseProgram();
-//    point_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
-//    
-//    //    Pipeline p;
-//    //    p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
-//    //    p.SetPerspectiveProj(m_persProjInfo);
-//    
-//    point_light_pass_program_.SetWVP(wvp_matrix_);
-//    
-//    //    for (const PointLight light : light_manager_.point_lights())
-//    
-//    //    std::vector<PointLight> lights = light_manager_.point_lights();
-//    
-//    for (std::vector<PointLight>::const_iterator light = lights.begin();
-//         light != lights.end();
-//         ++light)
-//    {
-//        point_light_pass_program_.SetPointLight((*light));
-//        sphere_->Render();
-//    }
-//    
-//    //   	for (unsigned int i = 1 ; i < 3; i++) {
-//    //        point_light_pass_program_.SetPointLight(point_lights_[i]);
-//    //
-//    ////        point_light_pass_program_.SetWVP(glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f)));
-//    ////   	    p.WorldPos(m_pointLight[i].Position);
-//    ////   	    float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
-//    ////   	    p.Scale(BSphereScale, BSphereScale, BSphereScale);
-//    ////   	    m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
-//    //   	    sphere_->Render();
-//    //   	} 
-//}
-
-//void bounce::OpenGLRenderer::RunLightPass()
-//{
-//    CHECK_GL_ERROR();
-//    
-//    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
-//    g_buffer_.BindForReading();
-//    
-//    GLsizei HalfWidth = (GLsizei)(WINDOW_WIDTH / 2.0f);
-//    GLsizei HalfHeight = (GLsizei)(WINDOW_HEIGHT / 2.0f);
-//    
-//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
-//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-//                      0, 0, HalfWidth, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-//    
-//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
-//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-//                      0, HalfHeight, HalfWidth, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-//    
-//    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
-//    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-//                      HalfWidth, HalfHeight, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-//    
-////    g_buffer_.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
-////    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-////                      HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-//    CHECK_GL_ERROR();
-//}
-
 void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
 {
     const Model& model = model_manager_.GetModel(model_handle);
+
+    unsigned short mesh_count = model.mesh_count();
     
-    const std::vector<int>& start_indices = model.mesh_start_indices();
-    const std::vector<int>& sizes = model.mesh_sizes();
-    const std::vector<int>& material_indices = model.material_indices();
-    
-    for (std::vector<int>::size_type i = 0; i != start_indices.size(); ++i) {
-        int start_index = start_indices[i];
-        int size = sizes[i];
-        int material_index = material_indices[i];
-        
-        const Material& material = material_manager_.GetMaterial(material_index);
-        
-        int texture_handle = material.texture_handle();
-        
-        if (texture_handle > -1) {
+    for (unsigned short i = 0; i < mesh_count; ++i) {
+        unsigned short index_offset = model.GetMeshIndexOffset(i);
+        unsigned short index_count = model.GetMeshIndexCount(i);
+        unsigned short material_index = model.GetMeshMaterialIndex(i);
+        unsigned int base_vertex = model.GetMeshBaseVertex(i);
+
+        int texture_handle = model.GetMeshMaterialIndex(i);
+        if (texture_handle > (unsigned short)-1) {
             texture_manager_.UseTexture(texture_handle);
         }
         
-        glDrawArrays(GL_TRIANGLES, start_index, size);
+//        const Material& material = material_manager_.GetMaterial(material_index);
+//        
+//        int texture_handle = material.texture_handle();
+//        
+//        if (texture_handle > -1) {
+//            texture_manager_.UseTexture(texture_handle);
+//        }
+        
+        
+        glDrawElementsBaseVertex(GL_TRIANGLES, index_count, GL_UNSIGNED_SHORT, (void*)(index_offset * sizeof(unsigned short)), base_vertex);
     }
 }

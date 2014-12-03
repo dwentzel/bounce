@@ -1,13 +1,17 @@
 setup_module(importer)
 
 set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/imported_model.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/imported_material.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/importer.h
-#    include/vertex_buffer.h
 )
 
 set(SOURCES
+    src/exceptions.cc
+    src/imported_model.cc
+    src/imported_material.cc
     src/importer.cc
-#    src/vertex_buffer.cc
 )
 
 add_library(

@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDERER_MESH_LOADER_
-#define BOUNCE_RENDERER_MESH_LOADER_
+#ifndef BOUNCE_RENDERER_MESH_LOADER_H_
+#define BOUNCE_RENDERER_MESH_LOADER_H_
 
 #include "framework/resource_loader.h"
 #include "mesh.h"
@@ -18,4 +18,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_RENDERER_MESH_LOADER_
+#endif // BOUNCE_RENDERER_MESH_LOADER_H_

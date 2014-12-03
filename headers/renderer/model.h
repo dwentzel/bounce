@@ -7,37 +7,28 @@ namespace bounce {
     
     class Model {
     private:
-        std::vector<int> mesh_start_indices_;
-        std::vector<int> mesh_sizes_;
-        std::vector<int> material_indices_;
+        struct MeshData {
+            unsigned short index_offset;
+            unsigned short index_count;
+            unsigned int base_vertex;
+            unsigned short material_index;
+        };
+        
+        std::vector<MeshData> meshes_;
         
     public:
         
-        void AddMeshStartIndex(int index);
-        void AddMeshMaterialIndex(int index);
-        void AddMeshSize(int size);
+        void AddMesh(unsigned short index_offset, unsigned short index_count, unsigned short base_vertex, unsigned short material_index);
         
-        const std::vector<int>& mesh_start_indices() const;
-        const std::vector<int>& mesh_sizes() const;
-        const std::vector<int>& material_indices() const;
+        unsigned short mesh_count() const;
+        
+        unsigned short GetMeshIndexOffset(unsigned short mesh_index) const;
+        unsigned short GetMeshIndexCount(unsigned short mesh_index) const;
+        unsigned int GetMeshBaseVertex(unsigned short mesh_index) const;
+        unsigned short GetMeshMaterialIndex(unsigned short mesh_index) const;
+
     };
-
-    inline const std::vector<int>& Model::mesh_start_indices() const
-    {
-        return mesh_start_indices_;
-    }
-    
-    inline const std::vector<int>& Model::mesh_sizes() const
-    {
-        return mesh_sizes_;
-    }
-    
-    inline const std::vector<int>& Model::material_indices() const
-    {
-        return material_indices_;
-    }
-
-    
+        
 }
 
 #endif // BOUNCE_RENDERER_MODEL_H_

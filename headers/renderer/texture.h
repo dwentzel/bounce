@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDERER_TEXTURE_
-#define BOUNCE_RENDERER_TEXTURE_
+#ifndef BOUNCE_RENDERER_TEXTURE_H_
+#define BOUNCE_RENDERER_TEXTURE_H_
 
 #include <string>
 #include <cstdint>
@@ -39,4 +39,4 @@ namespace bounce {
     
 }
 
-#endif // BOUNCE_RENDERER_TEXTURE_
+#endif // BOUNCE_RENDERER_TEXTURE_H_

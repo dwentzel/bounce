@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDERER_MESH_
-#define BOUNCE_RENDERER_MESH_
+#ifndef BOUNCE_RENDERER_MESH_H_
+#define BOUNCE_RENDERER_MESH_H_
 
 #include <vector>
 #include "bounce_gl.h"
@@ -25,4 +25,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_RENDERER_MESH_
+#endif // BOUNCE_RENDERER_MESH_H_

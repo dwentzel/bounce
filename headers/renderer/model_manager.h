@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDERER_MODEL_MANAGER_
-#define BOUNCE_RENDERER_MODEL_MANAGER_
+#ifndef BOUNCE_RENDERER_MODEL_MANAGER_H_
+#define BOUNCE_RENDERER_MODEL_MANAGER_H_
 
 #include <vector>
 #include "model.h"
@@ -36,4 +36,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_RENDERER_MODEL_MANAGER_
+#endif // BOUNCE_RENDERER_MODEL_MANAGER_H_

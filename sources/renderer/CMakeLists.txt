@@ -13,6 +13,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/mesh.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/mesh_loader.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/model_loader.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/model_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/opengl_renderer.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_pass_program.h
@@ -35,6 +36,7 @@ set(SOURCES
     src/mesh.cc
     src/mesh_loader.cc
     src/model.cc
+    src/model_loader.cc
     src/model_manager.cc
     src/opengl_renderer.cc
     src/point_light_pass_program.cc

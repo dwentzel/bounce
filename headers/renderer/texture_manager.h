@@ -1,5 +1,5 @@
-#ifndef BOUNCE_RENDERER_TEXTURE_MANAGER_
-#define BOUNCE_RENDERER_TEXTURE_MANAGER_
+#ifndef BOUNCE_RENDERER_TEXTURE_MANAGER_H_
+#define BOUNCE_RENDERER_TEXTURE_MANAGER_H_
 
 #include <string>
 #include <vector>
@@ -27,4 +27,4 @@ namespace bounce {
 
 }
 
-#endif // BOUNCE_RENDERER_TEXTURE_MANAGER_
+#endif // BOUNCE_RENDERER_TEXTURE_MANAGER_H_

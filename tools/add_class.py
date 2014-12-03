@@ -14,7 +14,7 @@ except IndexError:
     print 'Usage: add_class module class'
     sys.exit()
 
-header_file_name = 'sources/' + module_name + '/include/' + class_name + '.h'
+header_file_name = 'headers/' + module_name + '/' + class_name + '.h'
 src_file_name = 'sources/' + module_name + '/src/' + class_name + '.cc'
 
 if os.path.exists(header_file_name):
@@ -25,7 +25,7 @@ if os.path.exists(src_file_name):
     print src_file_name, 'already exists.'
     sys.exit()
 
-header_guard = 'BOUNCE_' + module_name.upper() + '_' + class_name.upper() + '_'
+header_guard = 'BOUNCE_' + module_name.upper() + '_' + class_name.upper() + '_H_'
 
 namespace = 'bounce'
 

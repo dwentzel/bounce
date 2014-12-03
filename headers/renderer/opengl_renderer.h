@@ -18,6 +18,7 @@
 #include "g_buffer.h"
 #include "mesh_loader.h"
 #include "mesh.h"
+#include "model_loader.h"
 
 namespace bounce
 {
@@ -29,6 +30,7 @@ namespace bounce
         
         GLuint model_vertex_array_;
         GLuint model_vertex_buffer_;
+        GLuint model_element_buffer_;
         
         Mesh* sphere_;
         Mesh* quad_;
@@ -74,7 +76,7 @@ namespace bounce
         void EndPointLighsPass();
         void RunDirectionalLightPass();
         
-        void BufferModelData();
+        void BufferModelData(const ModelLoader& model_loader);
         
         void RenderModel(unsigned int model_handle);
         void RenderPointLight(const PointLight& point_light);
