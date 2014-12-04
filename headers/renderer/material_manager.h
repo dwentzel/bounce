@@ -1,21 +1,21 @@
 #ifndef BOUNCE_RENDERER_MATERIAL_MANAGER_H_
 #define BOUNCE_RENDERER_MATERIAL_MANAGER_H_
 
+#include "framework/object_cache.h"
 #include "material.h"
 
 namespace bounce {
 
     class MaterialManager {
     private:
-        std::vector<Material> materials_;
+        ObjectCache<Material> materials_;
         
     public:
-        Material& CreateMaterial();
+        unsigned int GenerateMaterial();
         
+        Material& GetMaterial(unsigned int index);
         const Material& GetMaterial(unsigned int index) const;
         
-        unsigned int size() const;
-        unsigned int next_index() const;
     };
     
 }

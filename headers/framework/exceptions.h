@@ -12,6 +12,9 @@ namespace bounce {
 
     };
 
+    class ObjectNotFoundException : public BounceException {
+        
+    };
 }
 
 #endif // BOUNCE_FRAMEWORK_BOUNCE_EXCEPTION_

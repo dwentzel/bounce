@@ -88,17 +88,6 @@ bounce::ImportedModel bounce::Importer::LoadModel(const std::string& resource_na
             std::string texture_path(texture.C_Str());
 
             imported_material.texture_path(texture_path);
-            
-//            int texture_index = texture_manager_.IndexOf(path);
-//            
-//            if (texture_index == -1) {
-//                texture_index = texture_manager_.next_handle();
-//                texture_manager_.LoadTexture(path);
-//                new_material.texture_handle(texture_index);
-//            }
-//            else {
-//                new_material.texture_handle(texture_index);
-//            }
         }
         
         aiColor3D color_diffuse;

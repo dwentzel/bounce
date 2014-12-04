@@ -1,22 +1,17 @@
 #include "material_manager.h"
 
-bounce::Material& bounce::MaterialManager::CreateMaterial()
+unsigned int bounce::MaterialManager::GenerateMaterial()
 {
-    materials_.push_back(Material());
-    return *materials_.rbegin();
+    unsigned int index = materials_.GenerateObject();
+    return index;
 }
 
-unsigned int bounce::MaterialManager::size() const
+bounce::Material& bounce::MaterialManager::GetMaterial(unsigned int index)
 {
-    return materials_.size();
-}
-
-unsigned int bounce::MaterialManager::next_index() const
-{
-    return materials_.size();
+    return materials_.GetObject(index);
 }
 
 const bounce::Material& bounce::MaterialManager::GetMaterial(unsigned int index) const
 {
-    return materials_[index];
+    return materials_.GetObject(index);
 }

@@ -54,7 +54,7 @@ namespace bounce {
         
         ImportedModel imported_model = importer.LoadModel("simple_craft.dae");
 
-        ModelLoader loader(texture_manager_, model_manager_);
+        ModelLoader loader(texture_manager_, material_manager_, model_manager_);
         
         loader.Begin();
         

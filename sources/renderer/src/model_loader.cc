@@ -1,7 +1,7 @@
 #include "model_loader.h"
 
-bounce::ModelLoader::ModelLoader(TextureManager& texture_manager, ModelManager& model_manager)
-: texture_manager_(texture_manager), model_manager_(model_manager),
+bounce::ModelLoader::ModelLoader(TextureManager& texture_manager, MaterialManager& material_manager, ModelManager& model_manager)
+: texture_manager_(texture_manager), material_manager_(material_manager), model_manager_(model_manager),
 base_vertex_(0), index_offset_(0)
 {
     
@@ -14,25 +14,25 @@ void bounce::ModelLoader::Begin()
 
 int bounce::ModelLoader::LoadModel(const bounce::ImportedModel& imported_model)
 {
-    int model_index = model_manager_.next_handle();
-    Model& model = model_manager_.CreateModel();
+    int model_index = model_manager_.GenerateModel();
+    Model& model = model_manager_.GetModel(model_index);
     
     for (unsigned int i = 0; i < imported_model.mesh_count(); ++i) {
         
         
-        unsigned int imported_model_mesh_first_vertex = imported_model.GetMeshFirstVertex(i);
+//        unsigned int imported_model_mesh_first_vertex = imported_model.GetMeshFirstVertex(i);
         unsigned short imported_model_mesh_vertex_count = imported_model.GetMeshVertexCount(i);
         
-        unsigned short imported_model_mesh_index_offset = imported_model.GetMeshIndexOffset(i);
+//        unsigned short imported_model_mesh_index_offset = imported_model.GetMeshIndexOffset(i);
         unsigned short imported_model_mesh_index_count = imported_model.GetMeshIndexCount(i);
 
         const ImportedMaterial& imported_model_mesh_material = imported_model.GetMeshMaterial(i);
         
         unsigned short material_index = LoadMaterial(imported_model_mesh_material);
         
-        model.AddMesh(imported_model_mesh_index_offset + index_offset_,
+        model.AddMesh(index_offset_,
                       imported_model_mesh_index_count,
-                      imported_model_mesh_first_vertex + base_vertex_,
+                      base_vertex_,
                       material_index);
         
         index_offset_ += imported_model_mesh_index_count;
@@ -83,18 +83,27 @@ void bounce::ModelLoader::End()
 
 int bounce::ModelLoader::LoadMaterial(const bounce::ImportedMaterial& imported_material)
 {
+    int material_index = material_manager_.GenerateMaterial();
+    Material& material = material_manager_.GetMaterial(material_index);
+    
+    material.diffuse(imported_material.diffuse());
+    material.ambient(imported_material.ambient());
+    material.specular(imported_material.specular());
+    material.emissive(imported_material.emissive());
+    material.specular(imported_material.specular());
+    
     const std::string& texture_path = imported_material.texture_path();
     
-    if (texture_path != "") {
+    if (!texture_path.empty()) {
         if (texture_manager_.HasTexture(texture_path))
         {
-            return texture_manager_.IndexOf(texture_path);
+            material.texture_handle(texture_manager_.GetTextureHandle(texture_path));
         }
         else {
-            texture_manager_.LoadTexture(texture_path);
-            return texture_manager_.IndexOf(texture_path);
+            unsigned int texture_index = texture_manager_.GenerateTexture(texture_path);
+            material.texture_handle(texture_index);
         }
     }
     
-    return -1;
+    return material_index;
 }

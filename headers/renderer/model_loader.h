@@ -6,6 +6,7 @@
 #include "importer/imported_model.h"
 
 #include "texture_manager.h"
+#include "material_manager.h"
 #include "model_manager.h"
 
 namespace bounce {
@@ -13,6 +14,7 @@ namespace bounce {
     class ModelLoader {
     private:
         TextureManager& texture_manager_;
+        MaterialManager& material_manager_;
         ModelManager& model_manager_;
         
         unsigned int base_vertex_;
@@ -24,7 +26,7 @@ namespace bounce {
         int LoadMaterial(const ImportedMaterial& imported_material);
         
     public:
-        ModelLoader(TextureManager& texture_manager, ModelManager& model_manager);
+        ModelLoader(TextureManager& texture_manager, MaterialManager& material_manager, ModelManager& model_manager);
         
         void Begin();
         int LoadModel(const ImportedModel& imported_model);

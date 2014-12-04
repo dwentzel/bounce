@@ -21,10 +21,19 @@ namespace bounce {
         const std::string& texture_path() const;
         void texture_path(const std::string& value);
         
+        const float* diffuse() const;
         void diffuse(float r, float g, float b);
+        
+        const float* specular() const;
         void specular(float r, float g, float b);
+        
+        const float* ambient() const;
         void ambient(float r, float g, float b);
+        
+        const float* emissive() const;
         void emissive(float r, float g, float b);
+        
+        float shininess() const;
         void shininess(float value);
 
     };

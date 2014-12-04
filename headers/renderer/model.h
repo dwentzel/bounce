@@ -16,7 +16,10 @@ namespace bounce {
         
         std::vector<MeshData> meshes_;
         
+        Model();
+        
     public:
+        static Model Create();
         
         void AddMesh(unsigned short index_offset, unsigned short index_count, unsigned short base_vertex, unsigned short material_index);
         

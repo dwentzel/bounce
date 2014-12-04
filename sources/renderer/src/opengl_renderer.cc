@@ -7,8 +7,8 @@ bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
                                        const MaterialManager& material_manager,
                                        const VertexBuffer& vertex_buffer)
 : geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
-  mesh_loader_(resource_loader),
-  model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+mesh_loader_(resource_loader),
+model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
 }
@@ -29,8 +29,8 @@ void bounce::OpenGLRenderer::Startup()
     GLenum glew_error = glewInit();
     if (glew_error != GLEW_OK) {
         LOG_ERROR << L"Failed to initialize GLEW: "
-                  << glewGetErrorString(glew_error);
-
+        << glewGetErrorString(glew_error);
+        
         throw RendererException();
     }
     CHECK_GL_ERROR();
@@ -87,7 +87,7 @@ void bounce::OpenGLRenderer::BufferModelData(const ModelLoader& model_loader)
     glGenBuffers(1, &model_vertex_buffer_);
     
     glBindBuffer(GL_ARRAY_BUFFER, model_vertex_buffer_);
-//    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
+    //    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
     const std::vector<float> vertex_data = model_loader.vertex_data();
     glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(float), &vertex_data[0], GL_STATIC_DRAW);
     
@@ -116,13 +116,13 @@ void bounce::OpenGLRenderer::Resize(unsigned int width, unsigned int height)
 {
     g_buffer_ = std::unique_ptr<GBuffer>(new GBuffer());
     g_buffer_->Init(width, height);
-
+    
     GLint current_program_id;
     glGetIntegerv(GL_CURRENT_PROGRAM, &current_program_id);
     
     directional_light_pass_program_.UseProgram();
     directional_light_pass_program_.SetScreenSize(width, height);
-
+    
     point_light_pass_program_.UseProgram();
     point_light_pass_program_.SetScreenSize(width, height);
     
@@ -147,9 +147,9 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     g_buffer_->BindForWriting();
     
     glDepthMask(GL_TRUE);
-
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     glEnable(GL_DEPTH_TEST);
     
     glDisable(GL_BLEND);
@@ -157,7 +157,7 @@ void bounce::OpenGLRenderer::BeginGeometryPass()
     CHECK_GL_ERROR();
     
     glBindVertexArray(model_vertex_array_);
-        
+    
     CHECK_GL_ERROR();
 }
 
@@ -210,7 +210,7 @@ void bounce::OpenGLRenderer::RenderPointLight(const PointLight& point_light)
 void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
 {
     const Model& model = model_manager_.GetModel(model_handle);
-
+    
     unsigned short mesh_count = model.mesh_count();
     
     for (unsigned short i = 0; i < mesh_count; ++i) {
@@ -218,21 +218,19 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         unsigned short index_count = model.GetMeshIndexCount(i);
         unsigned short material_index = model.GetMeshMaterialIndex(i);
         unsigned int base_vertex = model.GetMeshBaseVertex(i);
-
-        int texture_handle = model.GetMeshMaterialIndex(i);
-        if (texture_handle > (unsigned short)-1) {
-            texture_manager_.UseTexture(texture_handle);
+        
+        const Material& material = material_manager_.GetMaterial(material_index);
+        
+        if (material.has_texture()) {
+            int texture_handle = material.texture_handle();
+            texture_manager_.BindTexture(texture_handle);
         }
         
-//        const Material& material = material_manager_.GetMaterial(material_index);
-//        
-//        int texture_handle = material.texture_handle();
-//        
-//        if (texture_handle > -1) {
-//            texture_manager_.UseTexture(texture_handle);
-//        }
-        
-        
         glDrawElementsBaseVertex(GL_TRIANGLES, index_count, GL_UNSIGNED_SHORT, (void*)(index_offset * sizeof(unsigned short)), base_vertex);
+        
+        if (material.has_texture()) {
+            //texture_manager_.UseTexture(texture_handle);
+            // unbind texture here
+        }
     }
 }

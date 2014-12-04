@@ -8,9 +8,18 @@ bounce::ModelManager::~ModelManager()
 {
 }
 
-bounce::Model& bounce::ModelManager::CreateModel()
+unsigned int bounce::ModelManager::GenerateModel()
 {
-    //Model model;
-    models_.push_back(Model());
-    return *models_.rbegin();
+    unsigned int index = models_.GenerateObject();
+    return index;
+}
+
+bounce::Model& bounce::ModelManager::GetModel(unsigned int handle)
+{
+    return models_.GetObject(handle);
+}
+
+const bounce::Model& bounce::ModelManager::GetModel(unsigned int handle) const
+{
+    return models_.GetObject(handle);
 }

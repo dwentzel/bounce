@@ -1,5 +1,15 @@
 #include "model.h"
 
+bounce::Model bounce::Model::Create()
+{
+    return Model();
+}
+
+bounce::Model::Model()
+{
+    
+}
+
 void bounce::Model::AddMesh(unsigned short index_offset, unsigned short index_count, unsigned short base_vertex, unsigned short material_index)
 {
     MeshData mesh_data;

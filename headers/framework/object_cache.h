@@ -26,7 +26,9 @@ namespace bounce {
         
         template<class... FactoryArgs>
         unsigned int GenerateObject(FactoryArgs&&...);
+
         T& GetObject(unsigned int handle);
+        const T& GetObject(unsigned int handle) const;
         
     };
 
@@ -74,6 +76,12 @@ namespace bounce {
     
     template<class T>
     T& ObjectCache<T>::GetObject(unsigned int handle)
+    {
+        return cache_[handle];
+    }
+
+    template<class T>
+    const T& ObjectCache<T>::GetObject(unsigned int handle) const
     {
         return cache_[handle];
     }

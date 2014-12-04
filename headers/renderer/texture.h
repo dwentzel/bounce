@@ -9,22 +9,25 @@
 namespace bounce {
 
     class Texture {
-    private:
-        bool initialized_;
-        
+    private:        
         unsigned int size_;
         unsigned int width_;
         unsigned int height_;
         
         GLuint texture_id_;
-        
         std::string name_;
-        std::uint8_t* data_;
         
-        void Initialize();
+        const std::uint8_t* data_;
+        
+        Texture(unsigned int size, unsigned int width, unsigned int height, const std::uint8_t* data);
+        
+        Texture(const Texture&) = delete;
+        Texture& operator=(const Texture&) = delete;
         
     public:
-        Texture(unsigned int size, unsigned int width, unsigned int height, std::uint8_t* data);
+        static Texture Create(unsigned int size, unsigned int width, unsigned int height, const std::uint8_t* data);
+        
+        Texture(Texture&& source);
         ~Texture();
         
         void UseTexture();
