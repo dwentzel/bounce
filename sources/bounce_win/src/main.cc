@@ -4,9 +4,12 @@
 //#include "logging\DefaultLogger.hpp"
 #include "debug_logger.h"
 
+#include "windows_application_context.h"
 #include "controller.h"
 #include "window.h"
 #include "gl_context.h"
+
+#include "bounce/bounce_main.h"
 
 int WINAPI WinMain(
     HINSTANCE hInstance,
@@ -14,25 +17,32 @@ int WINAPI WinMain(
     LPSTR lpCmdLine,
     int nCmdShow)
 {
-    MSG msg;
 
-    bounce::Logger* logger = new bounce_win::DebugLogger();
-    bounce::LogManager::instance().set_logger(logger);
 
-    LOG(bounce::LogLevel::Debug) << "STARTED" << std::endl;
+    bounce::LogManager::instance().Startup();
 
-    bounce_win::GLContext* context = new bounce_win::GLContext();
-    bounce_win::Controller* controller = new bounce_win::Controller(context);
+    LOG_DEBUG << "STARTED" << std::endl;
+
+    bounce_win::WindowsApplicationContext context(hInstance);
+
+    bounce_main(&context);
+
+    //bounce_win::GLContext* context = new bounce_win::GLContext();
+    //bounce_win::Controller* controller = new bounce_win::Controller(context);
+    //
+    //bounce_win::Window window(hInstance, L"Bounce", 0, controller);
+
+    //HWND w = window.create();
+    //window.show();
+
+    //MSG msg;
     
-    bounce_win::Window window(hInstance, L"Bounce", 0, controller);
+    //while (GetMessage(&msg, NULL, 0, 0) == TRUE) {
+    //    TranslateMessage(&msg);
+    //    DispatchMessage(&msg);
+    //}
 
-    HWND w = window.create();
-    window.show();
-    
-    while (GetMessage(&msg, NULL, 0, 0) == TRUE) {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+    bounce::LogManager::instance().Shutdown();
 
     return msg.wParam;
 }

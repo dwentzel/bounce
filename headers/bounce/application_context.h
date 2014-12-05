@@ -21,11 +21,11 @@ namespace bounce {
         EventManager* event_manager_ptr() { return &event_manager_; }
         EventManager& event_manager() { return event_manager_; }
         
-        virtual void Flush() const = 0;// { flush_(); }
+        virtual void Flush() const = 0;
         
-        virtual void Update() const = 0;// { poll_(); }
+        virtual void Update() const = 0;
         
-        virtual void CreateWindow() = 0;
+        virtual void CreateApplicationWindow() = 0;
         
         virtual const std::string& root_path() const = 0;
     };

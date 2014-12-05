@@ -7,19 +7,6 @@
 namespace bounce_win {
 
     class Window {
-    public:
-
-        Window(HINSTANCE hInst, const wchar_t* name, HWND parent, Controller* ctrl);
-
-        HWND create();
-        void show(int cmdShow = SW_SHOWDEFAULT);
-
-        HWND getHandle() const { return window; }
-
-        void setWindowStyle(DWORD style) { winStyle = style; }
-        void setWidth(int newWidth) { width = newWidth; }
-        void setHeith(int newHeight) { height = newHeight; }
-
     private:
         enum { MAX_STRING = 256 };
 
@@ -39,6 +26,20 @@ namespace bounce_win {
         int height;
         HWND parent;
         HMENU menu;
+
+    public:
+
+        Window(HINSTANCE hInst, const wchar_t* name, HWND parent, Controller* ctrl);
+
+        HWND create();
+        void show(int cmdShow = SW_SHOWDEFAULT);
+
+        HWND getHandle() const { return window; }
+
+        void setWindowStyle(DWORD style) { winStyle = style; }
+        void setWidth(int newWidth) { width = newWidth; }
+        void setHeith(int newHeight) { height = newHeight; }
+
     };
 
 }

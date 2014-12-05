@@ -24,8 +24,11 @@
 #include <cassert>
 
 #include "logging/log.h"
-
+#ifdef __PRETTY_FUNCTION__
 #define CHECK_GL_ERROR() bounce::CheckOpenGlError(__FILE__,__LINE__,__PRETTY_FUNCTION__)
+#else
+#define CHECK_GL_ERROR() bounce::CheckOpenGlError(__FILE__,__LINE__,__FUNCTION__)
+#endif
 #define ASSERT_NO_GL_ERROR() bounce::AssertNoGlError(__FILE__,__LINE__)
 
 namespace bounce {

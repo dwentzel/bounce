@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include "bounce/event.h"
-#include "bounce/application_context.h"
+#include "windows_application_context.h"
 #include "gl_context.h"
 
 namespace bounce_win {
@@ -20,17 +20,17 @@ namespace bounce_win {
         int keyUp(int key, LPARAM lParam);
 
     private:
-        static void run_thread(void* param);
-        void run();
+        //static void run_thread(void* param);
+        //void run();
         bounce::Key KeyCodeToKey(int keycode);
 
-        bounce::ApplicationContext application_context_;
+        //bounce_win::WindowsApplicationContext application_context_;
 
         HWND window_;
         GLContext* context_;
 
-        HANDLE thread_handle_;
-        unsigned int thread_id_;
+        //HANDLE thread_handle_;
+        //unsigned int thread_id_;
     };
 }
 

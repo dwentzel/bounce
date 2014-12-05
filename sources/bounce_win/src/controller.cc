@@ -1,5 +1,5 @@
 #include <process.h>
-#include "bounce/entry_point.h"
+//#include "bounce/entry_point.h"
 #include "controller.h"
 
 namespace bounce_win {
@@ -12,7 +12,7 @@ namespace bounce_win {
         Sleep(10);
     }
 
-    Controller::Controller(GLContext* context) : context_(context), application_context_(flush, context)
+    Controller::Controller(GLContext* context) : context_(context)
     {
 
     }
@@ -22,62 +22,62 @@ namespace bounce_win {
 
     }
 
-    void Controller::run_thread(void* param)
-    {
-        ((Controller*)param)->run();
-    }
+    //void Controller::run_thread(void* param)
+    //{
+    //    ((Controller*)param)->run();
+    //}
 
-    int Controller::create()
-    {
-        if (!context_->createContext(window_, 32, 24, 8))
-        {
-            //Win::log(L"[ERROR] Failed to create OpenGL rendering context from ControllerGL::create().");
-            return -1;
-        }
+    //int Controller::create()
+    //{
+    //    if (!context_->createContext(window_, 32, 24, 8))
+    //    {
+    //        //Win::log(L"[ERROR] Failed to create OpenGL rendering context from ControllerGL::create().");
+    //        return -1;
+    //    }
 
-        thread_handle_ = (HANDLE)_beginthreadex(0, 0, (unsigned(__stdcall *)(void *))run_thread, this, 0, &thread_id_);
-        if (thread_handle_)
-        {
-            //loopFlag = true;
-            //Win::log(L"Created a rendering thread for OpenGL.");
-        }
-        else
-        {
-            //Win::log(L"[ERROR] Failed to create rendering thread from ControllerGL::create().");
-        }
+    //    thread_handle_ = (HANDLE)_beginthreadex(0, 0, (unsigned(__stdcall *)(void *))run_thread, this, 0, &thread_id_);
+    //    if (thread_handle_)
+    //    {
+    //        //loopFlag = true;
+    //        //Win::log(L"Created a rendering thread for OpenGL.");
+    //    }
+    //    else
+    //    {
+    //        //Win::log(L"[ERROR] Failed to create rendering thread from ControllerGL::create().");
+    //    }
 
-        return 0;
-    }
+    //    return 0;
+    //}
 
 
 
-    void Controller::run()
-    {
-        ::wglMakeCurrent(context_->getDC(), context_->getRC());
+    //void Controller::run()
+    //{
+    //    ::wglMakeCurrent(context_->getDC(), context_->getRC());
 
-        bounce::EntryPoint entryPoint = bounce::EntryPoint();
+    //    bounce::EntryPoint entryPoint = bounce::EntryPoint();
 
-        entryPoint.run(application_context_);
+    //    entryPoint.run(application_context_);
 
-        ::wglMakeCurrent(0, 0);
-        ::CloseHandle(thread_handle_);
-    }
+    //    ::wglMakeCurrent(0, 0);
+    //    ::CloseHandle(thread_handle_);
+    //}
 
     bounce::Key Controller::KeyCodeToKey(int key)
     {
         switch (key) {
         case 0x41:
-            return bounce::Key::A;
+            return bounce::KEY_A;
         case 0x44:
-            return bounce::Key::D;
+            return bounce::KEY_D;
         case 0x45:
-            return bounce::Key::E;
+            return bounce::KEY_E;
         case 0x51:
-            return bounce::Key::Q;
+            return bounce::KEY_Q;
         case 0x53:
-            return bounce::Key::S;
+            return bounce::KEY_S;
         case 0x57:
-            return bounce::Key::W;
+            return bounce::KEY_W;
         default:
             return bounce::Key::NO_KEY;
         }
@@ -95,7 +95,7 @@ namespace bounce_win {
             keysym.mod = bounce::Modifier::NO_MODIFIER;
             keysym.sym = key;
 
-            application_context_.event_manager().queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeydownEvent(keysym)));
+            application_context_.event_manager().QueueEvent(std::unique_ptr<bounce::Event>(new bounce::KeydownEvent(keysym)));
         }
 
         return 0;
@@ -111,22 +111,22 @@ namespace bounce_win {
 
         switch (key) {
         case 0x41:
-            keysym.sym = bounce::Key::A;
+            keysym.sym = bounce::KEY_A;
             break;
         case 0x44:
-            keysym.sym = bounce::Key::D;
+            keysym.sym = bounce::KEY_D;
             break;
         case 0x45:
-            keysym.sym = bounce::Key::E;
+            keysym.sym = bounce::KEY_E;
             break;
         case 0x51:
-            keysym.sym = bounce::Key::Q;
+            keysym.sym = bounce::KEY_Q;
             break;
         case 0x53:
-            keysym.sym = bounce::Key::S;
+            keysym.sym = bounce::KEY_S;
             break;
         case 0x57:
-            keysym.sym = bounce::Key::W;
+            keysym.sym = bounce::KEY_W;
             break;
         default:
             triggerEvent = false;
@@ -134,7 +134,7 @@ namespace bounce_win {
         }
 
         if (triggerEvent) {
-            application_context_.event_manager().queueEvent(std::unique_ptr<bounce::Event>(new bounce::KeyupEvent(keysym)));
+            application_context_.event_manager().QueueEvent(std::unique_ptr<bounce::Event>(new bounce::KeyupEvent(keysym)));
         }
 
         return 0;

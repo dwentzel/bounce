@@ -9,7 +9,7 @@ set(SOURCES
     src/bounce.cc
 )
 
-if (APPLE)
+
     set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
     set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
     set(textures_PATH ${PROJECT_SOURCE_DIR}/resources/textures)
@@ -39,6 +39,7 @@ if (APPLE)
         ${RESOURCES}
     )
 
+if (APPLE)
     set(MACOSX_BUNDLE BUNDLE_NAME ${MODULE_NAME})
 
     add_executable(
@@ -79,6 +80,14 @@ if (APPLE)
 
     target_link_libraries(${MODULE_NAME} bounce_mac renderer)
 else (APPLE)
+
+    add_executable(
+        ${MODULE_NAME}
+        ${HEADERS}
+        ${SOURCES}
+    )
+
+
     add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E
             copy_directory "${PROJECT_SOURCE_DIR}/resources/shaders" "$<TARGET_FILE_DIR:game>/shaders")

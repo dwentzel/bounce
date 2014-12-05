@@ -1,5 +1,6 @@
 #include "shader_program.h"
 
+#include <algorithm>
 #include <fstream>
 
 namespace {
