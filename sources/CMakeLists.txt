@@ -43,19 +43,31 @@ endif()
 #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CXX_FLAGS}")
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CXX_FLAGS}")
 
-message("CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
-message("CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
-message("CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
+message(STATUS "CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
+message(STATUS "CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
+
+#add_definitions(-Dbounce_engine_EXPORTS)
+
+add_definitions(-Dbounce_engine_BUILT_AS_STATIC)
 
 add_subdirectory(framework)
 add_subdirectory(logging)
 add_subdirectory(renderer)
-add_subdirectory(renderer_test)
+#add_subdirectory(renderer_test)
 add_subdirectory(importer)
-add_subdirectory(bounce)
+add_subdirectory(engine)
+
+#remove_definitions(-Dbounce_engine_EXPORTS)
 
 if (WIN32)
     add_subdirectory(bounce_win)
 elseif (APPLE)
     add_subdirectory(bounce_mac)
 endif()
+
+set(HEADERS
+    ${PUBLIC_INCLUDE_DIR}/bounce_engine_export.h
+)
+
+add_custom_target(bounce_lib SOURCES ${HEADERS})

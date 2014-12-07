@@ -30,7 +30,7 @@ add_library(
 
 find_library(COCOA_LIBRARY Cocoa)
 
-target_link_libraries(${MODULE_NAME} ${COCOA_LIBRARY} bounce)
+target_link_libraries(${MODULE_NAME} ${COCOA_LIBRARY} engine)
 
 #set_target_properties(${EXENAME} PROPERTIES
 #    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/Debug
@@ -46,16 +46,4 @@ target_link_libraries(${MODULE_NAME} ${COCOA_LIBRARY} bounce)
 #PROPERTIES
 #RESOURCE Resources)
 
-file(GLOB ShellScript ${PROJECT_SOURCE_DIR}/bounce.sh)
 
-add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E
-        copy "${CMAKE_CURRENT_SOURCE_DIR}/bounce.sh" "$<TARGET_FILE_DIR:bounce_mac>")
-        
-add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E
-        copy_directory "${PROJECT_SOURCE_DIR}/resources/shaders" "$<TARGET_FILE_DIR:bounce_mac>/shaders")
-
-add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E
-        copy_directory "${PROJECT_SOURCE_DIR}/resources/models" "$<TARGET_FILE_DIR:bounce_mac>/models")

@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(Bounce)
 
-set(BUILD_SHARED_LIBS OFF)
+#set(BUILD_SHARED_LIBS OFF)
 
-message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
-
-
+message(STATUS "CMAKE_PREFIX_PATH: $ENV{CMAKE_PREFIX_PATH}")
 
 if (MSVC)
 #   set(CMAKE_FIND_LIBRARY_PREFIXES "")
@@ -25,6 +23,9 @@ message(STATUS "Generator: ${CMAKE_GENERATOR}")
 if (APPLE)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${Bounce_SOURCE_DIR}/cmake/modules/osx")
 endif (APPLE)
+if (WIN32)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${Bounce_SOURCE_DIR}/cmake/modules/win")
+endif (WIN32)
 message(STATUS "CMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}")
 
 

@@ -5,7 +5,7 @@
 bounce::VertexBuffer::VertexBuffer()
 {
     buffer_position_ = 0;
-    buffer_count_ = 2000;
+    buffer_count_ = 20000;
     buffer_size_ = buffer_count_ * sizeof(float);
     buffer_ = new char[buffer_size_];
 }

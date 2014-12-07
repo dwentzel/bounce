@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "engine/window_context.h"
+
 #include "app.h"
 
 int bounce_main(bounce::ApplicationContext* context)
@@ -7,9 +9,11 @@ int bounce_main(bounce::ApplicationContext* context)
     
     std::wcout << L"bounce_main" << std::endl;
     
-    context->CreateApplicationWindow();
+    bounce::WindowContext window_context(800, 600);
     
-    bounce::App app(*context);
+    context->CreateApplicationWindow(window_context);
+    
+    bounce::App app(*context, window_context);
     
     //app.onInit();
     

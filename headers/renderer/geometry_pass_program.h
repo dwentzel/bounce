@@ -1,5 +1,8 @@
-#ifndef BOUNCE_RENDERER_GEOMETRY_PASS_PROGRAM_
-#define BOUNCE_RENDERER_GEOMETRY_PASS_PROGRAM_
+#ifndef BOUNCE_RENDERER_GEOMETRY_PASS_PROGRAM_H_
+#define BOUNCE_RENDERER_GEOMETRY_PASS_PROGRAM_H_
+
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
 
 #include "shader_program.h"
 
@@ -7,25 +10,30 @@ namespace bounce {
 
     class GeometryPassProgram : public ShaderProgram {
     private:
-        GLint mwvp_matrix_id_;
-        GLint wvp_matrix_id_;
-        GLint view_matrix_id_;
-        GLint world_matrix_id_;
-        GLint model_matrix_id_;
+        GLuint mwvp_matrix_location_;
+        GLuint wvp_matrix_location_;
+        GLuint view_matrix_location_;
+        GLuint world_matrix_location_;
+        GLuint model_matrix_location_;
+
+        GLuint color_texture_unit_location_;
+
+        GeometryPassProgram& operator=(const GeometryPassProgram&) = delete;
         
     public:
-        GeometryPassProgram();
-        ~GeometryPassProgram();
+        GeometryPassProgram(const ResourceLoader& resource_loader);
         
         void Init();
         
-        void SetModelMatrix(const float* model_matrix);
-        void SetWorldMatrix(const float* world_matrix);
-        void SetViewMatrix(const float* view_matrix);
-        void SetWVPMatrix(const float* wvp_matrix);
-        void SetMWVPMatrix(const float* mwvp_matrix);
+        void SetModelMatrix(const glm::mat4& model_matrix);
+        void SetWorldMatrix(const glm::mat4& world_matrix);
+        void SetViewMatrix(const glm::mat4& view_matrix);
+        void SetWVPMatrix(const glm::mat4& wvp_matrix);
+        void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
+        void SetColorTextureUnit(unsigned int texture_unit);
+        
     };
 
 }
 
-#endif // BOUNCE_RENDERER_GEOMETRY_PASS_PROGRAM_
+#endif // BOUNCE_RENDERER_GEOMETRY_PASS_PROGRAM_H_

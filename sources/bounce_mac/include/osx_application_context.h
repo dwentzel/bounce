@@ -1,7 +1,7 @@
 #ifndef BOUNCE_BOUNCE_MAC_OSX_APPLICATION_CONTEXT_
 #define BOUNCE_BOUNCE_MAC_OSX_APPLICATION_CONTEXT_
 
-#import "bounce/application_context.h"
+#import "engine/application_context.h"
 #import <AppKit/NSOpenGL.h>
 #import <string>
 
@@ -19,7 +19,7 @@ namespace bounce_mac {
         virtual void Flush() const;
         virtual void Update() const;
         
-        virtual void CreateWindow();
+        virtual void CreateWindow(const bounce::WindowContext& window_context);
         
         virtual const std::string& root_path() const;
     };

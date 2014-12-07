@@ -25,7 +25,7 @@ set(SOURCES
 
 add_library(
     ${MODULE_NAME}
-    STATIC
+    OBJECT
     ${HEADERS}
     ${SOURCES}
 )

@@ -1,7 +1,9 @@
 #include "texture_manager.h"
 #include <fstream>
+#include <algorithm>
 
 #include "logging/log.h"
+#include "exceptions.h"
 
 bounce::TextureManager::TextureManager(const std::string& texture_directory_path)
 : texture_directory_path_(texture_directory_path)
@@ -17,13 +19,20 @@ bool bounce::TextureManager::HasTexture(const std::string& texture_path) const
 
 const bounce::Texture& bounce::TextureManager::GetTexture(unsigned int texture_handle) const
 {
-    return textures_[texture_handle];
+    return textures_.GetObject(texture_handle);
 }
 
-int bounce::TextureManager::IndexOf(const std::string& texture) const
+void bounce::TextureManager::BindTexture(unsigned int texture_handle)
 {
-    
-    return -1;
+    textures_.GetObject(texture_handle).UseTexture();
+}
+
+int bounce::TextureManager::GetTextureHandle(const std::string& texture_name) const
+{
+    std::vector<Texture>::const_iterator iter =
+        std::find_if(textures_.begin(), textures_.end(),
+                     [&texture_name](const Texture& texture) { return texture_name == texture.name(); } );
+    return iter == textures_.end() ? -1 : std::distance(textures_.begin(), iter);
 }
 
 namespace {
@@ -44,15 +53,9 @@ namespace {
         uint8_t red;
     };
     
-    class BitMap
-    {
-    public:
-        
-    };
-
 }
 
-void bounce::TextureManager::LoadTexture(const std::string& texture)
+unsigned int bounce::TextureManager::GenerateTexture(const std::string& texture)
 {
     std::string texture_path = texture_directory_path_ + "/" + texture;
     
@@ -64,7 +67,7 @@ void bounce::TextureManager::LoadTexture(const std::string& texture)
         
         if (header.type != 0x4D42)
         {
-            LOG_WARNING << L"File " << texture << L" is not a valid bitmap" << std::endl;
+            LOG_ERROR << L"File " << texture << L" is not a valid bitmap" << std::endl;
         }
         
         uint32_t width;
@@ -78,22 +81,13 @@ void bounce::TextureManager::LoadTexture(const std::string& texture)
         
         file.seekg(header.offset);
         file.read((char*)pixel_data, header.size);
+        file.close();
         
-//        uint8_t swap_byte;
-//        for (unsigned long i = 0; i < header.size; i += 3) {
-//            swap_byte = pixel_data[i];
-//            pixel_data[i] = pixel_data[i + 2];
-//            pixel_data[i + 2] = swap_byte;
-//        }
-        
-        textures_.emplace_back(header.size, width, height, pixel_data);
+        unsigned int handle = textures_.GenerateObject(header.size, width, height, pixel_data);
+        return handle;
     }
     else {
-        LOG_WARNING << L"Could not find file " << texture_path << std::endl;
+        LOG_ERROR << L"Could not find file " << texture_path << std::endl;
+        throw RendererException();
     }
-}
-
-unsigned int bounce::TextureManager::next_handle() const
-{
-    return textures_.size();
 }

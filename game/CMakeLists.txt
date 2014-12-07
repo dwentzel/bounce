@@ -1,5 +1,8 @@
 setup_module(game)
 
+add_definitions(-Dbounce_engine_BUILT_AS_STATIC)
+
+
 set(HEADERS
     include/app.h
 )
@@ -16,7 +19,9 @@ set(SOURCES
 
 
     set(MODELS
+        ${models_PATH}/quad.dae
         ${models_PATH}/simple_craft.dae
+        ${models_PATH}/sphere.dae
 #        ${models_PATH}/simple_craft.fbx
 #        ${models_PATH}/simple_craft.blend
     )
@@ -31,7 +36,7 @@ set(SOURCES
         ${shaders_PATH}/geometry_pass.frag.glsl
         ${shaders_PATH}/geometry_pass.vert.glsl
         ${shaders_PATH}/light_pass.vert.glsl
-        ${shaders_PATH}/dir_light_pass.frag.glsl
+        ${shaders_PATH}/directional_light_pass.frag.glsl
         ${shaders_PATH}/point_light_pass.frag.glsl
     )
 
@@ -83,10 +88,12 @@ else (APPLE)
 
     add_executable(
         ${MODULE_NAME}
+		WIN32
         ${HEADERS}
         ${SOURCES}
     )
 
+	target_link_libraries(${MODULE_NAME} engine bounce_win)
 
     add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E
@@ -95,6 +102,10 @@ else (APPLE)
     add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E
             copy_directory "${PROJECT_SOURCE_DIR}/resources/models" "$<TARGET_FILE_DIR:game>/models")
+
+	add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E
+            copy_directory "${PROJECT_SOURCE_DIR}/resources/textures" "$<TARGET_FILE_DIR:game>/textures")
 
 endif (APPLE)
 
@@ -138,6 +149,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
 endif()
 
+find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
+target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARY})
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
-

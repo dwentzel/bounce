@@ -6,6 +6,13 @@
 namespace bounce_win {
 
     class GLContext {
+    private:
+        static bool setPixelFormat(HDC hdc, int colorBits, int depthBits, int stencilBits);
+        static int findPixelFormat(HDC hdc, int colorbits, int depthBits, int stencilBits);
+
+        HDC hdc;
+        HGLRC hglrc;
+
     public:
         GLContext();
         ~GLContext();
@@ -16,12 +23,7 @@ namespace bounce_win {
         HDC getDC() const { return hdc; }
         HGLRC getRC() const { return hglrc; }
 
-    private:
-        static bool setPixelFormat(HDC hdc, int colorBits, int depthBits, int stencilBits);
-        static int findPixelFormat(HDC hdc, int colorbits, int depthBits, int stencilBits);
 
-        HDC hdc;
-        HGLRC hglrc;
     };
 
 }

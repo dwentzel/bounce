@@ -50,29 +50,29 @@ void bounce_mac::OsxApplicationContext::Update() const
     [pool release];
 }
 
-void bounce_mac::OsxApplicationContext::CreateWindow()
+void bounce_mac::OsxApplicationContext::CreateWindow(const bounce::WindowContext& window_context)
 {
     NSOpenGLPixelFormatAttribute attr[] = {
         NSOpenGLPFAOpenGLProfile,
         NSOpenGLProfileVersion3_2Core,
-        NSOpenGLPFAColorSize, 32,
-        NSOpenGLPFAAlphaSize, 8,
         NSOpenGLPFAAccelerated,
         NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFAColorSize, 32,
+        NSOpenGLPFAAlphaSize, 8,
         NSOpenGLPFADepthSize, 24,
         0
     };
     
-    NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attr];
+    NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attr] autorelease];
     
     openGLContext = [[NSOpenGLContext alloc] initWithFormat: pixelFormat shareContext: nil];
     
-    GLint one = 1;
-    [openGLContext setValues:&one forParameter:NSOpenGLCPSwapInterval];
+    GLint vsync = 0;
+    [openGLContext setValues:&vsync forParameter:NSOpenGLCPSwapInterval];
     
     
     id window = [[[BounceWindow alloc]
-                  initWithContentRect:NSMakeRect(0, 0, 640, 480)
+                  initWithContentRect:NSMakeRect(0, 0, window_context.width(), window_context.height())
                   styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO]
                  autorelease];
     [window cascadeTopLeftFromPoint:NSMakePoint(20,20)];

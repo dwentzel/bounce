@@ -4,15 +4,8 @@
 
 namespace bounce_win {
 
-    void flush(void* context)
-    {
-        GLContext* glContext = (GLContext*)context;
-
-        glContext->flush();
-        Sleep(10);
-    }
-
-    Controller::Controller(GLContext* context) : context_(context)
+    Controller::Controller(GLContext* context, WindowsApplicationContext& application_context) 
+        : context_(context), application_context_(application_context)
     {
 
     }
@@ -20,6 +13,12 @@ namespace bounce_win {
     Controller::~Controller()
     {
 
+    }
+
+    int Controller::create() 
+    {
+
+        return 0;
     }
 
     //void Controller::run_thread(void* param)
@@ -85,9 +84,6 @@ namespace bounce_win {
 
     int Controller::keyDown(int key_code, LPARAM lParam)
     {
-
-
-
         bounce::Key key = KeyCodeToKey(key_code);
 
         if (key != bounce::NO_KEY) {

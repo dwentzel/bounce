@@ -2,32 +2,25 @@
 #define BOUNCE_LOGGING_LOGMANAGER_H_
 
 #include <memory>
-#include <thread>
 #include "log.h"
-#include "log_stream_buffer.h"
-#include "log_worker.h"
-#include "framework/lock_free_queue.h"
+
+#include "bounce_engine_export.h"
 
 namespace bounce {
+
+    class LogManagerImpl;
     
-    class LogManager {
+    class bounce_engine_EXPORT LogManager {
     private:
         LogManager();
-        LogManager(const LogManager&) = delete;
         ~LogManager();
+
+        LogManager(const LogManager&) = delete;
+        LogManager& operator=(const LogManager&) = delete;
         
-        void operator=(const LogManager&);
-        
-        LogMessageQueue message_queue_;
-        
-        LogWorkerContext log_worker_context_;
-        LogWorker log_worker_;
-        
-        LogStreamBuffer buffer_;
-        std::wostream log_stream_;
-        LogLevel max_log_level_;
-        
-        std::unique_ptr<std::thread> worker_thread_;
+        LogManagerImpl* impl_;
+
+
         
     public:
         static LogManager& instance();
@@ -41,26 +34,7 @@ namespace bounce {
         void Shutdown();
     };
     
-    inline LogManager& LogManager::instance()
-    {
-        static LogManager instance;
-        return instance;
-    }
-    
-    inline LogLevel LogManager::max_log_level() const
-    {
-        return max_log_level_;
-    }
-    
-    inline void LogManager::max_log_level(LogLevel log_level)
-    {
-        max_log_level_ = log_level;
-    }
-    
-    inline std::wostream& LogManager::Log(const LogLevel& log_level)
-    {
-        return log_stream_;
-    }
+
     
 }
 #endif // BOUNCE_LOGGING_LOGMANAGER_H_

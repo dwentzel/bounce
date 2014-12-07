@@ -3,17 +3,22 @@
 
 #include <string>
 
+#include "bounce_engine_export.h"
+
 namespace bounce {
 
-    class ResourceLoader {
+    class bounce_engine_EXPORT ResourceLoader {
     private:
-        std::string resources_base_path_;
+        const std::string resources_base_path_;
         
+        std::string LoadFileData(const std::string& file_path) const;
+        
+        ResourceLoader& operator=(const ResourceLoader&) = delete;
     public:
         ResourceLoader(const std::string& resources_base_path);
         
-        std::string LoadShader(const std::string& shader_path);
-        std::string LoadModel(const std::string& model_path);
+        std::string LoadShaderData(const std::string& shader_path) const;
+        std::string LoadModelData(const std::string& model_path) const;
         
     };
 

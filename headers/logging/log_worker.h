@@ -18,6 +18,8 @@ namespace bounce {
         LogMessagePtr PollMessage();
         void OutputMessage(const LogMessage& message);
         
+        LogWorkerContext& operator=(const LogWorkerContext&) = delete;
+
     public:
         LogWorkerContext(LogMessageQueue& message_queue);
         

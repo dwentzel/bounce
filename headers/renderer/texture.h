@@ -1,23 +1,38 @@
-#ifndef BOUNCE_RENDERER_TEXTURE_
-#define BOUNCE_RENDERER_TEXTURE_
+#ifndef BOUNCE_RENDERER_TEXTURE_H_
+#define BOUNCE_RENDERER_TEXTURE_H_
 
 #include <string>
 #include <cstdint>
 
+#include "bounce_gl.h"
+
+#include "bounce_engine_export.h"
+
 namespace bounce {
 
-    class Texture {
-    private:
+    class bounce_engine_EXPORT Texture {
+    private:        
         unsigned int size_;
         unsigned int width_;
         unsigned int height_;
         
+        GLuint texture_id_;
         std::string name_;
-        std::uint8_t* data_;
+        
+        const std::uint8_t* data_;
+        
+        Texture(unsigned int size, unsigned int width, unsigned int height, const std::uint8_t* data);
+        
+        Texture(const Texture&) = delete;
+        Texture& operator=(const Texture&) = delete;
         
     public:
-        Texture(unsigned int size, unsigned int width, unsigned int height, std::uint8_t* data);
+        static Texture Create(unsigned int size, unsigned int width, unsigned int height, const std::uint8_t* data);
+        
+        Texture(Texture&& source);
         ~Texture();
+        
+        void UseTexture();
         
         const std::string& name() const;
         
@@ -25,29 +40,8 @@ namespace bounce {
         unsigned int width() const;
         unsigned int height() const;
         
-        const std::uint8_t* data() const;
     };
-
-    inline unsigned int Texture::size() const
-    {
-        return size_;
-    }
-    
-    inline unsigned int Texture::width() const
-    {
-        return width_;
-    }
-    
-    inline unsigned int Texture::height() const
-    {
-        return height_;
-    }
-    
-    inline const std::uint8_t* Texture::data() const
-    {
-        return data_;
-    }
     
 }
 
-#endif // BOUNCE_RENDERER_TEXTURE_
+#endif // BOUNCE_RENDERER_TEXTURE_H_

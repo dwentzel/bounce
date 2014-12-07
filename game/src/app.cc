@@ -1,185 +1,253 @@
-/*
- * App.cpp
- *
- *  Created on: 12 maj 2013
- *      Author: daniel
- */
+#include "app.h"
 
-#include <cstdlib>
 #include <ctime>
-
-#include <vector>
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
 
 #include "logging/log.h"
 
-#include "app.h"
+#include "framework/object_cache.h"
 
 #include "importer/importer.h"
-#include "renderer/model.h"
 
-#include "bounce/game_entity.h"
+#include "renderer/model_loader.h"
 
-#include "bounce/render_component.h"
-#include "bounce/control_component.h"
-#include "bounce/movement_component.h"
+#include "engine/game_entity.h"
 
+#include "engine/object_manager.h"
+#include "engine/body_component.h"
+#include "engine/render_component.h"
+#include "engine/point_light_component.h"
 
-//#include "lock_free_queue.h"
+#include "engine/control_component.h"
+#include "engine/position_component.h"
 
+#include "engine/ai_orbit_strategy.h"
 
 namespace bounce {
     
-    App::App(ApplicationContext& application_context) :
-        running_(true), application_context_(application_context), event_manager_(application_context.event_manager()),
-        texture_manager_(application_context_.root_path() + "/textures"),
-        renderer_(
-                  application_context_.root_path() + "/shaders/geometry_pass.vert.glsl",
-                  application_context_.root_path() + "/shaders/geometry_pass.frag.glsl",
-//                  application_context_.root_path() + "/shaders/triangleShader.vert.glsl",
-//                  application_context_.root_path() + "/shaders/triangleShader.frag.glsl",
-                  model_manager_, texture_manager_, material_manager_, vertex_buffer_),
-        render_system_(application_context_, world_manager_, renderer_)
+    App::App(ApplicationContext& application_context, WindowContext& window_context)
+    : running_(true),
+      application_context_(application_context),
+      event_manager_(application_context.event_manager()),
+      window_context_(window_context),
+      resource_loader_(application_context_.root_path()),
+      texture_manager_(application_context_.root_path() + "/textures"),
+      renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
+      entity_manager_(EntityManager::instance()),
+      component_manager_(ComponentManager::instance()),
+      input_system_(keyboard_state_, entity_manager_.game_entities()),
+      movement_system_(entity_manager_.game_entities()),
+      render_system_(application_context_, window_context_, entity_manager_.game_entities(), renderer_)
     {
         
     }
-
+    
     App::~App() {
         //delete window;
     }
-
+    
     bool App::onInit()
     {
         srand(time(0));
-        
-        ShaderProgram::base_path(application_context_.root_path() + "/shaders");
 
-        Importer importer(model_manager_, texture_manager_, material_manager_, vertex_buffer_);
+        render_system_.Startup();        
+        
+        Importer importer(resource_loader_);
+//        unsigned int model_handle = 0;// = importer.ImportFile("simple_craft.dae");
+        
+        ImportedModel imported_model = importer.LoadModel("simple_craft.dae");
+
+        ModelLoader loader(texture_manager_, material_manager_, model_manager_);
+        
+        loader.Begin();
+        
+        unsigned int model_handle = loader.LoadModel(imported_model);
+        
+        loader.End();
+        
+        renderer_.BufferModelData(loader);
+        
+        
+        GameEntityHandle light0_handle = entity_manager_.GenerateGameEntity();
+        GameEntity& light0 = light0_handle.Resolve();
+        
+        GameComponentHandle light0_point_light_component_handle = component_manager_.GeneratePointLightComponent(light0_handle);
+        PointLightComponent& light0_point_light_component = ResolveHandleAs<PointLightComponent>(light0_point_light_component_handle);
+        light0_point_light_component.diffuse_intensity(4.0f);
+        light0_point_light_component.exp_attenuation(0.3f);
+        light0_point_light_component.color(glm::vec3(0.0f, 1.0f, 0.0f));
+        
+        light0.AttachComponent(light0_point_light_component_handle);
+        light0_point_light_component.Startup();
+
+        std::unique_ptr<AiStrategy> light0_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
+        GameComponentHandle light0_ai_component_handle = component_manager_.GenerateAiComponent(light0_handle, std::move(light0_ai_strategy));
+        AiComponent& light0_ai_component = light0_ai_component_handle.ResolveAs<AiComponent>();
+        light0.AttachComponent(light0_ai_component_handle);
+        light0_ai_component.Startup();
+        GameComponentHandle light0_body_component_handle = component_manager_.GenerateBodyComponent(light0_handle);
+        BodyComponent& light0_body_component = ResolveHandleAs<BodyComponent>(light0_body_component_handle);
+        light0_body_component.position(glm::vec3(2.0f, 1.0f, 0.0f));
+        light0.AttachComponent(light0_body_component_handle);
+        light0_body_component.Startup();
+        
+        
+        
+        GameEntityHandle light1_handle = entity_manager_.GenerateGameEntity();
+        GameEntity& light1 = ResolveHandle(light1_handle);
+        
+        GameComponentHandle light1_point_light_component_handle = component_manager_.GeneratePointLightComponent(light1_handle);
+        PointLightComponent& light1_point_light_component = ResolveHandleAs<PointLightComponent>(light1_point_light_component_handle);
+        light1_point_light_component.diffuse_intensity(4.0f);
+        light1_point_light_component.exp_attenuation(0.3f);
+        light1_point_light_component.color(glm::vec3(1.0f, 0.0f, 0.0f));
+        light1.AttachComponent(light1_point_light_component_handle);
+        light1_point_light_component.Startup();
+        
+        std::unique_ptr<AiStrategy> light1_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
+        GameComponentHandle light1_ai_component_handle = component_manager_.GenerateAiComponent(light1_handle, std::move(light1_ai_strategy));
+        AiComponent& light1_ai_component = light1_ai_component_handle.ResolveAs<AiComponent>();
+        light1.AttachComponent(light1_ai_component_handle);
+        light1_ai_component.Startup();
+        
+        GameComponentHandle light1_body_component_handle = component_manager_.GenerateBodyComponent(light1_handle);
+        BodyComponent& light1_body_component = ResolveHandleAs<BodyComponent>(light1_body_component_handle);
+        light1_body_component.position(glm::vec3(0.0f, 0.5f, 2.0f));
+        light1.AttachComponent(light1_body_component_handle);
+        light1_body_component.Startup();
 
         
-        unsigned int model_handle = importer.ImportFile(application_context_.root_path() + "/models/simple_craft.dae");
-
-        render_system_.startup();
-//        renderer_.LoadVertexShader(application_context_.root_path() + "/triangleShader.vert.glsl");
-//        renderer_.LoadFragmentShader(application_context_.root_path() + "/triangleShader.frag.glsl");
-//        renderer_.LinkProgram();
+        GameEntityHandle light2_handle = entity_manager_.GenerateGameEntity();
+        GameEntity& light2 = ResolveHandle(light2_handle);
+        
+        GameComponentHandle light2_point_light_component_handle = component_manager_.GeneratePointLightComponent(light2_handle);
+        PointLightComponent& light2_point_light_component = ResolveHandleAs<PointLightComponent>(light2_point_light_component_handle);
+        light2_point_light_component.diffuse_intensity(4.0f);
+        light2_point_light_component.exp_attenuation(0.3f);
+        light2_point_light_component.color(glm::vec3(0.0f, 0.0f, 1.0f));
+        light2.AttachComponent(light2_point_light_component_handle);
+        light2_point_light_component.Startup();
+        
+        std::unique_ptr<AiStrategy> light2_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
+        GameComponentHandle light2_ai_component_handle = component_manager_.GenerateAiComponent(light2_handle, std::move(light2_ai_strategy));
+        AiComponent& light2_ai_component = light2_ai_component_handle.ResolveAs<AiComponent>();
+        light2.AttachComponent(light2_ai_component_handle);
+        light2_ai_component.Startup();
+        
+        GameComponentHandle light2_body_component_handle = component_manager_.GenerateBodyComponent(light2_handle);
+        BodyComponent& light2_body_component = ResolveHandleAs<BodyComponent>(light2_body_component_handle);
+        light2_body_component.position(glm::vec3(2.0f, 0.0f, 0.0f));
+        light2.AttachComponent(light2_body_component_handle);
+        light2_body_component.Startup();
         
         
-        GameEntity* cube = new GameEntity();
-        RenderComponent* render_component = new RenderComponent(&render_system_, model_handle);
-        cube->AttachComponent(render_component);
+        GameEntityHandle ship_handle = entity_manager_.GenerateGameEntity();
+        GameEntity& ship = ResolveHandle(ship_handle);
         
-        render_component->Startup();
+        GameComponentHandle ship_body_component_handle = component_manager_.GenerateBodyComponent(ship_handle);
+        BodyComponent& ship_body_component = ship_body_component_handle.ResolveAs<BodyComponent>();
+        ship_body_component.max_speed(0.1f);
+        ship_body_component.rotation_acceleration(0.0001f);
         
-        ControlComponent* control_component = new ControlComponent(keyboard_state_);
-        cube->AttachComponent(control_component);
+        ship.AttachComponent(ship_body_component_handle);
+        ship_body_component.Startup();
         
-        MovementComponent* movement_component = new MovementComponent(timer_);
-        cube->AttachComponent(movement_component);
+        GameComponentHandle render_component_handle = component_manager_.GenerateRenderComponent(ship_handle, model_handle);
+        RenderComponent& render_component = ResolveHandleAs<RenderComponent>(render_component_handle);
+        ship.AttachComponent(render_component_handle);
+        render_component.Startup();
         
-        world_manager_.AddEntity(cube);
-
+        GameComponentHandle control_component_handle = component_manager_.GenerateControlComponent(ship_handle, keyboard_state_);
+        ControlComponent& control_component = control_component_handle.ResolveAs<ControlComponent>();
+        ship.AttachComponent(control_component_handle);
+        control_component.Startup();
+        
         return true;
     }
-
+    
     int App::onExecute() {
         if (onInit() == false) {
             return -1;
         }
-
-        LOG_DEBUG << "testing";
-
+        
         EventPtr event = 0;
-
+        
         timer_.Start();
-        float delta_time;
+        float frame_time;
+        float slice_time = 0.0f;
+        float delta_time = 10.0f;
         int frame_count = 0;
         float accumulated_time = 0.0f;
-
+        
         while (running_) {
             timer_.SetFrameTime();
             timer_.Reset();
-            delta_time = timer_.frame_time();
-
-            accumulated_time += delta_time;
+            frame_time = timer_.frame_time();
+            slice_time += frame_time;
+            
+            while (slice_time > delta_time) {
+                slice_time -= delta_time;
+                
+//                LOG_DEBUG << "slice time " << slice_time;
+                
+                application_context_.Update();
+                
+                while ((event = event_manager_.PollEvent()) != nullptr) {
+                    onEvent(*event);
+                }
+                
+                input_system_.Update(delta_time);
+                movement_system_.Update(delta_time);
+                
+            }
+            
+//            LOG_DEBUG << "frame time " << frame_time;
+            accumulated_time += frame_time;
             ++frame_count;
-
+            
             if (accumulated_time > 1000.0f) {
                 float fps = frame_count * 1000.0f / accumulated_time;
                 LOG_DEBUG << "fps: " << fps << std::endl;
                 frame_count = 0;
                 accumulated_time = 0.0f;
             }
-
-//            LOG(LogLevel::Debug) << deltaTime << "\n";
-
-            application_context_.Update();
             
-            while ((event = event_manager_.PollEvent()) != nullptr) {
-                onEvent(*event);
-            }
-
-//            onLoop();
-//            onRender();
-            
-            const GameEntityList& entities = world_manager_.entities();
-            
-            for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
-                GameEntity* entity = *i;
-                
-                entity->UpdateComponentOfType(MOVEMENT_COMPONENT);
-            }
-            
-            render_system_.update();
+            render_system_.Update(delta_time);
         }
-
+        
         onCleanup();
-
+        
         return 0;
     }
-
+    
     void App::onEvent(const Event& event) {
-
+        
         EventType event_type = event.type();
-
+        
         if (event_type == EVENT_QUIT) {
             running_ = false;
         }
-
+        
         if (event_type == EVENT_KEYDOWN || event_type == EVENT_KEYUP) {
-
             KeyboardEvent keyboard_event = static_cast<const KeyboardEvent&>(event);
             keyboard_state_.ProcessEvent(keyboard_event);
-
-            const GameEntityList& entities = world_manager_.entities();
-            
-            for (GameEntityList::const_iterator i = entities.begin(); i != entities.end(); ++i) {
-                GameEntity* entity = *i;
-                
-                entity->UpdateComponentOfType(CONTROL_COMPONENT);
-            }
         }
     }
-
+    
     void App::onLoop() {
-
+        
     }
-
+    
     void App::onRender()
     {
-
+        
     }
-
+    
     void App::onCleanup() {
         //SDL_Quit();
     }
-
+    
     void App::onFlush() {
         application_context_.Flush();
     }
-
+    
 } /* namespace bounce */

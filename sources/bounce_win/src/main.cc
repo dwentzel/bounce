@@ -9,7 +9,9 @@
 #include "window.h"
 #include "gl_context.h"
 
-#include "bounce/bounce_main.h"
+#include "engine/bounce_main.h"
+
+extern int bounce_main(bounce::ApplicationContext*);
 
 int WINAPI WinMain(
     HINSTANCE hInstance,
@@ -44,6 +46,6 @@ int WINAPI WinMain(
 
     bounce::LogManager::instance().Shutdown();
 
-    return msg.wParam;
+    return 0;
 }
 

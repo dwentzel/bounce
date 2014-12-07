@@ -3,9 +3,11 @@
 
 #include <cstddef>
 
+#include "bounce_engine_export.h"
+
 namespace bounce {
     
-    class VertexBuffer {
+    class bounce_engine_EXPORT VertexBuffer {
     private:
         int buffer_position_;
         int buffer_count_;

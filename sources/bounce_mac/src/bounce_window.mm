@@ -1,5 +1,5 @@
 #import "bounce_window.h"
-#import "bounce/event.h"
+#import "engine/event.h"
 
 @implementation BounceWindow
 
@@ -88,7 +88,7 @@ bounce::Key UnicharToKey(unichar ch)
     //        NSLog(@"%@", strWithout);
     
     bounce::Keysym keysym;
-    
+    keysym.mod = bounce::NO_MODIFIER;
     keysym.sym = UnicharToKey(ch);
     
     if (event.type == NSKeyDown)

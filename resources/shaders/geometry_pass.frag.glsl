@@ -16,6 +16,7 @@ void main()
 {
     WorldPosOut = WorldPos0;
     DiffuseOut = texture(gColorMap, TexCoord0).xyz;
+    //DiffuseOut = vec3(1.0f, 1.0f, 1.0f);
     NormalOut = normalize(Normal0);
     TexCoordOut = vec3(TexCoord0, 0.0);
 }

@@ -1,5 +1,5 @@
 #import <Cocoa/Cocoa.h>
-#import "bounce/application_context.h"
+#import "engine/application_context.h"
 
 @interface BounceApplicationDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     bounce::ApplicationContext* application_context_;

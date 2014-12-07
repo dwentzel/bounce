@@ -46,9 +46,9 @@ bounce::LogWorker::LogWorker()
 
 void bounce::LogWorker::Run(LogWorkerContext& context)
 {
-    running_.store(true);
+    running_.store(1);
     
-    while (running_ == true) {
+    while (running_ != 0) {
         context.OutputMessages();
         std::chrono::milliseconds d(1000);
         std::this_thread::sleep_for(d);

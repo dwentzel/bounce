@@ -1,10 +1,3 @@
-/*
- * LockFreeQueue.h
- *
- *  Created on: 19 maj 2013
- *      Author: daniel
- */
-
 #ifndef LOCKFREEQUEUE_H_
 #define LOCKFREEQUEUE_H_
 

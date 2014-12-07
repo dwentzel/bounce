@@ -1,65 +1,54 @@
 #include "geometry_pass_program.h"
 
-bounce::GeometryPassProgram::GeometryPassProgram()
-{
-    
-}
-
-bounce::GeometryPassProgram::~GeometryPassProgram()
+bounce::GeometryPassProgram::GeometryPassProgram(const ResourceLoader& resource_loader)
+: ShaderProgram(resource_loader)
 {
     
 }
 
 void bounce::GeometryPassProgram::Init()
 {
-    CHECK_GL_ERROR();
-    
-    ShaderProgram::Init();
+    CreateProgram();
     
     LoadVertexShader("geometry_pass.vert.glsl");
     LoadFragmentShader("geometry_pass.frag.glsl");
     LinkProgram();
     
-    mwvp_matrix_id_ = glGetUniformLocation(program_id(), "MWVP");
-    wvp_matrix_id_ = glGetUniformLocation(program_id(), "WVP");
-    view_matrix_id_ = glGetUniformLocation(program_id(), "V");
-    world_matrix_id_ = glGetUniformLocation(program_id(), "W");
-    model_matrix_id_ = glGetUniformLocation(program_id(), "M");
+    mwvp_matrix_location_ = GetUniformLocation("MWVP");
+    wvp_matrix_location_ = GetUniformLocation("WVP");
+    view_matrix_location_ = GetUniformLocation("V");
+    world_matrix_location_ = GetUniformLocation("W");
+    model_matrix_location_ = GetUniformLocation("M");
     
-    CHECK_GL_ERROR();
+    color_texture_unit_location_ = GetUniformLocation("gColorMap");
 }
 
-void bounce::GeometryPassProgram::SetModelMatrix(const float* model_matrix)
+void bounce::GeometryPassProgram::SetModelMatrix(const glm::mat4& model_matrix)
 {
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(model_matrix_id_, 1, GL_FALSE, model_matrix);
-    CHECK_GL_ERROR();
+    glUniformMatrix4fv(model_matrix_location_, 1, GL_FALSE, &model_matrix[0][0]);
 }
 
-void bounce::GeometryPassProgram::SetWorldMatrix(const float* model_matrix)
+void bounce::GeometryPassProgram::SetWorldMatrix(const glm::mat4& model_matrix)
 {
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(world_matrix_id_, 1, GL_FALSE, model_matrix);
-    CHECK_GL_ERROR();
+    glUniformMatrix4fv(world_matrix_location_, 1, GL_FALSE, &model_matrix[0][0]);
 }
 
-void bounce::GeometryPassProgram::SetViewMatrix(const float* view_matrix)
+void bounce::GeometryPassProgram::SetViewMatrix(const glm::mat4& view_matrix)
 {
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(view_matrix_id_, 1, GL_FALSE, view_matrix);
-    CHECK_GL_ERROR();
+    glUniformMatrix4fv(view_matrix_location_, 1, GL_FALSE, &view_matrix[0][0]);
 }
 
-void bounce::GeometryPassProgram::SetWVPMatrix(const float* wvp_matrix)
+void bounce::GeometryPassProgram::SetWVPMatrix(const glm::mat4& wvp_matrix)
 {
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(wvp_matrix_id_, 1, GL_FALSE, wvp_matrix);
-    CHECK_GL_ERROR();
+    glUniformMatrix4fv(wvp_matrix_location_, 1, GL_FALSE, &wvp_matrix[0][0]);
 }
 
-void bounce::GeometryPassProgram::SetMWVPMatrix(const float* mwvp_matrix)
+void bounce::GeometryPassProgram::SetMWVPMatrix(const glm::mat4& mwvp_matrix)
 {
-    CHECK_GL_ERROR();
-    glUniformMatrix4fv(mwvp_matrix_id_, 1, GL_FALSE, mwvp_matrix);
-    CHECK_GL_ERROR();
+    glUniformMatrix4fv(mwvp_matrix_location_, 1, GL_FALSE, &mwvp_matrix[0][0]);
+}
+
+void bounce::GeometryPassProgram::SetColorTextureUnit(unsigned int texture_unit)
+{
+    glUniform1i(color_texture_unit_location_, texture_unit);
 }
