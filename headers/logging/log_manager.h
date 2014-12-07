@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "log.h"
+#include "log_output.h"
 
 #include "bounce_engine_export.h"
 
@@ -20,8 +21,6 @@ namespace bounce {
         
         LogManagerImpl* impl_;
 
-
-        
     public:
         static LogManager& instance();
         
@@ -32,6 +31,8 @@ namespace bounce {
         
         void Startup();
         void Shutdown();
+
+        void AddOutput(std::unique_ptr<LogOutput> output);
     };
     
 

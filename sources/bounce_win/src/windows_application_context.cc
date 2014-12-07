@@ -41,7 +41,7 @@ void bounce_win::WindowsApplicationContext::CreateApplicationWindow(const bounce
     
     bounce_win::Controller* controller = new bounce_win::Controller(gl_context_, *this);
 
-    bounce_win::Window window(hInstance_, L"Bounce", 0, controller);
+    bounce_win::Window window(hInstance_, L"Bounce", 0, controller, window_context);
 
     HWND w = window.create();
 

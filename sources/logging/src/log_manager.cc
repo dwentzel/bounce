@@ -32,18 +32,20 @@ public:
 
     void max_log_level(LogLevel log_level);
 
-        std::wostream& Log(const LogLevel&);
+    std::wostream& Log(const LogLevel&);
+
+    void AddOutput(std::unique_ptr<LogOutput> output);
 };
 
 bounce::LogManagerImpl::LogManagerImpl()
     : log_worker_context_(message_queue_), buffer_(message_queue_), log_stream_(&buffer_), max_log_level_(LOG_LEVEL_DEBUG)
 {
     //buffer_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
-    log_worker_context_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
-    log_worker_context_.AddOutput(std::unique_ptr<LogOutput>(new FileLogOutput()));
+    //log_worker_context_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
+    //log_worker_context_.AddOutput(std::unique_ptr<LogOutput>(new FileLogOutput()));
 }
 
-bounce::LogManagerImpl::~LogManagerImpl() 
+bounce::LogManagerImpl::~LogManagerImpl()
 {
     Shutdown();
     //delete logger;
@@ -75,6 +77,10 @@ std::wostream& bounce::LogManagerImpl::Log(const LogLevel&)
     return log_stream_;
 }
 
+void bounce::LogManagerImpl::AddOutput(std::unique_ptr<LogOutput> output)
+{
+    log_worker_context_.AddOutput(std::move(output));
+}
 
 
 
@@ -118,4 +124,9 @@ void bounce::LogManager::max_log_level(LogLevel log_level)
 std::wostream& bounce::LogManager::Log(const LogLevel& log_level)
 {
     return impl_->Log(log_level);
+}
+
+void bounce::LogManager::AddOutput(std::unique_ptr<LogOutput> output)
+{
+    impl_->AddOutput(std::move(output));
 }

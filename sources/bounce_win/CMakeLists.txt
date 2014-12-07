@@ -4,7 +4,7 @@ add_definitions(-DUNICODE -D_UNICODE)
 
 set(HEADERS
 	include/controller.h
-	include/debug_logger.h
+	${MODULE_PUBLIC_INCLUDE_DIR}/debug_string_output.h
 	include/gl_context.h
 	include/window.h
 	include/window_procedure.h
@@ -13,6 +13,7 @@ set(HEADERS
 
 set(SOURCES
 	src/controller.cc
+	src/debug_string_output.cc
 	src/gl_context.cc
 	src/window.cc
 	src/main.cc

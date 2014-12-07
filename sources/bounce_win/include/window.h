@@ -29,7 +29,7 @@ namespace bounce_win {
 
     public:
 
-        Window(HINSTANCE hInst, const wchar_t* name, HWND parent, Controller* ctrl);
+        Window(HINSTANCE hInst, const wchar_t* name, HWND parent, Controller* ctrl, const bounce::WindowContext& window_context);
 
         HWND create();
         void show(int cmdShow = SW_SHOWDEFAULT);

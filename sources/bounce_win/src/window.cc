@@ -3,10 +3,10 @@
 
 namespace bounce_win {
 
-    Window::Window(HINSTANCE hInst, const wchar_t* name, HWND hParent, Controller* ctrl)
+    Window::Window(HINSTANCE hInst, const wchar_t* name, HWND hParent, Controller* ctrl, const bounce::WindowContext& window_context)
         : controller(ctrl), window(0), instance(hInst), winStyle(WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN),
         winStyleEx(WS_EX_CLIENTEDGE), posX(CW_USEDEFAULT), posY(CW_USEDEFAULT),
-        width(CW_USEDEFAULT), height(CW_USEDEFAULT), parent(hParent), menu(0)
+        width(window_context.width()), height(window_context.height()), parent(hParent), menu(0)
     {
         wcsncpy_s(this->title, name, MAX_STRING - 1);
         wcsncpy_s(this->className, name, MAX_STRING - 1);

@@ -8,6 +8,7 @@
 #include "controller.h"
 #include "window.h"
 #include "gl_context.h"
+#include "debug_string_output.h"
 
 #include "engine/bounce_main.h"
 
@@ -19,9 +20,10 @@ int WINAPI WinMain(
     LPSTR lpCmdLine,
     int nCmdShow)
 {
-
+    std::unique_ptr<bounce_win::DebugStringOutput> log_output(new bounce_win::DebugStringOutput());
 
     bounce::LogManager::instance().Startup();
+    bounce::LogManager::instance().AddOutput(std::move(log_output));
 
     LOG_DEBUG << "STARTED" << std::endl;
 
