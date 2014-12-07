@@ -33,7 +33,7 @@ bounce::ImportedModel bounce::Importer::LoadModel(const std::string& resource_na
     
     ImportedModel imported_model;
     
-    unsigned short total_vertex_count = 0;
+    unsigned int total_vertex_count = 0;
     unsigned short total_index_count = 0;
     
     for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {

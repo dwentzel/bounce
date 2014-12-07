@@ -13,36 +13,34 @@ set(SOURCES
 )
 
 
-    set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
-    set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
-    set(textures_PATH ${PROJECT_SOURCE_DIR}/resources/textures)
+set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
+set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
+set(textures_PATH ${PROJECT_SOURCE_DIR}/resources/textures)
 
 
-    set(MODELS
-        ${models_PATH}/quad.dae
-        ${models_PATH}/simple_craft.dae
-        ${models_PATH}/sphere.dae
-#        ${models_PATH}/simple_craft.fbx
-#        ${models_PATH}/simple_craft.blend
-    )
+set(MODELS
+    ${models_PATH}/quad.dae
+    ${models_PATH}/simple_craft.dae
+    ${models_PATH}/sphere.dae
+)
 
-    set(TEXTURES
-        ${textures_PATH}/Hull_Texture.bmp
-    )
+set(TEXTURES
+    ${textures_PATH}/Hull_Texture.bmp
+)
 
-    set(SHADERS
-        ${shaders_PATH}/triangleShader.frag.glsl
-        ${shaders_PATH}/triangleShader.vert.glsl
-        ${shaders_PATH}/geometry_pass.frag.glsl
-        ${shaders_PATH}/geometry_pass.vert.glsl
-        ${shaders_PATH}/light_pass.vert.glsl
-        ${shaders_PATH}/directional_light_pass.frag.glsl
-        ${shaders_PATH}/point_light_pass.frag.glsl
-    )
+set(SHADERS
+    ${shaders_PATH}/triangleShader.frag.glsl
+    ${shaders_PATH}/triangleShader.vert.glsl
+    ${shaders_PATH}/geometry_pass.frag.glsl
+    ${shaders_PATH}/geometry_pass.vert.glsl
+    ${shaders_PATH}/light_pass.vert.glsl
+    ${shaders_PATH}/directional_light_pass.frag.glsl
+    ${shaders_PATH}/point_light_pass.frag.glsl
+)
 
-    set(RESOURCES
-        ${RESOURCES}
-    )
+set(RESOURCES
+    ${RESOURCES}
+)
 
 if (APPLE)
     set(MACOSX_BUNDLE BUNDLE_NAME ${MODULE_NAME})
@@ -144,7 +142,13 @@ if(MSVC)
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
     endif()
-    elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+
+#	set_target_properties(${MODULE_NAME} PROPERTIES LINK_FLAGS "/NODEFAULTLIB:\"msvcrt\"")
+
+	set(CMAKE_EXE_LINKER_FLAGS
+		"${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
+
+elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
     # Update if necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
 endif()

@@ -1,8 +1,6 @@
 #include <windows.h>
 
 #include "logging\log.h"
-//#include "logging\DefaultLogger.hpp"
-#include "debug_logger.h"
 
 #include "windows_application_context.h"
 #include "controller.h"
@@ -30,21 +28,6 @@ int WINAPI WinMain(
     bounce_win::WindowsApplicationContext context(hInstance);
 
     bounce_main(&context);
-
-    //bounce_win::GLContext* context = new bounce_win::GLContext();
-    //bounce_win::Controller* controller = new bounce_win::Controller(context);
-    //
-    //bounce_win::Window window(hInstance, L"Bounce", 0, controller);
-
-    //HWND w = window.create();
-    //window.show();
-
-    //MSG msg;
-    
-    //while (GetMessage(&msg, NULL, 0, 0) == TRUE) {
-    //    TranslateMessage(&msg);
-    //    DispatchMessage(&msg);
-    //}
 
     bounce::LogManager::instance().Shutdown();
 

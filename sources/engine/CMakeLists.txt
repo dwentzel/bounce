@@ -99,7 +99,6 @@ include_directories(${GLEW_INCLUDE_DIR})
 
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
 
-#target_link_libraries(${MODULE_NAME} logging importer renderer)
 
 ###########################################################
 # Tests
