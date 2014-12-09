@@ -8,4 +8,16 @@ namespace bounce {
         return out;
     }
     
+    std::wostream& operator<<(std::wostream& out, const unsigned char* data)
+    {
+        if (data == nullptr) {
+            out << L"(null)";
+        }
+        else {
+            out << std::string(reinterpret_cast<const char*>(data));
+        }
+        
+        return out;
+    }
+    
 }

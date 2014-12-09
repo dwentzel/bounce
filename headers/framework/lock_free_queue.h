@@ -1,9 +1,9 @@
-#ifndef LOCKFREEQUEUE_H_
-#define LOCKFREEQUEUE_H_
+#ifndef BOUNCE_FRAMEWORK_LOCKFREEQUEUE_H_
+#define BOUNCE_FRAMEWORK_LOCKFREEQUEUE_H_
 
 #include <memory>
 #include <atomic>
-#include <iostream>
+//#include <iostream>
 
 namespace bounce {
     
@@ -36,8 +36,6 @@ namespace bounce {
                 delete tmp;
             }
         }
-        
-        LockFreeQueue(LockFreeQueue&& queue) {}
         
         void produce(const T& item);
         bool consume(T& item);
@@ -105,6 +103,7 @@ namespace bounce {
                 delete tmp;
             }
         }
+        
         void produce(std::unique_ptr<T> item);
         bool consume(std::unique_ptr<T>& item);
     };
@@ -135,6 +134,6 @@ namespace bounce {
         
         return false;
     }
-    
-} /* namespace bounce */
-#endif /* LOCKFREEQUEUE_H_ */
+}
+
+#endif // BOUNCE_FRAMEWORK_LOCKFREEQUEUE_H_

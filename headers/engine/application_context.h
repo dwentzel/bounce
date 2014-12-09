@@ -2,7 +2,7 @@
 #define BOUNCE_ENGINE_APPLICATION_CONTEXT_H_
 
 #include <string>
-#include "event.h"
+#include "event_manager.h"
 #include "window_context.h"
 
 #include "bounce_engine_export.h"

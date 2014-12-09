@@ -1,13 +1,24 @@
 #ifndef BOUNCE_LOGGING_LOG_MESSAGE_H_
 #define BOUNCE_LOGGING_LOG_MESSAGE_H_
 
-#include "framework/lock_free_queue.h"
+#include <string>
+#include <ostream>
 
 namespace bounce {
-
-    typedef std::wstring LogMessage;
+    
+    class LogMessage {
+    private:
+        std::wstring message_;
+        
+        friend std::wostream& operator<<(std::wostream& ostream, const LogMessage& message);
+    public:
+        LogMessage(const std::wstring& message);
+        ~LogMessage();
+    };
+    
+    std::wostream& operator<<(std::wostream& ostream, const LogMessage& message);
+    
     typedef std::unique_ptr<LogMessage> LogMessagePtr;
-    typedef LockFreeQueue<LogMessagePtr> LogMessageQueue;    
 }
 
 #endif // BOUNCE_LOGGING_LOG_MESSAGE_H_

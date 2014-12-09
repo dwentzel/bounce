@@ -10,6 +10,7 @@ set(HEADERS
     include/console.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/event_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_type.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity.h
@@ -36,6 +37,7 @@ set(SOURCES
     src/console.cc
     src/control_component.cc
     src/event.cc
+    src/event_manager.cc
     src/game_component.cc
     src/game_entity.cc
     src/game_system.cc

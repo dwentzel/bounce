@@ -50,7 +50,7 @@ void bounce_mac::OsxApplicationContext::Update() const
     [pool release];
 }
 
-void bounce_mac::OsxApplicationContext::CreateWindow(const bounce::WindowContext& window_context)
+void bounce_mac::OsxApplicationContext::CreateApplicationWindow(const bounce::WindowContext& window_context)
 {
     NSOpenGLPixelFormatAttribute attr[] = {
         NSOpenGLPFAOpenGLProfile,

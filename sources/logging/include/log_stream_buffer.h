@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <sstream>
+
+#include "framework/lock_free_queue.h"
+
 #include "log_message.h"
 #include "log_output.h"
 
@@ -10,12 +13,12 @@ namespace bounce {
     
     class LogStreamBuffer : public std::wstringbuf {
     private:
-        LogMessageQueue& message_queue_;
+        LockFreeQueue<LogMessagePtr>& message_queue_;
         
         std::vector<std::unique_ptr<LogOutput>> outputs_;
         
     public:
-        LogStreamBuffer(LogMessageQueue& message_queue);
+        LogStreamBuffer(LockFreeQueue<LogMessagePtr>& message_queue);
         
         virtual int sync();
         

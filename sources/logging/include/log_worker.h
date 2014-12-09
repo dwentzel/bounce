@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include "framework/lock_free_queue.h"
 #include "log_output.h"
 #include "log_message.h"
 
@@ -12,7 +13,7 @@ namespace bounce {
     private:
         typedef std::vector<std::unique_ptr<LogOutput>> LogOutputList;
         
-        LogMessageQueue& message_queue_;
+        LockFreeQueue<LogMessagePtr>& message_queue_;
         LogOutputList outputs_;
         
         LogMessagePtr PollMessage();
@@ -21,7 +22,7 @@ namespace bounce {
         LogWorkerContext& operator=(const LogWorkerContext&) = delete;
 
     public:
-        LogWorkerContext(LogMessageQueue& message_queue);
+        LogWorkerContext(LockFreeQueue<LogMessagePtr>& message_queue);
         
         void AddOutput(std::unique_ptr<LogOutput> output);
         

@@ -81,7 +81,7 @@ if (APPLE)
 
     set_target_properties(${MODULE_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
 
-    target_link_libraries(${MODULE_NAME} bounce_mac renderer)
+    target_link_libraries(${MODULE_NAME} bounce_mac)
 else (APPLE)
 
     add_executable(

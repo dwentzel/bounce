@@ -1,8 +1,6 @@
 #ifndef BOUNCE_ENGINE_EVENT_H_
 #define BOUNCE_ENGINE_EVENT_H_
 
-#include <memory>
-#include "framework/lock_free_queue.h"
 #include "keys.h"
 
 #include "bounce_engine_export.h"
@@ -61,27 +59,11 @@ namespace bounce {
     public:
         QuitEvent();
     };
-    
-    
 
-    typedef std::unique_ptr<Event> EventPtr;
-    typedef LockFreeQueue<EventPtr> EventQueue;
-    
-    template struct bounce_engine_EXPORT std::atomic < LockFreeQueue<EventPtr>::Node* >;
-    template class bounce_engine_EXPORT LockFreeQueue<EventPtr>;
-    
-
-    class bounce_engine_EXPORT EventManager {
-    public:
-        EventManager();
-        ~EventManager();
-        
-        EventPtr PollEvent();
-        void QueueEvent(EventPtr event);
-        
-    private:
-        EventQueue event_queue_;
-    };
 }
+
+//template struct bounce_engine_EXPORT std::atomic < bounce::LockFreeQueue<bounce::EventPtr>::Node* >;
+
+
 
 #endif // BOUNCE_ENGINE_EVENT_H_

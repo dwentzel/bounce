@@ -2,15 +2,16 @@
 
 #include <thread>
 
+#include "framework/lock_free_queue.h"
+
 #include "log_stream_buffer.h"
 #include "log_worker.h"
 
-#include "stdout_log_output.h"
 #include "file_log_output.h"
 
 class bounce::LogManagerImpl {
 private:
-    LogMessageQueue message_queue_;
+    LockFreeQueue<LogMessagePtr> message_queue_;
 
     LogWorkerContext log_worker_context_;
     LogWorker log_worker_;
@@ -40,9 +41,7 @@ public:
 bounce::LogManagerImpl::LogManagerImpl()
     : log_worker_context_(message_queue_), buffer_(message_queue_), log_stream_(&buffer_), max_log_level_(LOG_LEVEL_DEBUG)
 {
-    //buffer_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
-    //log_worker_context_.AddOutput(std::unique_ptr<LogOutput>(new StdoutLogOutput()));
-    //log_worker_context_.AddOutput(std::unique_ptr<LogOutput>(new FileLogOutput()));
+
 }
 
 bounce::LogManagerImpl::~LogManagerImpl()

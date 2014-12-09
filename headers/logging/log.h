@@ -1,20 +1,9 @@
-/*
- * log.h
- *
- *  Created on: 31 maj 2013
- *      Author: daniel
- */
+#ifndef BOUNCE_LOGGING_LOG_H_
+#define BOUNCE_LOGGING_LOG_H_
 
-#ifndef BOUNCE_LOG_H_
-#define BOUNCE_LOG_H_
-
-//#ifdef NDEBUG
-//#define LOG(x) if (0) std::cerr
-//#else
 #define LOG(log_level) \
 if (log_level > bounce::LogManager::instance().max_log_level()) ; \
 else bounce::LogSync(bounce::LogManager::instance().Log(log_level))
-//#endif
 
 #define LOG_ERROR LOG(bounce::LOG_LEVEL_ERROR)
 #define LOG_WARNING LOG(bounce::LOG_LEVEL_WARNING)
@@ -34,19 +23,11 @@ namespace bounce {
     
     std::wostream& operator<<(std::wostream& out, const std::string& str);
     
-    inline std::wostream& operator<<(std::wostream& out, const unsigned char* data)
-    {
-        if (data == nullptr) {
-            out << L"(null)";
-        }
-        else {
-            out << std::string(reinterpret_cast<const char*>(data));
-        }
-        return out;
-    }
+    std::wostream& operator<<(std::wostream& out, const unsigned char* data);
+    
 }
 
 #include "log_sync.h"
 #include "log_manager.h"
 
-#endif /* LOG_H_ */
+#endif // BOUNCE_LOGGING_LOG_H_

@@ -1,5 +1,5 @@
 #import <AppKit/NSWindow.h>
-#import "engine/event.h"
+#import "engine/event_manager.h"
 
 @interface BounceWindow : NSWindow {
     @private

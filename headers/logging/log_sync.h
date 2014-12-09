@@ -6,9 +6,10 @@
 
 #include "bounce_engine_export.h"
 
+template class bounce_engine_EXPORT std::basic_stringstream<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>;
+
 namespace bounce {
 
-    template class bounce_engine_EXPORT std::basic_stringstream<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>;
 
     class bounce_engine_EXPORT LogSync {
     private:

@@ -4,9 +4,12 @@
 #import "app_delegate.h"
 #import "osx_application_context.h"
 #import "bounce_window.h"
+#import "console_log_output.h"
 
 int main(int argc, char** argv)
-{    
+{
+    std::unique_ptr<bounce::LogOutput> console_log_output(new bounce_mac::ConsoleLogOutput());
+    bounce::LogManager::instance().AddOutput(std::move(console_log_output));
     bounce::LogManager::instance().Startup();
     
     bounce::ApplicationContext* context = new bounce_mac::OsxApplicationContext();

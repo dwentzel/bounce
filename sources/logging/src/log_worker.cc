@@ -1,7 +1,7 @@
 #include <thread>
 #include "log_worker.h"
 
-bounce::LogWorkerContext::LogWorkerContext(LogMessageQueue& message_queue) : message_queue_(message_queue)
+bounce::LogWorkerContext::LogWorkerContext(LockFreeQueue<LogMessagePtr>& message_queue) : message_queue_(message_queue)
 {
     
 }
