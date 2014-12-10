@@ -4,14 +4,10 @@
 #include <ostream>
 #include <sstream>
 
-#include "bounce_engine_export.h"
-
-template class bounce_engine_EXPORT std::basic_stringstream<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>;
-
 namespace bounce {
 
 
-    class bounce_engine_EXPORT LogSync {
+    class LogSync {
     private:
         std::wostream& output_stream_;
         std::wstringstream buffer_stream_;

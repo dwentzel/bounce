@@ -23,7 +23,6 @@
 namespace bounce
 {
 
-    
     class OpenGLRenderer {
     private:
         std::unique_ptr<GBuffer> g_buffer_;

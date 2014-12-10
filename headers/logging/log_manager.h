@@ -5,13 +5,11 @@
 #include "log.h"
 #include "log_output.h"
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
 
     class LogManagerImpl;
     
-    class bounce_engine_EXPORT LogManager {
+    class LogManager {
     private:
         LogManager();
         ~LogManager();

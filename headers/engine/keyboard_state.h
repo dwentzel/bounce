@@ -7,18 +7,18 @@
 
 namespace bounce {
 
-class KeyboardState {
-private:
-	std::unordered_set<Key, std::hash<int>> pressed_keys_;
+    class KeyboardState {
+    private:
+        std::unordered_set<Key, std::hash<int>> pressed_keys_;
 
-public:
-	KeyboardState();
-	virtual ~KeyboardState();
+    public:
+        KeyboardState();
+        virtual ~KeyboardState();
 
-	void ProcessEvent(const KeyboardEvent& event);
+        void ProcessEvent(const KeyboardEvent& event);
 
-	bool IsDown(const Key& key) const;
-};
+        bool IsDown(const Key& key) const;
+    };
 
 }
 #endif // BOUNCE_ENGINE_KEYBOARDSTATE_H_

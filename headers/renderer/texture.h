@@ -6,11 +6,9 @@
 
 #include "bounce_gl.h"
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
 
-    class bounce_engine_EXPORT Texture {
+    class Texture {
     private:        
         unsigned int size_;
         unsigned int width_;

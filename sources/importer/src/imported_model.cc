@@ -4,11 +4,11 @@
 
 namespace bounce {
     struct MeshData {
-        unsigned short first_vertex;
-        unsigned short vertex_count;
-        unsigned short first_index;
-        unsigned short index_count;
-        unsigned short material_index;
+        unsigned int first_vertex;
+        unsigned int vertex_count;
+        unsigned int first_index;
+        unsigned int index_count;
+        unsigned int material_index;
     };
 }
 
@@ -71,22 +71,22 @@ public:
         return mesh_data_.size();
     }
     
-    unsigned short GetMeshIndexOffset(unsigned short mesh_index) const
+    unsigned int GetMeshIndexOffset(unsigned short mesh_index) const
     {
         return mesh_data_[mesh_index].first_index;
     }
     
-    unsigned short GetMeshIndexCount(unsigned short mesh_index) const
+    unsigned int GetMeshIndexCount(unsigned short mesh_index) const
     {
         return mesh_data_[mesh_index].index_count;
     }
     
-    unsigned short GetMeshFirstVertex(unsigned short mesh_index) const
+    unsigned int GetMeshFirstVertex(unsigned short mesh_index) const
     {
         return mesh_data_[mesh_index].first_vertex;
     }
     
-    unsigned short GetMeshVertexCount(unsigned short mesh_index) const
+    unsigned int GetMeshVertexCount(unsigned short mesh_index) const
     {
         return mesh_data_[mesh_index].vertex_count;
     }
@@ -115,21 +115,22 @@ bounce::ImportedModel::ImportedModel()
 }
 
 bounce::ImportedModel::ImportedModel(ImportedModel&& source)
-: impl_(std::move(source.impl_))
+: impl_(source.impl_)
 {
-    
+    source.impl_ = nullptr;
 }
 
 bounce::ImportedModel::~ImportedModel()
 {
-
+    delete impl_;
 }
 
-void bounce::ImportedModel::AddMesh(unsigned short first_vertex,
-                                    unsigned short vertex_count,
-                                    unsigned short first_index,
-                                    unsigned short index_count,
-                                    unsigned short material_index)
+void bounce::ImportedModel::AddMesh(
+    unsigned int first_vertex,
+    unsigned int vertex_count,
+    unsigned int first_index,
+    unsigned int index_count,
+    unsigned int material_index)
 {
     MeshData mesh_data;
     mesh_data.first_vertex = first_vertex;
@@ -171,22 +172,22 @@ unsigned short bounce::ImportedModel::mesh_count() const
     return impl_->mesh_count();
 }
 
-unsigned short bounce::ImportedModel::GetMeshIndexOffset(unsigned short mesh_index) const
+unsigned int bounce::ImportedModel::GetMeshIndexOffset(unsigned short mesh_index) const
 {
     return impl_->GetMeshIndexOffset(mesh_index);
 }
 
-unsigned short bounce::ImportedModel::GetMeshIndexCount(unsigned short mesh_index) const
+unsigned int bounce::ImportedModel::GetMeshIndexCount(unsigned short mesh_index) const
 {
     return impl_->GetMeshIndexCount(mesh_index);
 }
 
-unsigned short bounce::ImportedModel::GetMeshFirstVertex(unsigned short mesh_index) const
+unsigned int bounce::ImportedModel::GetMeshFirstVertex(unsigned short mesh_index) const
 {
     return impl_->GetMeshFirstVertex(mesh_index);
 }
 
-unsigned short bounce::ImportedModel::GetMeshVertexCount(unsigned short mesh_index) const
+unsigned int bounce::ImportedModel::GetMeshVertexCount(unsigned short mesh_index) const
 {
     return impl_->GetMeshVertexCount(mesh_index);
 }

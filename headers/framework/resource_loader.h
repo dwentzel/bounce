@@ -3,11 +3,9 @@
 
 #include <string>
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
 
-    class bounce_engine_EXPORT ResourceLoader {
+    class ResourceLoader {
     private:
         const std::string resources_base_path_;
         

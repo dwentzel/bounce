@@ -10,7 +10,7 @@ namespace bounce {
     
     class EventManagerImpl;
     
-    class bounce_engine_EXPORT EventManager {
+    class EventManager {
     private:
         EventManagerImpl* impl_;
         

@@ -5,17 +5,15 @@
 #include "framework/object_cache.h"
 #include "texture.h"
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
 
-    template class bounce_engine_EXPORT ObjectCache < Texture > ;
-
-    class bounce_engine_EXPORT TextureManager {
+    class TextureManager {
     private:
         std::string texture_directory_path_;
         ObjectCache<Texture> textures_;
         
+        TextureManager(const TextureManager&) = delete;
+
     public:
         TextureManager(const std::string& texture_directory_path);
         
@@ -28,9 +26,6 @@ namespace bounce {
         
         void BindTexture(unsigned int texture_handle);
         
-//        int IndexOf(const std::string& texture) const;
-//        void LoadTexture(const std::string& texture);
-//        unsigned int next_handle() const;
     };
 
 }

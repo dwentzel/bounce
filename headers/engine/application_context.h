@@ -5,11 +5,9 @@
 #include "event_manager.h"
 #include "window_context.h"
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
     
-    class bounce_engine_EXPORT ApplicationContext{
+    class ApplicationContext{
     private:
         EventManager event_manager_;
         

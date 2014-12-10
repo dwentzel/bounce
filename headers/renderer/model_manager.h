@@ -4,11 +4,9 @@
 #include "framework/object_cache.h"
 #include "model.h"
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
-
-    class bounce_engine_EXPORT ModelManager {
+    
+    class ModelManager {
     private:
         ObjectCache<Model> models_;
         

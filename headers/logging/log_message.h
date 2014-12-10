@@ -3,6 +3,7 @@
 
 #include <string>
 #include <ostream>
+#include <memory>
 
 namespace bounce {
     
@@ -14,6 +15,8 @@ namespace bounce {
     public:
         LogMessage(const std::wstring& message);
         ~LogMessage();
+
+        const wchar_t* c_str() const;
     };
     
     std::wostream& operator<<(std::wostream& ostream, const LogMessage& message);

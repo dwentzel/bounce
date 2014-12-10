@@ -3,8 +3,6 @@
 
 #include "keys.h"
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
     
     enum EventType {
@@ -13,7 +11,7 @@ namespace bounce {
         EVENT_QUIT
     };
     
-    class bounce_engine_EXPORT Event {
+    class Event {
     private:
         EventType type_;
     public:
@@ -29,7 +27,7 @@ namespace bounce {
     
     
     
-    class bounce_engine_EXPORT KeyboardEvent : public Event {
+    class KeyboardEvent : public Event {
     private:
         Keysym keysym_;
         
@@ -45,17 +43,17 @@ namespace bounce {
         return keysym_;
     }
     
-    class bounce_engine_EXPORT KeydownEvent : public KeyboardEvent {
+    class KeydownEvent : public KeyboardEvent {
     public:
         KeydownEvent(Keysym keysym);
     };
     
-    class bounce_engine_EXPORT KeyupEvent : public KeyboardEvent {
+    class KeyupEvent : public KeyboardEvent {
     public:
         KeyupEvent(Keysym keysym);
     };
     
-    class bounce_engine_EXPORT QuitEvent : public Event {
+    class QuitEvent : public Event {
     public:
         QuitEvent();
     };

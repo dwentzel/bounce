@@ -4,5 +4,5 @@
 
 void bounce_win::DebugStringOutput::Output(const bounce::LogMessage& message)
 {
-    OutputDebugString(&message[0]);
+    OutputDebugString(message.c_str());
 }

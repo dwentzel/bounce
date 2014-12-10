@@ -5,17 +5,13 @@
 #include <vector>
 #include "imported_material.h"
 
-#include "bounce_engine_export.h"
-
 namespace bounce {
 
     class ImportedModelImpl;
     
-    //template class bounce_engine_EXPORT std::unique_ptr < ImportedModelImpl > ;
-
-    class bounce_engine_EXPORT ImportedModel {
+    class ImportedModel {
     private:
-        std::unique_ptr<ImportedModelImpl> impl_;
+        ImportedModelImpl* impl_;
         
         ImportedModel(const ImportedModel&) = delete;
         ImportedModel& operator=(const ImportedModel&) = delete;
@@ -26,11 +22,12 @@ namespace bounce {
         
         ~ImportedModel();
         
-        void AddMesh(unsigned short first_vertex,
-                     unsigned short vertex_count,
-                     unsigned short first_index,
-                     unsigned short index_count,
-                     unsigned short material_index);
+        void AddMesh(
+            unsigned int first_vertex,
+            unsigned int vertex_count,
+            unsigned int first_index,
+            unsigned int index_count,
+            unsigned int material_index);
         
         void AddVertex(float x, float y, float z);
         void AddUV(float x, float y);
@@ -40,10 +37,10 @@ namespace bounce {
         
         unsigned short mesh_count() const;
         
-        unsigned short GetMeshIndexOffset(unsigned short mesh_index) const;
-        unsigned short GetMeshIndexCount(unsigned short mesh_index) const;
-        unsigned short GetMeshFirstVertex(unsigned short mesh_index) const;
-        unsigned short GetMeshVertexCount(unsigned short mesh_index) const;
+        unsigned int GetMeshIndexOffset(unsigned short mesh_index) const;
+        unsigned int GetMeshIndexCount(unsigned short mesh_index) const;
+        unsigned int GetMeshFirstVertex(unsigned short mesh_index) const;
+        unsigned int GetMeshVertexCount(unsigned short mesh_index) const;
         
         const ImportedMaterial& GetMeshMaterial(unsigned short mesh_index) const;
         
