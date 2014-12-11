@@ -1,20 +1,17 @@
 #include "texture_manager.h"
 #include <fstream>
 #include <algorithm>
+#include <limits>
 
 #include "logging/log.h"
 #include "exceptions.h"
+
+const unsigned int bounce::TextureManager::INVALID_INDEX = std::numeric_limits<unsigned int>::max();
 
 bounce::TextureManager::TextureManager(const std::string& texture_directory_path)
 : texture_directory_path_(texture_directory_path)
 {
     
-}
-
-bool bounce::TextureManager::HasTexture(const std::string& texture_path) const
-{
-    
-    return false;
 }
 
 const bounce::Texture& bounce::TextureManager::GetTexture(unsigned int texture_handle) const
@@ -27,12 +24,12 @@ void bounce::TextureManager::BindTexture(unsigned int texture_handle)
     textures_.GetObject(texture_handle).UseTexture();
 }
 
-int bounce::TextureManager::GetTextureHandle(const std::string& texture_name) const
+unsigned int bounce::TextureManager::GetTextureHandle(const std::string& texture_name) const
 {
     std::vector<Texture>::const_iterator iter =
         std::find_if(textures_.begin(), textures_.end(),
                      [&texture_name](const Texture& texture) { return texture_name == texture.name(); } );
-    return iter == textures_.end() ? -1 : std::distance(textures_.begin(), iter);
+    return iter == textures_.end() ? INVALID_INDEX : std::distance(textures_.begin(), iter);
 }
 
 namespace {

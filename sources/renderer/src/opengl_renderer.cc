@@ -112,7 +112,7 @@ void bounce::OpenGLRenderer::BufferModelData(const ModelLoader& model_loader)
     glBindVertexArray(0);
 }
 
-void bounce::OpenGLRenderer::Resize(int width, int height)
+void bounce::OpenGLRenderer::Resize(unsigned int width, unsigned int height)
 {
     g_buffer_ = std::unique_ptr<GBuffer>(new GBuffer());
     g_buffer_->Init(width, height);

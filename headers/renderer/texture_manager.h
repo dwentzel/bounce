@@ -15,14 +15,14 @@ namespace bounce {
         TextureManager(const TextureManager&) = delete;
 
     public:
+        static const unsigned int INVALID_INDEX;
+        
         TextureManager(const std::string& texture_directory_path);
         
         unsigned int GenerateTexture(const std::string& texture_path);
-        
-        bool HasTexture(const std::string& texture_path) const;
-        
+                
         const Texture& GetTexture(unsigned int texture_handle) const;
-        int GetTextureHandle(const std::string& texture_name) const;
+        unsigned int GetTextureHandle(const std::string& texture_name) const;
         
         void BindTexture(unsigned int texture_handle);
         

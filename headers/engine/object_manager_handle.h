@@ -1,6 +1,8 @@
 #ifndef BOUNCE_ENGINE_OBJECT_MANAGER_HANDLE_
 #define BOUNCE_ENGINE_OBJECT_MANAGER_HANDLE_
 
+#include <limits>
+
 namespace bounce {
     
     template <class T>
@@ -11,15 +13,18 @@ namespace bounce {
     
     template <class T, class Handle>
     T& ResolveHandleAs(const ObjectManagerHandle<Handle>&);
-
+    
     template <class T>
     class ObjectManagerHandle {
     private:
+        static const unsigned int INVALID_INDEX;
+        static const unsigned int INVALID_TYPE;
+        
         unsigned int index_;
         unsigned int type_;
         
     public:
-        static const ObjectManagerHandle zero;
+        static const ObjectManagerHandle invalid_handle;
         
         ObjectManagerHandle(unsigned int type, unsigned int index)
         : index_(index), type_(type)
@@ -37,6 +42,11 @@ namespace bounce {
             return type_;
         }
         
+        bool invalid() const
+        {
+            return index_ == INVALID_INDEX;
+        }
+        
         T& Resolve() const
         {
             return ResolveHandle<T>(*this);
@@ -51,7 +61,13 @@ namespace bounce {
     };
     
     template <class T>
-    const ObjectManagerHandle<T> ObjectManagerHandle<T>::zero = ObjectManagerHandle<T>(-1, -1);
+    const unsigned int ObjectManagerHandle<T>::INVALID_INDEX = std::numeric_limits<unsigned int>::max();
+    
+    template <class T>
+    const unsigned int ObjectManagerHandle<T>::INVALID_TYPE = std::numeric_limits<unsigned int>::max();
+    
+    template <class T>
+    const ObjectManagerHandle<T> ObjectManagerHandle<T>::invalid_handle = ObjectManagerHandle<T>(INVALID_TYPE, INVALID_INDEX);
 
 }
 

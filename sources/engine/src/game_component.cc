@@ -21,7 +21,7 @@ void bounce::GameComponent::SendMessage(const bounce::Message& message) const
 
 bounce::GameComponentHandle bounce::GameEntity::GetComponentOfType(GameComponentType type)
 {
-    std::vector<GameComponentHandle>::iterator iter = std::find_if(game_components_.begin(), game_components_.end(), [type](const GameComponentHandle& handle) {
+    component_iterator iter = std::find_if(game_components_.begin(), game_components_.end(), [type](const GameComponentHandle& handle) {
         return handle.type() == type;
     });
     
@@ -29,6 +29,6 @@ bounce::GameComponentHandle bounce::GameEntity::GetComponentOfType(GameComponent
         return *iter;
     }
     else {
-        return GameComponentHandle::zero;
+        return GameComponentHandle::invalid_handle;
     }
 }

@@ -66,7 +66,7 @@ namespace bounce
         virtual void SetWVPMatrix(const glm::mat4& wvp_matrix);
         virtual void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
         
-        void Resize(int width, int height);
+        void Resize(unsigned int width, unsigned int height);
         
         void BeginGeometryPass();
         void EndGeometryPass();

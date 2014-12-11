@@ -95,13 +95,14 @@ unsigned int bounce::ModelLoader::LoadMaterial(const bounce::ImportedMaterial& i
     const std::string& texture_path = imported_material.texture_path();
     
     if (!texture_path.empty()) {
-        if (texture_manager_.HasTexture(texture_path))
+        unsigned int texture_handle = texture_manager_.GetTextureHandle(texture_path);
+        if (texture_handle != TextureManager::INVALID_INDEX)
         {
-            material.texture_handle(texture_manager_.GetTextureHandle(texture_path));
+            material.texture_handle(texture_handle);
         }
         else {
-            unsigned int texture_index = texture_manager_.GenerateTexture(texture_path);
-            material.texture_handle(texture_index);
+            texture_handle = texture_manager_.GenerateTexture(texture_path);
+            material.texture_handle(texture_handle);
         }
     }
     

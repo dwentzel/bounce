@@ -21,6 +21,8 @@ namespace bounce {
         GameEntity& operator=(const GameEntity&) = delete;
 
     public:
+        typedef typename std::vector<GameComponentHandle>::iterator component_iterator;
+        
         static GameEntity Create();
         
         GameEntity();

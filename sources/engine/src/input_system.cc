@@ -20,13 +20,13 @@ void bounce::InputSystem::Update(float)
 {
     for (GameEntity& entity : game_entities_) {
         GameComponentHandle control_component_handle = entity.GetComponentOfType(CONTROL_COMPONENT);
-        if (control_component_handle.index() > -1) {
+        if (!control_component_handle.invalid()) {
             ControlComponent& component = control_component_handle.ResolveAs<ControlComponent>();
             component.Update();
         }
 
         GameComponentHandle ai_component_handle = entity.GetComponentOfType(AI_COMPONENT);
-        if (ai_component_handle.index() > -1) {
+        if (ai_component_handle.index() < (unsigned int)-1) {
             AiComponent& component = ai_component_handle.ResolveAs<AiComponent>();
             component.Update();
         }
