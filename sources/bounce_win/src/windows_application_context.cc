@@ -22,7 +22,6 @@ bounce_win::WindowsApplicationContext::WindowsApplicationContext(HINSTANCE hInst
 void bounce_win::WindowsApplicationContext::Flush() const
 {
     gl_context_->flush();
-    Sleep(10);
 }
 
 void bounce_win::WindowsApplicationContext::Update() const

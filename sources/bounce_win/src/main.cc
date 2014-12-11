@@ -10,13 +10,11 @@
 
 #include "engine/bounce_main.h"
 
-extern int bounce_main(bounce::ApplicationContext*);
-
 int WINAPI WinMain(
-    HINSTANCE hInstance,
-    HINSTANCE hPreviousInst,
-    LPSTR lpCmdLine,
-    int nCmdShow)
+    _In_ HINSTANCE hInstance,
+    _In_opt_ HINSTANCE hPreviousInst,
+    _In_ LPSTR lpCmdLine,
+    _In_ int nCmdShow)
 {
     std::unique_ptr<bounce_win::DebugStringOutput> log_output(new bounce_win::DebugStringOutput());
 
