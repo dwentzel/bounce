@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include <stdexcept>
 
 namespace bounce {
     
@@ -67,11 +68,15 @@ namespace bounce {
     template<class... FactoryArgs>
     unsigned int ObjectCache<T>::GenerateObject(FactoryArgs&&... args)
     {
-        unsigned int index = cache_.size();
+        typename std::vector<T>::size_type index = cache_.size();
+        
+        if (index > std::numeric_limits<unsigned int>::max()) {
+            throw std::out_of_range("too many items in object cache");
+        }
         
         cache_.push_back(T::Create(std::forward<FactoryArgs>(args)...));
         
-        return index;
+        return static_cast<unsigned int>(index);
     }
     
     template<class T>

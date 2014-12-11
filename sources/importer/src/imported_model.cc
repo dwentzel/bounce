@@ -14,6 +14,8 @@ namespace bounce {
 
 class bounce::ImportedModelImpl {
 private:
+    const unsigned short max_mesh_count = std::numeric_limits<unsigned short>::max();
+    
     std::vector<float> vertex_data_;
     std::vector<unsigned short> indices_;
     
@@ -33,6 +35,10 @@ public:
 
     void AddMesh(const MeshData& mesh_data)
     {
+        if (mesh_data_.size() > max_mesh_count) {
+            throw std::out_of_range("too many meshes");
+        }
+        
         mesh_data_.push_back(mesh_data);
     }
     
@@ -68,7 +74,7 @@ public:
     
     unsigned short mesh_count() const
     {
-        return mesh_data_.size();
+        return static_cast<unsigned short>(mesh_data_.size());
     }
     
     unsigned int GetMeshIndexOffset(unsigned short mesh_index) const
@@ -93,7 +99,7 @@ public:
     
     const bounce::ImportedMaterial& GetMeshMaterial(unsigned short mesh_index) const
     {
-        unsigned short material_index = mesh_data_[mesh_index].material_index;
+        unsigned int material_index = mesh_data_[mesh_index].material_index;
         return materials_[material_index];
     }
     

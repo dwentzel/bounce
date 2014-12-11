@@ -21,6 +21,10 @@ add_library(
     ${SOURCES}
 )
 
+if (XCODE)
+    setup_xcode(${MODULE_NAME})
+endif (XCODE)
+
 find_package(ASSIMP REQUIRED)
 if (ASSIMP_FOUND)
     message("ASSIMP_INCLUDE_DIR: ${ASSIMP_INCLUDE_DIR}")

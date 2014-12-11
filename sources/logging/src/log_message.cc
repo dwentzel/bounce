@@ -17,11 +17,11 @@ const wchar_t* bounce::LogMessage::c_str() const
 }
 
 namespace bounce {
-
-std::wostream& operator<<(std::wostream& ostream, const bounce::LogMessage& message)
-{
-    ostream << message.message_;
-    return ostream;
-}
-
+    
+    std::wostream& operator<<(std::wostream& ostream, const bounce::LogMessage& message)
+    {
+        ostream << message.message_;
+        return ostream;
+    }
+    
 }

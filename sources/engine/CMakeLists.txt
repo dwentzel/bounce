@@ -9,6 +9,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_main.h
     include/console.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/entity_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component.h
@@ -36,6 +37,7 @@ set(SOURCES
     src/body_component.cc
     src/console.cc
     src/control_component.cc
+    src/entity_manager.cc
     src/event.cc
     src/event_manager.cc
     src/game_component.cc
@@ -63,41 +65,30 @@ add_library(
 	$<TARGET_OBJECTS:logging>
 	$<TARGET_OBJECTS:renderer>)
 
-generate_export_header(${MODULE_NAME}
-         BASE_NAME bounce_engine
-         EXPORT_MACRO_NAME bounce_engine_EXPORT
-         EXPORT_FILE_NAME bounce_engine_export.h
-         STATIC_DEFINE bounce_engine_BUILT_AS_STATIC)
+if (XCODE)
+    setup_xcode(${MODULE_NAME})
+endif (XCODE)
+
+#generate_export_header(${MODULE_NAME}
+#         BASE_NAME bounce_engine
+#         EXPORT_MACRO_NAME bounce_engine_EXPORT
+#         EXPORT_FILE_NAME bounce_engine_export.h
+#         STATIC_DEFINE bounce_engine_BUILT_AS_STATIC)
+
+set_xcode_property(${MODULE_NAME} CLANG_CXX_LANGUAGE_STANDARD "c++11")
+set_xcode_property(${MODULE_NAME} WARNING_CFLAGS "-Wall -Wextra")
 
 find_package(GLEW REQUIRED)
 target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARY})
 
 find_package(OPENGL REQUIRED)
-
-#include_directories(${OPENGL_INCLUDE_DIR})
 target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
 
 find_package(ASSIMP REQUIRED)
 target_link_libraries(${MODULE_NAME} ${ASSIMP_LIBRARIES})
 
-
-#if (MSVC)
-#	set(GLEW_ROOT_DIR "${Bounce_SOURCE_DIR}/external/glew-1.10.0")
-#	set(GLEW_INCLUDE_DIR "${GLEW_ROOT_DIR}/include")
-#	set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/Win32/glew32.lib")
-#endif()
-
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
-#    target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
-
-#find_package(OPENGL REQUIRED)
-#if (OPENGL_FOUND)
-#    message("OPENGL_INCLUDE_DIR: ${OPENGL_INCLUDE_DIR}")
-#    message("OPENGL_LIBRARIES: ${OPENGL_LIBRARIES}")
-#    include_directories(${OPENGL_INCLUDE_DIR})
-#    target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
-#endif (OPENGL_FOUND)
 
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
 

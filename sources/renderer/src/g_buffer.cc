@@ -15,7 +15,7 @@ bounce::GBuffer::~GBuffer()
     glDeleteFramebuffers(1, &fbo_);
 }
 
-void bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height)
+void bounce::GBuffer::Init(int window_width, int window_height)
 {
     glGenFramebuffers(1, &fbo_);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo_);

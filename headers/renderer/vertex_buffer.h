@@ -7,8 +7,8 @@ namespace bounce {
     
     class VertexBuffer {
     private:
-        int buffer_position_;
-        int buffer_count_;
+        size_t buffer_position_;
+        unsigned long buffer_count_;
         size_t buffer_size_;
         void* buffer_;
         

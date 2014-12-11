@@ -12,23 +12,23 @@ void bounce::ModelLoader::Begin()
     
 }
 
-int bounce::ModelLoader::LoadModel(const bounce::ImportedModel& imported_model)
+unsigned int bounce::ModelLoader::LoadModel(const bounce::ImportedModel& imported_model)
 {
-    int model_index = model_manager_.GenerateModel();
+    unsigned int model_index = model_manager_.GenerateModel();
     Model& model = model_manager_.GetModel(model_index);
     
-    for (unsigned int i = 0; i < imported_model.mesh_count(); ++i) {
+    for (unsigned short i = 0; i < imported_model.mesh_count(); ++i) {
         
         
 //        unsigned int imported_model_mesh_first_vertex = imported_model.GetMeshFirstVertex(i);
-        unsigned short imported_model_mesh_vertex_count = imported_model.GetMeshVertexCount(i);
+        unsigned int imported_model_mesh_vertex_count = imported_model.GetMeshVertexCount(i);
         
 //        unsigned short imported_model_mesh_index_offset = imported_model.GetMeshIndexOffset(i);
-        unsigned short imported_model_mesh_index_count = imported_model.GetMeshIndexCount(i);
+        unsigned int imported_model_mesh_index_count = imported_model.GetMeshIndexCount(i);
 
         const ImportedMaterial& imported_model_mesh_material = imported_model.GetMeshMaterial(i);
         
-        unsigned short material_index = LoadMaterial(imported_model_mesh_material);
+        unsigned int material_index = LoadMaterial(imported_model_mesh_material);
         
         model.AddMesh(index_offset_,
                       imported_model_mesh_index_count,
@@ -81,9 +81,9 @@ void bounce::ModelLoader::End()
 //    model_manager_.vertex_array_object(model_vertex_array);
 }
 
-int bounce::ModelLoader::LoadMaterial(const bounce::ImportedMaterial& imported_material)
+unsigned int bounce::ModelLoader::LoadMaterial(const bounce::ImportedMaterial& imported_material)
 {
-    int material_index = material_manager_.GenerateMaterial();
+    unsigned int material_index = material_manager_.GenerateMaterial();
     Material& material = material_manager_.GetMaterial(material_index);
     
     material.diffuse(imported_material.diffuse());

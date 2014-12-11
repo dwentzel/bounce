@@ -34,6 +34,8 @@ namespace bounce {
                      GameEntityCache& game_entity_cache,
                      OpenGLRenderer& renderer);
         
+        virtual ~RenderSystem();
+        
         virtual void Startup();
         virtual void Shutdown();
         virtual void Update(float delta_time);

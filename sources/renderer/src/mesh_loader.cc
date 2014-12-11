@@ -1,8 +1,12 @@
 #include "mesh_loader.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wnewline-eof"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#pragma clang diagnostic pop
 
 #include "logging/log.h"
 

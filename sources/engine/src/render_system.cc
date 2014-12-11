@@ -21,6 +21,11 @@ bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context
     
 }
 
+bounce::RenderSystem::~RenderSystem()
+{
+    
+}
+
 void bounce::RenderSystem::Startup()
 {
     renderer_.Startup();

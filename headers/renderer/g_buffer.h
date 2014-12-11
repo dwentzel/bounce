@@ -24,7 +24,7 @@ namespace bounce {
         GBuffer();
         ~GBuffer();
         
-        void Init(unsigned int window_width, unsigned int window_height);
+        void Init(int window_width, int window_height);
         
         void BindForWriting();
         

@@ -55,7 +55,7 @@ void bounce::ShaderProgram::CreateProgram()
     CHECK_GL_ERROR();
 }
 
-void bounce::ShaderProgram::CompileShader(const int& shader_id, const std::string& shader_code)
+void bounce::ShaderProgram::CompileShader(GLuint shader_id, const std::string& shader_code)
 {
     CHECK_GL_ERROR();
     
@@ -137,13 +137,13 @@ void bounce::ShaderProgram::LinkProgram()
     CHECK_GL_ERROR();
 }
 
-GLuint bounce::ShaderProgram::GetUniformLocation(const GLchar* uniform)
+GLint bounce::ShaderProgram::GetUniformLocation(const GLchar* uniform)
 {
-    GLuint location = glGetUniformLocation(program_id_, uniform);
+    GLint location = glGetUniformLocation(program_id_, uniform);
 
-    if (location == GL_INVALID_INDEX) {
+    if (location == static_cast<GLint>(GL_INVALID_INDEX)) {
         LOG_WARNING << "Invalid uniform location: " << uniform;
-}
+    }
 
     return location;
 }

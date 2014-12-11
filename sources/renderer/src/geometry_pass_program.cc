@@ -48,7 +48,7 @@ void bounce::GeometryPassProgram::SetMWVPMatrix(const glm::mat4& mwvp_matrix)
     glUniformMatrix4fv(mwvp_matrix_location_, 1, GL_FALSE, &mwvp_matrix[0][0]);
 }
 
-void bounce::GeometryPassProgram::SetColorTextureUnit(unsigned int texture_unit)
+void bounce::GeometryPassProgram::SetColorTextureUnit(int texture_unit)
 {
     glUniform1i(color_texture_unit_location_, texture_unit);
 }

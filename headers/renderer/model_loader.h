@@ -23,14 +23,14 @@ namespace bounce {
         std::vector<float> vertex_data_;
         std::vector<unsigned short> index_data_;
         
-        int LoadMaterial(const ImportedMaterial& imported_material);
+        unsigned int LoadMaterial(const ImportedMaterial& imported_material);
         
         ModelLoader& operator=(const ModelLoader&) = delete;
     public:
         ModelLoader(TextureManager& texture_manager, MaterialManager& material_manager, ModelManager& model_manager);
         
         void Begin();
-        int LoadModel(const ImportedModel& imported_model);
+        unsigned int LoadModel(const ImportedModel& imported_model);
         void End();
         
         const std::vector<float> vertex_data() const {

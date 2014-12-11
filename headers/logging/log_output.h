@@ -11,11 +11,11 @@ namespace bounce {
         LogOutput& operator=(const LogOutput&) = delete;
         
     protected:
-        LogOutput() {}
+        LogOutput();
         
     public:
 //        LogOutput(LogOutput&& log_output) = default;
-//        virtual ~LogOutput() = 0;
+        virtual ~LogOutput() = 0;
         
         virtual void Output(const LogMessage& message) = 0;
     };

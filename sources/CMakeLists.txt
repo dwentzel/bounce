@@ -18,13 +18,13 @@ elseif(MSVC)
     #set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin/Release")
 endif()
 
-if (APPLE)
-    set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall -Wextra")
+#if (APPLE)
+#    set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall -Wextra -Weverything")
 
-    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
-    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
-endif()
+#    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
+#    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+#    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+#endif()
 
 if(MSVC)
     # Force to always compile with W4
@@ -47,19 +47,13 @@ message(STATUS "CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
 message(STATUS "CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
 message(STATUS "CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
 
-add_definitions(-Dbounce_engine_EXPORTS)
-
-#add_definitions(-Dbounce_engine_BUILT_AS_STATIC)
-
 add_subdirectory(framework)
 add_subdirectory(logging)
 add_subdirectory(renderer)
 #add_subdirectory(renderer_test)
 add_subdirectory(importer)
 add_subdirectory(engine)
-
-remove_definitions(-Dbounce_engine_EXPORTS)
-
+    
 if (WIN32)
     add_subdirectory(bounce_win)
 elseif (APPLE)

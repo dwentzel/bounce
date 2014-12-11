@@ -55,6 +55,10 @@ if (APPLE)
         ${SHADERS}
     )
 
+    if (XCODE)
+        setup_xcode(${MODULE_NAME})
+    endif (XCODE)
+
     set_source_files_properties(
         ${MODELS}
         PROPERTIES

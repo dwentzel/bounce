@@ -18,12 +18,12 @@ bool bounce::Material::has_texture() const
     return has_texture_;
 }
 
-int bounce::Material::texture_handle() const
+unsigned int bounce::Material::texture_handle() const
 {
     return texture_handle_;
 }
 
-void bounce::Material::texture_handle(int handle)
+void bounce::Material::texture_handle(unsigned int handle)
 {
     has_texture_ = true;
     texture_handle_ = handle;

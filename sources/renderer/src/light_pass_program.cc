@@ -24,17 +24,17 @@ void bounce::LightPassProgram::SetWVP(const glm::mat4& WVP)
     glUniformMatrix4fv(WVP_location_, 1, GL_TRUE, &WVP[0][0]);
 }
 
-void bounce::LightPassProgram::SetPositionTextureUnit(unsigned int texture_unit)
+void bounce::LightPassProgram::SetPositionTextureUnit(int texture_unit)
 {
     glUniform1i(position_texture_unit_location_, texture_unit);
 }
 
-void bounce::LightPassProgram::SetColorTextureUnit(unsigned int texture_unit)
+void bounce::LightPassProgram::SetColorTextureUnit(int texture_unit)
 {
     glUniform1i(color_texture_unit_location_, texture_unit);
 }
 
-void bounce::LightPassProgram::SetNormalTextureUnit(unsigned int texture_unit)
+void bounce::LightPassProgram::SetNormalTextureUnit(int texture_unit)
 {
     glUniform1i(normal_texture_unit_location_, texture_unit);
 }
@@ -44,7 +44,7 @@ void bounce::LightPassProgram::SetEyeWorldPos(const glm::vec3& eye_position)
     glUniform3f(eye_world_position_location_, eye_position.x, eye_position.y, eye_position.z);
 }
 
-void bounce::LightPassProgram::SetScreenSize(unsigned int width, unsigned int height)
+void bounce::LightPassProgram::SetScreenSize(int width, int height)
 {
     glUniform2f(screen_size_location_, (float)width, (float)height);
 }

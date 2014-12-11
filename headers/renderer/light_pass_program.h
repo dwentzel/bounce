@@ -10,14 +10,14 @@ namespace bounce {
 
     class LightPassProgram : public ShaderProgram {
     private:
-        GLuint WVP_location_;
-        GLuint position_texture_unit_location_;
-        GLuint normal_texture_unit_location_;
-        GLuint color_texture_unit_location_;
-        GLuint eye_world_position_location_;
-        GLuint material_specular_intensity_location_;
-        GLuint material_specular_power_location_;
-        GLuint screen_size_location_;
+        GLint WVP_location_;
+        GLint position_texture_unit_location_;
+        GLint normal_texture_unit_location_;
+        GLint color_texture_unit_location_;
+        GLint eye_world_position_location_;
+        GLint material_specular_intensity_location_;
+        GLint material_specular_power_location_;
+        GLint screen_size_location_;
 
         LightPassProgram& operator=(const LightPassProgram&) = delete;
     protected:
@@ -26,13 +26,13 @@ namespace bounce {
         
     public:
         void SetWVP(const glm::mat4& wvp_matrix);
-        void SetPositionTextureUnit(unsigned int texture_unit);
-        void SetColorTextureUnit(unsigned int texture_unit);
-        void SetNormalTextureUnit(unsigned int texture_unit);
+        void SetPositionTextureUnit(int texture_unit);
+        void SetColorTextureUnit(int texture_unit);
+        void SetNormalTextureUnit(int texture_unit);
         void SetEyeWorldPos(const glm::vec3& eye_world_position);
         void SetMatSpecularIntensity(float intensity);
         void SetMatSpecularPower(float power);
-        void SetScreenSize(unsigned int width, unsigned int height);
+        void SetScreenSize(int width, int height);
         
     };
 

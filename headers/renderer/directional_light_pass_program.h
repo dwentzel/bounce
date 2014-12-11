@@ -9,10 +9,10 @@ namespace bounce {
     class DirectionalLightPassProgram : public LightPassProgram {
     private:
         struct {
-            GLuint color;
-            GLuint ambient_intensity;
-            GLuint diffuse_intensity;
-            GLuint direction;
+            GLint color;
+            GLint ambient_intensity;
+            GLint diffuse_intensity;
+            GLint direction;
         } directional_light_location_;
         
     public:

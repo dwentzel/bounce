@@ -12,7 +12,7 @@ namespace bounce {
         float shininess_;
         
         bool has_texture_;
-        int texture_handle_;
+        unsigned int texture_handle_;
         
         Material();
     public:
@@ -20,8 +20,8 @@ namespace bounce {
         
         bool has_texture() const;
         
-        int texture_handle() const;
-        void texture_handle(int handle);
+        unsigned int texture_handle() const;
+        void texture_handle(unsigned int handle);
         
         const float* diffuse() const;
         void diffuse(const float* data);

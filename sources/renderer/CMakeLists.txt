@@ -53,13 +53,9 @@ add_library(
     ${SOURCES}
 )
 
-#target_link_libraries(${MODULE_NAME} framework)
-
-#if (MSVC)
-#    set(GLEW_ROOT_DIR "${Bounce_SOURCE_DIR}/external/glew-1.10.0")
-#    set(GLEW_INCLUDE_DIR "${GLEW_ROOT_DIR}/include")
-#    set(GLEW_LIBRARY "${GLEW_ROOT_DIR}/lib/Release/Win32/glew32.lib")
-#endif()
+if (XCODE)
+    setup_xcode(${MODULE_NAME})
+endif (XCODE)
 
 find_package(GLEW REQUIRED)
 if (GLEW_FOUND)

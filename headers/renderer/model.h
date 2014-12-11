@@ -7,6 +7,8 @@ namespace bounce {
     
     class Model {
     private:
+        static const unsigned short MAX_MESH_COUNT;
+        
         struct MeshData {
             unsigned short index_offset;
             unsigned short index_count;
@@ -21,7 +23,7 @@ namespace bounce {
     public:
         static Model Create();
         
-        void AddMesh(unsigned short index_offset, unsigned short index_count, unsigned short base_vertex, unsigned short material_index);
+        void AddMesh(unsigned short index_offset, unsigned short index_count, unsigned int base_vertex, unsigned short material_index);
         
         unsigned short mesh_count() const;
         

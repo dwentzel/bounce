@@ -28,3 +28,8 @@ add_library(
     ${HEADERS}
     ${SOURCES}
 )
+
+if (XCODE)
+    setup_xcode(${MODULE_NAME})
+endif (XCODE)
+

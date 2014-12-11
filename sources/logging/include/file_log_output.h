@@ -13,7 +13,7 @@ namespace bounce {
         
     public:
         FileLogOutput();
-        ~FileLogOutput();
+        virtual ~FileLogOutput();
         
         virtual void Output(const LogMessage& message);
     };

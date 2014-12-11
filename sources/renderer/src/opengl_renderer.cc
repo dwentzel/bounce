@@ -112,7 +112,7 @@ void bounce::OpenGLRenderer::BufferModelData(const ModelLoader& model_loader)
     glBindVertexArray(0);
 }
 
-void bounce::OpenGLRenderer::Resize(unsigned int width, unsigned int height)
+void bounce::OpenGLRenderer::Resize(int width, int height)
 {
     g_buffer_ = std::unique_ptr<GBuffer>(new GBuffer());
     g_buffer_->Init(width, height);
@@ -126,7 +126,7 @@ void bounce::OpenGLRenderer::Resize(unsigned int width, unsigned int height)
     point_light_pass_program_.UseProgram();
     point_light_pass_program_.SetScreenSize(width, height);
     
-    glUseProgram(current_program_id);
+    glUseProgram((GLuint)current_program_id);
 }
 
 void bounce::OpenGLRenderer::Shutdown() {
@@ -222,7 +222,7 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
         const Material& material = material_manager_.GetMaterial(material_index);
         
         if (material.has_texture()) {
-            int texture_handle = material.texture_handle();
+            unsigned int texture_handle = material.texture_handle();
             texture_manager_.BindTexture(texture_handle);
         }
         

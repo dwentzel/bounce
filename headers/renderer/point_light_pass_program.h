@@ -9,14 +9,14 @@ namespace bounce {
     class PointLightPassProgram : public LightPassProgram {
     private:
         struct {
-            GLuint color;
-            GLuint ambient_intensity;
-            GLuint diffuse_intensity;
-            GLuint position;
+            GLint color;
+            GLint ambient_intensity;
+            GLint diffuse_intensity;
+            GLint position;
             struct {
-                GLuint constant;
-                GLuint linear;
-                GLuint exp;
+                GLint constant;
+                GLint linear;
+                GLint exp;
             } attenuation;
         } point_light_location_;
         

@@ -19,7 +19,7 @@ namespace bounce {
         ShaderProgram& operator=(const ShaderProgram&) = delete;
 
     protected:
-        void CompileShader(const int& shader_id, const std::string& shader_code);
+        void CompileShader(GLuint shader_id, const std::string& shader_code);
         
         void LoadShader(const std::string& shader_code_file_path, GLuint shader_id);
         void LoadVertexShader(const std::string& shader_code_file_path);
@@ -28,7 +28,7 @@ namespace bounce {
 
         void CreateProgram();
         
-        GLuint GetUniformLocation(const GLchar* uniform);
+        GLint GetUniformLocation(const GLchar* uniform);
         
         ShaderProgram(const ResourceLoader& resource_loader);
         

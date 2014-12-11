@@ -55,7 +55,7 @@ namespace bounce
                        const MaterialManager& material_manager,
                        const VertexBuffer& vertex_buffer);
 
-        ~OpenGLRenderer();
+        virtual ~OpenGLRenderer();
         
         virtual void Startup();
         virtual void Shutdown();
@@ -66,7 +66,7 @@ namespace bounce
         virtual void SetWVPMatrix(const glm::mat4& wvp_matrix);
         virtual void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
         
-        void Resize(unsigned int width, unsigned int height);
+        void Resize(int width, int height);
         
         void BeginGeometryPass();
         void EndGeometryPass();
