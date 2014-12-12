@@ -2,7 +2,7 @@
 #define BOUNCE_ENGINE_GAME_COMPONENT_TYPE_H_
 
 namespace bounce {
-    enum GameComponentType {
+    enum GameComponentType : unsigned short {
         RENDER_COMPONENT,
         BODY_COMPONENT,
         CONTROL_COMPONENT,

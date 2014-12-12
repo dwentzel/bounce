@@ -1,11 +1,15 @@
 #include "importer.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wconversion"
+#ifdef __clang__
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wconversion"
+#endif
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#pragma clang diagnostic pop
+#ifdef __clang__
+#   pragma clang diagnostic pop
+#endif
 
 #include "logging/log.h"
 #include "exceptions.h"

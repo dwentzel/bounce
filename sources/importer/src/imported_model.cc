@@ -21,6 +21,9 @@ private:
     
     std::vector<MeshData> mesh_data_;
     std::vector<ImportedMaterial> materials_;
+
+    ImportedModelImpl(const ImportedModelImpl&) = delete;
+    ImportedModelImpl& operator=(const ImportedModelImpl&) = delete;
     
 public:
     ImportedModelImpl()
