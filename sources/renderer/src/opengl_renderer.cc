@@ -182,7 +182,7 @@ void bounce::OpenGLRenderer::BeginPointLightsPass()
     point_light_pass_program_.UseProgram();
     point_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
     
-    point_light_pass_program_.SetWVP(wvp_matrix_);
+    point_light_pass_program_.SetVP(vp_matrix_);
 }
 
 void bounce::OpenGLRenderer::EndPointLighsPass()
@@ -195,8 +195,8 @@ void bounce::OpenGLRenderer::RunDirectionalLightPass()
     directional_light_pass_program_.UseProgram();
     directional_light_pass_program_.SetEyeWorldPos(glm::vec3(2.0f, 3.0f, 5.0f));
     
-    glm::mat4 wvp_matrix = glm::mat4(1.0f);
-    directional_light_pass_program_.SetWVP(wvp_matrix);
+    glm::mat4 vp_matrix = glm::mat4(1.0f);
+    directional_light_pass_program_.SetVP(vp_matrix);
     
     quad_->Render();
 }

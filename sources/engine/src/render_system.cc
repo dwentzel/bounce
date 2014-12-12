@@ -58,26 +58,23 @@ void bounce::RenderSystem::Update(float delta_time) {
     glm::mat4 view_matrix = glm::lookAt(camera_position, glm::vec3(0.0f, 0.0f, 0.0f),
                                         glm::vec3(0.0f, 1.0f, 0.0f));
     
-    glm::mat4 world_matrix = glm::mat4(1.0f);
-    glm::mat4 wvp_matrix = projection_matrix * view_matrix * world_matrix;
+    glm::mat4 vp_matrix = projection_matrix * view_matrix;
     
     renderer_.BeginGeometryPass();
-    
     renderer_.SetViewMatrix(view_matrix);
-    renderer_.SetWorldMatrix(world_matrix);
-    renderer_.SetWVPMatrix(wvp_matrix);
+    renderer_.SetVPMatrix(vp_matrix);
     
     for (GameEntity& entity : game_entity_cache_) {
         GameComponentHandle component_handle = entity.GetComponentOfType(RENDER_COMPONENT);
         if (!component_handle.invalid()) {
             const RenderComponent& render_component = component_handle.ResolveAs<RenderComponent>();
             
-            glm::mat4 model_matrix = render_component.model_matrix();
-            glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
+            glm::mat4 world_matrix = render_component.model_matrix();
+            glm::mat4 wvp_matrix = vp_matrix * world_matrix;
             
             
-            renderer_.SetMWVPMatrix(mwvp_matrix);
-            renderer_.SetModelMatrix(model_matrix);
+            renderer_.SetWVPMatrix(wvp_matrix);
+            renderer_.SetWorldMatrix(world_matrix);
             
             renderer_.RenderModel(render_component.model_handle());
         }
@@ -99,9 +96,7 @@ void bounce::RenderSystem::Update(float delta_time) {
     }
     
     renderer_.EndPointLighsPass();
-    
     renderer_.RunDirectionalLightPass();
-    
     
     application_context_.Flush();
 }

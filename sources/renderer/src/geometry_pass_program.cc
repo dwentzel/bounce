@@ -14,18 +14,12 @@ void bounce::GeometryPassProgram::Init()
     LoadFragmentShader("geometry_pass.frag.glsl");
     LinkProgram();
     
-    mwvp_matrix_location_ = GetUniformLocation("MWVP");
     wvp_matrix_location_ = GetUniformLocation("WVP");
+    vp_matrix_location_ = GetUniformLocation("VP");
     view_matrix_location_ = GetUniformLocation("V");
     world_matrix_location_ = GetUniformLocation("W");
-    model_matrix_location_ = GetUniformLocation("M");
     
     color_texture_unit_location_ = GetUniformLocation("gColorMap");
-}
-
-void bounce::GeometryPassProgram::SetModelMatrix(const glm::mat4& model_matrix)
-{
-    glUniformMatrix4fv(model_matrix_location_, 1, GL_FALSE, &model_matrix[0][0]);
 }
 
 void bounce::GeometryPassProgram::SetWorldMatrix(const glm::mat4& model_matrix)
@@ -43,9 +37,9 @@ void bounce::GeometryPassProgram::SetWVPMatrix(const glm::mat4& wvp_matrix)
     glUniformMatrix4fv(wvp_matrix_location_, 1, GL_FALSE, &wvp_matrix[0][0]);
 }
 
-void bounce::GeometryPassProgram::SetMWVPMatrix(const glm::mat4& mwvp_matrix)
+void bounce::GeometryPassProgram::SetVPMatrix(const glm::mat4& vp_matrix)
 {
-    glUniformMatrix4fv(mwvp_matrix_location_, 1, GL_FALSE, &mwvp_matrix[0][0]);
+    glUniformMatrix4fv(wvp_matrix_location_, 1, GL_FALSE, &vp_matrix[0][0]);
 }
 
 void bounce::GeometryPassProgram::SetColorTextureUnit(int texture_unit)

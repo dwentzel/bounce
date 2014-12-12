@@ -8,7 +8,7 @@ bounce::LightPassProgram::LightPassProgram(const ResourceLoader& resource_loader
 
 void bounce::LightPassProgram::Init()
 {
-    WVP_location_ = GetUniformLocation("WVP");
+    VP_location_ = GetUniformLocation("VP");
     position_texture_unit_location_ = GetUniformLocation("gPositionMap");
     color_texture_unit_location_ = GetUniformLocation("gColorMap");
     normal_texture_unit_location_ = GetUniformLocation("gNormalMap");
@@ -19,9 +19,9 @@ void bounce::LightPassProgram::Init()
     
 }
 
-void bounce::LightPassProgram::SetWVP(const glm::mat4& WVP)
+void bounce::LightPassProgram::SetVP(const glm::mat4& VP)
 {
-    glUniformMatrix4fv(WVP_location_, 1, GL_TRUE, &WVP[0][0]);
+    glUniformMatrix4fv(VP_location_, 1, GL_TRUE, &VP[0][0]);
 }
 
 void bounce::LightPassProgram::SetPositionTextureUnit(int texture_unit)

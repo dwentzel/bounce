@@ -10,7 +10,7 @@ namespace bounce {
 
     class LightPassProgram : public ShaderProgram {
     private:
-        GLint WVP_location_;
+        GLint VP_location_;
         GLint position_texture_unit_location_;
         GLint normal_texture_unit_location_;
         GLint color_texture_unit_location_;
@@ -25,7 +25,7 @@ namespace bounce {
         void Init();
         
     public:
-        void SetWVP(const glm::mat4& wvp_matrix);
+        void SetVP(const glm::mat4& vp_matrix);
         void SetPositionTextureUnit(int texture_unit);
         void SetColorTextureUnit(int texture_unit);
         void SetNormalTextureUnit(int texture_unit);

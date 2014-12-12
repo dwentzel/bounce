@@ -46,7 +46,7 @@ namespace bounce
         
         void RunLightPass();
         
-        glm::mat4 wvp_matrix_;
+        glm::mat4 vp_matrix_;
         
     public:
         OpenGLRenderer(const ResourceLoader& resource_loader,
@@ -60,11 +60,10 @@ namespace bounce
         virtual void Startup();
         virtual void Shutdown();
 
-        virtual void SetModelMatrix(const glm::mat4& model_matrix);
         virtual void SetViewMatrix(const glm::mat4& view_matrix);
         virtual void SetWorldMatrix(const glm::mat4& world_matrix);
+        void SetVPMatrix(const glm::mat4& vp_matrix);
         virtual void SetWVPMatrix(const glm::mat4& wvp_matrix);
-        virtual void SetMWVPMatrix(const glm::mat4& mwvp_matrix);
         
         void Resize(unsigned int width, unsigned int height);
         
@@ -81,11 +80,6 @@ namespace bounce
         void RenderPointLight(const PointLight& point_light);
     };
     
-    inline void OpenGLRenderer::SetModelMatrix(const glm::mat4& model_matrix)
-    {
-        geometry_pass_program_.SetModelMatrix(model_matrix);
-    }
-    
     inline void OpenGLRenderer::SetViewMatrix(const glm::mat4& view_matrix)
     {
         geometry_pass_program_.SetViewMatrix(view_matrix);
@@ -96,18 +90,17 @@ namespace bounce
         geometry_pass_program_.SetWorldMatrix(world_matrix);
     }
 
+    inline void OpenGLRenderer::SetVPMatrix(const glm::mat4& wvp_matrix)
+    {
+        vp_matrix_ = wvp_matrix;
+        geometry_pass_program_.SetVPMatrix(wvp_matrix);
+    }
     
     inline void OpenGLRenderer::SetWVPMatrix(const glm::mat4& wvp_matrix)
     {
-        wvp_matrix_ = wvp_matrix;
         geometry_pass_program_.SetWVPMatrix(wvp_matrix);
     }
 
-    inline void OpenGLRenderer::SetMWVPMatrix(const glm::mat4& mwvp_matrix)
-    {
-        geometry_pass_program_.SetMWVPMatrix(mwvp_matrix);
-    }
-    
 }
 
 #endif // BOUNCE_RENDERER_OPENGL_RENDERER_H_
