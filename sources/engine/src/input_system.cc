@@ -31,12 +31,4 @@ void bounce::InputSystem::Update(float)
             component.Update();
         }
     }
-    
-//    for (ControlComponent& component : control_components_) {
-//        component.Update();
-//    }
-//    
-//    for (AiComponent& component : ai_components_) {
-//        component.Update();
-//    }
 }

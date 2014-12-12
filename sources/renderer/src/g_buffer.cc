@@ -15,7 +15,7 @@ bounce::GBuffer::~GBuffer()
     glDeleteFramebuffers(1, &fbo_);
 }
 
-void bounce::GBuffer::Init(int window_width, int window_height)
+void bounce::GBuffer::Init(unsigned int window_width, unsigned int window_height)
 {
     glGenFramebuffers(1, &fbo_);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo_);
@@ -25,14 +25,14 @@ void bounce::GBuffer::Init(int window_width, int window_height)
     
     for (unsigned int i = 0; i < GBUFFER_NUM_TEXTURES; ++i) {
         glBindTexture(GL_TEXTURE_2D, textures_[i]);
-        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB32F, window_width, window_height);
+        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB32F, static_cast<GLsizei>(window_width), static_cast<GLsizei>(window_height));
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, textures_[i], 0);
     }
     
     glBindTexture(GL_TEXTURE_2D, depth_texture_);
-    glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, window_width, window_height);
+    glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, static_cast<GLsizei>(window_width), static_cast<GLsizei>(window_height));
     glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_texture_, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     

@@ -32,7 +32,7 @@ namespace bounce {
         void SetEyeWorldPos(const glm::vec3& eye_world_position);
         void SetMatSpecularIntensity(float intensity);
         void SetMatSpecularPower(float power);
-        void SetScreenSize(int width, int height);
+        void SetScreenSize(unsigned int width, unsigned int height);
         
     };
 

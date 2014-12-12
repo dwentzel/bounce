@@ -12,11 +12,11 @@
 
 bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context,
                                    const WindowContext& window_context,
-             GameEntityCache& game_entity_cache,
-             OpenGLRenderer& renderer)
+                                   GameEntityCache& game_entity_cache,
+                                   OpenGLRenderer& renderer)
 : application_context_(application_context), window_context_(window_context),
-  game_entity_cache_(game_entity_cache),
-  renderer_(renderer)
+game_entity_cache_(game_entity_cache),
+renderer_(renderer)
 {
     
 }
@@ -60,8 +60,7 @@ void bounce::RenderSystem::Update(float delta_time) {
     
     glm::mat4 world_matrix = glm::mat4(1.0f);
     glm::mat4 wvp_matrix = projection_matrix * view_matrix * world_matrix;
-
-
+    
     renderer_.BeginGeometryPass();
     
     renderer_.SetViewMatrix(view_matrix);
@@ -70,35 +69,19 @@ void bounce::RenderSystem::Update(float delta_time) {
     
     for (GameEntity& entity : game_entity_cache_) {
         GameComponentHandle component_handle = entity.GetComponentOfType(RENDER_COMPONENT);
-        if (component_handle.index() == -1) {
-            continue;
+        if (!component_handle.invalid()) {
+            const RenderComponent& render_component = component_handle.ResolveAs<RenderComponent>();
+            
+            glm::mat4 model_matrix = render_component.model_matrix();
+            glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
+            
+            
+            renderer_.SetMWVPMatrix(mwvp_matrix);
+            renderer_.SetModelMatrix(model_matrix);
+            
+            renderer_.RenderModel(render_component.model_handle());
         }
-        
-        const RenderComponent& render_component = component_handle.ResolveAs<RenderComponent>();
-        
-        glm::mat4 model_matrix = render_component.model_matrix();
-        glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
-        
-        
-        renderer_.SetMWVPMatrix(mwvp_matrix);
-        renderer_.SetModelMatrix(model_matrix);
-        
-        renderer_.RenderModel(render_component.model_handle());
     }
-    
-    
-//    for (RenderComponentCache::const_iterator i = render_component_cache_.begin(); i != render_component_cache_.end(); ++i) {
-//        const RenderComponent& render_component = *i;
-//        
-//        glm::mat4 model_matrix = render_component.model_matrix();
-//        glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
-//        
-//        
-//        renderer_.SetMWVPMatrix(mwvp_matrix);
-//        renderer_.SetModelMatrix(model_matrix);
-//        
-//        renderer_.RenderModel(render_component.model_handle());
-//    }
     
     renderer_.EndGeometryPass();
     
@@ -106,28 +89,13 @@ void bounce::RenderSystem::Update(float delta_time) {
     
     renderer_.BeginPointLightsPass();
     
-//    for (PointLightComponentCache::const_iterator i = point_light_component_cache_.begin(); i != point_light_component_cache_.end(); ++i) {
-//        const PointLightComponent& point_light_component_ = *i;
-//        
-////        glm::mat4 model_matrix = point_light_component_.model_matrix();
-////        glm::mat4 mwvp_matrix = wvp_matrix * model_matrix;
-//        
-//        
-////        renderer_.SetMWVPMatrix(mwvp_matrix);
-////        renderer_.SetModelMatrix(model_matrix);
-//        
-//        renderer_.RenderPointLight(point_light_component_.light());
-//    }
-    
     for (GameEntity& entity : game_entity_cache_) {
         GameComponentHandle component_handle = entity.GetComponentOfType(POINT_LIGHT_COMPONENT);
-        if (component_handle.index() == -1) {
-            continue;
+        if (!component_handle.invalid()) {
+            const PointLightComponent& point_light_component_ = component_handle.ResolveAs<PointLightComponent>();
+            
+            renderer_.RenderPointLight(point_light_component_.light());
         }
-        
-        const PointLightComponent& point_light_component_ = component_handle.ResolveAs<PointLightComponent>();
-        
-        renderer_.RenderPointLight(point_light_component_.light());
     }
     
     renderer_.EndPointLighsPass();

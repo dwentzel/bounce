@@ -44,7 +44,7 @@ void bounce::LightPassProgram::SetEyeWorldPos(const glm::vec3& eye_position)
     glUniform3f(eye_world_position_location_, eye_position.x, eye_position.y, eye_position.z);
 }
 
-void bounce::LightPassProgram::SetScreenSize(int width, int height)
+void bounce::LightPassProgram::SetScreenSize(unsigned int width, unsigned int height)
 {
     glUniform2f(screen_size_location_, (float)width, (float)height);
 }
