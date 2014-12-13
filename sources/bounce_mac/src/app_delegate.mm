@@ -44,11 +44,11 @@
 }
 
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
 //    bounce_main(application_context_);
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)_app {
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
     return YES;
 }
 

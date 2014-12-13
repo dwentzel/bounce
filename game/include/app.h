@@ -17,9 +17,9 @@
 #include "engine/keyboard_state.h"
 #include "engine/input_system.h"
 #include "engine/movement_system.h"
-#include "engine/object_manager.h"
 #include "engine/render_system.h"
-
+#include "engine/game_entity_manager.h"
+#include "engine/game_component_manager.h"
 
 namespace bounce {
     
@@ -45,8 +45,8 @@ namespace bounce {
         
         Timer timer_;
         
-        EntityManager& entity_manager_;
-        ComponentManager& component_manager_;
+        GameEntityManager& entity_manager_;
+        GameComponentManager& component_manager_;
         
         InputSystem input_system_;
         MovementSystem movement_system_;

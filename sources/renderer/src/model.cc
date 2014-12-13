@@ -1,6 +1,8 @@
 #include "model.h"
 
 const unsigned short bounce::Model::MAX_MESH_COUNT  = std::numeric_limits<unsigned short>::max();
+const unsigned short bounce::Model::MAX_MESH_VERTEX_COUNT  = std::numeric_limits<unsigned short>::max();
+const unsigned short bounce::Model::MAX_MESH_INDEX_COUNT  = std::numeric_limits<unsigned short>::max();
 
 bounce::Model bounce::Model::Create()
 {

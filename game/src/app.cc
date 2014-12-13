@@ -32,8 +32,8 @@ namespace bounce {
       resource_loader_(application_context_.root_path()),
       texture_manager_(application_context_.root_path() + "/textures"),
       renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
-      entity_manager_(EntityManager::instance()),
-      component_manager_(ComponentManager::instance()),
+      entity_manager_(GameEntityManager::instance()),
+      component_manager_(GameComponentManager::instance()),
       input_system_(keyboard_state_, entity_manager_.game_entities()),
       movement_system_(entity_manager_.game_entities()),
       render_system_(application_context_, window_context_, entity_manager_.game_entities(), renderer_)

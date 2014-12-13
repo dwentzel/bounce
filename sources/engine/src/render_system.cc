@@ -38,18 +38,12 @@ void bounce::RenderSystem::Shutdown() {
 
 namespace {
     
-    glm::vec3 position = glm::vec3(0, 0, 15);
-    float horizontalAngle = 0.0f;
-    float verticalAngle = 0.0f;
     float initialFoV = 45.0f;
 }
 
 
-void bounce::RenderSystem::Update(float delta_time) {
-    
-    glm::vec3 direction(cos(verticalAngle) * sin(horizontalAngle),
-                        sin(verticalAngle), cos(verticalAngle) * cos(verticalAngle));
-    
+void bounce::RenderSystem::Update(float delta_time)
+{    
     glm::vec3 camera_position(2.0f, 3.0f, 5.0f);
     float fov = initialFoV;
     
@@ -71,7 +65,6 @@ void bounce::RenderSystem::Update(float delta_time) {
             
             glm::mat4 world_matrix = render_component.model_matrix();
             glm::mat4 wvp_matrix = vp_matrix * world_matrix;
-            
             
             renderer_.SetWVPMatrix(wvp_matrix);
             renderer_.SetWorldMatrix(world_matrix);

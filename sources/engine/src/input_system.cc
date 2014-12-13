@@ -1,6 +1,9 @@
 #include "input_system.h"
 
-bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state, GameEntityCache& game_entities)
+#include "ai_component.h"
+#include "control_component.h"
+
+bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state, ObjectCache<GameEntity>& game_entities)
 : keyboard_state_(keyboard_state), game_entities_(game_entities)
 {
     

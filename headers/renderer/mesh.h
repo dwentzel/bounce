@@ -12,7 +12,7 @@ namespace bounce {
         GLuint vertex_buffer_;
         GLuint index_buffer_;
         
-        unsigned int vertex_count_;
+//        unsigned int vertex_count_;
         unsigned int index_count_;
                 
     public:

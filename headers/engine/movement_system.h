@@ -1,16 +1,16 @@
 #ifndef BOUNCE_ENGINE_MOVEMENT_SYSTEM_
 #define BOUNCE_ENGINE_MOVEMENT_SYSTEM_
 
-#include "object_manager.h"
-#include "body_component.h"
-
+#include "framework/object_cache.h"
 #include "game_system.h"
+#include "game_entity.h"
+#include "body_component.h"
 
 namespace bounce {
     
     class MovementSystem : public GameSystem {
     private:
-        GameEntityCache& game_entities_;
+        ObjectCache<GameEntity>& game_entities_;
     
         float UpdateSpeed(float delta_speed, float acceleration_direction, float speed, float max_speed) const;
         void UpdateRotation(BodyComponent& component, float delta_time);
@@ -20,7 +20,7 @@ namespace bounce {
 
 
     public:
-        MovementSystem(GameEntityCache& game_entities);
+        MovementSystem(ObjectCache<GameEntity>& game_entities);
         
         virtual void Startup();
         virtual void Shutdown();

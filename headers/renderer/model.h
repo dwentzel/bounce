@@ -6,9 +6,12 @@
 namespace bounce {
     
     class Model {
-    private:
+    public:
         static const unsigned short MAX_MESH_COUNT;
-        
+        static const unsigned short MAX_MESH_INDEX_COUNT;
+        static const unsigned short MAX_MESH_VERTEX_COUNT;
+
+    private:
         struct MeshData {
             unsigned short index_offset;
             unsigned short index_count;

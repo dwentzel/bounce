@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "game_entity.h"
 
-#include "object_manager.h"
+#include "game_component_manager.h"
 #include "game_component.h"
 
 bounce::GameEntity bounce::GameEntity::Create()

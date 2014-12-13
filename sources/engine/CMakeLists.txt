@@ -8,13 +8,17 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/body_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/bounce_main.h
     include/console.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/camera_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/entity_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event_manager.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_component_type.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/input_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
@@ -36,12 +40,16 @@ set(SOURCES
     src/application_context.cc
     src/body_component.cc
     src/console.cc
+    src/camera_component.cc
     src/control_component.cc
     src/entity_manager.cc
     src/event.cc
     src/event_manager.cc
+    src/exceptions.cc
     src/game_component.cc
+    src/game_component_manager.cc
     src/game_entity.cc
+    src/game_entity_manager.cc
     src/game_system.cc
     src/input_system.cc
     src/keyboard_state.cc

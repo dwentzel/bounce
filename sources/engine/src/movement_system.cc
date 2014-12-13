@@ -2,7 +2,7 @@
 #include "logging/log.h"
 
 
-bounce::MovementSystem::MovementSystem(GameEntityCache& game_entities)
+bounce::MovementSystem::MovementSystem(ObjectCache<GameEntity>& game_entities)
 : game_entities_(game_entities)
 {
     

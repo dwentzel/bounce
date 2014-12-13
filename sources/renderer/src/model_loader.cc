@@ -18,26 +18,27 @@ unsigned int bounce::ModelLoader::LoadModel(const bounce::ImportedModel& importe
     Model& model = model_manager_.GetModel(model_index);
     
     for (unsigned short i = 0; i < imported_model.mesh_count(); ++i) {
-        
-        
-//        unsigned int imported_model_mesh_first_vertex = imported_model.GetMeshFirstVertex(i);
         unsigned int imported_model_mesh_vertex_count = imported_model.GetMeshVertexCount(i);
+        if (imported_model_mesh_vertex_count > Model::MAX_MESH_VERTEX_COUNT) {
+            throw std::out_of_range("too many vertices in model");
+        }
         
-//        unsigned short imported_model_mesh_index_offset = imported_model.GetMeshIndexOffset(i);
         unsigned int imported_model_mesh_index_count = imported_model.GetMeshIndexCount(i);
+        if (imported_model_mesh_index_count > Model::MAX_MESH_INDEX_COUNT) {
+            throw std::out_of_range("too many indices in model");
+        }
 
         const ImportedMaterial& imported_model_mesh_material = imported_model.GetMeshMaterial(i);
         
         unsigned int material_index = LoadMaterial(imported_model_mesh_material);
         
         model.AddMesh(index_offset_,
-                      imported_model_mesh_index_count,
+                      static_cast<unsigned short>(imported_model_mesh_index_count),
                       base_vertex_,
-                      material_index);
+                      static_cast<unsigned short>(material_index));
         
         index_offset_ += imported_model_mesh_index_count;
         base_vertex_ += imported_model_mesh_vertex_count;
-        
     }
     
     const std::vector<float>& imported_model_vertex_data = imported_model.vertex_data();
