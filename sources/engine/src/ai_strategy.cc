@@ -1,5 +1,4 @@
 #include "ai_strategy.h"
-#include "object_manager.h"
 #include "ai_component.h"
 
 bounce::AiStrategy::AiStrategy()

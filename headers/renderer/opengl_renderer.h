@@ -3,8 +3,10 @@
 
 #include <memory>
 
+#include "contrib/disable_clang_warnings.h"
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include "contrib/enable_clang_warnings.h"
 
 #include "framework/renderer.h"
 #include "bounce_gl.h"

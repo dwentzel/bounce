@@ -1,5 +1,4 @@
 #include "body_component.h"
-#include "object_manager.h"
 #include "game_entity.h"
 
 bounce::BodyComponent::BodyComponent(GameEntityHandle owner)

@@ -63,7 +63,9 @@ elseif (APPLE)
 endif()
 
 set(HEADERS
-    ${PUBLIC_INCLUDE_DIR}/
+    ${PUBLIC_INCLUDE_DIR}/contrib/assimp.h
+    ${PUBLIC_INCLUDE_DIR}/contrib/disable_clang_warnings.h
+    ${PUBLIC_INCLUDE_DIR}/contrib/enable_clang_warnings.h
 )
 
 add_custom_target(bounce_lib SOURCES ${HEADERS})

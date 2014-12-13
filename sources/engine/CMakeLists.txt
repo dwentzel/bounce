@@ -1,5 +1,5 @@
 setup_module(engine)
-include (GenerateExportHeader)
+
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/ai_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/ai_strategy.h
@@ -25,7 +25,6 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/movement_system.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/object_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_manager_handle.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/point_light_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/render_component.h
@@ -55,7 +54,6 @@ set(SOURCES
     src/keyboard_state.cc
     src/message.cc
     src/movement_system.cc
-    src/object_manager.cc
     src/object_manager_handle.cc
     src/point_light_component.cc
     src/render_component.cc
@@ -76,15 +74,6 @@ add_library(
 if (XCODE)
     setup_xcode(${MODULE_NAME})
 endif (XCODE)
-
-#generate_export_header(${MODULE_NAME}
-#         BASE_NAME bounce_engine
-#         EXPORT_MACRO_NAME bounce_engine_EXPORT
-#         EXPORT_FILE_NAME bounce_engine_export.h
-#         STATIC_DEFINE bounce_engine_BUILT_AS_STATIC)
-
-set_xcode_property(${MODULE_NAME} CLANG_CXX_LANGUAGE_STANDARD "c++11")
-set_xcode_property(${MODULE_NAME} WARNING_CFLAGS "-Wall -Wextra")
 
 find_package(GLEW REQUIRED)
 target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARY})

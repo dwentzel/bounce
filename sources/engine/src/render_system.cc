@@ -1,14 +1,17 @@
+#include "contrib/disable_clang_warnings.h"
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include "contrib/enable_clang_warnings.h"
 
 #include "logging/log.h"
 
 #include "render_system.h"
 #include "game_entity.h"
-
-#include "object_manager.h"
+#include "render_component.h"
+#include "point_light_component.h"
+#include "object_manager_handle.h"
 
 bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context,
                                    const WindowContext& window_context,

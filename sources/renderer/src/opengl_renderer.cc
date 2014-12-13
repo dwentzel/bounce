@@ -96,10 +96,10 @@ void bounce::OpenGLRenderer::BufferModelData(const ModelLoader& model_loader)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
     // Texture coordinates
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
     // Normal vectors
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), reinterpret_cast<void*>(5 * sizeof(float)));
     
     
     
@@ -126,7 +126,7 @@ void bounce::OpenGLRenderer::Resize(unsigned int width, unsigned int height)
     point_light_pass_program_.UseProgram();
     point_light_pass_program_.SetScreenSize(width, height);
     
-    glUseProgram((GLuint)current_program_id);
+    glUseProgram(static_cast<GLuint>(current_program_id));
 }
 
 void bounce::OpenGLRenderer::Shutdown() {
@@ -226,7 +226,7 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
             texture_manager_.BindTexture(texture_handle);
         }
         
-        glDrawElementsBaseVertex(GL_TRIANGLES, index_count, GL_UNSIGNED_SHORT, (void*)(index_offset * sizeof(unsigned short)), base_vertex);
+        glDrawElementsBaseVertex(GL_TRIANGLES, index_count, GL_UNSIGNED_SHORT, reinterpret_cast<void*>(index_offset * sizeof(unsigned short)), base_vertex);
         
         if (material.has_texture()) {
             //texture_manager_.UseTexture(texture_handle);

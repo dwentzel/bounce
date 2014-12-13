@@ -60,7 +60,7 @@ unsigned int bounce::TextureManager::GenerateTexture(const std::string& texture)
     
     std::ifstream file(texture_path, std::ios::in | std::ios::binary);
     if (file) {
-        file.read((char*)&header, sizeof(struct BitMapHeader));
+        file.read(reinterpret_cast<char*>(&header), sizeof(struct BitMapHeader));
         
         if (header.type != 0x4D42)
         {
@@ -71,13 +71,13 @@ unsigned int bounce::TextureManager::GenerateTexture(const std::string& texture)
         uint32_t height;
         
         file.seekg(0x12);
-        file.read((char*)&width, 4);
-        file.read((char*)&height, 4);
+        file.read(reinterpret_cast<char*>(&width), 4);
+        file.read(reinterpret_cast<char*>(&height), 4);
         
         uint8_t* pixel_data = new uint8_t[header.size];
         
         file.seekg(header.offset);
-        file.read((char*)pixel_data, header.size);
+        file.read(reinterpret_cast<char*>(pixel_data), header.size);
         file.close();
         
         unsigned int handle = textures_.GenerateObject(header.size, width, height, pixel_data);

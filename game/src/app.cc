@@ -12,7 +12,6 @@
 
 #include "engine/game_entity.h"
 
-#include "engine/object_manager.h"
 #include "engine/body_component.h"
 #include "engine/render_component.h"
 #include "engine/point_light_component.h"

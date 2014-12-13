@@ -51,7 +51,7 @@ endmacro(set_xcode_property)
 macro(setup_xcode TARGET)
     set_xcode_property(${TARGET} CLANG_CXX_LANGUAGE_STANDARD "c++11")
     set_xcode_property(${TARGET} CLANG_CXX_LIBRARY "libc++")
-    set_xcode_property(${TARGET} WARNING_CFLAGS "-Wall")
+    set_xcode_property(${TARGET} WARNING_CFLAGS "-Wall -Wextra -Weverything -Wno-c++98-compat -Wno-documentation-unknown-command")
 
     set_xcode_property(${TARGET} CLANG_WARN_BOOL_CONVERSION YES)
     set_xcode_property(${TARGET} CLANG_WARN_CONSTANT_CONVERSION YES)
