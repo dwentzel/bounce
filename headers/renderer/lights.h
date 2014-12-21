@@ -1,8 +1,10 @@
 #ifndef BOUNCE_RENDERER_LIGHTS_H_
 #define BOUNCE_RENDERER_LIGHTS_H_
 
+#include "contrib/disable_clang_warnings.h"
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include "contrib/enable_clang_warnings.h"
 
 namespace bounce {
     

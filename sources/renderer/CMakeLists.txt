@@ -53,14 +53,10 @@ add_library(
     ${SOURCES}
 )
 
-if (XCODE)
-    setup_xcode(${MODULE_NAME})
-endif (XCODE)
+setup_compiler(${MODULE_NAME})
 
 find_package(GLEW REQUIRED)
 if (GLEW_FOUND)
-message ("glew found")
-    set(GLEW_INCLUDE_DIR ${GLEW_INCLUDE_DIR})
     include_directories(${GLEW_INCLUDE_DIR})
     #target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
 endif (GLEW_FOUND)
@@ -75,4 +71,5 @@ endif (OPENGL_FOUND)
 
 find_package(ASSIMP REQUIRED)
 include_directories(${ASSIMP_INCLUDE_DIR})
+
 include_directories("${Bounce_SOURCE_DIR}/external/glm")

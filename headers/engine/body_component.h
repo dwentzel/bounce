@@ -1,9 +1,11 @@
 #ifndef BOUNCE_ENGINE_BODY_COMPONENT_
 #define BOUNCE_ENGINE_BODY_COMPONENT_
 
+#include "contrib/disable_clang_warnings.h"
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include "contrib/enable_clang_warnings.h"
 
 #include "game_component.h"
 

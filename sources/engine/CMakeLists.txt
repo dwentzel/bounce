@@ -71,9 +71,7 @@ add_library(
 	$<TARGET_OBJECTS:logging>
 	$<TARGET_OBJECTS:renderer>)
 
-if (XCODE)
-    setup_xcode(${MODULE_NAME})
-endif (XCODE)
+setup_compiler(${MODULE_NAME})
 
 find_package(GLEW REQUIRED)
 target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARY})

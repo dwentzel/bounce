@@ -27,9 +27,7 @@ add_library(
     ${SOURCES}
 )
 
-if (XCODE)
-    setup_xcode(${MODULE_NAME})
-endif (XCODE)
+setup_compiler(${MODULE_NAME})
 
 
 #source_group(\\ FILES ${SOURCES})
