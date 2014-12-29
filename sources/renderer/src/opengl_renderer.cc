@@ -6,9 +6,10 @@ bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
                                        TextureManager& texture_manager,
                                        const MaterialManager& material_manager,
                                        const VertexBuffer& vertex_buffer)
-: geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
-mesh_loader_(resource_loader),
-model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+: model_vertex_array_(0), model_vertex_buffer_(0), model_element_buffer_(0), quad_(nullptr), sphere_(nullptr),
+  geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
+  mesh_loader_(resource_loader),
+  model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
 {
     
 }

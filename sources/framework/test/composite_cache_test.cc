@@ -1,4 +1,6 @@
+#include "contrib/disable_clang_warnings.h"
 #include "gtest/gtest.h"
+#include "contrib/enable_clang_warnings.h"
 #include "object_cache.h"
 
 namespace bounce {
