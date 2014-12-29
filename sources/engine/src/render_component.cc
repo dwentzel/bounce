@@ -11,6 +11,13 @@ bounce::RenderComponent::RenderComponent(GameEntityHandle owner, unsigned int mo
 {
 }
 
+bounce::RenderComponent::RenderComponent(RenderComponent&& source)
+: GameComponent(std::move(source)),
+  model_handle_(std::move(source.model_handle_)), model_matrix_(std::move(source.model_matrix_))
+{
+
+}
+
 unsigned int bounce::RenderComponent::model_handle() const
 {
     return model_handle_;

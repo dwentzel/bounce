@@ -15,7 +15,7 @@ namespace bounce {
         ApplicationContext();
         
     public:
-        virtual ~ApplicationContext() = 0;
+        virtual ~ApplicationContext();
         
         EventManager* event_manager_ptr() { return &event_manager_; }
         EventManager& event_manager() { return event_manager_; }

@@ -15,11 +15,15 @@ namespace bounce {
         GameComponentType component_type_;
         GameEntityHandle owner_;
     
+        GameComponent(const GameComponent&) = delete;
+        GameComponent& operator=(const GameComponent&) = delete;
+
     protected:
         GameComponent(GameComponentType component_type, GameEntityHandle owner);
+        GameComponent(GameComponent&& source);
         
     public:
-        virtual ~GameComponent() = 0;
+        virtual ~GameComponent();
         
         virtual void Startup() = 0;
         

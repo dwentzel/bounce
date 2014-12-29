@@ -24,17 +24,7 @@ add_library(
 setup_compiler(${MODULE_NAME})
 
 find_package(ASSIMP REQUIRED)
-if (ASSIMP_FOUND)
-    message("ASSIMP_INCLUDE_DIR: ${ASSIMP_INCLUDE_DIR}")
-    include_directories(${ASSIMP_INCLUDE_DIR})
-
-    message("ASSIMP_LIBRARIES: ${ASSIMP_LIBRARIES}")
-#    target_link_libraries(${MODULE_NAME} ${ASSIMP_LIBRARIES})
-else (ASSIMP_FOUND)
-    message("Could not find assimp")
-endif (ASSIMP_FOUND)
+include_directories(${ASSIMP_INCLUDE_DIR})
 
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
-
-#target_link_libraries(${MODULE_NAME} logging renderer)

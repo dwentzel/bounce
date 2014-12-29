@@ -14,10 +14,13 @@ namespace bounce {
 
         RenderComponent(GameEntityHandle owner, unsigned int model_handle);
         
+        RenderComponent(const RenderComponent&) = delete;
         RenderComponent& operator=(const RenderComponent&) = delete;
 
     public:
         static RenderComponent Create(GameEntityHandle owner, unsigned int model_handle);
+
+        RenderComponent(RenderComponent&& source);
 
         unsigned int model_handle() const;
         

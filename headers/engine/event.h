@@ -20,12 +20,7 @@ namespace bounce {
     protected:
         Event(EventType type);
     };
-    
-    inline EventType Event::type() const {
-        return type_;
-    }
-    
-    
+
     
     class KeyboardEvent : public Event {
     private:
@@ -35,6 +30,8 @@ namespace bounce {
         KeyboardEvent(EventType eventType, Keysym keysym);
         
     public:
+        virtual ~KeyboardEvent();
+
         const Keysym& keysym() const;
         
     };
@@ -46,22 +43,22 @@ namespace bounce {
     class KeydownEvent : public KeyboardEvent {
     public:
         KeydownEvent(Keysym keysym);
+        virtual ~KeydownEvent();
     };
     
     class KeyupEvent : public KeyboardEvent {
     public:
         KeyupEvent(Keysym keysym);
+        virtual ~KeyupEvent();
     };
     
     class QuitEvent : public Event {
     public:
         QuitEvent();
+        virtual ~QuitEvent();
     };
 
 }
-
-//template struct bounce_engine_EXPORT std::atomic < bounce::LockFreeQueue<bounce::EventPtr>::Node* >;
-
 
 
 #endif // BOUNCE_ENGINE_EVENT_H_

@@ -1,10 +1,8 @@
 #import <AppKit/NSApplication.h>
 #import "engine/application_context.h"
 
-@interface BounceApplication : NSApplication {
-    bounce::ApplicationContext* applicationContext;
-}
+@interface BounceApplication : NSApplication
 
-- (void)setApplicationContext:(bounce::ApplicationContext*)context;
+@property (nonatomic, assign)bounce::ApplicationContext* applicationContext;
 
 @end

@@ -12,11 +12,14 @@ namespace bounce {
         
         ControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
         
+        ControlComponent(const ControlComponent&) = delete;
         ControlComponent& operator=(const ControlComponent&) = delete;
         
     public:
         static ControlComponent Create(GameEntityHandle owner, const KeyboardState& keyboard_state);
         
+        ControlComponent(ControlComponent&& source);
+
         virtual void Startup();
         
         virtual void Shutdown();

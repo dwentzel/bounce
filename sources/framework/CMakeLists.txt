@@ -1,5 +1,5 @@
 setup_module(framework)
-include (GenerateExportHeader)
+
 set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h

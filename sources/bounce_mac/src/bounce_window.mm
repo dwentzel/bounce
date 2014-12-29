@@ -3,15 +3,17 @@
 
 @implementation BounceWindow
 
+@synthesize eventManager;
+
 - (id) initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag {
     self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag];
     
     return self;
 }
 
-- (void)setEventManager:(bounce::EventManager *)eventManager {
-    eventManager_ = eventManager;
-}
+//- (void)setEventManager:(bounce::EventManager *)eventManager {
+//    [self setEventManager:eventManager];
+//}
 
 bounce::Key UnicharToKey(unichar ch)
 {
@@ -92,9 +94,9 @@ bounce::Key UnicharToKey(unichar ch)
     keysym.sym = UnicharToKey(ch);
     
     if (event.type == NSKeyDown)
-        eventManager_->QueueEvent(bounce::EventPtr(new bounce::KeydownEvent(keysym)));
+        [self eventManager]->QueueEvent(bounce::EventPtr(new bounce::KeydownEvent(keysym)));
     else if (event.type == NSKeyUp) {
-        eventManager_->QueueEvent(bounce::EventPtr(new bounce::KeyupEvent(keysym)));
+        [self eventManager]->QueueEvent(bounce::EventPtr(new bounce::KeyupEvent(keysym)));
     }
     //    }
 }

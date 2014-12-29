@@ -10,7 +10,7 @@ namespace bounce {
     protected:
         Renderer();
     public:
-        virtual ~Renderer() = 0;
+        virtual ~Renderer();
     
         virtual void Startup() = 0;
         virtual void Shutdown() = 0;

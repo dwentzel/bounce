@@ -1,10 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "engine/application_context.h"
 
-@interface BounceApplicationDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
-    bounce::ApplicationContext* application_context_;
-    bounce::EventManager* event_manager_;
-}
+@interface BounceApplicationDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
 - (id)initWithContext:(bounce::ApplicationContext*)context;
 

@@ -18,7 +18,7 @@ bounce::BodyComponent bounce::BodyComponent::Create(GameEntityHandle owner)
 
 void bounce::BodyComponent::Startup()
 {
-    PositionChangedMessage message = PositionChangedMessage(position_);
+    PositionChangedMessage message(position_);
     SendMessage(message);
 }
 
@@ -50,6 +50,6 @@ void bounce::BodyComponent::position(const glm::vec3& position)
 {
     position_ = position;
 
-    PositionChangedMessage message = PositionChangedMessage(position_);
+    PositionChangedMessage message(position_);
     SendMessage(message);
 }

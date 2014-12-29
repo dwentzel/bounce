@@ -56,18 +56,10 @@ add_library(
 setup_compiler(${MODULE_NAME})
 
 find_package(GLEW REQUIRED)
-if (GLEW_FOUND)
-    include_directories(${GLEW_INCLUDE_DIR})
-    #target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARIES})
-endif (GLEW_FOUND)
+include_directories(${GLEW_INCLUDE_DIR})
 
 find_package(OPENGL REQUIRED)
-if (OPENGL_FOUND)
-#    message("OPENGL_INCLUDE_DIR: ${OPENGL_INCLUDE_DIR}")
-#    message("OPENGL_LIBRARIES: ${OPENGL_LIBRARIES}")
-    include_directories(${OPENGL_INCLUDE_DIR})
-#    target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
-endif (OPENGL_FOUND)
+include_directories(${OPENGL_INCLUDE_DIR})
 
 find_package(ASSIMP REQUIRED)
 include_directories(${ASSIMP_INCLUDE_DIR})

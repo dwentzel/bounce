@@ -36,29 +36,3 @@ void bounce::GameEntity::HandleMessage(const bounce::Message &message)
         ResolveHandle(*i).HandleMessage(message);
     }
 }
-
-namespace {
-    
-    class GameComponentTypePredicate {
-    private:
-        bounce::GameComponentType type_;
-        
-    public:
-        GameComponentTypePredicate(bounce::GameComponentType type) : type_(type) {}
-        
-        inline bool operator()(bounce::GameComponent* component) const {
-            return component->IsOfType(type_);
-        }
-    };
-}
-
-//void bounce::GameEntity::UpdateComponentOfType(bounce::GameComponentType component_type) {
-//    GameComponentTypePredicate predicate(component_type);
-//    
-////    GameComponentList::iterator result =
-////    //std::find_if(components_.begin(), components_.end(), std::bind(gameComponentTypesAreEqual, component_type, std::placeholders::_1));
-////    std::find_if(components_.begin(), components_.end(), predicate);
-////    if (result != components_.end()) {
-////        (*result)->Update();
-////    }
-//}

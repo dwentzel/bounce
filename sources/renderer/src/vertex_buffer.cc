@@ -12,7 +12,7 @@ bounce::VertexBuffer::VertexBuffer()
 
 void bounce::VertexBuffer::AddData(void *data, size_t size)
 {
-    char* ptr = (char*)buffer_;
+    char* ptr = static_cast<char*>(buffer_);
     
     memcpy(ptr + buffer_position_, data, size);
     

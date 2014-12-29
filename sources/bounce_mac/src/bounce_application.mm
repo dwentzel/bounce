@@ -3,17 +3,13 @@
 
 @implementation BounceApplication
 
-bool shouldKeepRunning;
-
-- (void)setApplicationContext:(bounce::ApplicationContext *)context {
-    applicationContext = context;
-}
+@synthesize applicationContext;
 
 - (void)run
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    if (applicationContext == nil) {
+    if ([self applicationContext] == nil) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"applicationContext == nil"
                                      userInfo:nil];
@@ -21,9 +17,9 @@ bool shouldKeepRunning;
     
     [self finishLaunching];
     
-    applicationContext->Update();
+    [self applicationContext]->Update();
     
-    bounce_main(applicationContext);
+    bounce_main([self applicationContext]);
         
     [pool release];
 }

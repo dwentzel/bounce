@@ -7,9 +7,13 @@ namespace bounce {
 
     class RendererException : public BounceException {
     private:
+    	RendererException& operator=(const RendererException&) = delete;
 
     public:
+    	RendererException();
+    	RendererException(const RendererException& original);
 
+    	virtual ~RendererException();
     };
 
 }

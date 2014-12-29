@@ -23,6 +23,7 @@
 #   pragma clang diagnostic ignored "-Wundefined-reinterpret-cast"
 #   pragma clang diagnostic ignored "-Wundef"
 #   pragma clang diagnostic ignored "-Wnewline-eof"
+#   pragma GCC diagnostic ignored "-Wshadow"
 #endif
 
 #endif // BOUNCE_DISABLE_CLANG_WARNINGS_H_

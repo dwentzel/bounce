@@ -21,6 +21,7 @@ namespace bounce {
     private:
         const MessageType message_type_;
         
+        Message(const Message&) = delete;
         Message& operator=(const Message&) = delete;
     protected:
         Message(MessageType message_type);

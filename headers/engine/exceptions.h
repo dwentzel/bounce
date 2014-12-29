@@ -6,7 +6,13 @@
 namespace bounce {
 
     class ObjectManagerHandleException : public BounceException {
-        
+    private:
+    	ObjectManagerHandleException& operator=(const ObjectManagerHandleException&) = delete;
+
+    public:
+    	ObjectManagerHandleException();
+    	ObjectManagerHandleException(const ObjectManagerHandleException& original);
+    	virtual ~ObjectManagerHandleException();
     };
 
 }

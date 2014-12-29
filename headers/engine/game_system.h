@@ -5,7 +5,7 @@ namespace bounce {
     
     class GameSystem {
     public:
-        virtual ~GameSystem() = 0;
+        virtual ~GameSystem();
         
         virtual void Startup() = 0;
         virtual void Shutdown() = 0;

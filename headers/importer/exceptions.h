@@ -7,9 +7,12 @@ namespace bounce {
 
     class ImporterException : public BounceException {
     private:
+    	ImporterException& operator=(const ImporterException&) = delete;
 
     public:
-
+    	ImporterException();
+    	ImporterException(const ImporterException& original);
+    	virtual ~ImporterException();
     };
 
 }

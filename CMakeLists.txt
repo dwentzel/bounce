@@ -30,6 +30,8 @@ set(gtest_force_shared_crt ON)
 
 set(PUBLIC_INCLUDE_DIR ${Bounce_SOURCE_DIR}/headers)
 
+set(CLANG_WARNINGS "-Wall -Wextra -Weverything -Wno-c++98-compat -Wno-padded")
+
 macro(set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
     set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
 endmacro(set_xcode_property)
@@ -37,7 +39,7 @@ endmacro(set_xcode_property)
 macro(setup_xcode TARGET)
     set_xcode_property(${TARGET} CLANG_CXX_LANGUAGE_STANDARD "c++11")
     set_xcode_property(${TARGET} CLANG_CXX_LIBRARY "libc++")
-    set_xcode_property(${TARGET} WARNING_CFLAGS "-Wall -Wextra -Weverything -Wno-c++98-compat -Wno-documentation-unknown-command")
+    set_xcode_property(${TARGET} WARNING_CFLAGS ${CLANG_WARNINGS})
 
     set_xcode_property(${TARGET} CLANG_WARN_BOOL_CONVERSION YES)
     set_xcode_property(${TARGET} CLANG_WARN_CONSTANT_CONVERSION YES)
@@ -66,7 +68,7 @@ macro(setup_compiler TARGET)
 	if (XCODE)
     	setup_xcode(${TARGET})
 	elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
-		set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-Wall -Wextra -Weverything -Wno-c++98-compat")
+		set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS ${CLANG_WARNINGS})
 	endif (XCODE)
 endmacro(setup_compiler)
 

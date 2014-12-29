@@ -1,11 +1,8 @@
 #import <AppKit/NSWindow.h>
 #import "engine/event_manager.h"
 
-@interface BounceWindow : NSWindow {
-    @private
-    bounce::EventManager* eventManager_;
-}
+@interface BounceWindow : NSWindow
 
-- (void)setEventManager: (bounce::EventManager*) eventManager;
+@property (nonatomic, assign)bounce::EventManager* eventManager;
 
 @end

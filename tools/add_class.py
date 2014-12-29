@@ -97,9 +97,6 @@ if os.path.exists(source_path):
 
 namespace = 'bounce'
 
-#write_header(header_file_name, module_name, class_file_name, namespace)
-#write_source(source_file_name, class_file_name)
-
 cmakelists_path = 'sources/' + module_name + '/CMakeLists.txt'
 cmakelists_file = open(cmakelists_path, 'r')
 cmakelists_script = cmakelists_file.read()
@@ -111,4 +108,3 @@ new_cmake_script = add_source(new_cmake_script, source_filename)
 cmakelists_file = open(cmakelists_path, 'w')
 cmakelists_file.write(new_cmake_script)
 cmakelists_file.close()
-#print new_cmake_script

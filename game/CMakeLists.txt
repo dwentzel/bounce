@@ -1,7 +1,9 @@
-setup_module(game)
+message(STATUS "Setting up game")
+set(MODULE_NAME game)
 
-add_definitions(-Dbounce_engine_BUILT_AS_STATIC)
-
+include_directories(
+	${PUBLIC_INCLUDE_DIR}
+    include)
 
 set(HEADERS
     include/app.h
@@ -11,7 +13,6 @@ set(SOURCES
     src/app.cc
     src/bounce.cc
 )
-
 
 set(shaders_PATH ${PROJECT_SOURCE_DIR}/resources/shaders)
 set(models_PATH ${PROJECT_SOURCE_DIR}/resources/models)
