@@ -54,8 +54,8 @@ if (XCODE)
 endif (XCODE)
 
 target_include_directories(
-    ${PUBLIC_INCLUDE_DIR}
     ${TEST_EXE_NAME} PRIVATE
+	${PUBLIC_INCLUDE_DIR}
     ${gtest_SOURCE_DIR}/include
     ${gtest_SOURCE_DIR}
 )
