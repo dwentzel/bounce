@@ -1,6 +1,3 @@
-//#ifndef BOUNCE_DISABLE_CLANG_WARNINGS_H_
-//#define BOUNCE_DISABLE_CLANG_WARNINGS_H_
-
 #ifdef __clang__
 #   pragma clang diagnostic push
 #   pragma GCC diagnostic ignored "-Wall"
@@ -26,6 +23,8 @@
 #   pragma clang diagnostic ignored "-Wnewline-eof"
 #   pragma clang diagnostic ignored "-Wshadow"
 #   pragma clang diagnostic ignored "-Wundef"
+#   pragma clang diagnostic ignored "-Wmissing-noreturn"
+#   pragma clang diagnostic ignored "-Wshift-sign-overflow"
+#   pragma clang diagnostic ignored "-Wused-but-marked-unused"
+#   pragma clang diagnostic ignored "-Wweak-vtables"
 #endif
-
-//#endif // BOUNCE_DISABLE_CLANG_WARNINGS_H_
