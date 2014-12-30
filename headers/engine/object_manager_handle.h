@@ -5,9 +5,7 @@
 
 namespace bounce {
     
-    template <class T>
-    class ObjectManagerHandle;
-    
+
     template <class T>
     class ObjectManagerHandle {
     private:
@@ -20,7 +18,7 @@ namespace bounce {
     public:
         static const ObjectManagerHandle invalid_handle;
         
-        ObjectManagerHandle(unsigned int type, unsigned int index)
+        explicit ObjectManagerHandle(unsigned int type, unsigned int index)
         : index_(index), type_(type)
         {
             

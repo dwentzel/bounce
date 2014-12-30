@@ -1,10 +1,11 @@
 #ifndef BOUNCE_ENGINE_GAME_ENTITY_H_
 #define BOUNCE_ENGINE_GAME_ENTITY_H_
 
-#include <vector>
-
+#include "bounce.h"
 #include "game_component_type.h"
 #include "message.h"
+
+#include <vector>
 
 namespace bounce {
     
@@ -19,6 +20,7 @@ namespace bounce {
         
         GameEntity(const GameEntity&) = delete;
         GameEntity& operator=(const GameEntity&) = delete;
+        GameEntity& operator=(GameEntity&&) = delete;
 
     public:
         typedef std::vector<GameComponentHandle>::iterator component_iterator;
@@ -26,7 +28,7 @@ namespace bounce {
         static GameEntity Create();
         
         GameEntity();
-        GameEntity(GameEntity&& source);
+        GameEntity(GameEntity&& other) NOEXCEPT;
         
         void AttachComponent(GameComponentHandle component);
         void DetachComponent(GameComponentHandle component);

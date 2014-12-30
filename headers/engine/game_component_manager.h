@@ -24,20 +24,24 @@ namespace bounce {
     
     class GameComponentManager {
     private:
+        GameComponentManager(const GameComponentManager&) = delete;
+        GameComponentManager(GameComponentManager&&) = delete;
+        GameComponentManager& operator=(const GameComponentManager&) = delete;
+        GameComponentManager& operator=(GameComponentManager&&) = delete;
+
+    private:
         static GameComponentManager instance_;
         
-        //        ObjectCache<GameEntity> game_entities_;
         BodyComponentCache body_components_;
         ControlComponentCache control_components_;
         AiComponentCache ai_components_;
         RenderComponentCache render_components_;
         PointLightComponentCache point_light_components_;
         
-        
+        GameComponentManager();
+
     public:
         static GameComponentManager& instance();
-        
-        //        const ObjectCache<GameEntity>& game_entities() const;
         
         BodyComponentCache& body_components();
         const BodyComponentCache& body_components() const;
@@ -51,7 +55,6 @@ namespace bounce {
         const RenderComponentCache& render_components() const;
         const PointLightComponentCache& point_light_components() const;
         
-        //        GameEntityHandle GenerateGameEntity();
         GameComponentHandle GenerateBodyComponent(GameEntityHandle owner);
         GameComponentHandle GenerateControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
         GameComponentHandle GenerateAiComponent(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy);

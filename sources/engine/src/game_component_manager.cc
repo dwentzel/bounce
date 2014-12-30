@@ -7,6 +7,11 @@ bounce::GameComponentManager& bounce::GameComponentManager::instance()
     return instance_;
 }
 
+bounce::GameComponentManager::GameComponentManager()
+{
+
+}
+
 bounce::BodyComponentCache& bounce::GameComponentManager::body_components()
 {
     return body_components_;

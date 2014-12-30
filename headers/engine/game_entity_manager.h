@@ -16,9 +16,17 @@ namespace bounce {
     
     class GameEntityManager {
     private:
+        GameEntityManager(const GameEntityManager&) = delete;
+        GameEntityManager(GameEntityManager&&) = delete;
+        GameEntityManager& operator=(const GameEntityManager&) = delete;
+        GameEntityManager& operator=(GameEntityManager&&) = delete;
+
+    private:
         static GameEntityManager instance_;
         GameEntityCache game_entities_;
         
+        GameEntityManager();
+
     public:
         static GameEntityManager& instance();
         

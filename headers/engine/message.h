@@ -1,6 +1,8 @@
 #ifndef BOUNCE_ENGINE_MESSAGE_H_
 #define BOUNCE_ENGINE_MESSAGE_H_
 
+#include "bounce.h"
+
 #include "contrib/disable_clang_warnings.h"
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -23,10 +25,14 @@ namespace bounce {
         
         Message(const Message&) = delete;
         Message& operator=(const Message&) = delete;
+        Message& operator=(Message&&) = delete;
+
     protected:
         Message(MessageType message_type);
         
     public:
+        virtual ~Message() NOEXCEPT;
+
         MessageType message_type() const;
     };
     

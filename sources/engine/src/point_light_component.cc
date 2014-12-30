@@ -7,12 +7,19 @@ bounce::PointLightComponent bounce::PointLightComponent::Create(GameEntityHandle
 
 bounce::PointLightComponent::PointLightComponent(GameEntityHandle owner)
 : GameComponent(POINT_LIGHT_COMPONENT, owner), model_matrix_(glm::mat4(1.0f))
-//,
-//  ambient_intensity_(0.0f), diffuse_intensity_(0.0f),
-//  constant_attenuation_(0.0f), linear_attenuation_(0.0f), exp_attenuation_(0.0f),
-//  color_(glm::vec3(0.0f, 0.0f, 0.0f))
 {
     
+}
+
+bounce::PointLightComponent::PointLightComponent(PointLightComponent&& other)
+    : GameComponent(std::move(other)), light_(std::move(other.light_)), model_matrix_(std::move(other.model_matrix_))
+{
+
+}
+
+bounce::PointLightComponent::~PointLightComponent()
+{
+
 }
 
 void bounce::PointLightComponent::Startup()

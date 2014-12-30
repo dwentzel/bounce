@@ -5,29 +5,31 @@
 #include "keyboard_state.h"
 
 namespace bounce {
-    
+
     class ControlComponent : public GameComponent {
     private:
-        const KeyboardState& keyboard_state_;
-        
-        ControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
-        
         ControlComponent(const ControlComponent&) = delete;
         ControlComponent& operator=(const ControlComponent&) = delete;
-        
+        ControlComponent& operator=(ControlComponent&&) = delete;
+
+    private:
+        const KeyboardState& keyboard_state_;
+
+        explicit ControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
+
     public:
         static ControlComponent Create(GameEntityHandle owner, const KeyboardState& keyboard_state);
-        
-        ControlComponent(ControlComponent&& source);
+
+        ControlComponent(ControlComponent&& other) NOEXCEPT;
 
         virtual void Startup();
-        
+
         virtual void Shutdown();
-        
+
         virtual void Update();
     };
-    
-    
+
+
 }
 
 #endif // BOUNCE_ENGINE_CONTROL_COMPONENT_H_

@@ -8,8 +8,14 @@ bounce::GameComponent::GameComponent(GameComponentType component_type, GameEntit
     
 }
 
-bounce::GameComponent::GameComponent(GameComponent&& source)
-: component_type_(std::move(source.component_type_)), owner_(std::move(source.owner_))
+//bounce::GameComponent::GameComponent(const GameComponent& other)
+//    : component_type_(other.component_type_), owner_(other.owner_)
+//{
+//
+//}
+
+bounce::GameComponent::GameComponent(GameComponent&& other)
+    : component_type_(std::move(other.component_type_)), owner_(std::move(other.owner_))
 {
 
 }

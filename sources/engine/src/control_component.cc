@@ -11,8 +11,8 @@ bounce::ControlComponent::ControlComponent(GameEntityHandle owner, const Keyboar
     
 }
 
-bounce::ControlComponent::ControlComponent(ControlComponent&& source)
-: GameComponent(std::move(source)), keyboard_state_(std::move(source.keyboard_state_))
+bounce::ControlComponent::ControlComponent(ControlComponent&& other)
+    : GameComponent(std::move(other)), keyboard_state_(std::move(other.keyboard_state_))
 {
 
 }

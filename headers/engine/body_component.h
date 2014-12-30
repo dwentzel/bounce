@@ -13,6 +13,11 @@ namespace bounce {
 
     class BodyComponent : public GameComponent {
     private:
+        BodyComponent(const BodyComponent& other) = delete;
+        BodyComponent& operator=(const BodyComponent&) = delete;
+        BodyComponent& operator=(BodyComponent&&) = delete;
+
+    private:
         int yaw_acceleration_direction_;
         int pitch_acceleration_direction_;
         int roll_acceleration_direction_;
@@ -30,11 +35,13 @@ namespace bounce {
         glm::vec3 velocity_;
         glm::vec3 position_;
 
-        BodyComponent(GameEntityHandle owner);
+        explicit BodyComponent(GameEntityHandle owner);
         
     public:
         static BodyComponent Create(GameEntityHandle owner);
     
+        BodyComponent(BodyComponent&& other) NOEXCEPT;
+
         void Startup();
         void Shutdown();
         void Update();

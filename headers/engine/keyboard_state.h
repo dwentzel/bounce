@@ -13,7 +13,7 @@ namespace bounce {
 
     public:
         KeyboardState();
-        virtual ~KeyboardState();
+        ~KeyboardState();
 
         void ProcessEvent(const KeyboardEvent& event);
 

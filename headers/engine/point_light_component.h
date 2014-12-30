@@ -1,12 +1,19 @@
 #ifndef BOUNCE_ENGINE_POINT_LIGHT_COMPONENT_
 #define BOUNCE_ENGINE_POINT_LIGHT_COMPONENT_
 
+#include "bounce.h"
+
 #include "renderer/lights.h"
 #include "game_component.h"
 
 namespace bounce {
 
     class PointLightComponent : public GameComponent {
+    private:
+        PointLightComponent(const PointLightComponent& other) = delete;
+        PointLightComponent& operator=(const PointLightComponent&) = delete;
+        PointLightComponent& operator=(const PointLightComponent&&) = delete;
+
     private:
         PointLight light_;
         glm::mat4 model_matrix_;
@@ -15,6 +22,10 @@ namespace bounce {
         
     public:
         static PointLightComponent Create(GameEntityHandle owner);
+
+        PointLightComponent(PointLightComponent&& other) NOEXCEPT;
+
+        virtual ~PointLightComponent() NOEXCEPT;
         
         virtual void Startup();
         virtual void Shutdown();

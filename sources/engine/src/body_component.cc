@@ -1,18 +1,45 @@
 #include "body_component.h"
 #include "game_entity.h"
 
+bounce::BodyComponent bounce::BodyComponent::Create(GameEntityHandle owner)
+{
+    return BodyComponent(owner);
+}
+
 bounce::BodyComponent::BodyComponent(GameEntityHandle owner)
 : GameComponent(BODY_COMPONENT, owner),
-  yaw_acceleration_direction_(0), pitch_acceleration_direction_(0), roll_acceleration_direction_(0),
-  rotation_acceleration_(0.0002f), max_speed_(0.1f), yaw_speed_(0.0f), pitch_speed_(0.0f), roll_speed_(0.0f),
-  orientation_(1.0f, 0.0f, 0.0f, 0.0f), acceleration_(0.0f), velocity_(0.0f), position_(0.0f)
+  yaw_acceleration_direction_(0),
+  pitch_acceleration_direction_(0),
+  roll_acceleration_direction_(0),
+  rotation_acceleration_(0.0002f),
+  max_speed_(0.1f),
+  yaw_speed_(0.0f),
+  pitch_speed_(0.0f),
+  roll_speed_(0.0f),
+  orientation_(1.0f, 0.0f, 0.0f, 0.0f),
+  acceleration_(0.0f),
+  velocity_(0.0f),
+  position_(0.0f)
 {
     
 }
 
-bounce::BodyComponent bounce::BodyComponent::Create(GameEntityHandle owner)
+bounce::BodyComponent::BodyComponent(BodyComponent&& other)
+    : GameComponent(std::move(other)),
+    yaw_acceleration_direction_(std::move(other.yaw_acceleration_direction_)),
+    pitch_acceleration_direction_(std::move(other.pitch_acceleration_direction_)),
+    roll_acceleration_direction_(std::move(other.roll_acceleration_direction_)),
+    rotation_acceleration_(std::move(other.rotation_acceleration_)),
+    max_speed_(std::move(other.max_speed_)),
+    yaw_speed_(std::move(other.yaw_speed_)),
+    pitch_speed_(std::move(other.pitch_speed_)),
+    roll_speed_(std::move(other.roll_speed_)),
+    orientation_(std::move(other.orientation_)),
+    acceleration_(std::move(other.acceleration_)),
+    velocity_(std::move(other.velocity_)),
+    position_(std::move(other.position_))
 {
-    return BodyComponent(owner);
+
 }
 
 

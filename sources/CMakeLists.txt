@@ -61,6 +61,7 @@ elseif (APPLE)
 endif()
 
 set(HEADERS
+    ${PUBLIC_INCLUDE_DIR}/bounce.h
     ${PUBLIC_INCLUDE_DIR}/contrib/assimp.h
     ${PUBLIC_INCLUDE_DIR}/contrib/disable_clang_warnings.h
     ${PUBLIC_INCLUDE_DIR}/contrib/enable_clang_warnings.h

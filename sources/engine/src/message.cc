@@ -6,6 +6,11 @@ bounce::Message::Message(MessageType message_type)
     
 }
 
+bounce::Message::~Message() 
+{
+
+}
+
 bounce::AccelerationChangedMessage::AccelerationChangedMessage(int yaw, int pitch, int roll, const glm::vec3& direction)
 : Message(ACCELERATION_CHANGED_MESSAGE), yaw_(yaw), pitch_(pitch), roll_(roll), direction_(direction)
 {

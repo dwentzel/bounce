@@ -7,6 +7,11 @@ bounce::GameEntityManager& bounce::GameEntityManager::instance()
     return instance_;
 }
 
+bounce::GameEntityManager::GameEntityManager()
+{
+
+}
+
 bounce::GameEntityCache& bounce::GameEntityManager::game_entities()
 {
     return game_entities_;

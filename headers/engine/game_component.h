@@ -1,6 +1,7 @@
 #ifndef BOUNCE_ENGINE_GAME_COMPONENT_H_
 #define BOUNCE_ENGINE_GAME_COMPONENT_H_
 
+#include "bounce.h"
 #include "message.h"
 #include "game_component_type.h"
 #include "game_entity.h"
@@ -12,18 +13,20 @@ namespace bounce {
     
     class GameComponent {
     private:
+        GameComponent(const GameComponent& other) = delete;
+        GameComponent& operator=(const GameComponent&) = delete;
+        GameComponent& operator=(GameComponent&&) = delete;
+
+    private:
         GameComponentType component_type_;
         GameEntityHandle owner_;
-    
-        GameComponent(const GameComponent&) = delete;
-        GameComponent& operator=(const GameComponent&) = delete;
 
     protected:
-        GameComponent(GameComponentType component_type, GameEntityHandle owner);
-        GameComponent(GameComponent&& source);
+        explicit GameComponent(GameComponentType component_type, GameEntityHandle owner);
+        GameComponent(GameComponent&& other) NOEXCEPT;
         
     public:
-        virtual ~GameComponent();
+        virtual ~GameComponent() NOEXCEPT;
         
         virtual void Startup() = 0;
         
