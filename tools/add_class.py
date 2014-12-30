@@ -8,7 +8,7 @@ def filename_to_classname(file_name):
     words = file_name.split('_')
     return ''.join(word.title() for word in words)
 
-def write_header(header_file_name, module_name, class_file_name, namespace):
+def write_header_file(header_file_name, module_name, class_file_name, namespace):
     try:
         header_file = open(header_file_name, 'w')
     except IOError:
@@ -96,6 +96,9 @@ if os.path.exists(source_path):
     sys.exit()
 
 namespace = 'bounce'
+
+write_header_file(header_path, module_name, class_file_name, namespace)
+write_source_file(source_path, class_file_name)
 
 cmakelists_path = 'sources/' + module_name + '/CMakeLists.txt'
 cmakelists_file = open(cmakelists_path, 'r')
