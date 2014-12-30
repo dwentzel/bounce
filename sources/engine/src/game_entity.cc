@@ -14,7 +14,7 @@ bounce::GameEntity::GameEntity()
 
 }
 
-bounce::GameEntity::GameEntity(GameEntity&& source)
+bounce::GameEntity::GameEntity(GameEntity&& source) NOEXCEPT
     : game_components_(std::move(source.game_components_))
 {
 

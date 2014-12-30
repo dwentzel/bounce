@@ -11,7 +11,7 @@ bounce::AiComponent::AiComponent(GameEntityHandle owner, std::unique_ptr<AiStrat
 
 }
 
-bounce::AiComponent::AiComponent(AiComponent&& other)
+bounce::AiComponent::AiComponent(AiComponent&& other) NOEXCEPT
     : GameComponent(std::move(other)), ai_strategy_(std::move(other.ai_strategy_))
 {
 

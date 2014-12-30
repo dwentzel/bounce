@@ -2,9 +2,9 @@
 #define BOUNCE_H_
 
 #ifndef _MSC_VER
-#define NOEXCEPT noexcept
+#   define NOEXCEPT noexcept
 #else
-#define NOEXCEPT
+#   define NOEXCEPT
 #endif
 
 #endif // BOUNCE_H_

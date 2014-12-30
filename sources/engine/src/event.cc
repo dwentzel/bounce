@@ -24,6 +24,8 @@ bounce::KeyboardEvent::KeyboardEvent(EventType eventType, Keysym keysym)
 
 }
 
+bounce::KeyboardEvent::KeyboardEvent(const KeyboardEvent&) = default;
+
 bounce::KeyboardEvent::~KeyboardEvent()
 {
 

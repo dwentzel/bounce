@@ -11,46 +11,61 @@ namespace bounce {
         EVENT_QUIT
     };
     
+    
+    
     class Event {
+    protected:
+        explicit Event(EventType type);
+        
+    public:
+        virtual ~Event();
+        EventType type() const;
+        
     private:
         EventType type_;
-    public:
-        EventType type() const;
-        virtual ~Event();
-    protected:
-        Event(EventType type);
     };
 
     
+    
     class KeyboardEvent : public Event {
-    private:
-        Keysym keysym_;
-        
     protected:
-        KeyboardEvent(EventType eventType, Keysym keysym);
+        explicit KeyboardEvent(EventType eventType, Keysym keysym);
         
     public:
+        KeyboardEvent(const KeyboardEvent&);
         virtual ~KeyboardEvent();
 
         const Keysym& keysym() const;
         
+    private:
+        Keysym keysym_;
+        
+    private:
+        KeyboardEvent& operator=(const KeyboardEvent&) = delete;
+
     };
     
     inline const Keysym& KeyboardEvent::keysym() const {
         return keysym_;
     }
     
+    
+    
     class KeydownEvent : public KeyboardEvent {
     public:
-        KeydownEvent(Keysym keysym);
+        explicit KeydownEvent(Keysym keysym);
         virtual ~KeydownEvent();
     };
     
+    
+    
     class KeyupEvent : public KeyboardEvent {
     public:
-        KeyupEvent(Keysym keysym);
+        explicit KeyupEvent(Keysym keysym);
         virtual ~KeyupEvent();
     };
+    
+    
     
     class QuitEvent : public Event {
     public:

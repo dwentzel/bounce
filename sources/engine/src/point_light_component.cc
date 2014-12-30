@@ -11,7 +11,7 @@ bounce::PointLightComponent::PointLightComponent(GameEntityHandle owner)
     
 }
 
-bounce::PointLightComponent::PointLightComponent(PointLightComponent&& other)
+bounce::PointLightComponent::PointLightComponent(PointLightComponent&& other) NOEXCEPT
     : GameComponent(std::move(other)), light_(std::move(other.light_)), model_matrix_(std::move(other.model_matrix_))
 {
 

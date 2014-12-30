@@ -24,7 +24,7 @@ bounce::BodyComponent::BodyComponent(GameEntityHandle owner)
     
 }
 
-bounce::BodyComponent::BodyComponent(BodyComponent&& other)
+bounce::BodyComponent::BodyComponent(BodyComponent&& other) NOEXCEPT
     : GameComponent(std::move(other)),
     yaw_acceleration_direction_(std::move(other.yaw_acceleration_direction_)),
     pitch_acceleration_direction_(std::move(other.pitch_acceleration_direction_)),

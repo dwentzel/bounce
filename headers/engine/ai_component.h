@@ -22,7 +22,7 @@ namespace bounce {
         static AiComponent Create(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy);
 
         AiComponent(AiComponent&& other) NOEXCEPT;
-        virtual ~AiComponent() NOEXCEPT;
+        virtual ~AiComponent();
         
         virtual void Startup();
         virtual void Shutdown();

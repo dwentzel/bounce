@@ -25,7 +25,7 @@ namespace bounce {
 
         PointLightComponent(PointLightComponent&& other) NOEXCEPT;
 
-        virtual ~PointLightComponent() NOEXCEPT;
+        virtual ~PointLightComponent();
         
         virtual void Startup();
         virtual void Shutdown();

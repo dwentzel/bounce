@@ -31,7 +31,7 @@ namespace bounce {
         Message(MessageType message_type);
         
     public:
-        virtual ~Message() NOEXCEPT;
+        ~Message();
 
         MessageType message_type() const;
     };

@@ -14,7 +14,7 @@ bounce::GameComponent::GameComponent(GameComponentType component_type, GameEntit
 //
 //}
 
-bounce::GameComponent::GameComponent(GameComponent&& other)
+bounce::GameComponent::GameComponent(GameComponent&& other) NOEXCEPT
     : component_type_(std::move(other.component_type_)), owner_(std::move(other.owner_))
 {
 

@@ -26,7 +26,7 @@ namespace bounce {
         GameComponent(GameComponent&& other) NOEXCEPT;
         
     public:
-        virtual ~GameComponent() NOEXCEPT;
+        virtual ~GameComponent();
         
         virtual void Startup() = 0;
         
