@@ -16,10 +16,10 @@ namespace bounce {
     private:
         std::unique_ptr<AiStrategy> ai_strategy_;
         
-        explicit AiComponent(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy);
+        explicit AiComponent(std::unique_ptr<AiStrategy> ai_strategy);
         
     public:
-        static AiComponent Create(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy);
+        static AiComponent Create(std::unique_ptr<AiStrategy> ai_strategy);
 
         AiComponent(AiComponent&& other) NOEXCEPT;
         virtual ~AiComponent();

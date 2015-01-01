@@ -11,7 +11,7 @@ bounce::AiStrategy::~AiStrategy()
     
 }
 
-void bounce::AiStrategy::SendMessage(const AiComponent& owner, const bounce::Message& message)
-{
-    owner.SendMessage(message);
-}
+//void bounce::AiStrategy::SendMessage(const AiComponent& owner, const bounce::Message& message)
+//{
+//    owner.SendMessage(message);
+//}

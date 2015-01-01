@@ -35,10 +35,10 @@ namespace bounce {
         glm::vec3 velocity_;
         glm::vec3 position_;
 
-        explicit BodyComponent(GameEntityHandle owner);
+        explicit BodyComponent();
         
     public:
-        static BodyComponent Create(GameEntityHandle owner);
+        static BodyComponent Create();
     
         BodyComponent(BodyComponent&& other) NOEXCEPT;
 
@@ -170,8 +170,8 @@ namespace bounce {
     {
         orientation_ = value;
         
-        OrientationChangedMessage message(orientation_);
-        SendMessage(message);
+//        OrientationChangedMessage message(orientation_);
+//        SendMessage(message);
     }
 
     inline const glm::vec3& BodyComponent::acceleration() const

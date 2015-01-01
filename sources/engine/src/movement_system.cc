@@ -2,8 +2,8 @@
 #include "logging/log.h"
 
 
-bounce::MovementSystem::MovementSystem(ObjectCache<GameEntity>& game_entities)
-: game_entities_(game_entities)
+bounce::MovementSystem::MovementSystem(ObjectCache<GameEntity>& game_entities, GameComponentManager& component_manager)
+: game_entities_(game_entities), component_manager_(component_manager)
 {
     
 }
@@ -24,7 +24,7 @@ void bounce::MovementSystem::Update(float delta_time)
         GameComponentHandle component_handle = entity.GetComponentOfType(BODY_COMPONENT);
 
         if (!component_handle.invalid()) {
-            BodyComponent& component = component_handle.ResolveAs<BodyComponent>();
+            BodyComponent& component = component_manager_.ResolveHandleAs<BodyComponent>(component_handle);
             
             UpdateRotation(component, delta_time);
             UpdatePosition(component, delta_time);

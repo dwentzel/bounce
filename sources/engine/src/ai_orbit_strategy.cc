@@ -17,8 +17,8 @@ void bounce::AiOrbitStrategy::Update(const AiComponent& owner)
     glm::vec3 axis = glm::vec3(0.0f, 1.0f, 0.0f);
     glm:: vec3 normal = glm::normalize(glm::cross(v, axis));
     
-    AccelerationChangedMessage message(0.0f, 0.0f, 0.0f, normal);
-    SendMessage(owner, message);
+//    AccelerationChangedMessage message(0.0f, 0.0f, 0.0f, normal);
+//    SendMessage(owner, message);
 }
 
 void bounce::AiOrbitStrategy::HandleMessage(const bounce::Message& message)

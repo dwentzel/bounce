@@ -15,10 +15,10 @@ namespace bounce {
     private:
         const KeyboardState& keyboard_state_;
 
-        explicit ControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
+        explicit ControlComponent(const KeyboardState& keyboard_state);
 
     public:
-        static ControlComponent Create(GameEntityHandle owner, const KeyboardState& keyboard_state);
+        static ControlComponent Create(const KeyboardState& keyboard_state);
 
         ControlComponent(ControlComponent&& other) NOEXCEPT;
 

@@ -1,13 +1,13 @@
 #include "render_component.h"
 #include "render_system.h"
 
-bounce::RenderComponent bounce::RenderComponent::Create(GameEntityHandle owner, unsigned int model_handle)
+bounce::RenderComponent bounce::RenderComponent::Create(unsigned int model_handle)
 {
-    return RenderComponent(owner, model_handle);
+    return RenderComponent(model_handle);
 }
 
-bounce::RenderComponent::RenderComponent(GameEntityHandle owner, unsigned int model_handle)
-: GameComponent(RENDER_COMPONENT, owner), model_handle_(model_handle), model_matrix_(glm::mat4(1.0f))
+bounce::RenderComponent::RenderComponent(unsigned int model_handle)
+: GameComponent(RENDER_COMPONENT), model_handle_(model_handle), model_matrix_(glm::mat4(1.0f))
 {
 }
 

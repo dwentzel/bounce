@@ -3,8 +3,8 @@
 #include "ai_component.h"
 #include "control_component.h"
 
-bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state, ObjectCache<GameEntity>& game_entities)
-: keyboard_state_(keyboard_state), game_entities_(game_entities)
+bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state, ObjectCache<GameEntity>& game_entities, GameComponentManager& component_manager)
+: keyboard_state_(keyboard_state), game_entities_(game_entities), component_manager_(component_manager)
 {
     
 }
@@ -24,13 +24,13 @@ void bounce::InputSystem::Update(float)
     for (GameEntity& entity : game_entities_) {
         GameComponentHandle control_component_handle = entity.GetComponentOfType(CONTROL_COMPONENT);
         if (!control_component_handle.invalid()) {
-            ControlComponent& component = control_component_handle.ResolveAs<ControlComponent>();
+            ControlComponent& component = component_manager_.ResolveHandleAs<ControlComponent>(control_component_handle);
             component.Update();
         }
 
         GameComponentHandle ai_component_handle = entity.GetComponentOfType(AI_COMPONENT);
-        if (ai_component_handle.index() < (unsigned int)-1) {
-            AiComponent& component = ai_component_handle.ResolveAs<AiComponent>();
+        if (!ai_component_handle.invalid()) {
+            AiComponent& component = component_manager_.ResolveHandleAs<AiComponent>(ai_component_handle);
             component.Update();
         }
     }

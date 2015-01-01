@@ -1,12 +1,12 @@
 #include "point_light_component.h"
 
-bounce::PointLightComponent bounce::PointLightComponent::Create(GameEntityHandle owner)
+bounce::PointLightComponent bounce::PointLightComponent::Create()
 {
-    return PointLightComponent(owner);
+    return PointLightComponent();
 }
 
-bounce::PointLightComponent::PointLightComponent(GameEntityHandle owner)
-: GameComponent(POINT_LIGHT_COMPONENT, owner), model_matrix_(glm::mat4(1.0f))
+bounce::PointLightComponent::PointLightComponent()
+: GameComponent(POINT_LIGHT_COMPONENT), model_matrix_(glm::mat4(1.0f))
 {
     
 }

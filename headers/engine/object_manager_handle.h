@@ -39,31 +39,31 @@ namespace bounce {
             return index_ == INVALID_INDEX;
         }
         
-        T& Resolve() const;
-        
-        template <typename U>
-        U& ResolveAs() const;
+//        T& Resolve() const;
+//        
+//        template <typename U>
+//        U& ResolveAs() const;
         
     };
     
-    template <class T>
-    T& ResolveHandle(const ObjectManagerHandle<T>&);
-    
-    template <class T, class Handle>
-    T& ResolveHandleAs(const ObjectManagerHandle<Handle>&);
-
-    template <class T>
-    T& ObjectManagerHandle<T>::Resolve() const
-    {
-        return ResolveHandle<T>(*this);
-    }
-    
-    template <class T>
-    template <typename U>
-    U& ObjectManagerHandle<T>::ResolveAs() const
-    {
-        return ResolveHandleAs<U, T>(*this);
-    }
+//    template <class T>
+//    T& ResolveHandle(const ObjectManagerHandle<T>&);
+//    
+//    template <class T, class Handle>
+//    T& ResolveHandleAs(const ObjectManagerHandle<Handle>&);
+//
+//    template <class T>
+//    T& ObjectManagerHandle<T>::Resolve() const
+//    {
+//        return ResolveHandle<T>(*this);
+//    }
+//    
+//    template <class T>
+//    template <typename U>
+//    U& ObjectManagerHandle<T>::ResolveAs() const
+//    {
+//        return ResolveHandleAs<U, T>(*this);
+//    }
 
     
     

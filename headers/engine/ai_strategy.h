@@ -11,7 +11,7 @@ namespace bounce {
     private:
         
     protected:
-        void SendMessage(const AiComponent& owner, const Message& message);
+//        void SendMessage(const AiComponent& owner, const Message& message);
         
         AiStrategy();
 

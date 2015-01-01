@@ -16,10 +16,13 @@
 bounce::RenderSystem::RenderSystem(const ApplicationContext& application_context,
                                    const WindowContext& window_context,
                                    GameEntityCache& game_entity_cache,
+                                   GameComponentManager& component_manager,
                                    OpenGLRenderer& renderer)
-: application_context_(application_context), window_context_(window_context),
-game_entity_cache_(game_entity_cache),
-renderer_(renderer)
+: application_context_(application_context),
+  window_context_(window_context),
+  game_entity_cache_(game_entity_cache),
+  component_manager_(component_manager),
+  renderer_(renderer)
 {
     
 }
@@ -64,7 +67,7 @@ void bounce::RenderSystem::Update(float delta_time)
     for (GameEntity& entity : game_entity_cache_) {
         GameComponentHandle component_handle = entity.GetComponentOfType(RENDER_COMPONENT);
         if (!component_handle.invalid()) {
-            const RenderComponent& render_component = component_handle.ResolveAs<RenderComponent>();
+            const RenderComponent& render_component = component_manager_.ResolveHandleAs<RenderComponent>(component_handle);
             
             glm::mat4 world_matrix = render_component.model_matrix();
             glm::mat4 wvp_matrix = vp_matrix * world_matrix;
@@ -85,7 +88,7 @@ void bounce::RenderSystem::Update(float delta_time)
     for (GameEntity& entity : game_entity_cache_) {
         GameComponentHandle component_handle = entity.GetComponentOfType(POINT_LIGHT_COMPONENT);
         if (!component_handle.invalid()) {
-            const PointLightComponent& point_light_component_ = component_handle.ResolveAs<PointLightComponent>();
+            const PointLightComponent& point_light_component_ = component_manager_.ResolveHandleAs<PointLightComponent>(component_handle);
             
             renderer_.RenderPointLight(point_light_component_.light());
         }

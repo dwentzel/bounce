@@ -18,10 +18,10 @@ namespace bounce {
         PointLight light_;
         glm::mat4 model_matrix_;
         
-        PointLightComponent(GameEntityHandle owner);
+        PointLightComponent();
         
     public:
-        static PointLightComponent Create(GameEntityHandle owner);
+        static PointLightComponent Create();
 
         PointLightComponent(PointLightComponent&& other) NOEXCEPT;
 

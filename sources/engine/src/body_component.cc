@@ -1,13 +1,13 @@
 #include "body_component.h"
 #include "game_entity.h"
 
-bounce::BodyComponent bounce::BodyComponent::Create(GameEntityHandle owner)
+bounce::BodyComponent bounce::BodyComponent::Create()
 {
-    return BodyComponent(owner);
+    return BodyComponent();
 }
 
-bounce::BodyComponent::BodyComponent(GameEntityHandle owner)
-: GameComponent(BODY_COMPONENT, owner),
+bounce::BodyComponent::BodyComponent()
+: GameComponent(BODY_COMPONENT),
   yaw_acceleration_direction_(0),
   pitch_acceleration_direction_(0),
   roll_acceleration_direction_(0),
@@ -45,8 +45,8 @@ bounce::BodyComponent::BodyComponent(BodyComponent&& other) NOEXCEPT
 
 void bounce::BodyComponent::Startup()
 {
-    PositionChangedMessage message(position_);
-    SendMessage(message);
+//    PositionChangedMessage message(position_);
+//    SendMessage(message);
 }
 
 void bounce::BodyComponent::Shutdown()
@@ -76,7 +76,7 @@ void bounce::BodyComponent::HandleMessage(const bounce::Message& message)
 void bounce::BodyComponent::position(const glm::vec3& position)
 {
     position_ = position;
-
-    PositionChangedMessage message(position_);
-    SendMessage(message);
+//
+//    PositionChangedMessage message(position_);
+//    SendMessage(message);
 }

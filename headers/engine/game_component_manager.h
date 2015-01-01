@@ -23,23 +23,6 @@ namespace bounce {
     typedef ObjectManagerHandle<GameComponent> GameComponentHandle;
     
     class GameComponentManager {
-    private:
-        GameComponentManager(const GameComponentManager&) = delete;
-        GameComponentManager(GameComponentManager&&) = delete;
-        GameComponentManager& operator=(const GameComponentManager&) = delete;
-        GameComponentManager& operator=(GameComponentManager&&) = delete;
-
-    private:
-        static GameComponentManager instance_;
-        
-        BodyComponentCache body_components_;
-        ControlComponentCache control_components_;
-        AiComponentCache ai_components_;
-        RenderComponentCache render_components_;
-        PointLightComponentCache point_light_components_;
-        
-        GameComponentManager();
-
     public:
         static GameComponentManager& instance();
         
@@ -55,22 +38,39 @@ namespace bounce {
         const RenderComponentCache& render_components() const;
         const PointLightComponentCache& point_light_components() const;
         
-        GameComponentHandle GenerateBodyComponent(GameEntityHandle owner);
-        GameComponentHandle GenerateControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state);
-        GameComponentHandle GenerateAiComponent(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy);
-        GameComponentHandle GenerateRenderComponent(GameEntityHandle owner, unsigned int model_handle);
-        GameComponentHandle GeneratePointLightComponent(GameEntityHandle owner);
+        GameComponentHandle GenerateBodyComponent();
+        GameComponentHandle GenerateControlComponent(const KeyboardState& keyboard_state);
+        GameComponentHandle GenerateAiComponent(std::unique_ptr<AiStrategy> ai_strategy);
+        GameComponentHandle GenerateRenderComponent(unsigned int model_handle);
+        GameComponentHandle GeneratePointLightComponent();
         
         template <typename T>
-        friend T& ResolveHandle(const ObjectManagerHandle<T>& handle);
+        T& ResolveHandle(const ObjectManagerHandle<T>& handle);
         
         template <typename T, typename Handle>
-        friend T& ResolveHandleAs(const ObjectManagerHandle<Handle>& handle);
+        T& ResolveHandleAs(const ObjectManagerHandle<Handle>& handle);
+
+    private:
+        GameComponentManager();
+        
+        GameComponentManager(const GameComponentManager&) = delete;
+        GameComponentManager(GameComponentManager&&) = delete;
+        GameComponentManager& operator=(const GameComponentManager&) = delete;
+        GameComponentManager& operator=(GameComponentManager&&) = delete;
+        
+    private:
+        static GameComponentManager instance_;
+        
+        BodyComponentCache body_components_;
+        ControlComponentCache control_components_;
+        AiComponentCache ai_components_;
+        RenderComponentCache render_components_;
+        PointLightComponentCache point_light_components_;
         
     };
     
     template <>
-    inline GameComponent& ResolveHandle<GameComponent>(const ObjectManagerHandle<GameComponent>& handle)
+    inline GameComponent& GameComponentManager::ResolveHandle<GameComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         unsigned int index = handle.index();
         
@@ -91,7 +91,7 @@ namespace bounce {
     }
     
     template <>
-    inline AiComponent& ResolveHandle<AiComponent>(const ObjectManagerHandle<AiComponent>& handle)
+    inline AiComponent& GameComponentManager::ResolveHandle<AiComponent>(const ObjectManagerHandle<AiComponent>& handle)
     {
         if (handle.type() == AI_COMPONENT) {
             return GameComponentManager::instance_.ai_components_.GetObject(handle.index());
@@ -101,7 +101,7 @@ namespace bounce {
     }
     
     template <>
-    inline BodyComponent& ResolveHandleAs<BodyComponent>(const ObjectManagerHandle<GameComponent>& handle)
+    inline BodyComponent& GameComponentManager::ResolveHandleAs<BodyComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == BODY_COMPONENT) {
             return GameComponentManager::instance_.body_components_.GetObject(handle.index());
@@ -111,7 +111,7 @@ namespace bounce {
     }
     
     template <>
-    inline ControlComponent& ResolveHandleAs<ControlComponent>(const ObjectManagerHandle<GameComponent>& handle)
+    inline ControlComponent& GameComponentManager::ResolveHandleAs<ControlComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == CONTROL_COMPONENT) {
             return GameComponentManager::instance_.control_components_.GetObject(handle.index());
@@ -121,7 +121,7 @@ namespace bounce {
     }
     
     template <>
-    inline AiComponent& ResolveHandleAs<AiComponent>(const ObjectManagerHandle<GameComponent>& handle)
+    inline AiComponent& GameComponentManager::ResolveHandleAs<AiComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == AI_COMPONENT) {
             return GameComponentManager::instance_.ai_components_.GetObject(handle.index());
@@ -131,7 +131,7 @@ namespace bounce {
     }
     
     template <>
-    inline RenderComponent& ResolveHandleAs<RenderComponent>(const ObjectManagerHandle<GameComponent>& handle)
+    inline RenderComponent& GameComponentManager::ResolveHandleAs<RenderComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == RENDER_COMPONENT) {
             return GameComponentManager::instance_.render_components_.GetObject(handle.index());
@@ -141,7 +141,7 @@ namespace bounce {
     }
     
     template <>
-    inline PointLightComponent& ResolveHandleAs<PointLightComponent>(const ObjectManagerHandle<GameComponent>& handle)
+    inline PointLightComponent& GameComponentManager::ResolveHandleAs<PointLightComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == POINT_LIGHT_COMPONENT) {
             return GameComponentManager::instance_.point_light_components_.GetObject(handle.index());

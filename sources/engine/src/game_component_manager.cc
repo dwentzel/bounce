@@ -52,32 +52,32 @@ const bounce::PointLightComponentCache& bounce::GameComponentManager::point_ligh
     return point_light_components_;
 }
 
-bounce::GameComponentHandle bounce::GameComponentManager::GenerateBodyComponent(GameEntityHandle owner)
+bounce::GameComponentHandle bounce::GameComponentManager::GenerateBodyComponent()
 {
-    unsigned int index = body_components_.GenerateObject(owner);
+    unsigned int index = body_components_.GenerateObject();
     return GameComponentHandle(BODY_COMPONENT, index);
 }
 
-bounce::GameComponentHandle bounce::GameComponentManager::GenerateControlComponent(GameEntityHandle owner, const KeyboardState& keyboard_state)
+bounce::GameComponentHandle bounce::GameComponentManager::GenerateControlComponent(const KeyboardState& keyboard_state)
 {
-    unsigned int index = control_components_.GenerateObject(owner, keyboard_state);
+    unsigned int index = control_components_.GenerateObject(keyboard_state);
     return GameComponentHandle(CONTROL_COMPONENT, index);
 }
 
-bounce::GameComponentHandle bounce::GameComponentManager::GenerateAiComponent(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy)
+bounce::GameComponentHandle bounce::GameComponentManager::GenerateAiComponent(std::unique_ptr<AiStrategy> ai_strategy)
 {
-    unsigned int index = ai_components_.GenerateObject(owner, std::move(ai_strategy));
+    unsigned int index = ai_components_.GenerateObject(std::move(ai_strategy));
     return GameComponentHandle(AI_COMPONENT, index);
 }
 
-bounce::GameComponentHandle bounce::GameComponentManager::GenerateRenderComponent(GameEntityHandle owner, unsigned int model_handle)
+bounce::GameComponentHandle bounce::GameComponentManager::GenerateRenderComponent(unsigned int model_handle)
 {
-    unsigned int index = render_components_.GenerateObject(owner, model_handle);
+    unsigned int index = render_components_.GenerateObject(model_handle);
     return GameComponentHandle(RENDER_COMPONENT, index);
 }
 
-bounce::GameComponentHandle bounce::GameComponentManager::GeneratePointLightComponent(GameEntityHandle owner)
+bounce::GameComponentHandle bounce::GameComponentManager::GeneratePointLightComponent()
 {
-    unsigned int index = point_light_components_.GenerateObject(owner);
+    unsigned int index = point_light_components_.GenerateObject();
     return GameComponentHandle(POINT_LIGHT_COMPONENT, index);
 }

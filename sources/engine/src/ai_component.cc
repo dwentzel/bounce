@@ -1,12 +1,12 @@
 #include "ai_component.h"
 
-bounce::AiComponent bounce::AiComponent::Create(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy)
+bounce::AiComponent bounce::AiComponent::Create(std::unique_ptr<AiStrategy> ai_strategy)
 {
-    return AiComponent(owner, std::move(ai_strategy));
+    return AiComponent(std::move(ai_strategy));
 }
 
-bounce::AiComponent::AiComponent(GameEntityHandle owner, std::unique_ptr<AiStrategy> ai_strategy)
-: GameComponent(AI_COMPONENT, owner), ai_strategy_(std::move(ai_strategy))
+bounce::AiComponent::AiComponent(std::unique_ptr<AiStrategy> ai_strategy)
+: GameComponent(AI_COMPONENT), ai_strategy_(std::move(ai_strategy))
 {
 
 }

@@ -15,23 +15,11 @@ namespace bounce {
     typedef ObjectCache<GameEntity> GameEntityCache;
     
     class RenderSystem : public GameSystem {
-    private:
-        const ApplicationContext& application_context_;
-        const WindowContext& window_context_;
-        
-        GameEntityCache& game_entity_cache_;
-        
-        OpenGLRenderer& renderer_;
-        
-        std::vector<unsigned int> model_handles_;
-        
-        RenderSystem(const RenderSystem&) = delete;
-        RenderSystem& operator=(const RenderSystem&) = delete;
-
     public:
         RenderSystem(const ApplicationContext& application_context,
                      const WindowContext& window_context,
                      GameEntityCache& game_entity_cache,
+                     GameComponentManager& game_component_manager,
                      OpenGLRenderer& renderer);
         
         virtual ~RenderSystem();
@@ -41,6 +29,25 @@ namespace bounce {
         virtual void Update(float delta_time);
 
         void RenderModel(unsigned int model_handle);
+        
+    private:
+        const ApplicationContext& application_context_;
+        const WindowContext& window_context_;
+        
+        GameEntityCache& game_entity_cache_;
+        GameComponentManager& component_manager_;
+        
+        OpenGLRenderer& renderer_;
+        
+        std::vector<unsigned int> model_handles_;
+
+    private:
+        RenderSystem(const RenderSystem&) = delete;
+        RenderSystem& operator=(const RenderSystem&) = delete;
+        
+        RenderSystem(RenderSystem&&) = delete;
+        RenderSystem& operator=(RenderSystem&&) = delete;
+
     };
     
 }

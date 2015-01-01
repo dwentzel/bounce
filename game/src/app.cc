@@ -33,9 +33,9 @@ namespace bounce {
       renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
       entity_manager_(GameEntityManager::instance()),
       component_manager_(GameComponentManager::instance()),
-      input_system_(keyboard_state_, entity_manager_.game_entities()),
-      movement_system_(entity_manager_.game_entities()),
-      render_system_(application_context_, window_context_, entity_manager_.game_entities(), renderer_)
+      input_system_(keyboard_state_, entity_manager_.game_entities(), component_manager_),
+      movement_system_(entity_manager_.game_entities(), component_manager_),
+      render_system_(application_context_, window_context_, entity_manager_.game_entities(), component_manager_, renderer_)
     {
         
     }
@@ -48,6 +48,8 @@ namespace bounce {
     {
         srand(time(0));
 
+        GameEntity::component_manager(&component_manager_);
+        
         render_system_.Startup();        
         
         Importer importer(resource_loader_);
@@ -67,10 +69,10 @@ namespace bounce {
         
         
         GameEntityHandle light0_handle = entity_manager_.GenerateGameEntity();
-        GameEntity& light0 = light0_handle.Resolve();
+        GameEntity& light0 = entity_manager_.ResolveHandle(light0_handle);
         
-        GameComponentHandle light0_point_light_component_handle = component_manager_.GeneratePointLightComponent(light0_handle);
-        PointLightComponent& light0_point_light_component = ResolveHandleAs<PointLightComponent>(light0_point_light_component_handle);
+        GameComponentHandle light0_point_light_component_handle = component_manager_.GeneratePointLightComponent();
+        PointLightComponent& light0_point_light_component = component_manager_.ResolveHandleAs<PointLightComponent>(light0_point_light_component_handle);
         light0_point_light_component.diffuse_intensity(4.0f);
         light0_point_light_component.exp_attenuation(0.3f);
         light0_point_light_component.color(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -79,12 +81,12 @@ namespace bounce {
         light0_point_light_component.Startup();
 
         std::unique_ptr<AiStrategy> light0_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
-        GameComponentHandle light0_ai_component_handle = component_manager_.GenerateAiComponent(light0_handle, std::move(light0_ai_strategy));
-        AiComponent& light0_ai_component = light0_ai_component_handle.ResolveAs<AiComponent>();
+        GameComponentHandle light0_ai_component_handle = component_manager_.GenerateAiComponent(std::move(light0_ai_strategy));
+        AiComponent& light0_ai_component = component_manager_.ResolveHandleAs<AiComponent>(light0_ai_component_handle);
         light0.AttachComponent(light0_ai_component_handle);
         light0_ai_component.Startup();
-        GameComponentHandle light0_body_component_handle = component_manager_.GenerateBodyComponent(light0_handle);
-        BodyComponent& light0_body_component = ResolveHandleAs<BodyComponent>(light0_body_component_handle);
+        GameComponentHandle light0_body_component_handle = component_manager_.GenerateBodyComponent();
+        BodyComponent& light0_body_component = component_manager_.ResolveHandleAs<BodyComponent>(light0_body_component_handle);
         light0_body_component.position(glm::vec3(2.0f, 1.0f, 0.0f));
         light0.AttachComponent(light0_body_component_handle);
         light0_body_component.Startup();
@@ -92,10 +94,10 @@ namespace bounce {
         
         
         GameEntityHandle light1_handle = entity_manager_.GenerateGameEntity();
-        GameEntity& light1 = ResolveHandle(light1_handle);
+        GameEntity& light1 = entity_manager_.ResolveHandle(light1_handle);
         
-        GameComponentHandle light1_point_light_component_handle = component_manager_.GeneratePointLightComponent(light1_handle);
-        PointLightComponent& light1_point_light_component = ResolveHandleAs<PointLightComponent>(light1_point_light_component_handle);
+        GameComponentHandle light1_point_light_component_handle = component_manager_.GeneratePointLightComponent();
+        PointLightComponent& light1_point_light_component = component_manager_.ResolveHandleAs<PointLightComponent>(light1_point_light_component_handle);
         light1_point_light_component.diffuse_intensity(4.0f);
         light1_point_light_component.exp_attenuation(0.3f);
         light1_point_light_component.color(glm::vec3(1.0f, 0.0f, 0.0f));
@@ -103,23 +105,23 @@ namespace bounce {
         light1_point_light_component.Startup();
         
         std::unique_ptr<AiStrategy> light1_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
-        GameComponentHandle light1_ai_component_handle = component_manager_.GenerateAiComponent(light1_handle, std::move(light1_ai_strategy));
-        AiComponent& light1_ai_component = light1_ai_component_handle.ResolveAs<AiComponent>();
+        GameComponentHandle light1_ai_component_handle = component_manager_.GenerateAiComponent(std::move(light1_ai_strategy));
+        AiComponent& light1_ai_component = component_manager_.ResolveHandleAs<AiComponent>(light1_ai_component_handle);
         light1.AttachComponent(light1_ai_component_handle);
         light1_ai_component.Startup();
         
-        GameComponentHandle light1_body_component_handle = component_manager_.GenerateBodyComponent(light1_handle);
-        BodyComponent& light1_body_component = ResolveHandleAs<BodyComponent>(light1_body_component_handle);
+        GameComponentHandle light1_body_component_handle = component_manager_.GenerateBodyComponent();
+        BodyComponent& light1_body_component = component_manager_.ResolveHandleAs<BodyComponent>(light1_body_component_handle);
         light1_body_component.position(glm::vec3(0.0f, 0.5f, 2.0f));
         light1.AttachComponent(light1_body_component_handle);
         light1_body_component.Startup();
 
         
         GameEntityHandle light2_handle = entity_manager_.GenerateGameEntity();
-        GameEntity& light2 = ResolveHandle(light2_handle);
+        GameEntity& light2 = entity_manager_.ResolveHandle(light2_handle);
         
-        GameComponentHandle light2_point_light_component_handle = component_manager_.GeneratePointLightComponent(light2_handle);
-        PointLightComponent& light2_point_light_component = ResolveHandleAs<PointLightComponent>(light2_point_light_component_handle);
+        GameComponentHandle light2_point_light_component_handle = component_manager_.GeneratePointLightComponent();
+        PointLightComponent& light2_point_light_component = component_manager_.ResolveHandleAs<PointLightComponent>(light2_point_light_component_handle);
         light2_point_light_component.diffuse_intensity(4.0f);
         light2_point_light_component.exp_attenuation(0.3f);
         light2_point_light_component.color(glm::vec3(0.0f, 0.0f, 1.0f));
@@ -127,36 +129,36 @@ namespace bounce {
         light2_point_light_component.Startup();
         
         std::unique_ptr<AiStrategy> light2_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
-        GameComponentHandle light2_ai_component_handle = component_manager_.GenerateAiComponent(light2_handle, std::move(light2_ai_strategy));
-        AiComponent& light2_ai_component = light2_ai_component_handle.ResolveAs<AiComponent>();
+        GameComponentHandle light2_ai_component_handle = component_manager_.GenerateAiComponent(std::move(light2_ai_strategy));
+        AiComponent& light2_ai_component = component_manager_.ResolveHandleAs<AiComponent>(light2_ai_component_handle);
         light2.AttachComponent(light2_ai_component_handle);
         light2_ai_component.Startup();
         
-        GameComponentHandle light2_body_component_handle = component_manager_.GenerateBodyComponent(light2_handle);
-        BodyComponent& light2_body_component = ResolveHandleAs<BodyComponent>(light2_body_component_handle);
+        GameComponentHandle light2_body_component_handle = component_manager_.GenerateBodyComponent();
+        BodyComponent& light2_body_component = component_manager_.ResolveHandleAs<BodyComponent>(light2_body_component_handle);
         light2_body_component.position(glm::vec3(2.0f, 0.0f, 0.0f));
         light2.AttachComponent(light2_body_component_handle);
         light2_body_component.Startup();
         
         
         GameEntityHandle ship_handle = entity_manager_.GenerateGameEntity();
-        GameEntity& ship = ResolveHandle(ship_handle);
+        GameEntity& ship = entity_manager_.ResolveHandle(ship_handle);
         
-        GameComponentHandle ship_body_component_handle = component_manager_.GenerateBodyComponent(ship_handle);
-        BodyComponent& ship_body_component = ship_body_component_handle.ResolveAs<BodyComponent>();
+        GameComponentHandle ship_body_component_handle = component_manager_.GenerateBodyComponent();
+        BodyComponent& ship_body_component = component_manager_.ResolveHandleAs<BodyComponent>(ship_body_component_handle);
         ship_body_component.max_speed(0.1f);
         ship_body_component.rotation_acceleration(0.0001f);
         
         ship.AttachComponent(ship_body_component_handle);
         ship_body_component.Startup();
         
-        GameComponentHandle render_component_handle = component_manager_.GenerateRenderComponent(ship_handle, model_handle);
-        RenderComponent& render_component = ResolveHandleAs<RenderComponent>(render_component_handle);
+        GameComponentHandle render_component_handle = component_manager_.GenerateRenderComponent(model_handle);
+        RenderComponent& render_component = component_manager_.ResolveHandleAs<RenderComponent>(render_component_handle);
         ship.AttachComponent(render_component_handle);
         render_component.Startup();
         
-        GameComponentHandle control_component_handle = component_manager_.GenerateControlComponent(ship_handle, keyboard_state_);
-        ControlComponent& control_component = control_component_handle.ResolveAs<ControlComponent>();
+        GameComponentHandle control_component_handle = component_manager_.GenerateControlComponent(keyboard_state_);
+        ControlComponent& control_component = component_manager_.ResolveHandleAs<ControlComponent>(control_component_handle);
         ship.AttachComponent(control_component_handle);
         control_component.Startup();
         

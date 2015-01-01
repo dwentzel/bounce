@@ -4,25 +4,12 @@
 #include "bounce.h"
 #include "message.h"
 #include "game_component_type.h"
-#include "game_entity.h"
-#include "object_manager_handle.h"
 
 namespace bounce {
     
-    typedef ObjectManagerHandle<GameEntity> GameEntityHandle;
-    
     class GameComponent {
-    private:
-        GameComponent(const GameComponent& other) = delete;
-        GameComponent& operator=(const GameComponent&) = delete;
-        GameComponent& operator=(GameComponent&&) = delete;
-
-    private:
-        GameComponentType component_type_;
-        GameEntityHandle owner_;
-
     protected:
-        explicit GameComponent(GameComponentType component_type, GameEntityHandle owner);
+        explicit GameComponent(GameComponentType component_type);
         GameComponent(GameComponent&& other) NOEXCEPT;
         
     public:
@@ -36,9 +23,16 @@ namespace bounce {
         
         virtual void HandleMessage(const Message& message);
         
-        void SendMessage(const Message& message) const;
-        
         bool IsOfType(GameComponentType component_type);
+        
+    private:
+        GameComponentType component_type_;
+        
+    private:
+        GameComponent(const GameComponent& other) = delete;
+        GameComponent& operator=(const GameComponent&) = delete;
+        GameComponent& operator=(GameComponent&&) = delete;
+        
     };
     
     inline void GameComponent::HandleMessage(const Message&)
