@@ -7,6 +7,8 @@
 
 namespace bounce {
     
+    class GameEntity;
+    
     class GameComponent {
     protected:
         explicit GameComponent(GameComponentType component_type);
