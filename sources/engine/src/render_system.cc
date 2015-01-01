@@ -48,7 +48,7 @@ namespace {
 }
 
 
-void bounce::RenderSystem::Update(float delta_time)
+void bounce::RenderSystem::Update(float)
 {    
     glm::vec3 camera_position(2.0f, 3.0f, 5.0f);
     float fov = initialFoV;

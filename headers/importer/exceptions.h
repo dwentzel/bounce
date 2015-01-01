@@ -11,7 +11,7 @@ namespace bounce {
 
     public:
     	ImporterException();
-    	ImporterException(const ImporterException& original);
+    	ImporterException(const ImporterException& other);
     	virtual ~ImporterException();
     };
 

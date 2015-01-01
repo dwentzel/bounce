@@ -56,7 +56,8 @@ bounce::ImportedModel bounce::Importer::LoadModel(const std::string& resource_na
             const aiFace& face = mesh->mFaces[j];
             
             for (int k = 0; k < 3; ++k) {
-                imported_model.AddIndex(face.mIndices[k]);
+                assert(face.mIndices[k] < std::numeric_limits<unsigned short>::max());
+                imported_model.AddIndex(static_cast<unsigned short>(face.mIndices[k]));
             }
         }
         

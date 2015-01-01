@@ -11,7 +11,7 @@ namespace bounce {
 
     public:
     	BounceException();
-        BounceException(const BounceException&);
+        BounceException(const BounceException& other);
     	virtual ~BounceException();
     };
 

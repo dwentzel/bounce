@@ -1,12 +1,5 @@
 #include "game_component_manager.h"
 
-bounce::GameComponentManager bounce::GameComponentManager::instance_;
-
-bounce::GameComponentManager& bounce::GameComponentManager::instance()
-{
-    return instance_;
-}
-
 bounce::GameComponentManager::GameComponentManager()
 {
 

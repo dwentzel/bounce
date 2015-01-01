@@ -24,7 +24,7 @@ namespace bounce {
     
     class GameComponentManager {
     public:
-        static GameComponentManager& instance();
+        GameComponentManager();
         
         BodyComponentCache& body_components();
         const BodyComponentCache& body_components() const;
@@ -51,16 +51,12 @@ namespace bounce {
         T& ResolveHandleAs(const ObjectManagerHandle<Handle>& handle);
 
     private:
-        GameComponentManager();
-        
         GameComponentManager(const GameComponentManager&) = delete;
         GameComponentManager(GameComponentManager&&) = delete;
         GameComponentManager& operator=(const GameComponentManager&) = delete;
         GameComponentManager& operator=(GameComponentManager&&) = delete;
         
     private:
-        static GameComponentManager instance_;
-        
         BodyComponentCache body_components_;
         ControlComponentCache control_components_;
         AiComponentCache ai_components_;
@@ -76,25 +72,25 @@ namespace bounce {
         
         switch (handle.type()) {
             case BODY_COMPONENT:
-                return GameComponentManager::instance_.body_components_.GetObject(index);
+                return body_components_.GetObject(index);
             case CONTROL_COMPONENT:
-                return GameComponentManager::instance_.control_components_.GetObject(index);
+                return control_components_.GetObject(index);
             case AI_COMPONENT:
-                return GameComponentManager::instance_.ai_components_.GetObject(index);
+                return ai_components_.GetObject(index);
             case RENDER_COMPONENT:
-                return GameComponentManager::instance_.render_components_.GetObject(index);
+                return render_components_.GetObject(index);
             case POINT_LIGHT_COMPONENT:
-                return GameComponentManager::instance_.point_light_components_.GetObject(index);
-            default:
-                throw ObjectManagerHandleException();
+                return point_light_components_.GetObject(index);
         }
+        
+        throw ObjectManagerHandleException();
     }
     
     template <>
     inline AiComponent& GameComponentManager::ResolveHandle<AiComponent>(const ObjectManagerHandle<AiComponent>& handle)
     {
         if (handle.type() == AI_COMPONENT) {
-            return GameComponentManager::instance_.ai_components_.GetObject(handle.index());
+            return ai_components_.GetObject(handle.index());
         }
         
         throw ObjectManagerHandleException();
@@ -104,7 +100,7 @@ namespace bounce {
     inline BodyComponent& GameComponentManager::ResolveHandleAs<BodyComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == BODY_COMPONENT) {
-            return GameComponentManager::instance_.body_components_.GetObject(handle.index());
+            return body_components_.GetObject(handle.index());
         }
         
         throw ObjectManagerHandleException();
@@ -114,7 +110,7 @@ namespace bounce {
     inline ControlComponent& GameComponentManager::ResolveHandleAs<ControlComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == CONTROL_COMPONENT) {
-            return GameComponentManager::instance_.control_components_.GetObject(handle.index());
+            return control_components_.GetObject(handle.index());
         }
         
         throw ObjectManagerHandleException();
@@ -124,7 +120,7 @@ namespace bounce {
     inline AiComponent& GameComponentManager::ResolveHandleAs<AiComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == AI_COMPONENT) {
-            return GameComponentManager::instance_.ai_components_.GetObject(handle.index());
+            return ai_components_.GetObject(handle.index());
         }
         
         throw ObjectManagerHandleException();
@@ -134,7 +130,7 @@ namespace bounce {
     inline RenderComponent& GameComponentManager::ResolveHandleAs<RenderComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == RENDER_COMPONENT) {
-            return GameComponentManager::instance_.render_components_.GetObject(handle.index());
+            return render_components_.GetObject(handle.index());
         }
         
         throw ObjectManagerHandleException();
@@ -144,7 +140,7 @@ namespace bounce {
     inline PointLightComponent& GameComponentManager::ResolveHandleAs<PointLightComponent>(const ObjectManagerHandle<GameComponent>& handle)
     {
         if (handle.type() == POINT_LIGHT_COMPONENT) {
-            return GameComponentManager::instance_.point_light_components_.GetObject(handle.index());
+            return point_light_components_.GetObject(handle.index());
         }
         
         throw ObjectManagerHandleException();

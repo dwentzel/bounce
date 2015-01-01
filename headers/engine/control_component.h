@@ -7,16 +7,6 @@
 namespace bounce {
 
     class ControlComponent : public GameComponent {
-    private:
-        ControlComponent(const ControlComponent&) = delete;
-        ControlComponent& operator=(const ControlComponent&) = delete;
-        ControlComponent& operator=(ControlComponent&&) = delete;
-
-    private:
-        const KeyboardState& keyboard_state_;
-
-        explicit ControlComponent(const KeyboardState& keyboard_state);
-
     public:
         static ControlComponent Create(const KeyboardState& keyboard_state);
 
@@ -27,6 +17,16 @@ namespace bounce {
         virtual void Shutdown();
 
         virtual void Update();
+
+    private:
+        const KeyboardState& keyboard_state_;
+    
+    private:
+        explicit ControlComponent(const KeyboardState& keyboard_state);
+        
+        ControlComponent(const ControlComponent&) = delete;
+        ControlComponent& operator=(const ControlComponent&) = delete;
+        ControlComponent& operator=(ControlComponent&&) = delete;
     };
 
 

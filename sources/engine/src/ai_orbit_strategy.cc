@@ -11,7 +11,7 @@ bounce::AiOrbitStrategy::~AiOrbitStrategy()
 
 }
 
-void bounce::AiOrbitStrategy::Update(const AiComponent& owner)
+void bounce::AiOrbitStrategy::Update(const AiComponent&)
 {
     glm::vec3 v = position_ - center_;
     glm::vec3 axis = glm::vec3(0.0f, 1.0f, 0.0f);

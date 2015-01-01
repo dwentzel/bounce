@@ -31,8 +31,8 @@ namespace bounce {
       resource_loader_(application_context_.root_path()),
       texture_manager_(application_context_.root_path() + "/textures"),
       renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
-      entity_manager_(GameEntityManager::instance()),
-      component_manager_(GameComponentManager::instance()),
+      entity_manager_(),
+      component_manager_(),
       input_system_(keyboard_state_, entity_manager_.game_entities(), component_manager_),
       movement_system_(entity_manager_.game_entities(), component_manager_),
       render_system_(application_context_, window_context_, entity_manager_.game_entities(), component_manager_, renderer_)
@@ -46,7 +46,7 @@ namespace bounce {
     
     bool App::onInit()
     {
-        srand(time(0));
+        srand(static_cast<unsigned int>(time(nullptr)));
 
         GameEntity::component_manager(&component_manager_);
         

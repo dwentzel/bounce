@@ -6,6 +6,8 @@
 #include "logging/log.h"
 #include "exceptions.h"
 
+#include <cassert>
+
 const unsigned int bounce::TextureManager::INVALID_INDEX = std::numeric_limits<unsigned int>::max();
 
 bounce::TextureManager::TextureManager(const std::string& texture_directory_path)
@@ -29,7 +31,9 @@ unsigned int bounce::TextureManager::GetTextureHandle(const std::string& texture
     std::vector<Texture>::const_iterator iter =
         std::find_if(textures_.begin(), textures_.end(),
                      [&texture_name](const Texture& texture) { return texture_name == texture.name(); } );
-    return iter == textures_.end() ? INVALID_INDEX : std::distance(textures_.begin(), iter);
+    
+    assert(std::distance(textures_.begin(), iter) < std::numeric_limits<unsigned int>::max());
+    return iter == textures_.end() ? INVALID_INDEX : static_cast<unsigned int>(std::distance(textures_.begin(), iter));
 }
 
 namespace {

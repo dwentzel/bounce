@@ -33,5 +33,9 @@ void bounce::InputSystem::Update(float)
             AiComponent& component = component_manager_.ResolveHandleAs<AiComponent>(ai_component_handle);
             component.Update();
         }
+        
+        //    AccelerationChangedMessage message(yaw_acceleration, pitch_acceleration, roll_acceleration, glm::vec3(0.0f));
+        //
+        //        SendMessage(message);
     }
 }

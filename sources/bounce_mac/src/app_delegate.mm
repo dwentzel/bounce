@@ -34,6 +34,7 @@
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
+#pragma unused (notification)
     [self eventManager]->QueueEvent(bounce::EventPtr(new bounce::QuitEvent()));
 }
 
@@ -48,10 +49,12 @@
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+#pragma unused (notification)
 //    bounce_main(application_context_);
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
+#pragma unused (app)
     return YES;
 }
 

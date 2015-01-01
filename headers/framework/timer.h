@@ -1,15 +1,6 @@
-/*
- * Timer.h
- *
- *  Created on: 31 maj 2013
- *      Author: daniel
- */
-
 #ifndef BOUNCE_TIMER_H_
 #define BOUNCE_TIMER_H_
 
-
-#include <iostream>
 #if __unix__
 #define systime
 #endif

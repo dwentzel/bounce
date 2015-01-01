@@ -6,10 +6,19 @@ bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,
                                        TextureManager& texture_manager,
                                        const MaterialManager& material_manager,
                                        const VertexBuffer& vertex_buffer)
-: model_vertex_array_(0), model_vertex_buffer_(0), model_element_buffer_(0), quad_(nullptr), sphere_(nullptr),
-  geometry_pass_program_(resource_loader), directional_light_pass_program_(resource_loader), point_light_pass_program_(resource_loader),
+: model_vertex_array_(0),
+  model_vertex_buffer_(0),
+  model_element_buffer_(0),
+  sphere_(nullptr),
+  quad_(nullptr),
+  geometry_pass_program_(resource_loader),
+  directional_light_pass_program_(resource_loader),
+  point_light_pass_program_(resource_loader),
   mesh_loader_(resource_loader),
-  model_manager_(model_manager), texture_manager_(texture_manager), material_manager_(material_manager), vertex_buffer_(vertex_buffer)
+  model_manager_(model_manager),
+  texture_manager_(texture_manager),
+  material_manager_(material_manager),
+  vertex_buffer_(vertex_buffer)
 {
     
 }
@@ -90,7 +99,10 @@ void bounce::OpenGLRenderer::BufferModelData(const ModelLoader& model_loader)
     glBindBuffer(GL_ARRAY_BUFFER, model_vertex_buffer_);
     //    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.current_size(), vertex_buffer_.buffer(), GL_STATIC_DRAW);
     const std::vector<float> vertex_data = model_loader.vertex_data();
-    glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(float), &vertex_data[0], GL_STATIC_DRAW);
+    
+    unsigned long vertex_data_size = vertex_data.size() * sizeof(float);
+    assert(vertex_data_size < std::numeric_limits<GLsizeiptr>::max());
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertex_data_size), &vertex_data[0], GL_STATIC_DRAW);
     
     // Vertex positions
     glEnableVertexAttribArray(0);
@@ -108,7 +120,10 @@ void bounce::OpenGLRenderer::BufferModelData(const ModelLoader& model_loader)
     
     const std::vector<unsigned short>& index_data = model_loader.index_data();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model_element_buffer_);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_data.size() * sizeof(float), &index_data[0], GL_STATIC_DRAW);
+    
+    unsigned long index_data_size = index_data.size() * sizeof(float);
+    assert(index_data_size < std::numeric_limits<GLsizeiptr>::max());
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(index_data_size), &index_data[0], GL_STATIC_DRAW);
     
     glBindVertexArray(0);
 }
@@ -227,7 +242,8 @@ void bounce::OpenGLRenderer::RenderModel(unsigned int model_handle)
             texture_manager_.BindTexture(texture_handle);
         }
         
-        glDrawElementsBaseVertex(GL_TRIANGLES, index_count, GL_UNSIGNED_SHORT, reinterpret_cast<void*>(index_offset * sizeof(unsigned short)), base_vertex);
+        assert(base_vertex < std::numeric_limits<GLint>::max());
+        glDrawElementsBaseVertex(GL_TRIANGLES, index_count, GL_UNSIGNED_SHORT, reinterpret_cast<void*>(index_offset * sizeof(unsigned short)), static_cast<GLint>(base_vertex));
         
         if (material.has_texture()) {
             //texture_manager_.UseTexture(texture_handle);

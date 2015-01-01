@@ -1,12 +1,5 @@
 #include "game_entity_manager.h"
 
-bounce::GameEntityManager bounce::GameEntityManager::instance_;
-
-bounce::GameEntityManager& bounce::GameEntityManager::instance()
-{
-    return instance_;
-}
-
 bounce::GameEntityManager::GameEntityManager()
 {
 

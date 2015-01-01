@@ -8,6 +8,9 @@
 
 int main(int argc, char** argv)
 {
+#pragma unused (argc)
+#pragma unused (argv)
+    
     std::unique_ptr<bounce::LogOutput> console_log_output(new bounce_mac::ConsoleLogOutput());
     bounce::LogManager::instance().AddOutput(std::move(console_log_output));
     bounce::LogManager::instance().Startup();
@@ -38,7 +41,7 @@ int main(int argc, char** argv)
     
     BounceApplicationDelegate* appDelegate = [[BounceApplicationDelegate alloc] initWithContext:context];
     
-    [(NSApplication*)NSApp setDelegate: appDelegate];
+    [static_cast<NSApplication*>(NSApp) setDelegate: appDelegate];
     [NSApp setApplicationContext:context];
     [NSApp run];
     

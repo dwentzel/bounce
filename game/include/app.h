@@ -45,8 +45,8 @@ namespace bounce {
         
         Timer timer_;
         
-        GameEntityManager& entity_manager_;
-        GameComponentManager& component_manager_;
+        GameEntityManager entity_manager_;
+        GameComponentManager component_manager_;
         
         InputSystem input_system_;
         MovementSystem movement_system_;

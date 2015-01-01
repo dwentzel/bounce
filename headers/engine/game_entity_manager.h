@@ -15,21 +15,9 @@ namespace bounce {
     
     
     class GameEntityManager {
-    private:
-        GameEntityManager(const GameEntityManager&) = delete;
-        GameEntityManager(GameEntityManager&&) = delete;
-        GameEntityManager& operator=(const GameEntityManager&) = delete;
-        GameEntityManager& operator=(GameEntityManager&&) = delete;
-
-    private:
-        static GameEntityManager instance_;
-        GameEntityCache game_entities_;
-        
+    public:
         GameEntityManager();
 
-    public:
-        static GameEntityManager& instance();
-        
         GameEntityCache& game_entities();
         const GameEntityCache& game_entities() const;
         
@@ -40,19 +28,23 @@ namespace bounce {
         
         template <typename T, typename Handle>
         T& ResolveHandleAs(const ObjectManagerHandle<Handle>& handle);
+
+    private:
+        GameEntityCache game_entities_;
+        
+    private:
+        GameEntityManager(const GameEntityManager&) = delete;
+        GameEntityManager(GameEntityManager&&) = delete;
+        GameEntityManager& operator=(const GameEntityManager&) = delete;
+        GameEntityManager& operator=(GameEntityManager&&) = delete;
+        
     };
-    
-//    template <class T>
-//    T& ResolveHandle(const ObjectManagerHandle<T>&);
-//    
-//    template <class T, class Handle>
-//    T& ResolveHandleAs(const ObjectManagerHandle<Handle>&);
     
     template <>
     inline GameEntity& GameEntityManager::ResolveHandle<GameEntity>(const ObjectManagerHandle<GameEntity>& handle)
     {
         if (handle.type() == 0) {
-            return GameEntityManager::instance_.game_entities_.GetObject(handle.index());
+            return game_entities_.GetObject(handle.index());
         }
         
         throw ObjectManagerHandleException();

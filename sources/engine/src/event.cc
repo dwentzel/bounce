@@ -1,10 +1,13 @@
 #include "event.h"
 
 
-bounce::Event::Event(EventType type) : type_(type)
+bounce::Event::Event(EventType type)
+: type_(type)
 {
 
 }
+
+bounce::Event::Event(const Event&) = default;
 
 bounce::Event::~Event()
 {

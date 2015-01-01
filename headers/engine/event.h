@@ -16,6 +16,7 @@ namespace bounce {
     class Event {
     protected:
         explicit Event(EventType type);
+        Event(const Event& other);
         
     public:
         virtual ~Event();
@@ -23,6 +24,10 @@ namespace bounce {
         
     private:
         EventType type_;
+        
+    private:
+
+        Event& operator=(const Event&);
     };
 
     
