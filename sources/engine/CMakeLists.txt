@@ -10,7 +10,6 @@ set(HEADERS
     include/console.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/camera_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/entity_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
@@ -41,7 +40,6 @@ set(SOURCES
     src/console.cc
     src/camera_component.cc
     src/control_component.cc
-    src/entity_manager.cc
     src/event.cc
     src/event_manager.cc
     src/exceptions.cc
