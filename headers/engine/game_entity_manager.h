@@ -10,9 +10,7 @@
 namespace bounce {
 
     typedef ObjectCache<GameEntity> GameEntityCache;
-    
     typedef ObjectManagerHandle<GameEntity> GameEntityHandle;
-    
     
     class GameEntityManager {
     public:

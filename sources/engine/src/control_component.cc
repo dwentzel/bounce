@@ -6,7 +6,11 @@ bounce::ControlComponent bounce::ControlComponent::Create(const bounce::Keyboard
 }
 
 bounce::ControlComponent::ControlComponent(const KeyboardState& keyboard_state)
-: GameComponent(CONTROL_COMPONENT), keyboard_state_(keyboard_state)
+: GameComponent(CONTROL_COMPONENT),
+  keyboard_state_(keyboard_state),
+  yaw_acceleration_(0),
+  pitch_acceleration_(0),
+  roll_acceleration_(0)
 {
     
 }
@@ -17,41 +21,44 @@ bounce::ControlComponent::ControlComponent(ControlComponent&& other) NOEXCEPT
 
 }
 
-void bounce::ControlComponent::Startup() {
+void bounce::ControlComponent::Startup()
+{
     
 }
 
-void bounce::ControlComponent::Shutdown() {
+void bounce::ControlComponent::Shutdown()
+{
     
 }
 
-void bounce::ControlComponent::Update() {
-    int yaw_acceleration = 0;
-    int pitch_acceleration = 0;
-    int roll_acceleration = 0;
+void bounce::ControlComponent::Update()
+{
+    yaw_acceleration_ = 0;
+    pitch_acceleration_ = 0;
+    roll_acceleration_ = 0;
     
     if (keyboard_state_.IsDown(KEY_Q)) {
-        ++yaw_acceleration;
+        ++yaw_acceleration_;
     }
     
     if (keyboard_state_.IsDown(KEY_E)) {
-        --yaw_acceleration;
+        --yaw_acceleration_;
     }
     
     if (keyboard_state_.IsDown(KEY_W)) {
-        --pitch_acceleration;
+        --pitch_acceleration_;
     }
     
     if (keyboard_state_.IsDown(KEY_S)) {
-        ++pitch_acceleration;
+        ++pitch_acceleration_;
     }
     
     if (keyboard_state_.IsDown(KEY_A)) {
-        ++roll_acceleration;
+        ++roll_acceleration_;
     }
     
     if (keyboard_state_.IsDown(KEY_D)) {
-        --roll_acceleration;
+        --roll_acceleration_;
     }
     
 //    if (yaw_acceleration != 0 || pitch_acceleration != 0 || roll_acceleration != 0) {
@@ -59,4 +66,19 @@ void bounce::ControlComponent::Update() {
 //    
 //        SendMessage(message);
 //    }
+}
+
+int bounce::ControlComponent::yaw_acceleration() const
+{
+    return yaw_acceleration_;
+}
+
+int bounce::ControlComponent::pitch_acceleration() const
+{
+    return pitch_acceleration_;
+}
+
+int bounce::ControlComponent::roll_acceleration() const
+{
+    return roll_acceleration_;
 }

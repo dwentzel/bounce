@@ -26,13 +26,13 @@ void bounce::MovementSystem::Update(float delta_time)
         if (!component_handle.invalid()) {
             BodyComponent& component = component_manager_.ResolveHandleAs<BodyComponent>(component_handle);
             
-            UpdateRotation(component, delta_time);
+            UpdateRotation(entity, component, delta_time);
             UpdatePosition(component, delta_time);
         }
     }
 }
 
-void bounce::MovementSystem::UpdateRotation(BodyComponent& component, float delta_time)
+void bounce::MovementSystem::UpdateRotation(GameEntity& entity, BodyComponent& component, float delta_time)
 {
     float delta_speed = component.rotation_acceleration() * delta_time;
     
@@ -61,6 +61,9 @@ void bounce::MovementSystem::UpdateRotation(BodyComponent& component, float delt
     glm::quat rot = orientation * pitch_rotation * yaw_rotation * roll_rotation;
     
     component.orientation(rot);
+    
+    OrientationChangedMessage message(rot);
+    entity.HandleMessage(message);
 }
 
 void bounce::MovementSystem::UpdatePosition(BodyComponent& component, float delta_time)

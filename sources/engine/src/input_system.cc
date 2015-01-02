@@ -26,8 +26,11 @@ void bounce::InputSystem::Update(float)
         if (!control_component_handle.invalid()) {
             ControlComponent& component = component_manager_.ResolveHandleAs<ControlComponent>(control_component_handle);
             component.Update();
+            
+            AccelerationChangedMessage message(component.yaw_acceleration(), component.pitch_acceleration(), component.roll_acceleration(), glm::vec3(0.0f));
+            entity.HandleMessage(message);
         }
-
+        
         GameComponentHandle ai_component_handle = entity.GetComponentOfType(AI_COMPONENT);
         if (!ai_component_handle.invalid()) {
             AiComponent& component = component_manager_.ResolveHandleAs<AiComponent>(ai_component_handle);

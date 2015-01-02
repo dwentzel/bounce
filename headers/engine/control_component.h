@@ -17,9 +17,17 @@ namespace bounce {
         virtual void Shutdown();
 
         virtual void Update();
+        
+        int yaw_acceleration() const;
+        int pitch_acceleration() const;
+        int roll_acceleration() const;
 
     private:
         const KeyboardState& keyboard_state_;
+        
+        int yaw_acceleration_;
+        int pitch_acceleration_;
+        int roll_acceleration_;
     
     private:
         explicit ControlComponent(const KeyboardState& keyboard_state);

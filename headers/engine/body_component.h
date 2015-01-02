@@ -12,31 +12,6 @@
 namespace bounce {
 
     class BodyComponent : public GameComponent {
-    private:
-        BodyComponent(const BodyComponent& other) = delete;
-        BodyComponent& operator=(const BodyComponent&) = delete;
-        BodyComponent& operator=(BodyComponent&&) = delete;
-
-    private:
-        int yaw_acceleration_direction_;
-        int pitch_acceleration_direction_;
-        int roll_acceleration_direction_;
-        
-        float rotation_acceleration_;
-        float max_speed_;
-        
-        float yaw_speed_;
-        float pitch_speed_;
-        float roll_speed_;
-        
-        glm::quat orientation_;
-        
-        glm::vec3 acceleration_;
-        glm::vec3 velocity_;
-        glm::vec3 position_;
-
-        explicit BodyComponent();
-        
     public:
         static BodyComponent Create();
     
@@ -79,6 +54,31 @@ namespace bounce {
         
         const glm::vec3& position() const;
         void position(const glm::vec3& value);
+        
+    private:
+        int yaw_acceleration_direction_;
+        int pitch_acceleration_direction_;
+        int roll_acceleration_direction_;
+        
+        float rotation_acceleration_;
+        float max_speed_;
+        
+        float yaw_speed_;
+        float pitch_speed_;
+        float roll_speed_;
+        
+        glm::quat orientation_;
+        
+        glm::vec3 acceleration_;
+        glm::vec3 velocity_;
+        glm::vec3 position_;
+        
+    private:
+        explicit BodyComponent();
+        
+        BodyComponent(const BodyComponent& other) = delete;
+        BodyComponent& operator=(const BodyComponent&) = delete;
+        BodyComponent& operator=(BodyComponent&&) = delete;
     };
     
     inline float BodyComponent::rotation_acceleration() const
