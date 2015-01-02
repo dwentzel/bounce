@@ -14,4 +14,3 @@ bounce::ObjectManagerHandleException::~ObjectManagerHandleException()
 {
 
 }
-

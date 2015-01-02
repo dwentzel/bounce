@@ -46,7 +46,8 @@ namespace bounce {
         KEY_W,
         KEY_X,
         KEY_Y,
-        KEY_Z
+        KEY_Z,
+        NUM_KEYS
     };
     
     enum Modifier {

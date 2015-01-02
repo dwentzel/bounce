@@ -8,9 +8,6 @@
 namespace bounce {
 
     class KeyboardState {
-    private:
-        std::unordered_set<Key, std::hash<int>> pressed_keys_;
-
     public:
         KeyboardState();
         ~KeyboardState();
@@ -18,6 +15,9 @@ namespace bounce {
         void ProcessEvent(const KeyboardEvent& event);
 
         bool IsDown(const Key& key) const;
+    
+    private:
+        bool pressed_keys_[NUM_KEYS];
     };
 
 }

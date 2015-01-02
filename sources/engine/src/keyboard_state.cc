@@ -1,47 +1,39 @@
-/*
- * KeyboardState.cpp
- *
- *  Created on: 6 jun 2013
- *      Author: daniel
- */
-
 #include "keyboard_state.h"
 
 namespace std {
-	template<>
-	struct hash<bounce::Key> {
-		size_t operator()(const bounce::Key &key) const {
-			return std::hash<int>()(key);
-		}
-	};
-
+    template<>
+    struct hash<bounce::Key> {
+        size_t operator()(const bounce::Key &key) const {
+            return std::hash<int>()(key);
+        }
+    };
+    
 }
 
-namespace bounce {
 
-KeyboardState::KeyboardState() {
-
-
-}
-
-KeyboardState::~KeyboardState() {
-
-}
-
-void KeyboardState::ProcessEvent(const KeyboardEvent& keyboardEvent)
+bounce::KeyboardState::KeyboardState()
 {
-	if (keyboardEvent.type() == EVENT_KEYDOWN) {
-		pressed_keys_.insert(keyboardEvent.keysym().sym);
-	}
-	else if (keyboardEvent.type() == EVENT_KEYUP) {
-		pressed_keys_.erase(keyboardEvent.keysym().sym);
-	}
+    for (int i = 0; i < NUM_KEYS; ++i) {
+        pressed_keys_[i] = false;
+    }
 }
 
-bool KeyboardState::IsDown(const Key& key) const {
-
-	std::unordered_set<Key>::const_iterator foundKey = pressed_keys_.find(key);
-	return foundKey != pressed_keys_.end();
+bounce::KeyboardState::~KeyboardState()
+{
+    
 }
 
-} /* namespace bounce */
+void bounce::KeyboardState::ProcessEvent(const KeyboardEvent& keyboardEvent)
+{
+    if (keyboardEvent.type() == EVENT_KEYDOWN) {
+        pressed_keys_[keyboardEvent.keysym().sym] = true;
+    }
+    else if (keyboardEvent.type() == EVENT_KEYUP) {
+        pressed_keys_[keyboardEvent.keysym().sym] = false;
+    }
+}
+
+bool bounce::KeyboardState::IsDown(const Key& key) const
+{
+    return pressed_keys_[key];
+}
