@@ -45,8 +45,7 @@ bounce::BodyComponent::BodyComponent(BodyComponent&& other) NOEXCEPT
 
 void bounce::BodyComponent::Startup()
 {
-//    PositionChangedMessage message(position_);
-//    SendMessage(message);
+
 }
 
 void bounce::BodyComponent::Shutdown()
@@ -76,7 +75,9 @@ void bounce::BodyComponent::HandleMessage(const bounce::Message& message)
 void bounce::BodyComponent::position(const glm::vec3& position)
 {
     position_ = position;
-//
-//    PositionChangedMessage message(position_);
-//    SendMessage(message);
+}
+
+glm::mat4 bounce::BodyComponent::world_matrix() const
+{
+    return glm::mat4_cast(orientation_);
 }

@@ -6,13 +6,17 @@
 namespace bounce {
 
     class BounceException : public std::exception {
-    private:
-    	BounceException& operator=(const BounceException&) = delete;
-
     public:
     	BounceException();
         BounceException(const BounceException& other);
+        BounceException(BounceException&& other);
+        
     	virtual ~BounceException();
+        
+    private:
+        BounceException& operator=(const BounceException&) = delete;
+        BounceException& operator=(BounceException&) = delete;
+
     };
 
     class ObjectNotFoundException : public BounceException {

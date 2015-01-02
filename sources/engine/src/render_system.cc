@@ -65,11 +65,14 @@ void bounce::RenderSystem::Update(float)
     renderer_.SetVPMatrix(vp_matrix);
     
     for (GameEntity& entity : game_entity_cache_) {
-        GameComponentHandle component_handle = entity.GetComponentOfType(RENDER_COMPONENT);
-        if (!component_handle.invalid()) {
-            const RenderComponent& render_component = component_manager_.ResolveHandleAs<RenderComponent>(component_handle);
+        GameComponentHandle body_component_handle = entity.GetComponentOfType(BODY_COMPONENT);
+        GameComponentHandle render_component_handle = entity.GetComponentOfType(RENDER_COMPONENT);
+
+        if (!render_component_handle.invalid() && !body_component_handle.invalid()) {
+            const BodyComponent& body_component = component_manager_.ResolveHandleAs<BodyComponent>(body_component_handle);
+            const RenderComponent& render_component = component_manager_.ResolveHandleAs<RenderComponent>(render_component_handle);
             
-            glm::mat4 world_matrix = render_component.model_matrix();
+            glm::mat4 world_matrix = body_component.world_matrix();
             glm::mat4 wvp_matrix = vp_matrix * world_matrix;
             
             renderer_.SetWVPMatrix(wvp_matrix);

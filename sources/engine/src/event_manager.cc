@@ -9,17 +9,18 @@ namespace bounce {
 }
 
 class bounce::EventManagerImpl {
-private:
-    LockFreeQueue<EventPtr> event_queue_;
-
 public:
     EventPtr PollEvent();
     void QueueEvent(EventPtr event);
+
+private:
+    LockFreeQueue<EventPtr> event_queue_;
 };
 
 bounce::EventManager::EventManager()
 : impl_(new EventManagerImpl())
 {
+    
 }
         
 bounce::EventPtr bounce::EventManagerImpl::PollEvent()

@@ -6,17 +6,19 @@
 namespace bounce {
 
     class ResourceLoader {
+    public:
+        ResourceLoader(const std::string& resources_base_path);
+        
+        std::string LoadShaderData(const std::string& shader_path) const;
+        std::string LoadModelData(const std::string& model_path) const;
+        
     private:
         const std::string resources_base_path_;
         
         std::string LoadFileData(const std::string& file_path) const;
         
         ResourceLoader& operator=(const ResourceLoader&) = delete;
-    public:
-        ResourceLoader(const std::string& resources_base_path);
-        
-        std::string LoadShaderData(const std::string& shader_path) const;
-        std::string LoadModelData(const std::string& model_path) const;
+        ResourceLoader& operator=(ResourceLoader&&) = delete;
         
     };
 

@@ -60,12 +60,6 @@ void bounce::ControlComponent::Update()
     if (keyboard_state_.IsDown(KEY_D)) {
         --roll_acceleration_;
     }
-    
-//    if (yaw_acceleration != 0 || pitch_acceleration != 0 || roll_acceleration != 0) {
-//    AccelerationChangedMessage message(yaw_acceleration, pitch_acceleration, roll_acceleration, glm::vec3(0.0f));
-//    
-//        SendMessage(message);
-//    }
 }
 
 int bounce::ControlComponent::yaw_acceleration() const

@@ -35,10 +35,10 @@ void bounce::RenderComponent::HandleMessage(const Message& message)
 //        light_.position = msg.position();
 //    }
     
-    if (message.message_type() == ORIENTATION_CHANGED_MESSAGE) {
-        const OrientationChangedMessage& orientation_changed_message = static_cast<const OrientationChangedMessage&>(message);
-        model_matrix_ = glm::mat4_cast(orientation_changed_message.orientation());
-    }
+//    if (message.message_type() == ORIENTATION_CHANGED_MESSAGE) {
+//        const OrientationChangedMessage& orientation_changed_message = static_cast<const OrientationChangedMessage&>(message);
+//        model_matrix_ = glm::mat4_cast(orientation_changed_message.orientation());
+//    }
 }
 void bounce::RenderComponent::Startup()
 {

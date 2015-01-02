@@ -55,6 +55,8 @@ namespace bounce {
         const glm::vec3& position() const;
         void position(const glm::vec3& value);
         
+        glm::mat4 world_matrix() const;
+        
     private:
         int yaw_acceleration_direction_;
         int pitch_acceleration_direction_;

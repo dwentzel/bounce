@@ -61,9 +61,6 @@ void bounce::MovementSystem::UpdateRotation(GameEntity& entity, BodyComponent& c
     glm::quat rot = orientation * pitch_rotation * yaw_rotation * roll_rotation;
     
     component.orientation(rot);
-    
-    OrientationChangedMessage message(rot);
-    entity.HandleMessage(message);
 }
 
 void bounce::MovementSystem::UpdatePosition(BodyComponent& component, float delta_time)

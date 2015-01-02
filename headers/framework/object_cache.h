@@ -10,9 +10,6 @@ namespace bounce {
     
     template<class T>
     class ObjectCache {
-    private:
-        std::vector<T> cache_;
-        
     public:
         typedef typename std::vector<T>::iterator iterator;
         typedef typename std::vector<T>::const_iterator const_iterator;
@@ -32,6 +29,8 @@ namespace bounce {
         T& GetObject(unsigned int handle);
         const T& GetObject(unsigned int handle) const;
         
+    private:
+        std::vector<T> cache_;
     };
 
     
