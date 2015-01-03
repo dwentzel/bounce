@@ -22,7 +22,7 @@ bounce::LogMessagePtr bounce::LogWorkerContext::PollMessage()
 {
     LogMessagePtr message;
     
-    if (message_queue_.consume(message)) {
+    if (message_queue_.Consume(message)) {
         return message;
     }
     else {

@@ -6,62 +6,75 @@
 
 namespace bounce {
     
-    template<typename T>
+    template<class T>
     class LockFreeQueue {
+    public:
+        LockFreeQueue();
+        ~LockFreeQueue();
+        
+        void Produce(const T& item);
+        bool Consume(T& item);
+        
     private:
         struct Node {
-            Node(T val) :
-            value(val), next(nullptr) {
-            }
+            Node(T val);
+            
             T value;
             Node* next;
         };
         
-        Node* first;
-        std::atomic<Node*> divider;
-        std::atomic<Node*> last;
+        Node* first_;
+        std::atomic<Node*> divider_;
+        std::atomic<Node*> last_;
         
-    public:
-        LockFreeQueue() {
-            first = new Node(T());
-            last = first;
-            divider = first;
-        }
-        
-        ~LockFreeQueue() {
-            while (first != nullptr) {
-                Node* tmp = first;
-                first = tmp->next;
-                delete tmp;
-            }
-        }
-        
-        void produce(const T& item);
-        bool consume(T& item);
     };
     
-    template<typename T>
-    void LockFreeQueue<T>::produce(const T& item) {
-        //std::cout << "produce" << std::endl;
+    template<class T>
+    LockFreeQueue<T>::Node::Node(T val)
+    : value(val), next(nullptr)
+    {
         
-        Node* newNode = new Node(item);
-        last.load()->next = newNode;
-        last = newNode;
+    }
+    
+    template<class T>
+    LockFreeQueue<T>::LockFreeQueue()
+    : first_(new Node(T())), divider_(first_), last_(first_)
+    {
         
-        while (first != divider) {
-            Node* tmp = first;
-            first = first->next;
+    }
+    
+    template<class T>
+    LockFreeQueue<T>::~LockFreeQueue()
+    {
+        while (first_ != nullptr) {
+            Node* tmp = first_;
+            first_ = tmp->next;
             delete tmp;
         }
     }
     
     template<typename T>
-    bool LockFreeQueue<T>::consume(T& item) {
-        Node* dividerNode = divider.load();
+    void LockFreeQueue<T>::Produce(const T& item)
+    {
+        Node* new_node = new Node(item);
+        last_.load()->next = new_node;
+        last_ = new_node;
         
-        if (dividerNode != last) {
-            item = dividerNode->next->value;
-            divider.store(dividerNode->next);
+        while (first_ != divider_) {
+            Node* tmp = first_;
+            first_ = first_->next;
+            delete tmp;
+        }
+    }
+    
+    template<typename T>
+    bool LockFreeQueue<T>::Consume(T& item)
+    {
+        Node* divider_node = divider_.load();
+        
+        if (divider_node != last_) {
+            item = divider_node->next->value;
+            divider_.store(divider_node->next);
             return true;
         }
         
@@ -70,64 +83,83 @@ namespace bounce {
     
     
     
-    template<typename T>
+    template<class T>
     class LockFreeQueue<std::unique_ptr<T>> {
+    public:
+        LockFreeQueue();
+        ~LockFreeQueue();
+        
+        void Produce(std::unique_ptr<T> item);
+        bool Consume(std::unique_ptr<T>& item);
+        
     private:
         struct Node {
-            Node() : value(std::unique_ptr<T>(nullptr)), next(nullptr) {}
-            
-            Node(std::unique_ptr<T> val) :
-            value(std::move(val)), next(nullptr) {
-            }
+            Node();
+            Node(std::unique_ptr<T> val);
             
             std::unique_ptr<T> value;
             Node* next;
         };
         
-        Node* first;
-        std::atomic<Node*> divider;
-        std::atomic<Node*> last;
+        Node* first_;
+        std::atomic<Node*> divider_;
+        std::atomic<Node*> last_;
         
-    public:
-        LockFreeQueue() {
-            first = new Node();
-            last = first;
-            divider = first;
-        }
-        
-        ~LockFreeQueue() {
-            while (first != nullptr) {
-                Node* tmp = first;
-                first = tmp->next;
-                delete tmp;
-            }
-        }
-        
-        void produce(std::unique_ptr<T> item);
-        bool consume(std::unique_ptr<T>& item);
     };
     
-    
-    template<typename T>
-    void LockFreeQueue<std::unique_ptr<T>>::produce(std::unique_ptr<T> item) {
-        Node* newNode = new Node(std::move(item));
-        last.load()->next = newNode;
-        last = newNode;
+    template<class T>
+    LockFreeQueue<std::unique_ptr<T>>::Node::Node()
+    : value(std::unique_ptr<T>(nullptr)), next(nullptr)
+    {
         
-        while (first != divider) {
-            Node* tmp = first;
-            first = first->next;
+    }
+
+    template<class T>
+    LockFreeQueue<std::unique_ptr<T>>::Node::Node(std::unique_ptr<T> val)
+    : value(std::move(val)), next(nullptr)
+    {
+        
+    }
+    
+    template<class T>
+    LockFreeQueue<std::unique_ptr<T>>::LockFreeQueue()
+    : first_(new Node()), divider_(first_), last_(first_)
+    {
+        
+    }
+    
+    template<class T>
+    LockFreeQueue<std::unique_ptr<T>>::~LockFreeQueue()
+    {
+        while (first_ != nullptr) {
+            Node* tmp = first_;
+            first_ = tmp->next;
             delete tmp;
         }
     }
     
-    template<typename T>
-    bool LockFreeQueue<std::unique_ptr<T>>::consume(std::unique_ptr<T>& item) {
-        Node* dividerNode = divider.load();
+    template<class T>
+    void LockFreeQueue<std::unique_ptr<T>>::Produce(std::unique_ptr<T> item)
+    {
+        Node* newNode = new Node(std::move(item));
+        last_.load()->next = newNode;
+        last_ = newNode;
         
-        if (dividerNode != last) {
+        while (first_ != divider_) {
+            Node* tmp = first_;
+            first_ = first_->next;
+            delete tmp;
+        }
+    }
+    
+    template<class T>
+    bool LockFreeQueue<std::unique_ptr<T>>::Consume(std::unique_ptr<T>& item)
+    {
+        Node* dividerNode = divider_.load();
+        
+        if (dividerNode != last_) {
             item = std::move(dividerNode->next->value);
-            divider.store(dividerNode->next);
+            divider_.store(dividerNode->next);
             return true;
         }
         

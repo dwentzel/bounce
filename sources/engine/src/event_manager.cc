@@ -27,7 +27,7 @@ bounce::EventPtr bounce::EventManagerImpl::PollEvent()
 {
     EventPtr event;
     
-    if (event_queue_.consume(event)) {
+    if (event_queue_.Consume(event)) {
         return event;
     }
     else {
@@ -37,7 +37,7 @@ bounce::EventPtr bounce::EventManagerImpl::PollEvent()
 
 void bounce::EventManagerImpl::QueueEvent(EventPtr event)
 {
-    event_queue_.produce(std::move(event));
+    event_queue_.Produce(std::move(event));
 }
 
 bounce::EventManager::~EventManager()

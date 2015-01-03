@@ -9,7 +9,7 @@ int bounce::LogStreamBuffer::sync()
 {
     std::wstring data = str();
     
-    message_queue_.produce(LogMessagePtr(new LogMessage(data)));
+    message_queue_.Produce(LogMessagePtr(new LogMessage(data)));
     
     str(L"");
     return 0;
