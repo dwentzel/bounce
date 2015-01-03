@@ -22,7 +22,7 @@ namespace bounce {
         
         
         float UpdateSpeed(float delta_speed, float acceleration_direction, float speed, float max_speed) const;
-        void UpdateRotation(GameEntity& entity, BodyComponent& component, float delta_time);
+        void UpdateRotation(BodyComponent& component, float delta_time);
         void UpdatePosition(BodyComponent& component, float delta_time);
 
         

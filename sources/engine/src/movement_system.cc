@@ -26,19 +26,15 @@ void bounce::MovementSystem::Update(float delta_time)
         if (!component_handle.invalid()) {
             BodyComponent& component = component_manager_.ResolveHandleAs<BodyComponent>(component_handle);
             
-            UpdateRotation(entity, component, delta_time);
+            UpdateRotation(component, delta_time);
             UpdatePosition(component, delta_time);
         }
     }
 }
 
-void bounce::MovementSystem::UpdateRotation(GameEntity& entity, BodyComponent& component, float delta_time)
+void bounce::MovementSystem::UpdateRotation(BodyComponent& component, float delta_time)
 {
     float delta_speed = component.rotation_acceleration() * delta_time;
-    
-    //        LOG_DEBUG << "yaw acc: " << component.yaw_acceleration_direction()
-    //                  << " pitch acc: " << component.pitch_acceleration_direction()
-    //                  << " roll acc: " << component.roll_acceleration_direction();
     
     component.yaw_speed(UpdateSpeed(delta_speed, component.yaw_acceleration_direction(), component.yaw_speed(), component.max_speed()));
     component.pitch_speed(UpdateSpeed(delta_speed, component.pitch_acceleration_direction(), component.pitch_speed(), component.max_speed()));

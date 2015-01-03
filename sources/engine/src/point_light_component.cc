@@ -1,5 +1,7 @@
 #include "point_light_component.h"
 
+#include <algorithm>
+
 bounce::PointLightComponent bounce::PointLightComponent::Create()
 {
     return PointLightComponent();

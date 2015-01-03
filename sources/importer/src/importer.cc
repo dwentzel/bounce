@@ -66,7 +66,8 @@ bounce::ImportedModel bounce::Importer::LoadModel(const std::string& resource_na
         imported_model.AddMesh(total_vertex_count, mesh_vertex_count, total_index_count, mesh_index_count, mesh->mMaterialIndex);
         
         total_vertex_count += mesh_vertex_count;
-        total_index_count += mesh_index_count;
+        assert(total_index_count + mesh_index_count < std::numeric_limits<unsigned short>::max());
+        total_index_count += static_cast<unsigned short>(mesh_index_count);
     }
     
     unsigned int material_count = scene->mNumMaterials;

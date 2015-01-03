@@ -15,7 +15,7 @@ namespace bounce {
         
     private:
         BounceException& operator=(const BounceException&) = delete;
-        BounceException& operator=(BounceException&) = delete;
+        BounceException& operator=(BounceException&&) = delete;
 
     };
 

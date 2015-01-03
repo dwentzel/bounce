@@ -1,5 +1,7 @@
 #include "model_loader.h"
 
+#include <cassert>
+
 bounce::ModelLoader::ModelLoader(TextureManager& texture_manager, MaterialManager& material_manager, ModelManager& model_manager)
 : texture_manager_(texture_manager), material_manager_(material_manager), model_manager_(model_manager),
 base_vertex_(0), index_offset_(0)
@@ -37,6 +39,7 @@ unsigned int bounce::ModelLoader::LoadModel(const bounce::ImportedModel& importe
                       base_vertex_,
                       static_cast<unsigned short>(material_index));
         
+        assert(index_offset_ + imported_model_mesh_index_count < std::numeric_limits<unsigned short>::max());
         index_offset_ += imported_model_mesh_index_count;
         base_vertex_ += imported_model_mesh_vertex_count;
     }
