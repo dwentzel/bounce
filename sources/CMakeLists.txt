@@ -22,6 +22,7 @@ if (APPLE)
 #    set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall -Wextra -Weverything -Wno-c++98-compat")
 #	set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall -Wno-c++98-compat")
 
+# -S -mllvm --x86-asm-syntax=intel
 	set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
 
 #    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")

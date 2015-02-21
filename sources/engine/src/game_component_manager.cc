@@ -51,9 +51,9 @@ bounce::GameComponentHandle bounce::GameComponentManager::GenerateBodyComponent(
     return GameComponentHandle(BODY_COMPONENT, index);
 }
 
-bounce::GameComponentHandle bounce::GameComponentManager::GenerateControlComponent(const KeyboardState& keyboard_state)
+bounce::GameComponentHandle bounce::GameComponentManager::GenerateControlComponent(std::unique_ptr<ControlStrategy> control_strategy)
 {
-    unsigned int index = control_components_.GenerateObject(keyboard_state);
+    unsigned int index = control_components_.GenerateObject(std::move(control_strategy));
     return GameComponentHandle(CONTROL_COMPONENT, index);
 }
 

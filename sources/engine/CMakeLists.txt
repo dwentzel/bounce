@@ -10,6 +10,7 @@ set(HEADERS
     include/console.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/camera_component.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/control_component.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/control_strategy.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/event_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
@@ -20,6 +21,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_entity_manager.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/game_system.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/input_system.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_control_strategy.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keyboard_state.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/keys.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/message.h
@@ -40,6 +42,7 @@ set(SOURCES
     src/console.cc
     src/camera_component.cc
     src/control_component.cc
+    src/control_strategy.cc
     src/event.cc
     src/event_manager.cc
     src/exceptions.cc
@@ -49,6 +52,7 @@ set(SOURCES
     src/game_entity_manager.cc
     src/game_system.cc
     src/input_system.cc
+    src/keyboard_control_strategy.cc
     src/keyboard_state.cc
     src/message.cc
     src/movement_system.cc

@@ -27,8 +27,10 @@ void bounce::InputSystem::Update(float)
             ControlComponent& component = component_manager_.ResolveHandleAs<ControlComponent>(control_component_handle);
             component.Update();
             
-            AccelerationChangedMessage message(component.yaw_acceleration(), component.pitch_acceleration(), component.roll_acceleration(), glm::vec3(0.0f));
-            entity.HandleMessage(message);
+            std::shared_ptr<Message> message = component.CreateMessage();
+            
+//            AccelerationChangedMessage message(component.yaw_acceleration(), component.pitch_acceleration(), component.roll_acceleration(), glm::vec3(0.0f));
+            entity.HandleMessage(*message);
         }
         
         GameComponentHandle ai_component_handle = entity.GetComponentOfType(AI_COMPONENT);

@@ -34,7 +34,7 @@ namespace bounce {
     
     class KeyboardEvent : public Event {
     protected:
-        explicit KeyboardEvent(EventType eventType, Keysym keysym);
+        KeyboardEvent(EventType eventType, Keysym keysym);
         
     public:
         KeyboardEvent(const KeyboardEvent&);
@@ -62,7 +62,9 @@ namespace bounce {
         virtual ~KeydownEvent();
     };
     
-    
+}
+
+namespace bounce {
     
     class KeyupEvent : public KeyboardEvent {
     public:

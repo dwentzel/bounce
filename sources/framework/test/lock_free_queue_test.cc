@@ -71,7 +71,7 @@ namespace bounce {
         TEST_F(LockFreeQueueTest, consume_from_empty_unique_ptr_pure_virtual_queue_returns_false) {
             bounce::LockFreeQueue<std::unique_ptr<PureVirtual>> queue;
             std::unique_ptr<PureVirtual> item;
-            bool result = queue.consume(item);
+            bool result = queue.Consume(item);
             
             EXPECT_FALSE(result);
         }

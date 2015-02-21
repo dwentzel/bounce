@@ -2,13 +2,14 @@
 #define BOUNCE_ENGINE_CONTROL_COMPONENT_H_
 
 #include "game_component.h"
+#include "control_strategy.h"
 #include "keyboard_state.h"
 
 namespace bounce {
 
     class ControlComponent : public GameComponent {
     public:
-        static ControlComponent Create(const KeyboardState& keyboard_state);
+        static ControlComponent Create(std::unique_ptr<ControlStrategy> control_strategy);
 
         ControlComponent(ControlComponent&& other) NOEXCEPT;
 
@@ -18,19 +19,13 @@ namespace bounce {
 
         virtual void Update();
         
-        int yaw_acceleration() const;
-        int pitch_acceleration() const;
-        int roll_acceleration() const;
+        std::shared_ptr<Message> CreateMessage() const;
 
     private:
-        const KeyboardState& keyboard_state_;
-        
-        int yaw_acceleration_;
-        int pitch_acceleration_;
-        int roll_acceleration_;
+        std::unique_ptr<ControlStrategy> control_strategy_;
     
     private:
-        explicit ControlComponent(const KeyboardState& keyboard_state);
+        explicit ControlComponent(std::unique_ptr<ControlStrategy> control_strategy);
         
         ControlComponent(const ControlComponent&) = delete;
         ControlComponent& operator=(const ControlComponent&) = delete;

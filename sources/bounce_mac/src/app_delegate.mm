@@ -20,8 +20,6 @@
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:@"-init is not a valid initializer for BounceApplicationDelegate"
                                  userInfo:nil];
-    
-    return nil;
 }
 
 - (id)initWithContext:(bounce::ApplicationContext*)context {

@@ -39,7 +39,7 @@ namespace bounce {
         const PointLightComponentCache& point_light_components() const;
         
         GameComponentHandle GenerateBodyComponent();
-        GameComponentHandle GenerateControlComponent(const KeyboardState& keyboard_state);
+        GameComponentHandle GenerateControlComponent(std::unique_ptr<ControlStrategy> control_strategy);
         GameComponentHandle GenerateAiComponent(std::unique_ptr<AiStrategy> ai_strategy);
         GameComponentHandle GenerateRenderComponent(unsigned int model_handle);
         GameComponentHandle GeneratePointLightComponent();

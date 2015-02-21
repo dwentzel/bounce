@@ -22,8 +22,8 @@ def write_header_file(header_file_name, module_name, class_file_name, namespace)
         '#define ' + header_guard + '\n\n' + \
         'namespace ' + namespace + ' {\n\n' + \
         '    class ' + class_name + ' {\n' + \
-        '    private:\n\n' + \
         '    public:\n\n' + \
+        '    private:\n\n' + \
         '    };\n\n' + \
         '}' + \
         '\n\n#endif // ' + header_guard + '\n'
@@ -38,8 +38,8 @@ def write_source_file(source_file_name, class_file_name):
         print 'Could not open', source_file_name, 'for writing.'
         sys.exit()
 
-    class_name = filename_to_classname(class_file_name)
-    source_content = '#include "' + class_name + '.h"\n'
+#    class_name = filename_to_classname(class_file_name)
+    source_content = '#include "' + class_file_name + '.h"\n'
 
     source_file.write(source_content)
     source_file.close()

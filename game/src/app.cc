@@ -17,6 +17,7 @@
 #include "engine/point_light_component.h"
 
 #include "engine/control_component.h"
+#include "engine/keyboard_control_strategy.h"
 #include "engine/position_component.h"
 
 #include "engine/ai_orbit_strategy.h"
@@ -157,7 +158,8 @@ namespace bounce {
         ship.AttachComponent(render_component_handle);
         render_component.Startup();
         
-        GameComponentHandle control_component_handle = component_manager_.GenerateControlComponent(keyboard_state_);
+        std::unique_ptr<ControlStrategy> keyboard_control_strategy(new KeyboardControlStrategy(keyboard_state_));
+        GameComponentHandle control_component_handle = component_manager_.GenerateControlComponent(std::move(keyboard_control_strategy));
         ControlComponent& control_component = component_manager_.ResolveHandleAs<ControlComponent>(control_component_handle);
         ship.AttachComponent(control_component_handle);
         control_component.Startup();

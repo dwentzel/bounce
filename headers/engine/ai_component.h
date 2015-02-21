@@ -8,16 +8,6 @@
 namespace bounce {
 
     class AiComponent : public GameComponent {
-    private:
-        AiComponent(const AiComponent&) = delete;
-        AiComponent& operator=(const AiComponent&) = delete;
-        AiComponent& operator=(AiComponent&&) = delete;
-
-    private:
-        std::unique_ptr<AiStrategy> ai_strategy_;
-        
-        explicit AiComponent(std::unique_ptr<AiStrategy> ai_strategy);
-        
     public:
         static AiComponent Create(std::unique_ptr<AiStrategy> ai_strategy);
 
@@ -29,6 +19,17 @@ namespace bounce {
         virtual void Update();
         
         void HandleMessage(const Message& message);
+        
+    private:
+        explicit AiComponent(std::unique_ptr<AiStrategy> ai_strategy);
+        
+        AiComponent(const AiComponent&) = delete;
+        AiComponent& operator=(const AiComponent&) = delete;
+        AiComponent& operator=(AiComponent&&) = delete;
+        
+    private:
+        std::unique_ptr<AiStrategy> ai_strategy_;
+    
     };
 
 }
