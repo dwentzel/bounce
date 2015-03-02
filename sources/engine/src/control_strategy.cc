@@ -9,3 +9,8 @@ bounce::ControlStrategy::ControlStrategy(ControlStrategy&& other) NOEXCEPT
 {
     
 }
+
+void bounce::ControlStrategy::HandleMessage(const bounce::Message& message)
+{
+    
+}

@@ -11,14 +11,21 @@ bounce::AiOrbitStrategy::~AiOrbitStrategy()
 
 }
 
-void bounce::AiOrbitStrategy::Update(const AiComponent&)
+void bounce::AiOrbitStrategy::Update()
 {
-    glm::vec3 v = position_ - center_;
-    glm::vec3 axis = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm:: vec3 normal = glm::normalize(glm::cross(v, axis));
-    
-//    AccelerationChangedMessage message(0.0f, 0.0f, 0.0f, normal);
-//    SendMessage(owner, message);
+//    glm::vec3 v = position_ - center_;
+//    glm::vec3 axis = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 cross = glm::cross(position_, center_);
+    if (cross == glm::vec3(0.0f)) {
+        normal_ = glm::vec3(0);
+    }
+    else {
+        normal_ = glm::normalize(cross);
+    }
+//    normal_ = glm::normalize(glm::cross(v, axis));
+    assert(!std::isnan(normal_.x));
+    assert(!std::isnan(normal_.y));
+    assert(!std::isnan(normal_.z));
 }
 
 void bounce::AiOrbitStrategy::HandleMessage(const bounce::Message& message)
@@ -27,6 +34,11 @@ void bounce::AiOrbitStrategy::HandleMessage(const bounce::Message& message)
         const PositionChangedMessage& position_changed_message = static_cast<const PositionChangedMessage&>(message);
         position_ = position_changed_message.position();
     }
+}
+
+std::unique_ptr<bounce::Message> bounce::AiOrbitStrategy::CreateMessage() const
+{
+    return std::unique_ptr<Message>(new AccelerationChangedMessage(0.0f, 0.0f, 0.0f, normal_));
 }
 
 void bounce::AiOrbitStrategy::position(const glm::vec3& value)

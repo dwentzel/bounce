@@ -12,6 +12,7 @@ namespace bounce {
         ControlStrategy(ControlStrategy&& other) NOEXCEPT;
         
         virtual void Update() = 0;
+        virtual void HandleMessage(const Message& message);
         virtual std::unique_ptr<Message> CreateMessage() const = 0;
         
     private:

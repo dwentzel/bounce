@@ -32,7 +32,12 @@ void bounce::ControlComponent::Update()
     control_strategy_->Update();
 }
 
-std::shared_ptr<bounce::Message> bounce::ControlComponent::CreateMessage() const
+void bounce::ControlComponent::HandleMessage(const bounce::Message& message)
+{
+    control_strategy_->HandleMessage(message);
+}
+
+std::unique_ptr<bounce::Message> bounce::ControlComponent::CreateMessage() const
 {
     return control_strategy_->CreateMessage();
 }

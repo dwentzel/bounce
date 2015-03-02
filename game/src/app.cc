@@ -81,9 +81,9 @@ namespace bounce {
         light0.AttachComponent(light0_point_light_component_handle);
         light0_point_light_component.Startup();
 
-        std::unique_ptr<AiStrategy> light0_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
-        GameComponentHandle light0_ai_component_handle = component_manager_.GenerateAiComponent(std::move(light0_ai_strategy));
-        AiComponent& light0_ai_component = component_manager_.ResolveHandleAs<AiComponent>(light0_ai_component_handle);
+        std::unique_ptr<ControlStrategy> light0_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
+        GameComponentHandle light0_ai_component_handle = component_manager_.GenerateControlComponent(std::move(light0_ai_strategy));
+        ControlComponent& light0_ai_component = component_manager_.ResolveHandleAs<ControlComponent>(light0_ai_component_handle);
         light0.AttachComponent(light0_ai_component_handle);
         light0_ai_component.Startup();
         GameComponentHandle light0_body_component_handle = component_manager_.GenerateBodyComponent();
@@ -105,9 +105,9 @@ namespace bounce {
         light1.AttachComponent(light1_point_light_component_handle);
         light1_point_light_component.Startup();
         
-        std::unique_ptr<AiStrategy> light1_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
-        GameComponentHandle light1_ai_component_handle = component_manager_.GenerateAiComponent(std::move(light1_ai_strategy));
-        AiComponent& light1_ai_component = component_manager_.ResolveHandleAs<AiComponent>(light1_ai_component_handle);
+        std::unique_ptr<ControlStrategy> light1_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
+        GameComponentHandle light1_ai_component_handle = component_manager_.GenerateControlComponent(std::move(light1_ai_strategy));
+        ControlComponent& light1_ai_component = component_manager_.ResolveHandleAs<ControlComponent>(light1_ai_component_handle);
         light1.AttachComponent(light1_ai_component_handle);
         light1_ai_component.Startup();
         
@@ -129,9 +129,9 @@ namespace bounce {
         light2.AttachComponent(light2_point_light_component_handle);
         light2_point_light_component.Startup();
         
-        std::unique_ptr<AiStrategy> light2_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
-        GameComponentHandle light2_ai_component_handle = component_manager_.GenerateAiComponent(std::move(light2_ai_strategy));
-        AiComponent& light2_ai_component = component_manager_.ResolveHandleAs<AiComponent>(light2_ai_component_handle);
+        std::unique_ptr<ControlStrategy> light2_ai_strategy(new AiOrbitStrategy(10.0f, 1, glm::vec3(0.0f, 0.5f, 0.0f)));
+        GameComponentHandle light2_ai_component_handle = component_manager_.GenerateControlComponent(std::move(light2_ai_strategy));
+        ControlComponent& light2_ai_component = component_manager_.ResolveHandleAs<ControlComponent>(light2_ai_component_handle);
         light2.AttachComponent(light2_ai_component_handle);
         light2_ai_component.Startup();
         

@@ -19,7 +19,9 @@ namespace bounce {
 
         virtual void Update();
         
-        std::shared_ptr<Message> CreateMessage() const;
+        virtual void HandleMessage(const Message& message);
+        
+        std::unique_ptr<Message> CreateMessage() const;
 
     private:
         std::unique_ptr<ControlStrategy> control_strategy_;

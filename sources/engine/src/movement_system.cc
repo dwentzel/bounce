@@ -28,6 +28,9 @@ void bounce::MovementSystem::Update(float delta_time)
             
             UpdateRotation(component, delta_time);
             UpdatePosition(component, delta_time);
+            
+            PositionChangedMessage message(component.position());
+            entity.HandleMessage(message);
         }
     }
 }
