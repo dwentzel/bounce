@@ -2,6 +2,7 @@
 
 bounce::ControlComponent bounce::ControlComponent::Create(std::unique_ptr<ControlStrategy> control_strategy)
 {
+    assert(control_strategy);
     return ControlComponent(std::move(control_strategy));
 }
 

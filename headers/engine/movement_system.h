@@ -25,7 +25,9 @@ namespace bounce {
         void UpdateRotation(BodyComponent& component, float delta_time);
         void UpdatePosition(BodyComponent& component, float delta_time);
 
-        
+        static const glm::vec3 yaw_axis_;
+        static const glm::vec3 pitch_axis_;
+        static const glm::vec3 roll_axis_;
     private:
         MovementSystem(const MovementSystem&) = delete;
         MovementSystem(MovementSystem&&) = delete;

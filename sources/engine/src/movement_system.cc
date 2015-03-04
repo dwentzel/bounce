@@ -1,6 +1,9 @@
 #include "movement_system.h"
 #include "logging/log.h"
 
+const glm::vec3 bounce::MovementSystem::yaw_axis_{0.0f, 1.0f, 0.0f};
+const glm::vec3 bounce::MovementSystem::pitch_axis_{1.0f, 0.0f, 0.0f};
+const glm::vec3 bounce::MovementSystem::roll_axis_{0.0f, 0.0f, 1.0f};
 
 bounce::MovementSystem::MovementSystem(ObjectCache<GameEntity>& game_entities, GameComponentManager& component_manager)
 : game_entities_(game_entities), component_manager_(component_manager)
@@ -39,24 +42,19 @@ void bounce::MovementSystem::UpdateRotation(BodyComponent& component, float delt
 {
     float delta_speed = component.rotation_acceleration() * delta_time;
     
-    component.yaw_speed(UpdateSpeed(delta_speed, component.yaw_acceleration_direction(), component.yaw_speed(), component.max_speed()));
-    component.pitch_speed(UpdateSpeed(delta_speed, component.pitch_acceleration_direction(), component.pitch_speed(), component.max_speed()));
-    component.roll_speed(UpdateSpeed(delta_speed, component.roll_acceleration_direction(), component.roll_speed(), component.max_speed()));
+    float pitch = UpdateSpeed(delta_speed, component.pitch_acceleration_direction(), component.pitch_speed(), component.max_speed());
+    float yaw = UpdateSpeed(delta_speed, component.yaw_acceleration_direction(), component.yaw_speed(), component.max_speed());
+    float roll = UpdateSpeed(delta_speed, component.roll_acceleration_direction(), component.roll_speed(), component.max_speed());
     
-    float yaw = component.yaw_speed();
-    float pitch = component.pitch_speed();
-    float roll = component.roll_speed();
+    component.pitch_speed(pitch);
+    component.yaw_speed(yaw);
+    component.roll_speed(roll);
+        
+    glm::quat pitch_rotation = glm::angleAxis(pitch, pitch_axis_);
+    glm::quat yaw_rotation = glm::angleAxis(yaw, yaw_axis_);
+    glm::quat roll_rotation = glm::angleAxis(roll, roll_axis_);
     
-    glm::quat orientation = component.orientation();
-    
-    glm::vec3 yaw_axis(0.0f, 1.0f, 0.0f);
-    glm::vec3 pitch_axis(1.0f, 0.0f, 0.0f);
-    glm::vec3 roll_axis(0.0f, 0.0f, 1.0f);
-    
-    glm::quat pitch_rotation = glm::angleAxis(pitch, pitch_axis);
-    glm::quat yaw_rotation = glm::angleAxis(yaw, yaw_axis);
-    glm::quat roll_rotation = glm::angleAxis(roll, roll_axis);
-    
+    const glm::quat& orientation = component.orientation();
     glm::quat rot = orientation * pitch_rotation * yaw_rotation * roll_rotation;
     
     component.orientation(rot);

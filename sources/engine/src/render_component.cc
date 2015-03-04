@@ -40,6 +40,7 @@ void bounce::RenderComponent::HandleMessage(const Message& message)
 //        model_matrix_ = glm::mat4_cast(orientation_changed_message.orientation());
 //    }
 }
+
 void bounce::RenderComponent::Startup()
 {
     //render_system_.AddModel(model_handle_);

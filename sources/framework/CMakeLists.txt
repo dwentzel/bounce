@@ -1,6 +1,7 @@
 setup_module(framework)
 
 set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/contracts.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_cache.h
@@ -11,6 +12,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    src/contracts.cc
     src/exceptions.cc
     src/framework.cc
     src/object_cache.cc
@@ -36,6 +38,7 @@ set(TEST_HEADERS
 
 set(TEST_SOURCES
     test/composite_cache_test.cc
+    test/contracts_test.cc
     test/lock_free_queue_test.cc
 )
 
