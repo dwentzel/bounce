@@ -61,10 +61,8 @@ namespace bounce {
         explicit KeydownEvent(Keysym keysym);
         virtual ~KeydownEvent();
     };
-    
-}
 
-namespace bounce {
+    
     
     class KeyupEvent : public KeyboardEvent {
     public:

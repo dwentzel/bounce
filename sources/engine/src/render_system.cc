@@ -68,7 +68,7 @@ void bounce::RenderSystem::Update(float)
         GameComponentHandle body_component_handle = entity.GetComponentOfType(BODY_COMPONENT);
         GameComponentHandle render_component_handle = entity.GetComponentOfType(RENDER_COMPONENT);
 
-        if (!render_component_handle.invalid() && !body_component_handle.invalid()) {
+        if (render_component_handle.is_valid() && body_component_handle.is_valid()) {
             const BodyComponent& body_component = component_manager_.ResolveHandleAs<BodyComponent>(body_component_handle);
             const RenderComponent& render_component = component_manager_.ResolveHandleAs<RenderComponent>(render_component_handle);
             
@@ -90,7 +90,8 @@ void bounce::RenderSystem::Update(float)
     
     for (GameEntity& entity : game_entity_cache_) {
         GameComponentHandle component_handle = entity.GetComponentOfType(POINT_LIGHT_COMPONENT);
-        if (!component_handle.invalid()) {
+        
+        if (component_handle.is_valid()) {
             GameComponentHandle body_component_handle = entity.GetComponentOfType(BODY_COMPONENT);
             const BodyComponent& body_component = component_manager_.ResolveHandleAs<BodyComponent>(body_component_handle);
             

@@ -26,7 +26,7 @@ void bounce::MovementSystem::Update(float delta_time)
     for (GameEntity& entity : game_entities_) {
         GameComponentHandle component_handle = entity.GetComponentOfType(BODY_COMPONENT);
 
-        if (!component_handle.invalid()) {
+        if (component_handle.is_valid()) {
             BodyComponent& component = component_manager_.ResolveHandleAs<BodyComponent>(component_handle);
             
             UpdateRotation(component, delta_time);

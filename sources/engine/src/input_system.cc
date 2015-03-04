@@ -25,7 +25,8 @@ void bounce::InputSystem::Update(float)
 {
     for (GameEntity& entity : game_entities_) {
         GameComponentHandle control_component_handle = entity.GetComponentOfType(CONTROL_COMPONENT);
-        if (!control_component_handle.invalid()) {
+        
+        if (control_component_handle.is_valid()) {
             ControlComponent& component = component_manager_.ResolveHandleAs<ControlComponent>(control_component_handle);
             component.Update();
             

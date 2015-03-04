@@ -34,38 +34,11 @@ namespace bounce {
             return type_;
         }
         
-        bool invalid() const
+        bool is_valid() const
         {
-            return index_ == INVALID_INDEX;
+            return index_ != INVALID_INDEX;
         }
-        
-//        T& Resolve() const;
-//        
-//        template <typename U>
-//        U& ResolveAs() const;
-        
     };
-    
-//    template <class T>
-//    T& ResolveHandle(const ObjectManagerHandle<T>&);
-//    
-//    template <class T, class Handle>
-//    T& ResolveHandleAs(const ObjectManagerHandle<Handle>&);
-//
-//    template <class T>
-//    T& ObjectManagerHandle<T>::Resolve() const
-//    {
-//        return ResolveHandle<T>(*this);
-//    }
-//    
-//    template <class T>
-//    template <typename U>
-//    U& ObjectManagerHandle<T>::ResolveAs() const
-//    {
-//        return ResolveHandleAs<U, T>(*this);
-//    }
-
-    
     
     template <class T>
     const unsigned int ObjectManagerHandle<T>::INVALID_INDEX = std::numeric_limits<unsigned int>::max();
@@ -74,7 +47,7 @@ namespace bounce {
     const unsigned int ObjectManagerHandle<T>::INVALID_TYPE = std::numeric_limits<unsigned int>::max();
     
     template <class T>
-    const ObjectManagerHandle<T> ObjectManagerHandle<T>::invalid_handle = ObjectManagerHandle<T>(INVALID_TYPE, INVALID_INDEX);
+    const ObjectManagerHandle<T> ObjectManagerHandle<T>::invalid_handle{INVALID_TYPE, INVALID_INDEX};
 
 }
 
