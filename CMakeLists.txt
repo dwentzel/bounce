@@ -30,7 +30,7 @@ set(gtest_force_shared_crt ON)
 
 set(PUBLIC_INCLUDE_DIR ${Bounce_SOURCE_DIR}/headers)
 
-set(CLANG_WARNINGS "-Wall -Wextra -Weverything -Wno-c++98-compat -Wno-padded")
+set(CLANG_WARNINGS "-Wall -Wextra -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded")
 
 macro(set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
     set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})

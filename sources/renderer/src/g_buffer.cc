@@ -1,5 +1,7 @@
 #include "g_buffer.h"
 
+#include "logging/log.h"
+
 #include "exceptions.h"
 
 bounce::GBuffer::GBuffer()

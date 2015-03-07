@@ -1,5 +1,7 @@
 #include "shader_program.h"
 
+#include "logging/log.h"
+
 #include <algorithm>
 #include <fstream>
 

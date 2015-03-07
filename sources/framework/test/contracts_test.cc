@@ -41,12 +41,12 @@ namespace bounce {
             public:
                 void MethodWithPrecondition(bool ok)
                 {
-                    REQUIRES(ok == true);
+                    CONTRACT_REQUIRES(ok == true);
                 }
                 
                 void MethodWithPostcondition(int x)
                 {
-                    ENSURES(x == 10);
+                    CONTRACT_ENSURES(x == 10);
                     
                     x = x * 2;
                 }
@@ -54,13 +54,13 @@ namespace bounce {
             
             void FunctionWithPrecondition(bool ok)
             {
-                REQUIRES(ok == true);
+                CONTRACT_REQUIRES(ok == true);
             }
             
             void FuncitonWithPostCondition(int x)
             {
-                ENSURES(x == 10);
-                ENSURES(x == 10);
+                CONTRACT_ENSURES(x == 10);
+                CONTRACT_ENSURES(x == 10);
                 
                 x = x * 2;
             }
@@ -92,63 +92,6 @@ namespace bounce {
                 
                 EXPECT_DEATH(c.MethodWithPostcondition(10), "");
             }
-            
-            //        TEST_F(LockFreeQueueTest, consume_from_empty_queue_returns_false) {
-            //            bounce::LockFreeQueue<int> queue;
-            //            int item;
-            //            bool result = queue.consume(item);
-            //
-            //            EXPECT_FALSE(result);
-            //        }
-            //
-            //        TEST_F(LockFreeQueueTest, consume_from_queue_with_one_item_returns_true) {
-            //            bounce::LockFreeQueue<int> queue;
-            //            queue.produce(1);
-            //            int item;
-            //            bool result = queue.consume(item);
-            //
-            //            EXPECT_TRUE(result);
-            //        }
-            //
-            //        TEST_F(LockFreeQueueTest, consume_from_empty_unique_ptr_queue_returns_false) {
-            //            bounce::LockFreeQueue<std::unique_ptr<int>> queue;
-            //            std::unique_ptr<int> item;
-            //            bool result = queue.consume(item);
-            //
-            //            EXPECT_FALSE(result);
-            //        }
-
-            
-            
-            //        TEST_F(CompositeCacheTest, test_1) {
-            //            bounce::CompositeCache<ObjectBase, Object1, Object2> cache;
-            //
-            //            ObjectCacheHandle<ObjectBase> x = cache.Generate<0>();
-            //
-            //
-            //            //EXPECT_TRUE(result);
-            //        }
-            //
-            //        TEST_F(CompositeCacheTest, test_2) {
-            //            bounce::CompositeCache<ObjectBase, Object1, Object2> cache;
-            //
-            //            ObjectCacheHandle<ObjectBase> x = cache.Generate<0>();
-            //
-            //            cache.Resolve<0>(x);
-            //
-            //            //EXPECT_TRUE(result);
-            //        }
-            
-            
-            
-            //        TEST_F(LockFreeQueueTest, consume_from_queue_with_one_item_returns_true) {
-            //            bounce::LockFreeQueue<int> queue;
-            //            queue.produce(1);
-            //            int item;
-            //            bool result = queue.consume(item);
-            //            
-            //            EXPECT_TRUE(result);
-            //        }
         }
     }
 }

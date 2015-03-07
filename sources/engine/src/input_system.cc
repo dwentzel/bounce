@@ -1,6 +1,5 @@
 #include "input_system.h"
 
-#include "ai_component.h"
 #include "control_component.h"
 
 bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state,
@@ -30,7 +29,7 @@ void bounce::InputSystem::Update(float)
             ControlComponent& component = component_manager_.ResolveHandleAs<ControlComponent>(control_component_handle);
             component.Update();
             
-            std::unique_ptr<Message> message{component.CreateMessage()};
+            std::unique_ptr<Message> message = component.CreateMessage();
             
             entity.HandleMessage(*message);
         }

@@ -22,7 +22,6 @@ namespace bounce {
     };
     
     std::wostream& operator<<(std::wostream& out, const std::string& str);
-    
     std::wostream& operator<<(std::wostream& out, const unsigned char* data);
     
 }

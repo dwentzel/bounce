@@ -15,9 +15,9 @@ bounce::AiOrbitStrategy::~AiOrbitStrategy()
 
 void bounce::AiOrbitStrategy::Update()
 {
-    ENSURES(!std::isnan(normal_.x));
-    ENSURES(!std::isnan(normal_.y));
-    ENSURES(!std::isnan(normal_.z));
+    CONTRACT_ENSURES(!std::isnan(normal_.x));
+    CONTRACT_ENSURES(!std::isnan(normal_.y));
+    CONTRACT_ENSURES(!std::isnan(normal_.z));
     
     glm::vec3 cross = glm::cross(position_, center_);
     if (cross == glm::vec3(0.0f)) {

@@ -25,16 +25,6 @@ const bounce::ControlComponentCache& bounce::GameComponentManager::control_compo
     return control_components_;
 }
 
-bounce::AiComponentCache& bounce::GameComponentManager::ai_components()
-{
-    return ai_components_;
-}
-
-const bounce::AiComponentCache& bounce::GameComponentManager::ai_components() const
-{
-    return ai_components_;
-}
-
 const bounce::RenderComponentCache& bounce::GameComponentManager::render_components() const
 {
     return render_components_;
@@ -55,12 +45,6 @@ bounce::GameComponentHandle bounce::GameComponentManager::GenerateControlCompone
 {
     unsigned int index = control_components_.GenerateObject(std::move(control_strategy));
     return GameComponentHandle(CONTROL_COMPONENT, index);
-}
-
-bounce::GameComponentHandle bounce::GameComponentManager::GenerateAiComponent(std::unique_ptr<AiStrategy> ai_strategy)
-{
-    unsigned int index = ai_components_.GenerateObject(std::move(ai_strategy));
-    return GameComponentHandle(AI_COMPONENT, index);
 }
 
 bounce::GameComponentHandle bounce::GameComponentManager::GenerateRenderComponent(unsigned int model_handle)

@@ -1,4 +1,5 @@
 #include "opengl_renderer.h"
+#include "logging/log.h"
 #include "exceptions.h"
 
 bounce::OpenGLRenderer::OpenGLRenderer(const ResourceLoader& resource_loader,

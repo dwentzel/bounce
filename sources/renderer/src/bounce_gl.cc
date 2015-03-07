@@ -1,5 +1,7 @@
 #include "bounce_gl.h"
 
+#include "logging/log.h"
+
 #include <cstdio>
 #include <cassert>
 

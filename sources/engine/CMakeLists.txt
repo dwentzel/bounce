@@ -1,8 +1,6 @@
 setup_module(engine)
 
 set(HEADERS
-    ${MODULE_PUBLIC_INCLUDE_DIR}/ai_component.h
-    ${MODULE_PUBLIC_INCLUDE_DIR}/ai_strategy.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/ai_orbit_strategy.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/application_context.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/body_component.h
@@ -34,8 +32,6 @@ set(HEADERS
 )
 
 set(SOURCES
-    src/ai_component.cc
-    src/ai_strategy.cc
     src/ai_orbit_strategy.cc
     src/application_context.cc
     src/body_component.cc
@@ -76,6 +72,7 @@ add_library(
 setup_compiler(${MODULE_NAME})
 
 find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIR})
 target_link_libraries(${MODULE_NAME} ${GLEW_LIBRARY})
 
 find_package(OPENGL REQUIRED)
@@ -83,9 +80,6 @@ target_link_libraries(${MODULE_NAME} ${OPENGL_LIBRARIES})
 
 find_package(ASSIMP REQUIRED)
 target_link_libraries(${MODULE_NAME} ${ASSIMP_LIBRARIES})
-
-find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIR})
 
 include_directories("${Bounce_SOURCE_DIR}/external/glm")
 
