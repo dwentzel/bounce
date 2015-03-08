@@ -15,10 +15,10 @@ namespace bounce {
         template<typename T>
         LogSync& operator<<(const T& t);
         
-        std::wostream& operator<<(std::wostream& (*manip)(std::wostream&))
+        LogSync& operator<<(std::wostream& (*manip)(std::wostream&))
         {
             manip(buffer_stream_);
-            return buffer_stream_;
+            return *this;
         }
         
     private:
