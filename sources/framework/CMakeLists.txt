@@ -1,6 +1,7 @@
 setup_module(framework)
 
 set(HEADERS
+    ${MODULE_PUBLIC_INCLUDE_DIR}/assertions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/contracts.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
@@ -37,9 +38,11 @@ set(TEST_HEADERS
 )
 
 set(TEST_SOURCES
+    test/assertions_test.cc
     test/composite_cache_test.cc
     test/contracts_test.cc
     test/lock_free_queue_test.cc
+    test/main.cc
 )
 
 set(TEST_EXE_NAME ${MODULE_NAME}_unit_tests)
@@ -63,7 +66,7 @@ target_include_directories(
     ${gtest_SOURCE_DIR}
 )
 
-target_link_libraries(${TEST_EXE_NAME} gtest gtest_main)
+target_link_libraries(${TEST_EXE_NAME} gtest)
 
 add_test(${TEST_EXE_NAME} ${TEST_EXE_NAME})
 

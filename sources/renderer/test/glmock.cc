@@ -11,3 +11,17 @@ OpenGLMock& GLFacade::Mock()
 {
     return *mock_;
 }
+
+using ::testing::_;
+using ::testing::Return;
+
+OpenGLMock::OpenGLMock()
+{
+    ON_CALL(*this, CheckFramebufferStatus(_))
+    .WillByDefault(Return(GL_FRAMEBUFFER_COMPLETE));
+}
+
+OpenGLMock::~OpenGLMock()
+{
+    
+}

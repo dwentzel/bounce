@@ -79,6 +79,7 @@ set(TEST_SOURCES
     test/main.cc
     test/glmock.cc
     test/g_buffer_test.cc
+    test/opengl_renderer_test.cc
 )
 
 set(TEST_EXE_NAME ${MODULE_NAME}_unit_tests)

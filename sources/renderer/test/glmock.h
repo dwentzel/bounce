@@ -6,21 +6,31 @@
 #include "contrib/enable_clang_warnings.h"
 #include "bounce_gl.h"
 
-class OpenGLMock {
+//class OpenGLMockBase {
+//public:
+//    virtual GLenum CheckFramebufferStatus(GLenum target) {
+//        return GL_FRAMEBUFFER_COMPLETE;
+//    }
+//};
+
+class OpenGLMock //: public OpenGLMockBase
+{
 public:
-    MOCK_METHOD2(GenFramebuffers, void(GLsizei n, GLuint* buffers));
-    MOCK_METHOD2(BindFramebuffer, void(GLenum target, GLuint framebuffer));
+    OpenGLMock();
+    ~OpenGLMock();
     
-    MOCK_METHOD2(GenTextures, void(GLsizei n, GLuint *textures));
+    MOCK_METHOD2(BindFramebuffer, void(GLenum target, GLuint framebuffer));
     MOCK_METHOD2(BindTexture, void(GLenum target, GLuint texture));
-    MOCK_METHOD5(TexStorage2D, void(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height));
-    MOCK_METHOD3(TexParameterf, void(GLenum target, GLenum pname, GLfloat param));
-    MOCK_METHOD5(FramebufferTexture2D, void(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level));
-    MOCK_METHOD2(DrawBuffers, void(GLsizei n, const GLenum* bufs));
     MOCK_METHOD1(CheckFramebufferStatus, GLenum(GLenum target));
-    MOCK_METHOD0(GetError, GLenum());
-    MOCK_METHOD2(DeleteTextures, void(GLsizei n, const GLuint *textures));
     MOCK_METHOD2(DeleteFramebuffers, void(GLsizei n, const GLuint* framebuffers));
+    MOCK_METHOD2(DeleteTextures, void(GLsizei n, const GLuint *textures));
+    MOCK_METHOD2(DrawBuffers, void(GLsizei n, const GLenum* bufs));
+    MOCK_METHOD5(FramebufferTexture2D, void(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level));
+    MOCK_METHOD2(GenFramebuffers, void(GLsizei n, GLuint* buffers));
+    MOCK_METHOD2(GenTextures, void(GLsizei n, GLuint *textures));
+    MOCK_METHOD0(GetError, GLenum());
+    MOCK_METHOD3(TexParameterf, void(GLenum target, GLenum pname, GLfloat param));
+    MOCK_METHOD5(TexStorage2D, void(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height));
 };
 
 class GLFacade

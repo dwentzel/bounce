@@ -3,6 +3,11 @@
 namespace bounce {
     namespace tests {
         
+        using ::testing::_;
+        using ::testing::InSequence;
+        using ::testing::Return;
+        using ::testing::SetArgPointee;
+        
         class GBufferTest : public ::testing::Test {
         protected:
             // You can remove any or all of the following functions if its body
@@ -25,6 +30,9 @@ namespace bounce {
                 
                 mock_ = new OpenGLMock();
                 GLFacade::Mock(mock_);
+                
+//                ON_CALL(*mock_, CheckFramebufferStatus(_))
+//                .WillByDefault(Return(GL_FRAMEBUFFER_COMPLETE));
             }
             
             virtual void TearDown() {
@@ -39,24 +47,31 @@ namespace bounce {
             // Objects declared here can be used by all tests in the test case for Foo.
         };
         
-        using ::testing::_;
+        
         
         TEST_F(GBufferTest, Test1)
         {
-            EXPECT_CALL(*mock_, GenFramebuffers(_, _));
+            InSequence s;
+            
+            EXPECT_CALL(*mock_, GenFramebuffers(_, _))
+            .Times(1)
+            .WillOnce(SetArgPointee<1>(135));
+            
+            EXPECT_CALL(*mock_, BindFramebuffer(GL_DRAW_FRAMEBUFFER, 135)).Times(1);
+            EXPECT_CALL(*mock_, BindFramebuffer(GL_DRAW_FRAMEBUFFER, 0)).Times(1);
             
             bounce::GBuffer g_buffer;
             g_buffer.Init(0, 0);
         }
         
-        TEST_F(GBufferTest, Test2)
-        {
-            EXPECT_CALL(*mock_, GenFramebuffers(_, _));
-            
-            bounce::GBuffer g_buffer;
-            
-            g_buffer.Init(0, 0);
-        }
+//        TEST_F(GBufferTest, Test2)
+//        {
+//            EXPECT_CALL(*mock_, GenFramebuffers(_, _));
+//            
+//            bounce::GBuffer g_buffer;
+//            
+//            g_buffer.Init(0, 0);
+//        }
         
     }
 }
