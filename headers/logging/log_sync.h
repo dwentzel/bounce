@@ -8,10 +8,6 @@ namespace bounce {
 
 
     class LogSync {
-    private:
-        std::wostream& output_stream_;
-        std::wstringstream buffer_stream_;
-        
     public:
         explicit LogSync(std::wostream& output_stream);
         ~LogSync();
@@ -24,7 +20,10 @@ namespace bounce {
             manip(buffer_stream_);
             return buffer_stream_;
         }
-
+        
+    private:
+        std::wostream& output_stream_;
+        std::wstringstream buffer_stream_;
     };
     
     template<typename T>

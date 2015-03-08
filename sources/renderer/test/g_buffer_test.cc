@@ -1,4 +1,6 @@
 #include "g_buffer.h"
+#include "glmock.h"
+#include "gmock/gmock.h"
 
 namespace bounce {
     namespace tests {

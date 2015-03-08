@@ -4,14 +4,12 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 
-#include OPENGL_INCLUDE
-
-#if 0
-#if defined (__APPLE__) && defined(__MACH__)
-#include <OpenGL/gl.h>
+#if defined(MOCK_OPENGL)
+#   include "glmock.h"
+#elif defined(__APPLE__) && defined(__MACH__)
+#   include <OpenGL/gl.h>
 #else
-#include <GL/gl.h>
-#endif
+#   include <GL/gl.h>
 #endif
 
 #ifdef __PRETTY_FUNCTION__
