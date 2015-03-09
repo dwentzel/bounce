@@ -9,7 +9,7 @@ namespace bounce {
     class ObjectManagerHandle {
     public:
         typedef unsigned int index_t;
-        typedef unsigned int type_t;
+        typedef unsigned short type_t;
         
         static const ObjectManagerHandle invalid_handle;
         
@@ -20,29 +20,35 @@ namespace bounce {
         bool is_valid() const;
         
     private:
-        static const index_t INVALID_INDEX;
-        static const type_t INVALID_TYPE;
+        static const index_t INVALID_INDEX{std::numeric_limits<index_t>::max()};
+        
+        ObjectManagerHandle(index_t index);
         
         index_t index_;
-        type_t type_;
     };
     
     template <class T>
+    ObjectManagerHandle<T>::ObjectManagerHandle(index_t index)
+    : index_(index)
+    {
+    }
+    
+    template <class T>
     ObjectManagerHandle<T>::ObjectManagerHandle(type_t type, index_t index)
-    : index_(index), type_(type)
+    : index_((index << 4) | (type & 0x0F))
     {
     }
     
     template <class T>
     typename ObjectManagerHandle<T>::index_t ObjectManagerHandle<T>::index() const
     {
-        return index_;
+        return index_ >> 4;
     }
     
     template <class T>
     typename ObjectManagerHandle<T>::type_t ObjectManagerHandle<T>::type() const
     {
-        return type_;
+        return index_ & 0x0F;
     }
     
     template <class T>
@@ -51,14 +57,11 @@ namespace bounce {
         return index_ != INVALID_INDEX;
     }
     
-    template <class T>
-    const typename ObjectManagerHandle<T>::index_t ObjectManagerHandle<T>::INVALID_INDEX = std::numeric_limits<index_t>::max();
+//    template <class T>
+//    const typename ObjectManagerHandle<T>::index_t ObjectManagerHandle<T>::INVALID_INDEX = std::numeric_limits<index_t>::max();
     
     template <class T>
-    const typename ObjectManagerHandle<T>::type_t ObjectManagerHandle<T>::INVALID_TYPE = std::numeric_limits<type_t>::max();
-    
-    template <class T>
-    const ObjectManagerHandle<T> ObjectManagerHandle<T>::invalid_handle{INVALID_TYPE, INVALID_INDEX};
+    const ObjectManagerHandle<T> ObjectManagerHandle<T>::invalid_handle{INVALID_INDEX};
 
 }
 
