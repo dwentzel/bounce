@@ -5,46 +5,57 @@
 
 namespace bounce {
     
-
     template <class T>
     class ObjectManagerHandle {
-    private:
-        static const unsigned int INVALID_INDEX;
-        static const unsigned int INVALID_TYPE;
-        
-        unsigned int index_;
-        unsigned int type_;
-        
     public:
+        typedef unsigned int index_t;
+        typedef unsigned int type_t;
+        
         static const ObjectManagerHandle invalid_handle;
         
-        explicit ObjectManagerHandle(unsigned int type, unsigned int index)
-        : index_(index), type_(type)
-        {
-            
-        }
+        ObjectManagerHandle(type_t type, index_t index);
         
-        unsigned int index() const
-        {
-            return index_;
-        }
+        index_t index() const;
+        type_t type() const;
+        bool is_valid() const;
         
-        unsigned int type() const
-        {
-            return type_;
-        }
+    private:
+        static const index_t INVALID_INDEX;
+        static const type_t INVALID_TYPE;
         
-        bool is_valid() const
-        {
-            return index_ != INVALID_INDEX;
-        }
+        index_t index_;
+        type_t type_;
     };
     
     template <class T>
-    const unsigned int ObjectManagerHandle<T>::INVALID_INDEX = std::numeric_limits<unsigned int>::max();
+    ObjectManagerHandle<T>::ObjectManagerHandle(type_t type, index_t index)
+    : index_(index), type_(type)
+    {
+    }
     
     template <class T>
-    const unsigned int ObjectManagerHandle<T>::INVALID_TYPE = std::numeric_limits<unsigned int>::max();
+    typename ObjectManagerHandle<T>::index_t ObjectManagerHandle<T>::index() const
+    {
+        return index_;
+    }
+    
+    template <class T>
+    typename ObjectManagerHandle<T>::type_t ObjectManagerHandle<T>::type() const
+    {
+        return type_;
+    }
+    
+    template <class T>
+    bool ObjectManagerHandle<T>::is_valid() const
+    {
+        return index_ != INVALID_INDEX;
+    }
+    
+    template <class T>
+    const typename ObjectManagerHandle<T>::index_t ObjectManagerHandle<T>::INVALID_INDEX = std::numeric_limits<index_t>::max();
+    
+    template <class T>
+    const typename ObjectManagerHandle<T>::type_t ObjectManagerHandle<T>::INVALID_TYPE = std::numeric_limits<type_t>::max();
     
     template <class T>
     const ObjectManagerHandle<T> ObjectManagerHandle<T>::invalid_handle{INVALID_TYPE, INVALID_INDEX};
