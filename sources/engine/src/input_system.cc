@@ -2,10 +2,9 @@
 
 #include "control_component.h"
 
-bounce::InputSystem::InputSystem(const KeyboardState& keyboard_state,
-                                 ObjectCache<GameEntity>& game_entities,
+bounce::InputSystem::InputSystem(ObjectCache<GameEntity>& game_entities,
                                  GameComponentManager& component_manager)
-: keyboard_state_(keyboard_state), game_entities_(game_entities), component_manager_(component_manager)
+: game_entities_(game_entities), component_manager_(component_manager)
 {
     
 }

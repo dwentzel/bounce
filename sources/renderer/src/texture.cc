@@ -1,20 +1,26 @@
 #include "texture.h"
 
-bounce::Texture bounce::Texture::Create(unsigned int size, unsigned int width, unsigned int height, const std::uint8_t *data)
+#include "framework/contracts.h"
+
+bounce::Texture bounce::Texture::Create(std::unique_ptr<ImageData> image_data)
 {
-    return Texture(size, width, height, data);
+    CONTRACT_REQUIRES(image_data != nullptr);
+    
+    return Texture(std::move(image_data));
 }
 
-bounce::Texture::Texture(unsigned int size, unsigned int width, unsigned int height, const std::uint8_t* data)
-: size_(size), width_(width), height_(height), data_(data)
+bounce::Texture::Texture(std::unique_ptr<ImageData> image_data)
+: image_data_(std::move(image_data))
 {
+    CONTRACT_REQUIRES(image_data_ != nullptr);
+    
     glGenTextures(1, &texture_id_);
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_id_);
     
-    glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB32F, static_cast<GLsizei>(width_), static_cast<GLsizei>(height_));
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, static_cast<GLsizei>(width_), static_cast<GLsizei>(height_), GL_BGR, GL_UNSIGNED_BYTE, data_);
+    glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB32F, static_cast<GLsizei>(image_data_->width()), static_cast<GLsizei>(image_data_->height()));
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, static_cast<GLsizei>(image_data_->width()), static_cast<GLsizei>(image_data_->height()), GL_BGR, GL_UNSIGNED_BYTE, image_data_->data());
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -23,16 +29,15 @@ bounce::Texture::Texture(unsigned int size, unsigned int width, unsigned int hei
 }
 
 bounce::Texture::Texture(Texture&& source)
-: size_(source.size_), width_(source.width_), height_(source.height_), texture_id_(source.texture_id_), name_(source.name_), data_(source.data_)
+: image_data_(std::move(source.image_data_)), texture_id_(source.texture_id_), name_(source.name_)
 {
     source.texture_id_ = 0;
-    source.data_ = nullptr;
+    source.image_data_ = nullptr;
 }
 
 bounce::Texture::~Texture()
 {
     glDeleteTextures(1, &texture_id_);
-    delete[] data_;
 }
 
 //void bounce::Texture::Initialize()
@@ -66,17 +71,17 @@ void bounce::Texture::UseTexture()
 
 unsigned int bounce::Texture::size() const
 {
-    return size_;
+    return image_data_->size();
 }
 
 unsigned int bounce::Texture::width() const
 {
-    return width_;
+    return image_data_->width();
 }
 
 unsigned int bounce::Texture::height() const
 {
-    return height_;
+    return image_data_->height();
 }
 
 const std::string& bounce::Texture::name() const

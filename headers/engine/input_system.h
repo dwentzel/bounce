@@ -9,15 +9,13 @@ namespace bounce {
 
     class InputSystem {
     public:
-        explicit InputSystem(const KeyboardState& keyboard_state, ObjectCache<GameEntity>& game_entities, GameComponentManager& component_manager);
+        explicit InputSystem(ObjectCache<GameEntity>& game_entities, GameComponentManager& component_manager);
         
         void Startup();
         void Shutdown();
         void Update(float delta_time);
 
-    private:
-        const KeyboardState& keyboard_state_;
-        
+    private:        
         ObjectCache<GameEntity>& game_entities_;
         GameComponentManager& component_manager_;
         

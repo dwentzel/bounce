@@ -8,9 +8,9 @@
 
 #include "file_log_output.h"
 #include <thread>
-#include <iostream>
 
 namespace bounce {
+    
     class DefaultLogManagerImpl {
     public:
         DefaultLogManagerImpl();
@@ -43,6 +43,7 @@ bounce::DefaultLogManagerImpl::DefaultLogManagerImpl()
 : log_worker_context_(message_queue_), buffer_(message_queue_), log_stream_(&buffer_)
 {
     CONTRACT_ENSURES(log_stream_.good());
+    
     log_stream_.exceptions(log_stream_.exceptions() | std::ios_base::failbit);
 }
 
@@ -105,5 +106,6 @@ std::wostream& bounce::DefaultLogManager::Log(const LogLevel& log_level)
 void bounce::DefaultLogManager::AddOutput(std::unique_ptr<LogOutput> output)
 {
     CONTRACT_REQUIRES(output != nullptr);
+    
     impl_->AddOutput(std::move(output));
 }

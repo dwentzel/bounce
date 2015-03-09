@@ -2,15 +2,16 @@
 
 bounce::ControlStrategy::ControlStrategy()
 {
-    
 }
 
-bounce::ControlStrategy::ControlStrategy(ControlStrategy&& other) NOEXCEPT
+bounce::ControlStrategy::ControlStrategy(ControlStrategy&&) NOEXCEPT
 {
-    
 }
 
-void bounce::ControlStrategy::HandleMessage(const bounce::Message& message)
+void bounce::ControlStrategy::HandleMessage(const bounce::Message&)
 {
-    
+}
+
+bounce::ControlStrategy::~ControlStrategy()
+{
 }

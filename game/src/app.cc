@@ -30,15 +30,14 @@ namespace bounce {
       event_manager_(application_context.event_manager()),
       window_context_(window_context),
       resource_loader_(application_context_.root_path()),
-      texture_manager_(application_context_.root_path() + "/textures"),
+      texture_manager_(resource_loader_),
       renderer_(resource_loader_, model_manager_, texture_manager_, material_manager_, vertex_buffer_),
       entity_manager_(),
       component_manager_(),
-      input_system_(keyboard_state_, entity_manager_.game_entities(), component_manager_),
+      input_system_(entity_manager_.game_entities(), component_manager_),
       movement_system_(entity_manager_.game_entities(), component_manager_),
       render_system_(application_context_, window_context_, entity_manager_.game_entities(), component_manager_, renderer_)
     {
-        
     }
     
     App::~App() {
@@ -54,8 +53,6 @@ namespace bounce {
         render_system_.Startup();        
         
         Importer importer(resource_loader_);
-//        unsigned int model_handle = 0;// = importer.ImportFile("simple_craft.dae");
-        
         ImportedModel imported_model = importer.LoadModel("simple_craft.dae");
 
         ModelLoader loader(texture_manager_, material_manager_, model_manager_);

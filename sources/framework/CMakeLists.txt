@@ -4,6 +4,7 @@ set(HEADERS
     ${MODULE_PUBLIC_INCLUDE_DIR}/assertions.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/contracts.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/exceptions.h
+    ${MODULE_PUBLIC_INCLUDE_DIR}/image_data.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/lock_free_queue.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_cache.h
     ${MODULE_PUBLIC_INCLUDE_DIR}/object_cache_handle.h
@@ -16,6 +17,7 @@ set(SOURCES
     src/contracts.cc
     src/exceptions.cc
     src/framework.cc
+    src/image_data.cc
     src/object_cache.cc
     src/object_cache_handle.cc
     src/renderer.cc

@@ -4,17 +4,14 @@
 
 bounce::NullLogManager::~NullLogManager()
 {
-    
 }
 
 void bounce::NullLogManager::Startup()
 {
-    
 }
 
 void bounce::NullLogManager::Shutdown()
 {
-    
 }
 
 std::wostream& bounce::NullLogManager::Log(const LogLevel&)
@@ -22,7 +19,6 @@ std::wostream& bounce::NullLogManager::Log(const LogLevel&)
     return std::wcout;
 }
 
-void bounce::NullLogManager::AddOutput(std::unique_ptr<LogOutput> output)
+void bounce::NullLogManager::AddOutput(std::unique_ptr<LogOutput>)
 {
-    
 }

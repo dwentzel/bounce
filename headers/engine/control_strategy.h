@@ -10,6 +10,7 @@ namespace bounce {
     public:
         ControlStrategy();
         ControlStrategy(ControlStrategy&& other) NOEXCEPT;
+        virtual ~ControlStrategy();
         
         virtual void Update() = 0;
         virtual void HandleMessage(const Message& message);
