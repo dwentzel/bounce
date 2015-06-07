@@ -65,7 +65,8 @@ namespace bounce {
                 x = x * 2;
             }
             
-            TEST_F(ContractsTest, test1) {
+            TEST_F(ContractsTest, test1) 
+            {
                 EXPECT_DEATH(FunctionWithPrecondition(false), "");
             }
             

@@ -1,0 +1,36 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+
+	"build_systems":
+	[
+		{
+            "name": "CMake",
+            "cmd": [ "/opt/local/bin/cmake", 
+                "-G", "Unix Makefiles",
+                "${project_path}"],
+            "working_dir": "${project_path}/build"
+        },
+		{
+            "name": "Make",
+            "cmd": [ "make" ],
+            "working_dir": "${project_path}/build",
+            "file_regex": "([^:]+):(\\d+):(\\d+): ",
+
+            "variants": [
+            	{
+            		"name": "clean",
+            		"cmd": [ "make", "clean" ]
+            	},
+            	{
+            		"name": "test",
+            		"cmd": [ "make", "test" ],
+            	}
+            ]
+        }
+	]
+}

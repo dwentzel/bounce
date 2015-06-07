@@ -5,6 +5,8 @@
 #include "logging/log.h"
 #include "exceptions.h"
 
+#include <cassert>
+
 
 bounce::Importer::Importer(const ResourceLoader& resource_loader)
 : resource_loader_(resource_loader)

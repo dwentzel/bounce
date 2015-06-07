@@ -7,3 +7,5 @@ build/
 *~
 *\.blend1
 \#*#
+.tags*
+*.sublime-workspace

@@ -12,6 +12,11 @@ std::unique_ptr<bounce::LogManager>bounce::LogFacade::log_manager_;
 //    impl_ = std::move(implementation);
 //}
 
+void bounce::LogFacade::SetFactory(std::unique_ptr<LogManagerFactoryBase> factory)
+{
+    factory_ = std::move(factory);
+}
+
 void bounce::LogFacade::Startup()
 {
     CONTRACT_ENSURES(log_manager_ != nullptr);
